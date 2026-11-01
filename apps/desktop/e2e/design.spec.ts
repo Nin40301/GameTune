@@ -4,7 +4,7 @@ import { mkdirSync, readFileSync } from 'node:fs'
 import pt from '../src/locales/pt-BR.json' with { type: 'json' }
 import en from '../src/locales/en.json' with { type: 'json' }
 
-const shots = '../../outputs/phase-6.5/screenshots'
+const shots = '../../outputs/phase-6.5-polish/screenshots'
 for (const language of ['pt-BR', 'en'] as const)
   for (const theme of ['light', 'dark'] as const)
     for (const width of [1440, 1100, 768, 390]) {
@@ -42,8 +42,19 @@ for (const language of ['pt-BR', 'en'] as const)
             if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
           })
           await page.evaluate(() => document.fonts.ready)
+          expect(
+            await page.locator('h1').evaluate((el) => getComputedStyle(el).fontOpticalSizing),
+          ).toBe('auto')
+          expect(
+            Math.abs(
+              parseFloat(
+                await page.locator('h1').evaluate((el) => getComputedStyle(el).letterSpacing),
+              ),
+            ),
+          ).toBeLessThanOrEqual(0.5)
           // Let only the finite page entrance finish; no background animation.
           await page.waitForTimeout(400)
+          if (width <= 900) await expect(page.locator('.topbar .mobile-brand')).toBeVisible()
           expect(
             await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
             name,
@@ -61,6 +72,16 @@ for (const language of ['pt-BR', 'en'] as const)
               path: `${shots}/${name}-${theme}-${width}.png`,
               animations: 'disabled',
             })
+          if (
+            language === 'pt-BR' &&
+            [1440, 390].includes(width) &&
+            ['home', 'games', 'benchmark', 'history', 'apps'].includes(name)
+          )
+            await page.screenshot({
+              path: `${shots}/${name}-${theme}-${width}-full.png`,
+              fullPage: true,
+              animations: 'disabled',
+            })
           expect.soft(axe.violations, name).toEqual([])
         }
         await inspect('home')
@@ -76,7 +97,9 @@ for (const language of ['pt-BR', 'en'] as const)
           'games',
           'settings',
         ] as const) {
-          await page.getByRole('button', { name: t[name], exact: true }).click()
+          const target = page.getByRole('button', { name: t[name], exact: true })
+          if (!(await target.isVisible())) await page.locator('.more-navigation summary').click()
+          await target.click()
           if (name === 'games') {
             await page.getByRole('button', { name: t.addGame }).click()
             await page.getByRole('button', { name: /Sample.exe/ }).click()
@@ -128,4 +151,54 @@ test('production CSP and animation rules remain restricted', async () => {
   expect(config.app.security.csp).not.toMatch(/unsafe-inline|unsafe-eval|https:|\*/)
   const styles = readFileSync(new URL('../src/styles/screens.css', import.meta.url), 'utf8')
   expect(styles).not.toMatch(/background-attachment|feDisplacementMap|infinite/)
+})
+
+test('mobile navigation exposes four destinations and a keyboard-accessible More panel', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 900 })
+  await page.goto('/')
+  await expect(page.getByRole('navigation').getByRole('button')).toHaveCount(4)
+  const more = page.locator('.more-navigation summary')
+  await more.focus()
+  await page.keyboard.press('Enter')
+  await expect(page.getByRole('button', { name: pt.history, exact: true })).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(more).toBeFocused()
+  await expect(page.getByRole('button', { name: pt.history, exact: true })).not.toBeVisible()
+  await more.click()
+  await page.getByRole('button', { name: pt.settings, exact: true }).click()
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(pt.settingsTitle)
+  await expect(page.locator('details[open]')).toHaveCount(0)
+  expect(
+    (await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze())
+      .violations,
+  ).toEqual([])
+})
+
+test('review removes duplicate status and repeated low-risk badges; item footer clears the last row', async ({
+  page,
+}) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: pt.simulate, exact: true }).click()
+  await expect(page.getByText(pt.complete, { exact: true })).toBeVisible()
+  await page.getByRole('button', { name: pt.reviewSelection, exact: true }).click()
+  await expect(page.getByText(pt.complete, { exact: true })).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: pt.byType })).toHaveCount(0)
+  await expect(page.locator('.review-item .risk-badge')).toHaveCount(0)
+  await expect(page.locator('.review-risk-group.low > h2')).toHaveCount(1)
+  await page.getByRole('button', { name: pt.items, exact: true }).click()
+  await expect(
+    page.locator('.page-heading').getByRole('button', { name: pt.analyze }),
+  ).toBeVisible()
+  await expect(page.getByRole('searchbox')).toHaveAttribute('placeholder', pt.searchPlaceholder)
+  for (const width of [1440, 1100, 768, 390]) {
+    await page.setViewportSize({ width, height: 1000 })
+    const last = page.locator('.item-list .item-row').last()
+    await last.scrollIntoViewIfNeeded()
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+    const row = await last.boundingBox(),
+      bar = await page.locator('.sticky-actions').boundingBox()
+    expect(row && bar && row.y + row.height <= bar.y).toBe(true)
+  }
 })

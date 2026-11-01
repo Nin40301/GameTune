@@ -1,0 +1,343 @@
+/* Keep the existing glass language, with calmer typography and fewer labels. */
+.brand strong {
+  letter-spacing: -0.02em;
+}
+.topbar {
+  justify-content: flex-end;
+}
+.topbar-location {
+  margin-right: auto;
+}
+.heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.search-field,
+.select-field {
+  position: relative;
+  display: block;
+}
+.search-field > svg,
+.select-field > svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-soft);
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
+}
+.search-field > svg {
+  left: 14px;
+}
+.search-field input {
+  padding-left: 42px;
+}
+.select-field select {
+  width: 100%;
+  appearance: none;
+  padding-right: 44px;
+  min-height: 44px;
+  border-radius: 12px;
+  background: var(--solid-surface);
+  color: var(--ink);
+}
+.select-field > svg {
+  right: 14px;
+}
+input::placeholder {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+.toolbar > .search-label {
+  flex: 1 1 280px;
+}
+.toolbar > label:not(.search-label) {
+  flex: 0 1 220px;
+}
+.item-list,
+.app-grid {
+  padding-bottom: 104px;
+}
+.item-select small {
+  max-width: 62ch;
+}
+.checkbox-control {
+  display: inline-grid;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  position: relative;
+  place-items: center;
+  vertical-align: middle;
+}
+.checkbox-control input.checkbox {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  margin: 0;
+  border: 1.5px solid var(--ink-faint);
+  border-radius: 6px;
+  background: var(--solid-surface);
+  cursor: pointer;
+}
+.checkbox-control input:checked {
+  background: #6d28d9;
+  border-color: #6d28d9;
+}
+.checkbox-control > svg {
+  position: absolute;
+  pointer-events: none;
+  width: 16px;
+  height: 16px;
+  color: #fff;
+  visibility: hidden;
+}
+.checkbox-control:has(input:checked) > svg {
+  visibility: visible;
+}
+.checkbox-control:has(input:disabled) {
+  opacity: 0.5;
+}
+.checkbox-control input:disabled {
+  cursor: not-allowed;
+}
+:is(.consent, .check-line, .game-action) {
+  max-width: 62ch;
+  gap: 12px;
+  min-height: 40px;
+}
+:is(.consent, .check-line, .game-action) > :last-child {
+  min-width: 0;
+}
+.consent {
+  align-items: flex-start;
+}
+.checkbox-target {
+  margin: 0;
+}
+.game-action .checkbox-control {
+  margin-top: 2px;
+}
+.button + p,
+.btn + p,
+.actions + p {
+  margin-top: 16px;
+}
+.games-panel > p + .actions,
+.game-editor > p + fieldset {
+  margin-top: 20px;
+}
+.review-summary {
+  padding: 16px 20px;
+  margin: 24px 0;
+  border-radius: 18px;
+}
+.review-summary dl.review-metrics {
+  margin: 0;
+  gap: 16px 32px;
+}
+.review-summary .review-metrics > div {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.review-metrics dt {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.review-metrics dt svg {
+  width: 18px;
+  height: 18px;
+}
+.review-metrics dd {
+  font-size: 1.25rem;
+}
+.review-timeline {
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+}
+.risk-group-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin: 28px 0 20px;
+}
+.risk-group-heading .num {
+  margin-left: auto;
+  font-size: 0.75rem;
+}
+.review-risk-group.high > .risk-group-heading {
+  color: var(--danger);
+}
+.review-risk-group.high {
+  padding: 0 16px 1px;
+  border: 1px solid var(--danger);
+  border-radius: 18px;
+}
+.review-item {
+  margin: 0 0 16px 52px;
+  padding: 0 0 20px;
+}
+.review-item .section-top {
+  margin-bottom: 8px;
+}
+.review-item h2 {
+  line-height: 1.5;
+}
+.timeline-marker {
+  left: -52px;
+  top: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+}
+.review-item p {
+  margin-bottom: 0;
+}
+.review-item .notice {
+  margin-top: 16px;
+}
+.final-consent .actions {
+  margin-top: 20px;
+}
+@media (max-width: 900px) {
+  .topbar .topbar-location > .mobile-brand {
+    display: inline-flex;
+  }
+  .sidebar .nav ul {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .sidebar .nav button {
+    width: 100%;
+  }
+  .more-navigation {
+    position: relative;
+  }
+  .more-navigation summary {
+    list-style: none;
+    min-height: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 16px;
+    font-size: 0.66rem;
+    color: var(--ink-soft);
+  }
+  .more-navigation summary::-webkit-details-marker {
+    display: none;
+  }
+  .more-navigation summary > svg {
+    width: 19px;
+    height: 19px;
+  }
+  .more-navigation summary[data-active='true'],
+  .more-navigation details[open] > summary {
+    background: var(--thumb);
+    color: #3b1a7a;
+  }
+  .more-panel {
+    position: absolute;
+    bottom: 72px;
+    right: 0;
+    width: 240px;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--solid-surface);
+    box-shadow: var(--glass-shadow);
+  }
+  .sidebar .nav .more-panel button {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 12px;
+    min-height: 48px;
+    height: auto;
+    text-align: left;
+  }
+  .more-panel .nav-label {
+    display: inline;
+  }
+  .more-panel .nav-short {
+    display: none;
+  }
+  .more-panel button[aria-current='page'] {
+    background: var(--thumb);
+  }
+  .more-panel button[aria-current='page']::after {
+    display: none;
+  }
+  .more-navigation summary:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+  .sticky-actions {
+    bottom: 88px;
+  }
+  main {
+    padding-bottom: 116px;
+  }
+  html {
+    scroll-padding-bottom: 200px;
+  }
+  :is(button, input, select, summary, [tabindex='0']) {
+    scroll-margin-bottom: 200px;
+  }
+}
+@media (max-width: 600px) {
+  .page-heading {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .heading-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .heading-actions .btn {
+    min-height: 40px;
+    padding-inline: 20px;
+  }
+  .toolbar > label:not(.search-label) {
+    flex: 1 1 100%;
+  }
+  .review-summary .review-metrics {
+    gap: 16px 24px;
+  }
+  .review-item {
+    margin-left: 44px;
+  }
+  .timeline-marker {
+    left: -44px;
+    width: 30px;
+    height: 34px;
+  }
+}
+@media (forced-colors: active) {
+  .checkbox-control input.checkbox {
+    appearance: auto;
+    border-color: ButtonText;
+    background: Canvas;
+  }
+  .checkbox-control > svg {
+    display: none;
+  }
+  .more-panel {
+    background: Canvas;
+    border-color: CanvasText;
+  }
+  .more-navigation summary[data-active='true'] {
+    color: HighlightText;
+    background: Highlight;
+  }
+}

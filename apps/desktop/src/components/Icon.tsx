@@ -1,5 +1,9 @@
 import {
   House,
+  MoreHorizontal,
+  ChevronDown,
+  CalendarClock,
+  Rocket,
   SlidersHorizontal,
   PackageOpen,
   ListChecks,
@@ -28,6 +32,10 @@ import {
 } from 'lucide-react'
 const icons = {
   home: House,
+  more: MoreHorizontal,
+  chevronDown: ChevronDown,
+  task: CalendarClock,
+  startup: Rocket,
   items: SlidersHorizontal,
   apps: PackageOpen,
   review: ListChecks,

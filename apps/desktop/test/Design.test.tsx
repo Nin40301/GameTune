@@ -1,3 +1,4 @@
+import { Checkbox } from '../src/components/Checkbox'
 import { useState } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -72,4 +73,38 @@ test('sparklines require real finite samples and buttons preserve disabled seman
   )
   expect(screen.getByRole('img', { name: 'CPU' })).toBeVisible()
   expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled()
+})
+
+test('styled checkbox retains label, Space, description and disabled consent semantics', async () => {
+  function Example() {
+    const [checked, setChecked] = useState(false)
+    return (
+      <>
+        <label>
+          <Checkbox
+            checked={checked}
+            aria-describedby="detail"
+            onChange={(event) => setChecked(event.target.checked)}
+          />
+          Consent
+        </label>
+        <p id="detail">Explicit consent remains required</p>
+        <label>
+          <Checkbox disabled />
+          Disabled consent
+        </label>
+      </>
+    )
+  }
+  const user = userEvent.setup()
+  render(<Example />)
+  const checkbox = screen.getByRole('checkbox', { name: 'Consent' })
+  expect(checkbox).toHaveAccessibleDescription('Explicit consent remains required')
+  await user.tab()
+  await user.keyboard(' ')
+  expect(checkbox).toBeChecked()
+  await user.click(screen.getByText('Consent', { exact: true }))
+  expect(checkbox).not.toBeChecked()
+  await user.click(screen.getByText('Disabled consent'))
+  expect(screen.getByRole('checkbox', { name: 'Disabled consent' })).not.toBeChecked()
 })

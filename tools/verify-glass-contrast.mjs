@@ -5,7 +5,7 @@ import { spawn } from "node:child_process";
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 const app = fileURLToPath(new URL("../apps/desktop/", import.meta.url));
-const out = new URL("../work/glass-contrast/", import.meta.url);
+const out = new URL("../work/glass-contrast-polish/", import.meta.url);
 mkdirSync(out, { recursive: true });
 const server = spawn(
   process.execPath,
@@ -231,9 +231,13 @@ try {
           "games",
           "settings",
         ]) {
-          await page
-            .getByRole("button", { name: t[name], exact: true })
-            .click();
+          const target = page.getByRole("button", {
+            name: t[name],
+            exact: true,
+          });
+          if (!(await target.isVisible()))
+            await page.locator(".more-navigation summary").click();
+          await target.click();
           await measure(name);
         }
         await page.close();
