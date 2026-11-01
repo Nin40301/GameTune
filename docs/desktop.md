@@ -1,4 +1,4 @@
-# GameTune Desktop — Fases 4 a 6
+# Ametista Desktop — Fases 4 a 6
 
 Interface Windows em Tauri 2, React, TypeScript strict e Tailwind. Usa o mesmo
 catálogo, presets, proteção, WindowsSession e journal da CLI. Disponível em
@@ -24,17 +24,17 @@ cd apps/desktop
 npm ci --no-audit --no-fund
 npm run build
 cd ../..
-cargo build -p gametune-desktop -p gametune-helper -p gametune-monitor --release --locked --offline
+cargo build -p ametista-desktop -p ametista-helper -p ametista-monitor --release --locked --offline
 ./tools/verify-desktop.ps1
 ```
 
-Os arquivos `target/release/gametune.exe`, `gametune-helper.exe` e `gametune-monitor.exe` devem ficar
+Os arquivos `target/release/ametista.exe`, `ametista-helper.exe` e `ametista-monitor.exe` devem ficar
 juntos. UI/monitor têm manifesto **asInvoker**, o helper **requireAdministrator**.
 O build padrão inclui assets locais, não depende do servidor Vite e exclui mocks
 e autorização de fixtures. Não use `--all-features` para um release de produção.
 Os executáveis ainda não são assinados; instalador e assinatura entram na Fase 7.
 
-Abra gametune.exe pelo Explorer/terminal comum. Se iniciado elevado, o backend
+Abra ametista.exe pelo Explorer/terminal comum. Se iniciado elevado, o backend
 recusa a análise e orienta abrir como usuário comum. Não abra o helper diretamente.
 Ele não aceita comandos de shell, caminhos de alvo ou scripts em argumentos.
 

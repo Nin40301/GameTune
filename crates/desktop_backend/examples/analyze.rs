@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let desktop = gametune_desktop_backend::Desktop::default();
+    let desktop = ametista_desktop_backend::Desktop::default();
     let started = std::time::Instant::now();
     desktop.analysis_start()?;
     loop {

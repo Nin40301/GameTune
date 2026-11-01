@@ -1,7 +1,7 @@
 # Fase 4 — plano de arquitetura
 
 Adicionar apps/desktop (React, TypeScript strict, Tailwind e Tauri 2), um crate
-desktop_backend e um crate ipc com binário gametune-helper. A UI permanece
+desktop_backend e um crate ipc com binário ametista-helper. A UI permanece
 asInvoker; o helper tem manifesto requireAdministrator, é lançado apenas por
 ação explícita após revisão e encerra após uma transação. Ambos usam o catálogo,
 perfis, proteção, WindowsSession, consentimentos e journal existentes. A UI não

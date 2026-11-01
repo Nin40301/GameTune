@@ -1,5 +1,5 @@
 [package]
-name = "gametune-windows-runtime"
+name = "ametista-windows-runtime"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -7,12 +7,12 @@ publish.workspace = true
 license.workspace = true
 
 [features]
-vm-tests = ["gametune-core/test-targets"]
+vm-tests = ["ametista-core/test-targets"]
 real-profile-tests = []
 
 [dependencies]
-gametune-core.workspace = true
-gametune-catalog.workspace = true
+ametista-core.workspace = true
+ametista-catalog.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 sha2.workspace = true

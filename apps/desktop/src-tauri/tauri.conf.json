@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "GameTune",
+  "productName": "Ametista",
   "version": "0.6.0",
-  "identifier": "local.gametune.desktop",
+  "identifier": "local.ametista.desktop",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://127.0.0.1:1420",
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "GameTune",
+        "title": "Ametista",
         "width": 1100,
         "height": 740,
         "minWidth": 360,
@@ -29,6 +29,7 @@
     }
   },
   "bundle": {
-    "active": false
+    "active": false,
+    "publisher": "Ametista"
   }
 }

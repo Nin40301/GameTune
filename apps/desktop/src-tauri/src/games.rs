@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-use gametune_watcher::{
+use ametista_watcher::{
     discovery::{Candidate, Locations},
     storage::*,
     *,
@@ -35,18 +35,18 @@ pub enum Action {
 pub struct View {
     pub library: Library,
     pub candidates: Vec<Candidate>,
-    pub actions: Vec<gametune_core::temporary::GameAction>,
+    pub actions: Vec<ametista_core::temporary::GameAction>,
     pub monitor: MonitorStatus,
 }
 pub struct Games {
     directory: PathBuf,
     candidates: Mutex<Vec<Candidate>>,
-    actions: Vec<gametune_core::temporary::GameAction>,
+    actions: Vec<ametista_core::temporary::GameAction>,
 }
 impl Games {
     pub fn new(directory: PathBuf) -> Result<Self> {
-        let catalog = gametune_catalog::load_embedded().map_err(|_| Error::Invalid)?;
-        let actions = gametune_catalog::game_actions(&catalog).map_err(|_| Error::Invalid)?;
+        let catalog = ametista_catalog::load_embedded().map_err(|_| Error::Invalid)?;
+        let actions = ametista_catalog::game_actions(&catalog).map_err(|_| Error::Invalid)?;
         Ok(Self {
             directory,
             candidates: Mutex::new(vec![]),
@@ -153,7 +153,7 @@ impl Games {
                 language,
             } => {
                 use std::os::windows::process::CommandExt;
-                if !confirm || std::env::var_os("GAMETUNE_RESOURCE_MODE").is_some() {
+                if !confirm || std::env::var_os("AMETISTA_RESOURCE_MODE").is_some() {
                     return Err(Error::Invalid);
                 }
                 match load(&self.directory) {
@@ -170,7 +170,7 @@ impl Games {
                     .map_err(|_| Error::Storage)?
                     .parent()
                     .ok_or(Error::Storage)?
-                    .join("gametune-monitor.exe");
+                    .join("ametista-monitor.exe");
                 if !exe.is_file() {
                     return Err(Error::Storage);
                 }
@@ -202,6 +202,6 @@ pub fn monitor_running() -> std::result::Result<bool, String> {
     let directory = std::env::var_os("LOCALAPPDATA")
         .map(PathBuf::from)
         .ok_or("games_storage")?
-        .join("local.gametune.desktop/games");
+        .join("local.ametista.desktop/games");
     Ok(status(&directory).running)
 }

@@ -1,7 +1,7 @@
 #![forbid(unsafe_code)]
-use gametune_core::temporary::*;
-use gametune_core::*;
-use gametune_exec_mock::{MockExecutor, MockHost};
+use ametista_core::temporary::*;
+use ametista_core::*;
+use ametista_exec_mock::{MockExecutor, MockHost};
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 fn machine() -> Machine {
     Machine {
@@ -12,8 +12,8 @@ fn machine() -> Machine {
 }
 #[test]
 fn temporary_pause_preserves_start_mode_and_reverts_exact_snapshot() -> TestResult {
-    let catalog = gametune_catalog::load_embedded()?;
-    let actions = gametune_catalog::game_actions(&catalog)?;
+    let catalog = ametista_catalog::load_embedded()?;
+    let actions = ametista_catalog::game_actions(&catalog)?;
     let item = catalog.get("svc.diagtrack")?;
     let host = MockHost::default();
     host.seed(
@@ -62,8 +62,8 @@ fn temporary_pause_preserves_start_mode_and_reverts_exact_snapshot() -> TestResu
 }
 #[test]
 fn temporary_original_is_current_state_not_permanent_original() -> TestResult {
-    let catalog = gametune_catalog::load_embedded()?;
-    let actions = gametune_catalog::game_actions(&catalog)?;
+    let catalog = ametista_catalog::load_embedded()?;
+    let actions = ametista_catalog::game_actions(&catalog)?;
     let item = catalog.get("reg.game_mode")?;
     let host = MockHost::default();
     host.seed(
@@ -109,8 +109,8 @@ fn temporary_original_is_current_state_not_permanent_original() -> TestResult {
 }
 #[test]
 fn unknown_or_permanent_ids_cannot_enter_temporary_journal() -> TestResult {
-    let catalog = gametune_catalog::load_embedded()?;
-    let actions = gametune_catalog::game_actions(&catalog)?;
+    let catalog = ametista_catalog::load_embedded()?;
+    let actions = ametista_catalog::game_actions(&catalog)?;
     let mut executors = Executors::default();
     let mut engine = Engine {
         catalog: &catalog,
@@ -168,19 +168,19 @@ impl Executor for FileService {
 }
 #[test]
 fn crash_child() -> TestResult {
-    if std::env::var("GAMETUNE_SYNTHETIC_CRASH").as_deref() != Ok("MOCK_ONLY") {
+    if std::env::var("AMETISTA_SYNTHETIC_CRASH").as_deref() != Ok("MOCK_ONLY") {
         return Ok(());
     }
-    let directory = std::path::PathBuf::from(std::env::var("GAMETUNE_SESSION_TEST_DIR")?);
+    let directory = std::path::PathBuf::from(std::env::var("AMETISTA_SESSION_TEST_DIR")?);
     if !directory.starts_with(std::env::temp_dir())
         || !directory
             .file_name()
-            .is_some_and(|s| s.to_string_lossy().starts_with("gametune-session-test-"))
+            .is_some_and(|s| s.to_string_lossy().starts_with("ametista-session-test-"))
     {
         return Err("invalid mock sandbox".into());
     }
-    let catalog = gametune_catalog::load_embedded()?;
-    let actions = gametune_catalog::game_actions(&catalog)?;
+    let catalog = ametista_catalog::load_embedded()?;
+    let actions = ametista_catalog::game_actions(&catalog)?;
     let mut executors = Executors::default();
     executors.insert(FileService {
         path: directory.join("state.json"),
@@ -198,7 +198,7 @@ fn crash_child() -> TestResult {
 #[test]
 fn actual_child_crash_between_write_ahead_and_commit_recovers() -> TestResult {
     let directory = tempfile::Builder::new()
-        .prefix("gametune-session-test-")
+        .prefix("ametista-session-test-")
         .tempdir()?;
     let original = Snapshot::Service {
         start_mode: 2,
@@ -209,8 +209,8 @@ fn actual_child_crash_between_write_ahead_and_commit_recovers() -> TestResult {
     std::fs::write(directory.path().join("state.json"), &bytes)?;
     let status = std::process::Command::new(std::env::current_exe()?)
         .args(["--exact", "crash_child", "--nocapture"])
-        .env("GAMETUNE_SYNTHETIC_CRASH", "MOCK_ONLY")
-        .env("GAMETUNE_SESSION_TEST_DIR", directory.path())
+        .env("AMETISTA_SYNTHETIC_CRASH", "MOCK_ONLY")
+        .env("AMETISTA_SESSION_TEST_DIR", directory.path())
         .status()?;
     assert_eq!(status.code(), Some(73));
     let mut wal = Journal::open(directory.path().join("games.wal"))?;
@@ -219,8 +219,8 @@ fn actual_child_crash_between_write_ahead_and_commit_recovers() -> TestResult {
         wal.entries().next().ok_or("no prepared entry")?.status,
         Status::Prepared
     );
-    let catalog = gametune_catalog::load_embedded()?;
-    let actions = gametune_catalog::game_actions(&catalog)?;
+    let catalog = ametista_catalog::load_embedded()?;
+    let actions = ametista_catalog::game_actions(&catalog)?;
     let mut executors = Executors::default();
     executors.insert(FileService {
         path: directory.path().join("state.json"),

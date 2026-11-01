@@ -1,12 +1,12 @@
 #![forbid(unsafe_code)]
 //! Appx executor, backed by validated Windows operations or an explicit mock.
-use gametune_core::{ActionType, ExecResult, Executor, Item, Snapshot};
-use gametune_exec_mock::MockHost;
+use ametista_core::{ActionType, ExecResult, Executor, Item, Snapshot};
+use ametista_exec_mock::MockHost;
 
-pub struct MockExecutor(gametune_exec_mock::MockExecutor);
+pub struct MockExecutor(ametista_exec_mock::MockExecutor);
 impl MockExecutor {
     pub fn new(host: MockHost) -> Self {
-        Self(gametune_exec_mock::MockExecutor::new(
+        Self(ametista_exec_mock::MockExecutor::new(
             ActionType::Appx,
             host,
         ))
@@ -28,10 +28,10 @@ impl Executor for MockExecutor {
 }
 
 /// Real Windows adapter with validated catalog targets and interactive-user scope.
-pub struct WindowsExecutor(gametune_windows_runtime::WindowsExecutor);
+pub struct WindowsExecutor(ametista_windows_runtime::WindowsExecutor);
 impl WindowsExecutor {
-    pub fn new(context: gametune_windows_runtime::WindowsContext) -> Self {
-        Self(gametune_windows_runtime::WindowsExecutor::new(
+    pub fn new(context: ametista_windows_runtime::WindowsContext) -> Self {
+        Self(ametista_windows_runtime::WindowsExecutor::new(
             ActionType::Appx,
             context,
         ))

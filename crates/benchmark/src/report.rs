@@ -108,7 +108,7 @@ mod tests {
         assert!(html.contains("default-src 'none'"));
         assert!(!html.contains("https://"));
         let english = render(&p, Format::Html, true, true)?;
-        assert!(english.contains("GameTune measurement report"));
+        assert!(english.contains("Ametista measurement report"));
         Ok(())
     }
 }

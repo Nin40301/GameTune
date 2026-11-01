@@ -63,7 +63,7 @@ Host: Windows 11 Pro x64 build 26200, Rust/Cargo 1.98.1, terminal sem elevação
 | Checagem | Situação |
 | --- | --- |
 | Testes normais | 51 testes passaram |
-| Registro nativo dedicado | 2 testes incluídos nos 51, somente HKCU\Software\GameTuneTest |
+| Registro nativo dedicado | 2 testes incluídos nos 51, somente HKCU\Software\AmetistaTest |
 | fmt e Clippy padrão | Passaram sem avisos |
 | Clippy com feature vm-tests | Passou sem avisos |
 | Build release, features padrão | Passou |
@@ -92,17 +92,17 @@ cargo fetch --locked
 cargo fmt --all --check
 cargo clippy --workspace --all-targets --locked --offline -- -D warnings
 cargo test --workspace --locked --offline
-cargo clippy -p gametune-windows-runtime --features vm-tests --all-targets --locked --offline -- -D warnings
-cargo test -p gametune-windows-runtime --features vm-tests --locked --offline --no-run
-cargo test -p gametune-windows-runtime embedded_powershell_sources_parse --locked --offline
+cargo clippy -p ametista-windows-runtime --features vm-tests --all-targets --locked --offline -- -D warnings
+cargo test -p ametista-windows-runtime --features vm-tests --locked --offline --no-run
+cargo test -p ametista-windows-runtime embedded_powershell_sources_parse --locked --offline
 cargo build --workspace --release --locked --offline
-cargo run -p gametune-catalog --example simulate --locked --offline
-cargo run -p gametune-catalog --example removed_apps --locked --offline -- outputs/appx-reinstall-demo.html
+cargo run -p ametista-catalog --example simulate --locked --offline
+cargo run -p ametista-catalog --example removed_apps --locked --offline -- outputs/appx-reinstall-demo.html
 ```
 
 Para rodar a suíte administrativa, siga windows-vm.md: VM descartável, snapshot
 do hipervisor, desktop interativo elevado e opt-in explícito. Ela usa somente
-serviço/tarefa/helper próprios, Run dedicado, GameTuneTest e plano de teste.
+serviço/tarefa/helper próprios, Run dedicado, AmetistaTest e plano de teste.
 Compara XML/DACL/configurações completas e preserva before/after/restored e WAL.
 Não aplica alvos reais do catálogo. Appx real não é removido pela suíte.
 
@@ -128,7 +128,7 @@ não é o ZIP portátil de um aplicativo final.
 ## Próximo passo
 
 Concluir o aceite administrativo conforme windows-vm.md e registrar a matriz.
-Depois, Fase 3: gametune-cli sobre WindowsSession, com --profile, --dry-run,
+Depois, Fase 3: ametista-cli sobre WindowsSession, com --profile, --dry-run,
 --undo, --list e JSON, incluindo comandos separados de remoção/reinstalação Appx.
 
 ## Arquivos criados e alterados

@@ -1,5 +1,5 @@
 [package]
-name = "gametune-catalog"
+name = "ametista-catalog"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -7,14 +7,14 @@ publish.workspace = true
 license.workspace = true
 
 [dependencies]
-gametune-core.workspace = true
+ametista-core.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 sha2.workspace = true
 jsonschema.workspace = true
 
 [dev-dependencies]
-gametune-exec-mock.workspace = true
+ametista-exec-mock.workspace = true
 tempfile.workspace = true
 
 [lints]

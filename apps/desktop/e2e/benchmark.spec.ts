@@ -6,8 +6,8 @@ for (const locale of ['pt-BR', 'en'] as const)
     test(`benchmark axe, distributions and exports ${locale} ${theme}`, async ({ page }) => {
       await page.addInitScript(
         ({ locale, theme }) => {
-          localStorage.setItem('gametune.language', locale)
-          localStorage.setItem('gametune.theme', theme)
+          localStorage.setItem('ametista.language', locale)
+          localStorage.setItem('ametista.theme', theme)
         },
         { locale, theme },
       )
@@ -52,7 +52,7 @@ test('guided run is read-only, cancelable and keyboard accessible', async ({ pag
   await expect(
     page.getByText('A rodada interrompida foi descartada. As concluídas foram preservadas'),
   ).toBeVisible()
-  expect(await page.evaluate(() => window.__gametuneTest?.executions.length)).toBe(0)
+  expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(0)
 })
 for (const width of [390, 768, 1440])
   test(`benchmark layout at ${width}`, async ({ page }) => {

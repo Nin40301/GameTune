@@ -17,18 +17,18 @@ sha2 = "0.10"
 time = { version = "0.3", features = ["formatting"] }
 jsonschema = { version = "0.46", default-features = false }
 tempfile = "3"
-gametune-core = { path = "crates/core" }
-gametune-catalog = { path = "crates/catalog" }
-gametune-exec-mock = { path = "crates/exec_mock" }
-gametune-windows-runtime = { path = "crates/windows_runtime" }
+ametista-core = { path = "crates/core" }
+ametista-catalog = { path = "crates/catalog" }
+ametista-exec-mock = { path = "crates/exec_mock" }
+ametista-windows-runtime = { path = "crates/windows_runtime" }
 base64 = "0.22"
 getrandom = "0.3"
 tokio = { version = "1.53", features = ["rt-multi-thread", "net", "io-util", "time", "macros", "sync"] }
-gametune-ipc = { path = "crates/ipc" }
-gametune-desktop-backend = { path = "crates/desktop_backend" }
-gametune-metrics = { path = "crates/metrics" }
-gametune-benchmark = { path = "crates/benchmark" }
-gametune-watcher = { path = "crates/watcher" }
+ametista-ipc = { path = "crates/ipc" }
+ametista-desktop-backend = { path = "crates/desktop_backend" }
+ametista-metrics = { path = "crates/metrics" }
+ametista-benchmark = { path = "crates/benchmark" }
+ametista-watcher = { path = "crates/watcher" }
 
 [workspace.lints.rust]
 unsafe_code = "forbid"

@@ -2,7 +2,7 @@ use crate::{
     WindowsContext, registry, startup,
     transport::{self, Script},
 };
-use gametune_core::*;
+use ametista_core::*;
 use serde_json::json;
 use std::{cell::RefCell, collections::BTreeMap};
 
@@ -41,7 +41,7 @@ impl WindowsExecutor {
             startup::bound(&self.context, item)?;
             return Ok(());
         }
-        let catalog = gametune_catalog::load_embedded().map_err(crate::failed)?;
+        let catalog = ametista_catalog::load_embedded().map_err(crate::failed)?;
         let approved = catalog.get(&item.id).map_err(|_| ExecError::Protected)?;
         if item.target != approved.target || item.action_type != approved.action_type {
             return Err(ExecError::Protected);
@@ -263,8 +263,8 @@ impl Executor for WindowsExecutor {
             return self.apply(item);
         }
         self.authorize(item)?;
-        let catalog = gametune_catalog::load_embedded().map_err(crate::failed)?;
-        if !gametune_catalog::game_actions(&catalog)
+        let catalog = ametista_catalog::load_embedded().map_err(crate::failed)?;
+        if !ametista_catalog::game_actions(&catalog)
             .map_err(crate::failed)?
             .iter()
             .any(|a| a.id == item.id && a.pause_service)
@@ -405,7 +405,7 @@ impl WindowsContext {
         executors
     }
     pub fn open_reinstall(&self, action: &ReinstallAction) -> ExecResult<()> {
-        let catalog = gametune_catalog::load_embedded().map_err(crate::failed)?;
+        let catalog = ametista_catalog::load_embedded().map_err(crate::failed)?;
         let item = catalog
             .get(action.item_id())
             .map_err(|_| ExecError::Protected)?;
@@ -448,8 +448,8 @@ pub struct AppRemovalPreview {
 }
 impl WindowsSession {
     pub fn reconcile_games(&mut self, journal: &mut Journal, ids: &[String]) -> Result<Report> {
-        let actions = gametune_catalog::game_actions(&self.catalog)?;
-        gametune_core::temporary::reconcile(&mut self.engine(), journal, &actions, ids)
+        let actions = ametista_catalog::game_actions(&self.catalog)?;
+        ametista_core::temporary::reconcile(&mut self.engine(), journal, &actions, ids)
     }
     pub fn validate_request(&mut self, request: &Request) -> Result<()> {
         self.engine().validate_request(request)

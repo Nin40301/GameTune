@@ -1,6 +1,6 @@
 # Plano da Fase 3
 
-Criar gametune-cli como consumidor de WindowsSession. Não haverá dependência de
+Criar ametista-cli como consumidor de WindowsSession. Não haverá dependência de
 parser: a gramática pequena e fechada terá análise própria e testes de conflitos.
 Sem flags, usar perfil Seguro, leitura real e nenhuma alteração de configuração.
 Aplicar/desfazer/remover/reinstalar só com --apply e confirmação explícita;

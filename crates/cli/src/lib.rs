@@ -1,9 +1,9 @@
 #![forbid(unsafe_code)]
 pub mod args;
 mod output;
+use ametista_core::*;
+use ametista_windows_runtime::WindowsSession;
 use args::{Action, Options};
-use gametune_core::*;
-use gametune_windows_runtime::WindowsSession;
 pub use output::*;
 use serde::Serialize;
 use serde_json::{Value, json};
@@ -22,8 +22,8 @@ impl Failure {
         Self::new(2, "arguments")
     }
 }
-impl From<gametune_core::Error> for Failure {
-    fn from(error: gametune_core::Error) -> Self {
+impl From<ametista_core::Error> for Failure {
+    fn from(error: ametista_core::Error) -> Self {
         match error {
             Error::ConfirmationRequired(_) => Self::new(4, "confirmation"),
             Error::Incompatible(_) => Self::new(4, "incompatible"),
@@ -46,6 +46,9 @@ impl From<gametune_core::Error> for Failure {
 impl From<ExecError> for Failure {
     fn from(error: ExecError) -> Self {
         match error {
+            ExecError::Failed(ref message) if message == "legacy_data" => {
+                Self::new(6, "legacyData")
+            }
             ExecError::AccessDenied => Self::new(5, "administrator"),
             ExecError::Protected | ExecError::ManualReinstallRequired => Self::new(4, "blocked"),
             ExecError::Conflict => Self::new(6, "recovery"),
@@ -277,7 +280,7 @@ fn profile_ids(profile: &str, catalog: &Catalog, machine: Machine) -> Result<Vec
         .take(65537)
         .read_to_string(&mut json)
         .map_err(|_| Failure::new(2, "profile"))?;
-    gametune_catalog::validate_profile_json(&json)?;
+    ametista_catalog::validate_profile_json(&json)?;
     Ok(Profile::import(&json, catalog)?.item_ids().to_vec())
 }
 fn validate_acknowledgements(
@@ -436,7 +439,7 @@ pub fn static_response(options: &Options, locale: &Locale) -> Result<Option<Resp
     };
     reply.result = match options.action {
         Action::List => {
-            json!({"items":gametune_catalog::load_embedded()?.items().collect::<Vec<_>>()})
+            json!({"items":ametista_catalog::load_embedded()?.items().collect::<Vec<_>>()})
         }
         Action::Help => json!({"usage":locale.text("help")}),
         _ => json!({"version":env!("CARGO_PKG_VERSION")}),

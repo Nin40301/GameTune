@@ -1,6 +1,9 @@
 Require-Admin
 $programData=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData)
 if([string]::IsNullOrEmpty($programData)){Fail 'failed' 'CommonApplicationData is unavailable'}
+# Check again immediately before creating or verifying the protected state directory.
+$legacy=Join-Path $programData ('Game'+'Tune')
+if(Test-Path -LiteralPath $legacy -ErrorAction Stop){Fail 'failed' 'legacy_data'}
 function No-Reparse([string]$path){
     $current=[IO.DirectoryInfo]::new($path)
     while($null -ne $current){if($current.Exists -and ($current.Attributes -band [IO.FileAttributes]::ReparsePoint)){Fail 'protected'};$current=$current.Parent}
@@ -25,7 +28,7 @@ function Secure-Directory([string]$path){
 }
 $sid=[string]$p.sid
 if($sid -cnotmatch '^S-1-5-[0-9-]{1,176}$'){Fail 'protected'}
-$rootName=if($p.testRoot){'GameTuneTestStore'}else{'GameTune'}
+$rootName=if($p.testRoot){'AmetistaTestStore'}else{'Ametista'}
 $root=Join-Path $programData $rootName
 Secure-Directory $root
 $directory=Join-Path $root $sid

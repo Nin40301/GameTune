@@ -26,8 +26,8 @@
     "states": {"already_applied": 3, "discovery": 2, "exists": 48, "missing": 35},
     "readFailures": 0,
     "exitCode": 0,
-    "programDataGameTuneExistedBefore": false,
-    "programDataGameTuneExistedAfter": false,
+    "programDataAmetistaExistedBefore": false,
+    "programDataAmetistaExistedAfter": false,
     "elapsedSecondsOneSample": 32.6972388
   }
 }

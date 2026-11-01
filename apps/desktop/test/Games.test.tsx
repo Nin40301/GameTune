@@ -15,7 +15,7 @@ test('game registration starts disabled and needs profile consent', async () => 
   await user.click(screen.getByRole('checkbox', { name: pt.gameConsent }))
   await user.click(screen.getByRole('button', { name: pt.saveGame }))
   expect(await screen.findByText(pt.profileEnabled)).toBeVisible()
-  expect(window.__gametuneTest?.executions).toHaveLength(0)
+  expect(window.__ametistaTest?.executions).toHaveLength(0)
 })
 test('monitor starts on demand with acknowledgement and stops separately', async () => {
   const user = userEvent.setup()
@@ -46,5 +46,5 @@ test('startup offers recovery without starting monitor or requesting elevation a
   render(<App backend={backend} />)
   await user.click(await screen.findByRole('button', { name: pt.reviewGameRecovery }))
   expect(await screen.findByRole('button', { name: pt.startMonitor })).toBeDisabled()
-  expect(window.__gametuneTest?.executions).toHaveLength(0)
+  expect(window.__ametistaTest?.executions).toHaveLength(0)
 })

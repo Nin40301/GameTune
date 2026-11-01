@@ -13,7 +13,7 @@ test('simulate, review, acknowledge and undo through a mock backend', async ({ p
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()
   await page.getByRole('button', { name: 'Desfaça', exact: true }).click()
   await expect(page.getByText('Operação concluída. Confira o resultado por item')).toBeVisible()
-  expect(await page.evaluate(() => window.__gametuneTest?.executions.length)).toBe(2)
+  expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(2)
 })
 test('multi-app removal needs every consent and reinforced high-risk approval', async ({
   page,
@@ -43,7 +43,7 @@ test('multi-app removal needs every consent and reinforced high-risk approval', 
   await expect(remove).toBeDisabled()
   await page.getByLabel('Revisei as fontes e aceito usar este item não verificado').check()
   await expect(remove).toBeEnabled()
-  expect(await page.evaluate(() => window.__gametuneTest?.executions.length)).toBe(0)
+  expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(0)
 })
 test('cancel remains responsive and a new review is required after UAC cancellation', async ({
   page,
@@ -52,7 +52,7 @@ test('cancel remains responsive and a new review is required after UAC cancellat
   await page.getByRole('button', { name: /^Simule/ }).click()
   await page.getByRole('button', { name: 'Cancele' }).click()
   await expect(page.getByText('Análise cancelada. Nenhuma alteração foi feita')).toBeVisible()
-  expect(await page.evaluate(() => window.__gametuneTest?.executions.length)).toBe(0)
+  expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(0)
   await page.getByRole('button', { name: /^Simule/ }).click()
   await expect(page.getByText('Análise concluída. Nenhuma alteração foi feita')).toBeVisible()
   await page.getByRole('button', { name: 'Revise os ajustes' }).click()
@@ -130,11 +130,11 @@ test('Store reinstall is a separately reviewed explicit action', async ({ page }
   await page.getByRole('button', { name: 'Histórico', exact: true }).click()
   await page.getByRole('button', { name: 'Abra na Loja' }).click()
   await expect(page.getByRole('button', { name: 'Abra na Loja' })).toBeDisabled()
-  expect(await page.evaluate(() => window.__gametuneTest?.executions.length)).toBe(0)
+  expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(0)
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()
   await page.getByRole('button', { name: 'Abra na Loja' }).click()
   await expect(page.getByText('Operação concluída. Confira o resultado por item')).toBeVisible()
-  expect(await page.evaluate(() => window.__gametuneTest?.reviews[0]?.kind)).toBe('reinstall')
+  expect(await page.evaluate(() => window.__ametistaTest?.reviews[0]?.kind)).toBe('reinstall')
 })
 test('responsive layouts stay within the viewport and make no external requests', async ({
   page,

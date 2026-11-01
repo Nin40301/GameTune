@@ -1,5 +1,5 @@
 use crate::{WindowsContext, registry};
-use gametune_core::{
+use ametista_core::{
     Catalog, ExecError, ExecResult, Hive, Item, RegistryValue, StartupTarget, Target,
 };
 use sha2::{Digest, Sha256};
@@ -83,7 +83,7 @@ fn fingerprint(context: &WindowsContext, hive: Hive, name: &str, value: &Registr
 }
 impl WindowsContext {
     pub fn catalog_with_startup(&self) -> ExecResult<Catalog> {
-        let catalog = gametune_catalog::load_embedded().map_err(crate::failed)?;
+        let catalog = ametista_catalog::load_embedded().map_err(crate::failed)?;
         let mut items: Vec<_> = catalog.items().cloned().collect();
         for hive in [Hive::HKCU, Hive::HKLM] {
             let descriptor = match hive {
@@ -91,7 +91,7 @@ impl WindowsContext {
                 Hive::HKLM => "startup.hklm",
             };
             for (name, value) in registry::run_entries(self, hive)? {
-                if !gametune_core::protection::permitted_startup_name(&name) {
+                if !ametista_core::protection::permitted_startup_name(&name) {
                     continue;
                 }
                 if !eligible_command(&name, &value) {
@@ -127,7 +127,7 @@ pub(crate) fn bound(context: &WindowsContext, item: &Item) -> ExecResult<(Hive, 
     let value = value.ok_or(ExecError::NotFound)?;
     let mut permitted = eligible_command(&entry.name, &value);
     #[cfg(feature = "vm-tests")]
-    if gametune_core::protection::valid_test_target(item) {
+    if ametista_core::protection::valid_test_target(item) {
         permitted = true;
     }
     let _ = &mut permitted;

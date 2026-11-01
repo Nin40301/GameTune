@@ -1,5 +1,5 @@
 [package]
-name = "gametune-desktop"
+name = "ametista-desktop"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -9,17 +9,17 @@ publish.workspace = true
 default = ["custom-protocol"]
 custom-protocol = ["tauri/custom-protocol"]
 [[bin]]
-name = "gametune"
+name = "ametista"
 path = "src/main.rs"
 test = false
 bench = false
 [dependencies]
-gametune-desktop-backend.workspace = true
-gametune-benchmark.workspace = true
-gametune-ipc.workspace = true
-gametune-watcher.workspace = true
-gametune-catalog.workspace = true
-gametune-core.workspace = true
+ametista-desktop-backend.workspace = true
+ametista-benchmark.workspace = true
+ametista-ipc.workspace = true
+ametista-watcher.workspace = true
+ametista-catalog.workspace = true
+ametista-core.workspace = true
 serde.workspace = true
 [target.'cfg(windows)'.dependencies]
 tauri = { version = "2.12.3", default-features = false, features = ["wry", "compression", "common-controls-v6"] }

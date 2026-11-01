@@ -1,5 +1,5 @@
 use crate::*;
-use gametune_windows_runtime::WindowsSession;
+use ametista_windows_runtime::WindowsSession;
 use std::time::Duration;
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
 const MAX_REPLY: usize = 4 * 1024 * 1024;
@@ -51,7 +51,7 @@ pub async fn request(command: Command) -> Result<Reply> {
     }
     let bytes = serde_json::to_vec(&Envelope {
         version: 1,
-        catalog_hash: gametune_catalog::embedded_hash(),
+        catalog_hash: ametista_catalog::embedded_hash(),
         nonce: token,
         sequence: 1,
         command,
@@ -77,7 +77,7 @@ pub async fn serve(token: String, parent: u32) -> Result<()> {
     let mut session = WindowsSession::connect().map_err(|_| Error::Windows)?;
     session
         .context
-        .ensure_elevated()
+        .ensure_privileged_identity()
         .map_err(|_| Error::Identity)?;
     let sid = session.context.interactive_sid().to_string();
     let mut pipe = native::server(&token, &sid)?;

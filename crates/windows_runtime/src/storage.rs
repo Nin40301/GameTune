@@ -2,7 +2,7 @@ use crate::{
     WindowsContext,
     transport::{self, Script},
 };
-use gametune_core::{ExecError, ExecResult, Journal, RemovedApps};
+use ametista_core::{ExecError, ExecResult, Journal, RemovedApps};
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 use std::{
@@ -53,7 +53,7 @@ fn lease_mode(root: &Path, scope: &str, sid: &str, temporary: bool) -> ExecResul
                 .map_err(crate::failed)?;
             if game_journal
                 .entries()
-                .any(|e| e.status != gametune_core::Status::Reverted)
+                .any(|e| e.status != ametista_core::Status::Reverted)
             {
                 return Err(ExecError::Conflict);
             }
@@ -67,7 +67,7 @@ fn lease_mode(root: &Path, scope: &str, sid: &str, temporary: bool) -> ExecResul
                 .map_err(crate::failed)?;
             if journal
                 .entries()
-                .any(|e| e.status != gametune_core::Status::Reverted)
+                .any(|e| e.status != ametista_core::Status::Reverted)
             {
                 return Err(ExecError::Conflict);
             }
@@ -89,7 +89,7 @@ fn lease_mode(root: &Path, scope: &str, sid: &str, temporary: bool) -> ExecResul
                     let journal = Journal::open_scoped(old, &owner.scope).map_err(crate::failed)?;
                     if journal
                         .entries()
-                        .any(|e| e.status != gametune_core::Status::Reverted)
+                        .any(|e| e.status != ametista_core::Status::Reverted)
                     {
                         return Err(ExecError::Conflict);
                     }
@@ -158,9 +158,9 @@ impl WindowsContext {
 }
 
 impl ProtectedStore {
-    pub fn game_journal(&self) -> gametune_core::Result<Journal> {
+    pub fn game_journal(&self) -> ametista_core::Result<Journal> {
         self.verify()
-            .map_err(|e| gametune_core::Error::CorruptJournal(e.to_string()))?;
+            .map_err(|e| ametista_core::Error::CorruptJournal(e.to_string()))?;
         Journal::open_scoped(
             self.directory.join("game-session.wal"),
             self.context.scope(),
@@ -179,24 +179,24 @@ impl ProtectedStore {
         }
         Ok(())
     }
-    pub fn journal(&self) -> gametune_core::Result<Journal> {
+    pub fn journal(&self) -> ametista_core::Result<Journal> {
         self.verify()
-            .map_err(|e| gametune_core::Error::CorruptJournal(e.to_string()))?;
+            .map_err(|e| ametista_core::Error::CorruptJournal(e.to_string()))?;
         Journal::open_scoped(self.directory.join("journal.wal"), self.context.scope())
     }
-    pub fn removed_apps(&self) -> gametune_core::Result<RemovedApps> {
+    pub fn removed_apps(&self) -> ametista_core::Result<RemovedApps> {
         self.verify()
-            .map_err(|e| gametune_core::Error::CorruptJournal(e.to_string()))?;
+            .map_err(|e| ametista_core::Error::CorruptJournal(e.to_string()))?;
         RemovedApps::open(
             self.directory.join("removed-apps.json"),
             Some(self.context.scope()),
         )
     }
-    pub fn export_journal(&self, journal: &Journal) -> gametune_core::Result<()> {
+    pub fn export_journal(&self, journal: &Journal) -> ametista_core::Result<()> {
         self.verify()
-            .map_err(|e| gametune_core::Error::CorruptJournal(e.to_string()))?;
+            .map_err(|e| ametista_core::Error::CorruptJournal(e.to_string()))?;
         if journal.scope() != Some(self.context.scope()) {
-            return Err(gametune_core::Error::CorruptJournal(
+            return Err(ametista_core::Error::CorruptJournal(
                 "scope mismatch".into(),
             ));
         }
@@ -208,7 +208,7 @@ impl ProtectedStore {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use gametune_core::*;
+    use ametista_core::*;
     type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
     struct Noop;
     #[test]
@@ -218,7 +218,7 @@ mod tests {
         let scope = format!("machine:{sid}");
         std::fs::create_dir(dir.path().join(sid))?;
         drop(lease_mode(dir.path(), &scope, sid, true)?);
-        let catalog = gametune_catalog::load_embedded()?;
+        let catalog = ametista_catalog::load_embedded()?;
         let mut executors = Executors::default();
         executors.insert(Noop);
         let mut engine = Engine {
@@ -280,7 +280,7 @@ mod tests {
             Err(ExecError::Conflict)
         ));
         drop(first);
-        let catalog = gametune_catalog::load_embedded()?;
+        let catalog = ametista_catalog::load_embedded()?;
         let mut executors = Executors::default();
         executors.insert(Noop);
         let mut engine = Engine {

@@ -4,7 +4,7 @@ use crate::{
     stats::{self, Comparison},
     store::Store,
 };
-use gametune_metrics::{Collector, Sample};
+use ametista_metrics::{Collector, Sample};
 use serde::{Deserialize, Serialize};
 use std::{
     path::{Path, PathBuf},

@@ -102,8 +102,8 @@ impl Library {
         {
             return Err(Error::Invalid);
         }
-        let catalog = gametune_catalog::load_embedded().map_err(|_| Error::Invalid)?;
-        let actions = gametune_catalog::game_actions(&catalog).map_err(|_| Error::Invalid)?;
+        let catalog = ametista_catalog::load_embedded().map_err(|_| Error::Invalid)?;
+        let actions = ametista_catalog::game_actions(&catalog).map_err(|_| Error::Invalid)?;
         let mut ids = BTreeSet::new();
         for game in &self.games {
             if game.id != game_id(&game.exe)?

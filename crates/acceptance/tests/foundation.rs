@@ -1,8 +1,8 @@
-use gametune_catalog::{
+use ametista_catalog::{
     EMBEDDED_ITEMS, load_embedded, validate_catalog_json, validate_profile_json, verify_hash,
 };
-use gametune_core::*;
-use gametune_exec_mock::{MockHost, Stage};
+use ametista_core::*;
+use ametista_exec_mock::{MockHost, Stage};
 use serde_json::json;
 use std::fs;
 
@@ -60,14 +60,14 @@ fn original(item: &Item) -> Snapshot {
 }
 fn executors(host: &MockHost) -> Executors {
     let mut executors = Executors::default();
-    executors.insert(gametune_exec_registry::MockExecutor::new(host.clone()));
-    executors.insert(gametune_exec_service::MockExecutor::new(host.clone()));
-    executors.insert(gametune_exec_scheduled_task::MockExecutor::new(
+    executors.insert(ametista_exec_registry::MockExecutor::new(host.clone()));
+    executors.insert(ametista_exec_service::MockExecutor::new(host.clone()));
+    executors.insert(ametista_exec_scheduled_task::MockExecutor::new(
         host.clone(),
     ));
-    executors.insert(gametune_exec_appx::MockExecutor::new(host.clone()));
-    executors.insert(gametune_exec_startup::MockExecutor::new(host.clone()));
-    executors.insert(gametune_exec_power::MockExecutor::new(host.clone()));
+    executors.insert(ametista_exec_appx::MockExecutor::new(host.clone()));
+    executors.insert(ametista_exec_startup::MockExecutor::new(host.clone()));
+    executors.insert(ametista_exec_power::MockExecutor::new(host.clone()));
     executors
 }
 
@@ -782,12 +782,12 @@ fn journal_has_single_writer_lock_and_reopens_after_drop() -> TestResult {
 fn real_windows_boundaries_require_an_interactive_context() -> TestResult {
     #[cfg(not(windows))]
     assert!(matches!(
-        gametune_windows_runtime::WindowsContext::detect(),
+        ametista_windows_runtime::WindowsContext::detect(),
         Err(ExecError::Unavailable)
     ));
     #[cfg(windows)]
     {
-        match gametune_windows_runtime::WindowsContext::detect() {
+        match ametista_windows_runtime::WindowsContext::detect() {
             Ok(context) => {
                 assert!(context.interactive_sid().starts_with("S-1-5-"));
                 if !context.elevated() {
@@ -807,7 +807,7 @@ fn appx_mock_never_claims_exact_automatic_restoration() -> TestResult {
     let item = catalog.get("appx.microsoft.bingnews")?;
     let host = MockHost::default();
     host.seed(item, original(item))?;
-    let mut executor = gametune_exec_appx::MockExecutor::new(host);
+    let mut executor = ametista_exec_appx::MockExecutor::new(host);
     executor.apply(item)?;
     assert_eq!(
         executor.restore(item, &original(item)),

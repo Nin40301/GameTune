@@ -1,4 +1,4 @@
-use gametune_watcher::{storage::*, *};
+use ametista_watcher::{storage::*, *};
 use std::{
     collections::BTreeMap,
     sync::{
@@ -45,7 +45,7 @@ pub fn run() -> Result<()> {
                 labels(english)
                     .get("error")
                     .map(String::as_str)
-                    .unwrap_or("GameTune"),
+                    .unwrap_or("Ametista"),
             );
             while !crate::tray::stopped() {
                 let control = bounded_read(&directory.join("monitor-stop.json"), 1024)
@@ -75,14 +75,14 @@ async fn observe_async(
     library: Library,
     readonly: bool,
 ) -> Result<()> {
-    use gametune_ipc::{GameStep, game_pipe::Client};
+    use ametista_ipc::{GameStep, game_pipe::Client};
     let allowed = library.allowed_ids();
     let messages = labels(library.language == "en");
     let mut detector = Detector::new(library)?;
     let mut status = MonitorStatus {
         running: true,
         pid: std::process::id(),
-        instance: gametune_ipc::nonce().map_err(|_| Error::Invalid)?,
+        instance: ametista_ipc::nonce().map_err(|_| Error::Invalid)?,
         readonly,
         recovery_pending: debt(directory),
         ..MonitorStatus::default()
@@ -96,7 +96,7 @@ async fn observe_async(
     let health = Arc::new(AtomicU64::new(0));
     let heartbeat = health.clone();
     let source = std::thread::spawn(move || {
-        let result = gametune_watcher::wmi::listen_health(
+        let result = ametista_watcher::wmi::listen_health(
             |event| send.try_send(Ok(event)).is_ok(),
             || {
                 heartbeat.store(started.elapsed().as_secs(), Ordering::Relaxed);
@@ -113,7 +113,7 @@ async fn observe_async(
                 messages
                     .get("recovering")
                     .map(String::as_str)
-                    .unwrap_or("GameTune"),
+                    .unwrap_or("Ametista"),
             );
             let mut recovery = Client::open(vec![]).await.map_err(|_| Error::Invalid)?;
             recovery
@@ -161,7 +161,7 @@ async fn observe_async(
                     messages
                         .get("consent")
                         .map(String::as_str)
-                        .unwrap_or("GameTune"),
+                        .unwrap_or("Ametista"),
                 );
                 client = Some(
                     Client::open(allowed.clone())
@@ -228,7 +228,7 @@ async fn observe_async(
             } else {
                 "idle"
             };
-            crate::tray::set_status(messages.get(key).map(String::as_str).unwrap_or("GameTune"));
+            crate::tray::set_status(messages.get(key).map(String::as_str).unwrap_or("Ametista"));
         }
         Ok(())
     }
@@ -240,7 +240,7 @@ async fn observe_async(
             messages
                 .get("recovering")
                 .map(String::as_str)
-                .unwrap_or("GameTune"),
+                .unwrap_or("Ametista"),
         );
         restore_ok = helper.step(GameStep::Finish {}).await.is_ok();
         if restore_ok {

@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
-use gametune_benchmark::{store::Store, *};
-use gametune_metrics::{Group, Sample};
+use ametista_benchmark::{store::Store, *};
+use ametista_metrics::{Group, Sample};
 fn sample(t: u64, boot: &str) -> Sample {
     Sample {
         uptime_ms: 1_000_000 + t * 1000,

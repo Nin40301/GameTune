@@ -6,7 +6,7 @@ if($points.Count -gt 0){
     $created=[Management.ManagementDateTimeConverter]::ToDateTime([string]$latest.CreationTime)
     if(((Get-Date)-$created).TotalHours -lt 24){Emit 'recent';return}
 }
-try{Checkpoint-Computer -Description 'GameTune before applying changes' -RestorePointType MODIFY_SETTINGS -WarningAction Stop}
+try{Checkpoint-Computer -Description 'Ametista before applying changes' -RestorePointType MODIFY_SETTINGS -WarningAction Stop}
 catch{
     $raced=@(Get-ComputerRestorePoint) | Sort-Object SequenceNumber -Descending | Select-Object -First 1
     if($raced){$racedAt=[Management.ManagementDateTimeConverter]::ToDateTime([string]$raced.CreationTime);if(((Get-Date)-$racedAt).TotalHours -lt 24){Emit 'recent';return}}

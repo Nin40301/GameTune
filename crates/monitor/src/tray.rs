@@ -40,7 +40,7 @@ pub fn data_directory() -> std::io::Result<std::path::PathBuf> {
         CoTaskMemFree(path.cast());
     }
     Ok(std::path::PathBuf::from(value)
-        .join("local.gametune.desktop")
+        .join("local.ametista.desktop")
         .join("games"))
 }
 pub fn stopped() -> bool {
@@ -72,13 +72,13 @@ unsafe extern "system" fn callback(
                     menu,
                     MF_STRING,
                     1,
-                    wide(labels.get("open").map(String::as_str).unwrap_or("GameTune")).as_ptr(),
+                    wide(labels.get("open").map(String::as_str).unwrap_or("Ametista")).as_ptr(),
                 );
                 AppendMenuW(
                     menu,
                     MF_STRING,
                     2,
-                    wide(labels.get("stop").map(String::as_str).unwrap_or("GameTune")).as_ptr(),
+                    wide(labels.get("stop").map(String::as_str).unwrap_or("Ametista")).as_ptr(),
                 );
                 let mut point = POINT::default();
                 GetCursorPos(&mut point);
@@ -97,7 +97,7 @@ unsafe extern "system" fn callback(
                     && let Ok(path) = std::env::current_exe()
                     && let Some(parent) = path.parent()
                 {
-                    let _ = std::process::Command::new(parent.join("gametune.exe")).spawn();
+                    let _ = std::process::Command::new(parent.join("ametista.exe")).spawn();
                 }
                 if command == 2 {
                     STOP.store(true, Ordering::Relaxed);
@@ -140,7 +140,7 @@ pub fn run(done: Arc<AtomicBool>, title: &str, english: bool) -> std::io::Result
     // All allocations/handles created here are released before returning.
     unsafe {
         let instance = GetModuleHandleW(ptr::null());
-        let class = wide("GameTuneMonitorWindow");
+        let class = wide("AmetistaMonitorWindow");
         let descriptor = WNDCLASSW {
             lpfnWndProc: Some(callback),
             hInstance: instance,
@@ -153,7 +153,7 @@ pub fn run(done: Arc<AtomicBool>, title: &str, english: bool) -> std::io::Result
         let window = CreateWindowExW(
             0,
             class.as_ptr(),
-            wide("GameTune Monitor").as_ptr(),
+            wide("Ametista Monitor").as_ptr(),
             0,
             0,
             0,

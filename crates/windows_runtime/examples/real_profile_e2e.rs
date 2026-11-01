@@ -1,7 +1,7 @@
 #![forbid(unsafe_code)]
 #[cfg(feature = "real-profile-tests")]
 fn main() -> std::process::ExitCode {
-    use gametune_windows_runtime::real_profiles::{self, Stage};
+    use ametista_windows_runtime::real_profiles::{self, Stage};
     let stage = match std::env::args().nth(1).as_deref() {
         Some("step") => Stage::Step,
         Some("verify") => Stage::Verify,

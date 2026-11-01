@@ -16,7 +16,7 @@
    Use **Pare e restaure** na bandeja ou em Configurações para encerrar. Edite
    a biblioteca só depois de o monitor liberar o lock.
 
-O menu da bandeja é acessível pelo teclado do Windows e tem **Abra o GameTune**
+O menu da bandeja é acessível pelo teclado do Windows e tem **Abra o Ametista**
 e **Pare e restaure**. O tooltip indica observação, sessão, autorização,
 recuperação ou falha. Um erro fica na bandeja até o usuário parar o monitor;
 não há repetição automática de UAC em loop.
@@ -51,7 +51,7 @@ recurso gera resultado ignorado. Não há garantia de redução de RAM, CPU ou F
 
 ## Arquitetura e recuperação
 
-`gametune-monitor.exe` é Rust/Win32, **asInvoker**, sem Tauri/WebView. Um worker
+`ametista-monitor.exe` é Rust/Win32, **asInvoker**, sem Tauri/WebView. Um worker
 COM recebe eventos WMI; outro cuida do detector e do protocolo. Não há processo
 PowerShell de monitoramento ou polling que abra processos. A thread da bandeja
 continua responsiva durante UAC/aplicação/restauração. O cliente usa runtime
@@ -65,7 +65,7 @@ de todas as ações e encerra. Payload malformado/replay também encerra e rever
 O prazo de execução de uma operação Windows é separado do heartbeat. Depois
 da resposta, o cliente drena eventos acumulados durante UAC antes de aplicar.
 
-O journal `game-session.wal` fica em `%ProgramData%\GameTune\<SID>`, protegido
+O journal `game-session.wal` fica em `%ProgramData%\Ametista\<SID>`, protegido
 como o journal permanente. O mesmo motor grava original **antes** da alteração,
 e guarda status/hash/transições. Um lock de máquina fica retido durante a sessão
 e impede aplicar/desfazer permanentemente enquanto ações temporárias estão
@@ -147,7 +147,7 @@ abrir o jogo por outra API.
 
 ## Dados e execução
 
-Biblioteca em `%LOCALAPPDATA%\local.gametune.desktop\games\games.json`, formato
+Biblioteca em `%LOCALAPPDATA%\local.ametista.desktop\games\games.json`, formato
 fechado/validado, escrita atômica e lock. Não aceita comandos, alvos Windows ou
 IDs fora do catálogo temporário. Caminhos ficam locais; biblioteca/status não
 são exportados no benchmark anonimizado. `monitor-status.json` é uma projeção,
@@ -157,11 +157,11 @@ PID a terminar. Uma instância mantém lock; PID antigo não significa “execut
 
 ```powershell
 cargo build --workspace --release --locked --offline
-cargo build -p gametune-metrics --example budget --release --locked --offline
+cargo build -p ametista-metrics --example budget --release --locked --offline
 ./tools/verify-desktop.ps1
 ./tools/test-resource-budget.ps1 -Mode interface
 ./tools/test-resource-budget.ps1 -Mode game_monitor
-cargo build -p gametune-watcher --example synthetic_game --example wmi_probe --release --locked --offline
+cargo build -p ametista-watcher --example synthetic_game --example wmi_probe --release --locked --offline
 ./tools/test-game-events.ps1
 ```
 

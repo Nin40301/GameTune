@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
 //! Read-only resource gate. Includes root and descendants; no process handles.
-use gametune_metrics::{BudgetProfile, Collector, budget_for};
+use ametista_metrics::{BudgetProfile, Collector, budget_for};
 use std::{
     process::ExitCode,
     time::{Duration, Instant},

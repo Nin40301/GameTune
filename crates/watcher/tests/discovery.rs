@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-use gametune_watcher::discovery::*;
+use ametista_watcher::discovery::*;
 #[test]
 fn parses_launcher_metadata_without_executing_commands() {
     let epic=json_candidates("epic",br#"{"DisplayName":"Test","InstallLocation":"C:\\Games\\Test","LaunchExecutable":"Binaries/Test.exe","LaunchCommand":"ignore me"}"#);

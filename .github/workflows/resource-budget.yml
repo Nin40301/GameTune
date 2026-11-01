@@ -5,7 +5,7 @@ permissions:
   contents: read
 jobs:
   budget:
-    runs-on: [self-hosted, Windows, X64, gametune-desktop-standard-user]
+    runs-on: [self-hosted, Windows, X64, ametista-desktop-standard-user]
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -19,8 +19,8 @@ jobs:
         working-directory: apps/desktop
       - run: npm run build
         working-directory: apps/desktop
-      - run: cargo build -p gametune-desktop -p gametune-helper -p gametune-monitor --release --locked
-      - run: cargo build -p gametune-metrics --example budget --release --locked
+      - run: cargo build -p ametista-desktop -p ametista-helper -p ametista-monitor --release --locked
+      - run: cargo build -p ametista-metrics --example budget --release --locked
       - name: Open interface, including WebView children, 150 MiB
         run: ./tools/test-resource-budget.ps1 -Mode interface
       - name: Independent Rust game monitor, 15 MiB and 0.5 percent

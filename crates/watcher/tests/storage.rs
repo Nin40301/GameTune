@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-use gametune_watcher::{storage::*, *};
+use ametista_watcher::{storage::*, *};
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 #[test]
 fn library_is_atomic_validated_and_locked_while_monitor_runs() -> TestResult {

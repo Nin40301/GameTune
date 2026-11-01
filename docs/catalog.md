@@ -44,7 +44,7 @@ essencial, variável de ambiente ambígua ou comando inesperado fica oculto.
 O layout 02/03 de StartupApproved não é uma API pública documentada pela Microsoft:
 continua experimental, não verificado e somente manual, com restauração dos bytes.
 
-`test-targets` e `vm-tests` acrescentam somente namespaces GameTuneTest fixos para
+`test-targets` e `vm-tests` acrescentam somente namespaces AmetistaTest fixos para
 testes. Nunca habilite essas features no binário distribuído. Não importe
 catálogos, scripts ou targets de arquivos do usuário. A validação de schema usa
 jsonschema sem recursos de resolução HTTP/arquivos externos.

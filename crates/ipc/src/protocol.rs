@@ -1,5 +1,5 @@
 use crate::*;
-use gametune_core::*;
+use ametista_core::*;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 
@@ -93,7 +93,7 @@ impl Command {
                 if !confirm {
                     return Err(crate::Error::Confirmation);
                 }
-                let actions = gametune_catalog::game_actions(catalog)
+                let actions = ametista_catalog::game_actions(catalog)
                     .map_err(|_| crate::Error::InvalidItem)?;
                 if ids.iter().any(|id| !actions.iter().any(|a| &a.id == id)) {
                     return Err(crate::Error::InvalidItem);
@@ -187,7 +187,7 @@ impl Gate {
         if envelope.version != 1 || envelope.sequence != 1 || envelope.nonce != self.nonce {
             return Err(crate::Error::Replay);
         }
-        if envelope.catalog_hash != gametune_catalog::embedded_hash() {
+        if envelope.catalog_hash != ametista_catalog::embedded_hash() {
             return Err(crate::Error::CatalogMismatch);
         }
         envelope.command.validate_shape(catalog)?;

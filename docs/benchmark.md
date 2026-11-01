@@ -40,7 +40,7 @@ Fontes: [NtQuerySystemInformation](https://learn.microsoft.com/en-us/windows/win
    o fluxo de reversão ou faça um experimento separado. Nunca há troca automática.
 5. Compare RAM disponível, CPU e processos. Não existe escore ou ganho de FPS.
 
-Dados ficam em `%LOCALAPPDATA%\local.gametune.desktop\measurements\benchmark.json`.
+Dados ficam em `%LOCALAPPDATA%\local.ametista.desktop\measurements\benchmark.json`.
 Estado versionado, checksum, limite de tamanho, lock exclusivo e substituição
 atômica com sync protegem contra corrupção/instâncias simultâneas. Esse arquivo
 não concede autorização ao motor e não contém comandos. Uma rodada em andamento
@@ -79,7 +79,7 @@ CPU. Amostragem não captura processos que nascem e morrem entre dois snapshots.
 ## PresentMon opcional, sem anexar ao jogo
 
 O usuário instala sua ferramenta e indica um executável PresentMon existente
-(nome/extensão e cabeçalho PE; isso **não autentica** o fornecedor). O GameTune
+(nome/extensão e cabeçalho PE; isso **não autentica** o fornecedor). O Ametista
 nunca executa esse arquivo, baixa arquivos ou cria sessão ETW. O console oficial
 [abre handles para metadados](https://github.com/GameTechDev/PresentMon/blob/69dafa12b9804b1ea0a5d7595cba8eaf3c127e68/PresentMon/OutputThread.cpp#L303).
 Por isso a integração é **importação offline**, não captura automática.
@@ -113,8 +113,8 @@ locais do experimento não são anonimizados retroativamente pela exportação.
 ## Orçamentos separados — atualizados na Fase 6
 
 ```powershell
-cargo build -p gametune-desktop -p gametune-helper -p gametune-monitor --release --locked --offline
-cargo build -p gametune-metrics --example budget --release --locked --offline
+cargo build -p ametista-desktop -p ametista-helper -p ametista-monitor --release --locked --offline
+cargo build -p ametista-metrics --example budget --release --locked --offline
 ./tools/test-resource-budget.ps1 -Mode interface
 ./tools/test-resource-budget.ps1 -Mode game_monitor
 ```

@@ -19,15 +19,15 @@ PowerShell elevado **dentro da VM**:
 ```powershell
 cargo fetch --locked
 # Binário de produção com features padrão, sem autorização de fixtures
-cargo build -p gametune-cli --locked --offline
-cargo build -p gametune-windows-runtime --example real_profile_e2e --features real-profile-tests --locked --offline
-$env:GAMETUNE_DISPOSABLE_VM = 'I_HAVE_A_SNAPSHOT'
-$env:GAMETUNE_REAL_PROFILES = 'I_ACCEPT_REAL_CATALOG_CHANGES_AND_REBOOTS'
+cargo build -p ametista-cli --locked --offline
+cargo build -p ametista-windows-runtime --example real_profile_e2e --features real-profile-tests --locked --offline
+$env:AMETISTA_DISPOSABLE_VM = 'I_HAVE_A_SNAPSHOT'
+$env:AMETISTA_REAL_PROFILES = 'I_ACCEPT_REAL_CATALOG_CHANGES_AND_REBOOTS'
 target/debug/examples/real_profile_e2e.exe step
 ```
 
 Não use `--all-features` para compilar a CLI. O harness invoca exatamente
-`target/debug/gametune-cli.exe` com perfis reais e flags fixas; não injeta alvos de
+`target/debug/ametista-cli.exe` com perfis reais e flags fixas; não injeta alvos de
 teste, não remove Appx e não exporta scripts da UI. Exige histórico sem alterações
 ativas. É compilado apenas com `real-profile-tests`; o release padrão o exclui.
 
@@ -45,7 +45,7 @@ ativas. É compilado apenas com `real-profile-tests`; o release padrão o exclui
 4. Execute o teste de aceite:
 
 ```powershell
-cargo test -p gametune-windows-runtime --features real-profile-tests --test real_profiles_vm --locked --offline -- --ignored --test-threads=1
+cargo test -p ametista-windows-runtime --features real-profile-tests --test real_profiles_vm --locked --offline -- --ignored --test-threads=1
 ```
 
 Executar `step` sem reiniciar retorna 10 e não reaplica. O teste de aceite falha
@@ -56,7 +56,7 @@ selecionar explicitamente a suíte desejada.
 
 ## Evidência e comparação
 
-`%ProgramData%\GameTuneRealProfileTests\<SID>`, protegido para Administradores e
+`%ProgramData%\AmetistaRealProfileTests\<SID>`, protegido para Administradores e
 SYSTEM, guarda estado retomável e, por perfil:
 
 - `*-before.json`, `*-after-apply.json`, `*-after-reboot.json`, `*-restored.json`

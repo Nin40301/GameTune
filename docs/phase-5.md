@@ -56,7 +56,7 @@ cargo clippy --workspace --all-targets --all-features --locked --offline -- -D w
 cargo test --workspace --locked --offline
 cargo build --workspace --release --locked --offline
 ./tools/verify-desktop.ps1
-cargo build -p gametune-metrics --example budget --release --locked --offline
+cargo build -p ametista-metrics --example budget --release --locked --offline
 ./tools/test-resource-budget.ps1 -Mode idle
 ./tools/test-resource-budget.ps1 -Mode monitor
 ```

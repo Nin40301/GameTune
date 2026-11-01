@@ -1,10 +1,10 @@
 use crate::WindowsContext;
-use gametune_core::{ExecResult, Hive, RegistryValue};
+use ametista_core::{ExecResult, Hive, RegistryValue};
 
 #[cfg(windows)]
 mod native {
     use super::*;
-    use gametune_core::ExecError;
+    use ametista_core::ExecError;
     use winreg::{RegKey, RegValue, enums::*};
 
     fn location(context: &WindowsContext, hive: Hive, path: &str) -> (RegKey, String) {
@@ -184,7 +184,7 @@ pub(crate) fn capture(
     _: &str,
     _: &str,
 ) -> ExecResult<(Option<RegistryValue>, Vec<String>)> {
-    Err(gametune_core::ExecError::Unavailable)
+    Err(ametista_core::ExecError::Unavailable)
 }
 #[cfg(not(windows))]
 pub(crate) fn write(
@@ -194,7 +194,7 @@ pub(crate) fn write(
     _: &str,
     _: &RegistryValue,
 ) -> ExecResult<()> {
-    Err(gametune_core::ExecError::Unavailable)
+    Err(ametista_core::ExecError::Unavailable)
 }
 #[cfg(not(windows))]
 pub(crate) fn restore(
@@ -205,9 +205,9 @@ pub(crate) fn restore(
     _: &Option<RegistryValue>,
     _: &[String],
 ) -> ExecResult<()> {
-    Err(gametune_core::ExecError::Unavailable)
+    Err(ametista_core::ExecError::Unavailable)
 }
 #[cfg(not(windows))]
 pub(crate) fn run_entries(_: &WindowsContext, _: Hive) -> ExecResult<Vec<(String, RegistryValue)>> {
-    Err(gametune_core::ExecError::Unavailable)
+    Err(ametista_core::ExecError::Unavailable)
 }

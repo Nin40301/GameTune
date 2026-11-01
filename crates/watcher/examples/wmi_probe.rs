@@ -1,7 +1,7 @@
 #![forbid(unsafe_code)]
 #[cfg(windows)]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    use gametune_watcher::*;
+    use ametista_watcher::*;
     let exe = std::env::args()
         .nth(1)
         .ok_or("synthetic executable required")?;
@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     });
     let mut started = false;
     let mut ended = false;
-    gametune_watcher::wmi::listen(
+    ametista_watcher::wmi::listen(
         |event| {
             if event.path.as_deref().and_then(|p| normalize_exe(p).ok()) == normalize_exe(&exe).ok()
             {

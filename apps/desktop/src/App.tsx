@@ -50,14 +50,14 @@ const glyphs: Record<Page, string> = {
 }
 function preference(key: string, fallback: string) {
   try {
-    return localStorage.getItem(`gametune.${key}`) ?? fallback
+    return localStorage.getItem(`ametista.${key}`) ?? fallback
   } catch {
     return fallback
   }
 }
 function persist(key: string, value: string) {
   try {
-    localStorage.setItem(`gametune.${key}`, value)
+    localStorage.setItem(`ametista.${key}`, value)
   } catch {
     /* Preferences never authorize operations. */
   }

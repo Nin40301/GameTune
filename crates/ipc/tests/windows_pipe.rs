@@ -1,5 +1,5 @@
 #![cfg(windows)]
-use gametune_ipc::*;
+use ametista_ipc::*;
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 #[tokio::test]
 async fn real_pipe_authenticates_sid_pid_and_exclusive_instance() -> TestResult {
@@ -31,13 +31,13 @@ async fn real_pipe_acl_denies_a_different_user() -> TestResult {
 async fn real_pipe_replay_and_malformed_frame_never_reach_execution() -> TestResult {
     let token = nonce()?;
     let sid = native::current_sid()?;
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     let mut server = native::server(&token, &sid)?;
     let mut client = native::client(&token)?;
     server.connect().await?;
     let data = serde_json::to_vec(&Envelope {
         version: 1,
-        catalog_hash: gametune_catalog::embedded_hash(),
+        catalog_hash: ametista_catalog::embedded_hash(),
         sequence: 1,
         nonce: token.clone(),
         command: Command::History,

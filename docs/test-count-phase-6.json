@@ -46,8 +46,8 @@
   "wryExperimentalDefaultArgumentsSuppressed": true,
   "productionMockBackendPresent": false,
   "uacOrMutatingVmHarnessExecuted": false,
-  "programDataGameTuneCreated": false,
-  "hkcuGameTuneTestCreated": false,
+  "programDataAmetistaCreated": false,
+  "hkcuAmetistaTestCreated": false,
   "linuxExecutedLocally": false,
   "nativeWmiSyntheticStartAndStopObservedWithFullPath": true,
   "nativeWmiProbeInvokedExecutors": false,
@@ -83,10 +83,10 @@
     "DisplayVersion": "25H2"
   },
   "artifactSha256": {
-    "gametune.exe": "9b32cceff445972f5ac1473c86686a168f1e7634883c807c800532e4190dde5d",
-    "gametune-helper.exe": "32fedcd3e5c35cd56ae394041dcb211bb9e273845c626068e1d351a174f281dc",
-    "gametune-monitor.exe": "d2f0b0bd2bb1cf24d1832a0a9704dc10efc2d1cc699ff8167e04b8d18e84c989",
-    "gametune-cli.exe": "1b2a0534e20e54120a74933d8fe2ce9bbfbc8dfbbc2a6ebf2c70c443fd3f4887"
+    "ametista.exe": "9b32cceff445972f5ac1473c86686a168f1e7634883c807c800532e4190dde5d",
+    "ametista-helper.exe": "32fedcd3e5c35cd56ae394041dcb211bb9e273845c626068e1d351a174f281dc",
+    "ametista-monitor.exe": "d2f0b0bd2bb1cf24d1832a0a9704dc10efc2d1cc699ff8167e04b8d18e84c989",
+    "ametista-cli.exe": "1b2a0534e20e54120a74933d8fe2ce9bbfbc8dfbbc2a6ebf2c70c443fd3f4887"
   },
   "monitorNormalDependenciesContainWebViewOrTauri": false,
   "resourceGateNote": "Monitor gate is observation only. Elevated helper and transition children remain VM-only; Windows WMI provider is shared and outside the tree.",

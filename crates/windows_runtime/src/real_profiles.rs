@@ -3,7 +3,7 @@ use crate::{
     WindowsContext,
     transport::{self, Script},
 };
-use gametune_core::{ExecError, ExecResult};
+use ametista_core::{ExecError, ExecResult};
 use serde::{Deserialize, Serialize};
 #[derive(Clone, Copy, Serialize)]
 #[serde(rename_all = "snake_case")]
@@ -18,8 +18,8 @@ pub struct Evidence {
     pub evidence: String,
 }
 pub fn run(stage: Stage) -> ExecResult<Evidence> {
-    if std::env::var("GAMETUNE_DISPOSABLE_VM").as_deref() != Ok("I_HAVE_A_SNAPSHOT")
-        || std::env::var("GAMETUNE_REAL_PROFILES").as_deref()
+    if std::env::var("AMETISTA_DISPOSABLE_VM").as_deref() != Ok("I_HAVE_A_SNAPSHOT")
+        || std::env::var("AMETISTA_REAL_PROFILES").as_deref()
             != Ok("I_ACCEPT_REAL_CATALOG_CHANGES_AND_REBOOTS")
     {
         return Err(ExecError::Protected);
@@ -27,7 +27,7 @@ pub fn run(stage: Stage) -> ExecResult<Evidence> {
     let context = WindowsContext::detect()?;
     context.ensure_elevated()?;
     let exe = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../target/debug/gametune-cli.exe")
+        .join("../../target/debug/ametista-cli.exe")
         .canonicalize()
         .map_err(crate::io_error)?;
     transport::run(

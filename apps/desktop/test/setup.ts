@@ -4,5 +4,5 @@ import { cleanup } from '@testing-library/react'
 afterEach(() => {
   cleanup()
   localStorage.clear()
-  delete window.__gametuneTest
+  delete window.__ametistaTest
 })

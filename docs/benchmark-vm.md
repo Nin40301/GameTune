@@ -11,7 +11,7 @@ o roteiro no host. Nenhum ensaio aplicar/reiniciar/desfazer foi autorizado no ho
    set compartilhado e memória privada. Pause/retome a coleta. Rode os dois gates
    de recursos de `benchmark.md`; qualquer violação reprova, sem ignorar filhos.
 3. Faça 2 rodadas Antes de 60 s. Feche/reabra: 2 preservadas. Inicie outra rodada,
-   simule crash **somente do GameTune** na VM, reabra: parcial descartada e 2 salvas.
+   simule crash **somente do Ametista** na VM, reabra: parcial descartada e 2 salvas.
    Complete 5; a primeira não deve entrar nas 4 medianas usadas na comparação.
 4. Em novo snapshot, interrompa uma rodada suspendendo/retomando a VM. Ela deve
    falhar por lacuna/cobertura, sem virar uma rodada completa. Durante coleta,

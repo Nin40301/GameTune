@@ -1,5 +1,5 @@
-use gametune_core::*;
-use gametune_ipc::AppConsent;
+use ametista_core::*;
+use ametista_ipc::AppConsent;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 #[derive(Clone, Serialize)]

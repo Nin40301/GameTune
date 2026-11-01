@@ -13,7 +13,7 @@ pub use scan::*;
 mod startup;
 mod storage;
 mod transport;
-use gametune_core::{ExecError, ExecResult};
+use ametista_core::{ExecError, ExecResult};
 pub use platform::*;
 use serde::{Deserialize, Serialize};
 pub use storage::*;
@@ -28,7 +28,7 @@ struct Identity {
     file_owner_sid: String,
     program_data: String,
     build: u32,
-    edition: gametune_core::Edition,
+    edition: ametista_core::Edition,
 }
 
 #[derive(Debug, Clone)]
@@ -39,7 +39,7 @@ pub struct WindowsContext {
 impl WindowsContext {
     pub(crate) fn state_directory(&self) -> std::path::PathBuf {
         std::path::Path::new(&self.identity.program_data)
-            .join("GameTune")
+            .join("Ametista")
             .join(self.interactive_sid())
     }
     #[cfg(all(windows, test))]
@@ -78,14 +78,19 @@ impl WindowsContext {
     pub fn elevated(&self) -> bool {
         self.identity.elevated
     }
-    pub fn machine(&self) -> gametune_core::Machine {
-        gametune_core::Machine {
+    pub fn machine(&self) -> ametista_core::Machine {
+        ametista_core::Machine {
             build: self.identity.build,
             edition: self.identity.edition,
-            disk: gametune_core::DiskKind::Unknown,
+            disk: ametista_core::DiskKind::Unknown,
         }
     }
     pub fn ensure_elevated(&self) -> ExecResult<()> {
+        refuse_legacy_data(std::path::Path::new(&self.identity.program_data))?;
+        self.ensure_privileged_identity()
+    }
+    /// Authenticate the helper before opening its pipe, without starting any write.
+    pub fn ensure_privileged_identity(&self) -> ExecResult<()> {
         if self.elevated()
             && ["S-1-5-32-544", "S-1-5-18"].contains(&self.identity.file_owner_sid.as_str())
         {
@@ -130,5 +135,35 @@ pub(crate) fn io_error(e: std::io::Error) -> ExecError {
         std::io::ErrorKind::NotFound => ExecError::NotFound,
         std::io::ErrorKind::PermissionDenied => ExecError::AccessDenied,
         _ => failed(e),
+    }
+}
+
+// Exact pre-rename directory name, intentionally separate from the current brand.
+fn refuse_legacy_data(program_data: &std::path::Path) -> ExecResult<()> {
+    let legacy = program_data.join(concat!("Game", "Tune"));
+    match std::fs::symlink_metadata(&legacy) {
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
+        Ok(_) => Err(ExecError::Failed("legacy_data".into())),
+        Err(error) => Err(io_error(error)),
+    }
+}
+#[cfg(test)]
+mod rename_tests {
+    use super::*;
+    #[test]
+    fn legacy_data_blocks_writes_without_moving_or_deleting()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let root = tempfile::tempdir()?;
+        refuse_legacy_data(root.path())?;
+        let old = root.path().join(concat!("Game", "Tune"));
+        std::fs::create_dir(&old)?;
+        std::fs::write(old.join("journal.wal"), b"original")?;
+        assert_eq!(
+            refuse_legacy_data(root.path()),
+            Err(ExecError::Failed("legacy_data".into()))
+        );
+        assert_eq!(std::fs::read(old.join("journal.wal"))?, b"original");
+        assert!(!root.path().join("Ametista").exists());
+        Ok(())
     }
 }

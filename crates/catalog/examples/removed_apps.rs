@@ -1,9 +1,9 @@
 #![forbid(unsafe_code)]
 //! Mock-only demonstration of the per-app flow and offline Reinstall buttons.
-use gametune_core::*;
-use gametune_exec_mock::{MockExecutor, MockHost};
+use ametista_core::*;
+use ametista_exec_mock::{MockExecutor, MockHost};
 fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     let id = "appx.microsoft.bingnews";
     let item = catalog.get(id)?;
     let host = MockHost::default();
