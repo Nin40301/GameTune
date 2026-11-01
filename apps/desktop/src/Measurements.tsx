@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
+import { StatusOrb } from './components/StatusOrb'
+import { Icon } from './components/Icon'
+import { Sparkline } from './components/Sparkline'
 import type { Backend, Conditions, LabAction, LabFile, LabStatus, Language } from './types'
 import { translator } from './i18n'
 
@@ -12,11 +15,16 @@ export function Measurements({
   backend,
   language,
   dashboard = false,
+  profileControls,
+  selectedCount = 0,
 }: {
   backend: Backend
   language: Language
   dashboard?: boolean
+  profileControls?: ReactNode
+  selectedCount?: number
 }) {
+  const [cpuSamples, setCpuSamples] = useState<{ time: number; value: number }[]>([])
   const [status, setStatus] = useState<LabStatus | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -40,7 +48,18 @@ export function Measurements({
       void backend
         .lab({ kind: 'status' })
         .then((s) => {
-          if (alive) setStatus(s)
+          if (alive) {
+            setStatus(s)
+            const latest = s.latest
+            if (latest?.cpuPercent != null && Number.isFinite(latest.cpuPercent)) {
+              const value = latest.cpuPercent
+              setCpuSamples((old) =>
+                old.at(-1)?.time === latest.timestampMs
+                  ? old
+                  : [...old.slice(-29), { time: latest.timestampMs, value }],
+              )
+            }
+          }
         })
         .catch((e: unknown) => {
           if (alive) setError(typeof e === 'string' ? e : 'metrics_unavailable')
@@ -109,38 +128,70 @@ export function Measurements({
             </button>
           </div>
           {!status?.monitor && <p className="notice">{t('metricsPaused')}</p>}
-          <div className="metric-grid">
-            <article className="surface metric">
-              <h3>{t('availableRam')}</h3>
-              <strong>{gib(sample?.availableBytes)}</strong>
-              <p>
-                {t('totalRam')} {gib(sample?.totalBytes)}
-              </p>
-            </article>
-            <article className="surface metric">
-              <h3>{t('systemCpu')}</h3>
-              <strong>{number(sample?.cpuPercent)} %</strong>
-              <p>{t('cpuNote')}</p>
-            </article>
-            <article className="surface metric">
-              <h3>{t('processCount')}</h3>
-              <strong>{number(sample?.processCount, 0)}</strong>
-              <p>{t('systemSnapshot')}</p>
-            </article>
-            <article className="surface metric">
-              <h3>{t('appFootprint')}</h3>
-              <strong>{sample ? number(sample.appPrivateBytes / 1048576) : '—'} MiB</strong>
-              <p>
+          <div className="overview">
+            <section className="glass glass--strong glass--pad profile-panel">
+              <div className="ram-status">
+                <StatusOrb
+                  value={
+                    sample && sample.totalBytes > 0 ? sample.availableBytes / sample.totalBytes : 0
+                  }
+                  title={gib(sample?.availableBytes)}
+                  caption={t('availableRam')}
+                />
+                <p>
+                  {t('totalRam')} <strong className="num">{gib(sample?.totalBytes)}</strong>
+                </p>
+              </div>
+              {profileControls}
+            </section>
+            <aside className="vitals" aria-label={t('systemSnapshot')}>
+              <article className="surface metric metric--processes">
+                <div>
+                  <h3>
+                    <Icon name="layers" />
+                    {t('processCount')}
+                  </h3>
+                  <p>{t('systemSnapshot')}</p>
+                </div>
+                <strong className="num">{number(sample?.processCount, 0)}</strong>
+              </article>
+              <article className="surface metric metric--cpu">
+                <h3>
+                  <Icon name="cpu" />
+                  {t('systemCpu')}
+                </h3>
+                <strong className="num">
+                  {number(sample?.cpuPercent)} <small>%</small>
+                </strong>
+                <Sparkline values={cpuSamples.map((s) => s.value)} label={t('cpuHistory')} />
+                <p>{t('cpuNote')}</p>
+              </article>
+              <article className="surface metric metric--selection">
+                <h3>
+                  <Icon name="items" />
+                  {t('selected')}
+                </h3>
+                <strong className="num">{number(selectedCount, 0)}</strong>
+                <p>{t('safeDefaultNote')}</p>
+              </article>
+              <p className="footprint">
+                <Icon name="memory" />
+                {t('appFootprint')}: {sample ? number(sample.appPrivateBytes / 1048576) : '—'} MiB ·{' '}
                 {number(sample?.appCpuPercent, 2)} % CPU · {number(sample?.appProcesses, 0)}{' '}
                 {t('processCount').toLocaleLowerCase()}
               </p>
-            </article>
+            </aside>
           </div>
           <p className="muted">{t('metricNote')}</p>
           <details className="surface process-list">
             <summary>{t('topMemory')}</summary>
             {sample ? (
-              <div className="table-scroll">
+              <div
+                className="table-scroll"
+                role="region"
+                tabIndex={0}
+                aria-label={t('tableNavigation')}
+              >
                 <table>
                   <caption>{t('groupedMemory')}</caption>
                   <thead>
@@ -176,9 +227,22 @@ export function Measurements({
         </>
       ) : (
         <>
-          <p className="intro">{t('benchmarkIntro')}</p>
+          <div className="measurement-overview">
+            <StatusOrb
+              compact
+              value={
+                sample && sample.totalBytes > 0 ? sample.availableBytes / sample.totalBytes : 0
+              }
+              title={gib(sample?.availableBytes)}
+              caption={t('availableRam')}
+            />
+            <div>
+              <p className="intro">{t('benchmarkIntro')}</p>
+              <Sparkline values={cpuSamples.map((s) => s.value)} label={t('cpuHistory')} />
+            </div>
+          </div>
           <div className="benchmark-layout">
-            <section className="surface benchmark-protocol">
+            <section className="surface benchmark-protocol glass">
               <p className="eyebrow">{t('protocol')}</p>
               <h2>{t(`phase_${p?.phase ?? 'before'}`)}</h2>
               <p>{t('benchmarkRules')}</p>
@@ -309,7 +373,12 @@ export function Measurements({
             ) : (
               <>
                 <p>{t('comparisonNote')}</p>
-                <div className="table-scroll">
+                <div
+                  className="table-scroll"
+                  role="region"
+                  tabIndex={0}
+                  aria-label={t('tableNavigation')}
+                >
                   <table>
                     <caption>{t('runMediansCaption')}</caption>
                     <thead>
@@ -327,6 +396,10 @@ export function Measurements({
                           <th scope="row">{t(`metric_${c.metric}`)}</th>
                           <td>
                             {number(c.before.median)}
+                            <Sparkline
+                              values={c.before.runMedians}
+                              label={`${t('before')} · ${t(`metric_${c.metric}`)}`}
+                            />
                             <small>
                               p5 {number(c.before.p5)} · p95 {number(c.before.p95)}
                             </small>
@@ -337,6 +410,10 @@ export function Measurements({
                           </td>
                           <td>
                             {number(c.after.median)}
+                            <Sparkline
+                              values={c.after.runMedians}
+                              label={`${t('after')} · ${t(`metric_${c.metric}`)}`}
+                            />
                             <small>
                               p5 {number(c.after.p5)} · p95 {number(c.after.p95)}
                             </small>

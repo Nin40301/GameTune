@@ -408,10 +408,7 @@ ul {
 .sidebar nav button[aria-current='page'] .nav-symbol {
   color: var(--accent);
 }
-.sidebar nav button:hover:not(:disabled) {
-  background: var(--surface2);
-  color: var(--text);
-}
+
 .nav-symbol {
   width: 21px;
   text-align: center;
