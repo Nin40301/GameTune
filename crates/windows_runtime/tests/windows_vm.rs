@@ -1,6 +1,6 @@
 #![cfg(all(windows, feature = "vm-tests"))]
-use gametune_core::*;
-use gametune_windows_runtime::fixture::VmFixture;
+use ametista_core::*;
+use ametista_windows_runtime::fixture::VmFixture;
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 
 #[test]
@@ -88,7 +88,7 @@ fn dedicated_store_has_admin_system_acl() -> TestResult {
     assert!(
         directory
             .as_str()
-            .is_some_and(|s| s.contains("GameTuneTestStore"))
+            .is_some_and(|s| s.contains("AmetistaTestStore"))
     );
     cleanup?;
     store_cleanup?;

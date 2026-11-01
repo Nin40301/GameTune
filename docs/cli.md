@@ -1,4 +1,4 @@
-# GameTune CLI — Fase 3
+# Ametista CLI — Fase 3
 
 Execute a partir de um terminal comum. A CLI usa WindowsSession e não realiza
 elevação automática. Sem flags, seleciona Seguro e consulta o Windows somente
@@ -7,11 +7,11 @@ abra um terminal elevado na mesma sessão e use **ambos** `--apply --confirm`.
 `--apply` e `--dry-run` juntos são erro, sem executar ações.
 
 ```powershell
-cargo build -p gametune-cli --locked --offline
-target/debug/gametune-cli.exe --profile safe
-target/debug/gametune-cli.exe --profile balanced --dry-run --json > analise.json
-target/debug/gametune-cli.exe --list --json
-target/debug/gametune-cli.exe --help --lang en
+cargo build -p ametista-cli --locked --offline
+target/debug/ametista-cli.exe --profile safe
+target/debug/ametista-cli.exe --profile balanced --dry-run --json > analise.json
+target/debug/ametista-cli.exe --list --json
+target/debug/ametista-cli.exe --help --lang en
 ```
 
 `--profile` aceita `safe`/`seguro`, `balanced`/`equilibrado`,
@@ -30,10 +30,10 @@ exigir `--ack-risk ID` e `--ack-unverified ID`, além de compatibilidade real.
 Após revisar a simulação, **em VM descartável para esta versão em validação**:
 
 ```powershell
-target/debug/gametune-cli.exe --profile safe --apply --confirm --json
-target/debug/gametune-cli.exe --undo
-target/debug/gametune-cli.exe --undo all --apply --confirm --json
-target/debug/gametune-cli.exe --undo reg.edge_preload --apply --confirm --json
+target/debug/ametista-cli.exe --profile safe --apply --confirm --json
+target/debug/ametista-cli.exe --undo
+target/debug/ametista-cli.exe --undo all --apply --confirm --json
+target/debug/ametista-cli.exe --undo reg.edge_preload --apply --confirm --json
 ```
 
 Undo sem `--apply` apenas lê o histórico. Arquivos em ProgramData continuam
@@ -45,10 +45,10 @@ repara arquivos. Uma cauda incompleta é indicada em `tornTail`/`needsRecovery`.
 ## Appx: ações separadas, um app por comando
 
 ```powershell
-target/debug/gametune-cli.exe appx remove appx.microsoft.copilot --json
-target/debug/gametune-cli.exe appx remove appx.microsoft.copilot --apply --confirm --ack-no-undo --json
-target/debug/gametune-cli.exe appx reinstall appx.microsoft.copilot --json
-target/debug/gametune-cli.exe appx reinstall appx.microsoft.copilot --apply --confirm --json
+target/debug/ametista-cli.exe appx remove appx.microsoft.copilot --json
+target/debug/ametista-cli.exe appx remove appx.microsoft.copilot --apply --confirm --ack-no-undo --json
+target/debug/ametista-cli.exe appx reinstall appx.microsoft.copilot --json
+target/debug/ametista-cli.exe appx reinstall appx.microsoft.copilot --apply --confirm --json
 ```
 
 Remover exige elevação e `--ack-no-undo`. Registra nome, PackageFamilyName e

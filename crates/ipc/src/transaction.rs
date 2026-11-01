@@ -1,6 +1,6 @@
 use crate::{Command, Error, Reply, Result};
-use gametune_core::{AppRemovalConsent, Request};
-use gametune_windows_runtime::WindowsSession;
+use ametista_core::{AppRemovalConsent, Request};
+use ametista_windows_runtime::WindowsSession;
 use serde_json::json;
 
 /// Independent elevated authorization. Called before creating any store/checkpoint.
@@ -22,7 +22,7 @@ pub fn validate(session: &mut WindowsSession, command: &Command) -> Result<()> {
         Command::Undo { ids, .. } => {
             for id in ids {
                 let item = session.catalog().get(id).map_err(|_| Error::InvalidItem)?;
-                if item.revert != gametune_core::Revert::Auto {
+                if item.revert != ametista_core::Revert::Auto {
                     return Err(Error::InvalidItem);
                 }
             }
@@ -34,7 +34,7 @@ pub fn validate(session: &mut WindowsSession, command: &Command) -> Result<()> {
                     .get(&app.item_id)
                     .map_err(|_| Error::InvalidItem)?;
                 if !session.context.machine().supports(item)
-                    || gametune_core::protection::is_protected(item)
+                    || ametista_core::protection::is_protected(item)
                 {
                     return Err(Error::InvalidItem);
                 }
@@ -46,7 +46,7 @@ pub fn validate(session: &mut WindowsSession, command: &Command) -> Result<()> {
                 .get(item_id)
                 .map_err(|_| Error::InvalidItem)?
                 .action_type
-                != gametune_core::ActionType::Appx =>
+                != ametista_core::ActionType::Appx =>
         {
             return Err(Error::InvalidItem);
         }
@@ -60,7 +60,12 @@ pub fn execute(session: &mut WindowsSession, command: &Command) -> Reply {
         session
             .context
             .ensure_elevated()
-            .map_err(|_| Error::Identity)?;
+            .map_err(|error| match error {
+                ametista_core::ExecError::Failed(ref message) if message == "legacy_data" => {
+                    Error::LegacyData
+                }
+                _ => Error::Identity,
+            })?;
         let result = match command {
             Command::TemporarySession { .. } => return Err(Error::InvalidPayload), // Only the authenticated session protocol may hold a game WAL.
             Command::Apply {

@@ -1,9 +1,9 @@
-use gametune_ipc::*;
+use ametista_ipc::*;
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 fn encoded(command: Command, token: &str) -> TestResultWith<Vec<u8>> {
     Ok(serde_json::to_vec(&Envelope {
         version: 1,
-        catalog_hash: gametune_catalog::embedded_hash(),
+        catalog_hash: ametista_catalog::embedded_hash(),
         nonce: token.into(),
         sequence: 1,
         command,
@@ -13,7 +13,7 @@ type TestResultWith<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 #[test]
 fn a_different_helper_catalog_cannot_execute_the_reviewed_ids() -> TestResult {
     let token = nonce()?;
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     let mut value: serde_json::Value = serde_json::from_slice(&encoded(Command::History, &token)?)?;
     value["catalogHash"] = serde_json::json!("0".repeat(64));
     let mut gate = Gate::new("SID".into(), 42, token)?;
@@ -26,7 +26,7 @@ fn a_different_helper_catalog_cannot_execute_the_reviewed_ids() -> TestResult {
 #[test]
 fn invalid_id_is_rejected_before_execution() -> TestResult {
     let token = nonce()?;
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     let mut gate = Gate::new("SID".into(), 42, token.clone())?;
     let bytes = encoded(
         Command::Undo {
@@ -44,7 +44,7 @@ fn invalid_id_is_rejected_before_execution() -> TestResult {
 #[test]
 fn another_user_or_process_cannot_use_the_pipe() -> TestResult {
     let token = nonce()?;
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     let bytes = encoded(Command::History, &token)?;
     for (sid, pid) in [("OTHER", 42), ("SID", 99)] {
         let mut gate = Gate::new("SID".into(), 42, token.clone())?;
@@ -58,7 +58,7 @@ fn another_user_or_process_cannot_use_the_pipe() -> TestResult {
 #[test]
 fn replay_and_wrong_nonce_are_rejected() -> TestResult {
     let token = nonce()?;
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     let bytes = encoded(Command::History, &token)?;
     let mut gate = Gate::new("SID".into(), 42, token.clone())?;
     gate.accept(&bytes, "SID", 42, &catalog)?;
@@ -72,7 +72,7 @@ fn replay_and_wrong_nonce_are_rejected() -> TestResult {
 }
 #[test]
 fn malformed_oversized_and_free_form_payloads_are_rejected() -> TestResult {
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     for bytes in [
         b"{".to_vec(),
         vec![0u8; MAX_FRAME + 1],
@@ -92,7 +92,7 @@ fn malformed_oversized_and_free_form_payloads_are_rejected() -> TestResult {
 }
 #[test]
 fn missing_or_reinforced_app_consent_is_rejected() -> TestResult {
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     for command in [
         Command::UndoAll { confirm: false },
         Command::RemoveApps {

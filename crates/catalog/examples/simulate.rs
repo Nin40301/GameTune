@@ -1,10 +1,10 @@
 #![forbid(unsafe_code)]
 //! Fictitious Windows 10 Pro host. Never reads or changes the real computer.
-use gametune_core::*;
-use gametune_exec_mock::{MockExecutor, MockHost};
+use ametista_core::*;
+use ametista_exec_mock::{MockExecutor, MockHost};
 
 fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     let machine = Machine {
         build: 19045,
         edition: Edition::Pro,

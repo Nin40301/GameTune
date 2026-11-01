@@ -1,5 +1,5 @@
 {
-  "brand": "GameTune",
+  "brand": "Ametista",
   "tagline": "Prepare Windows for play",
   "offline": "Offline",
   "readOnly": "Read only",
@@ -176,7 +176,7 @@
   "cpuNote": "Percentage of total CPU capacity",
   "processCount": "Processes",
   "systemSnapshot": "Read-only system snapshot",
-  "appFootprint": "GameTune usage",
+  "appFootprint": "Ametista usage",
   "metricNote": "Samples every 2 s. App usage includes WebView2 and uses private resident RAM. No processes are terminated or have their working sets emptied",
   "topMemory": "View the 12 largest memory groups",
   "groupedMemory": "Resident memory grouped by name. Shared pages may be counted more than once",
@@ -197,7 +197,7 @@
   "applyReboot": "Review, apply and reboot Windows",
   "benchmarkInterrupted": "The interrupted run was discarded. Completed runs were preserved",
   "awaitApplyNote": "Open Items and Review to apply. Only a confirmed helper response advances the protocol. Keep this experiment's power plan unchanged",
-  "awaitRebootNote": "Reboot manually and reopen GameTune. Start the first After run soon after reboot, using the same plan. If you wait too long, reboot again to prove a new boot",
+  "awaitRebootNote": "Reboot manually and reopen Ametista. Start the first After run soon after reboot, using the same plan. If you wait too long, reboot again to prove a new boot",
   "powerPlan": "Power plan",
   "runInProgress": "Run in progress",
   "runProgress": "Run duration",
@@ -229,7 +229,7 @@
   "inconclusive": "Inconclusive",
   "difference_observed": "Difference observed",
   "optionalPresentmon": "Frames per second · optional",
-  "presentmonExplanation": "Install PresentMon yourself and select its executable. Import a v1 CSV (--v1_metrics) with one process and swap chain. GameTune does not run PresentMon, start ETW or open the game",
+  "presentmonExplanation": "Install PresentMon yourself and select its executable. Import a v1 CSV (--v1_metrics) with one process and swap chain. Ametista does not run PresentMon, start ETW or open the game",
   "choosePresentmon": "Select installed PresentMon",
   "importPresentmon": "Import a CSV capture",
   "presentmonDefinition": "Average FPS = 1000 / mean interval between presents. 1% low = 1000 / mean of the slowest 1%. First row discarded. May differ from displayed frames. Not compared with system metrics",
@@ -295,10 +295,11 @@
   "gameDetectionLimits": "Full-path detection",
   "gameDetectionExplanation": "The monitor receives local WMI events at roughly 1 s intervals. It does not open game handles or read game memory. Without a readable path, it does not apply. Games already open before the monitor need reopening. Java games sharing the same javaw.exe cannot be distinguished",
   "games_invalid": "The registration or profile is invalid. Use a local .exe and only available temporary actions",
-  "games_storage": "Game data could not be accessed or the monitor could not start. Check that gametune-monitor.exe is beside the interface",
+  "games_storage": "Game data could not be accessed or the monitor could not start. Check that ametista-monitor.exe is beside the interface",
   "games_busy": "The monitor is running. Stop it and wait for restoration before editing",
   "monitor_event_error": "Observation was interrupted. Check recovery, stop the monitor and start again",
   "monitor_benchmark_conflict": "Stop the monitor and wait for restoration before starting a benchmark run",
   "monitor_items_skipped": "Some profile items are unavailable on this PC and were skipped. Other items remain temporary",
-  "reviewGameRecovery": "Review recovery"
+  "reviewGameRecovery": "Review recovery",
+  "legacy_data": "Previous-version data exists in ProgramData. Writing is blocked. Preserve the old folder; no data was moved or deleted."
 }

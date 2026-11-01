@@ -124,21 +124,21 @@ pub fn valid_test_target(item: &Item) -> bool {
             name,
             ..
         } => {
-            path.strip_prefix("Software\\GameTuneTest\\")
+            path.strip_prefix("Software\\AmetistaTest\\")
                 .is_some_and(|s| s.split('\\').all(safe_suffix))
                 && safe_suffix(name)
         }
-        Target::Service { name, .. } => name.strip_prefix("GameTuneTest_").is_some_and(safe_suffix),
+        Target::Service { name, .. } => name.strip_prefix("AmetistaTest_").is_some_and(safe_suffix),
         Target::ScheduledTask { path, name } => {
-            path == "\\GameTuneTest\\"
-                && name.strip_prefix("GameTuneTest_").is_some_and(safe_suffix)
+            path == "\\AmetistaTest\\"
+                && name.strip_prefix("AmetistaTest_").is_some_and(safe_suffix)
         }
         Target::Startup {
             hive: crate::Hive::HKCU,
             entry: Some(e),
         } => {
             e.name
-                .strip_prefix("GameTuneTest_")
+                .strip_prefix("AmetistaTest_")
                 .is_some_and(safe_suffix)
                 && e.fingerprint.len() == 64
                 && e.fingerprint.bytes().all(|b| b.is_ascii_hexdigit())

@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
 
-use gametune_core::{Catalog, Error, Item, Result};
+use ametista_core::{Catalog, Error, Item, Result};
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
@@ -17,12 +17,12 @@ pub fn embedded_hash() -> String {
     hash.update(GAME_ACTIONS);
     format!("{hash:x}", hash = hash.finalize())
 }
-pub fn game_actions(catalog: &Catalog) -> Result<Vec<gametune_core::temporary::GameAction>> {
+pub fn game_actions(catalog: &Catalog) -> Result<Vec<ametista_core::temporary::GameAction>> {
     #[derive(Deserialize)]
     #[serde(deny_unknown_fields)]
     struct Actions {
         version: u8,
-        actions: Vec<gametune_core::temporary::GameAction>,
+        actions: Vec<ametista_core::temporary::GameAction>,
     }
     let hashes: BTreeMap<String, String> = serde_json::from_str(HASHES)?;
     verify_hash(
@@ -42,7 +42,7 @@ pub fn game_actions(catalog: &Catalog) -> Result<Vec<gametune_core::temporary::G
     if document.version != 1 {
         return Err(Error::InvalidCatalog("game action version".into()));
     }
-    gametune_core::temporary::validate_actions(catalog, &document.actions)?;
+    ametista_core::temporary::validate_actions(catalog, &document.actions)?;
     Ok(document.actions)
 }
 

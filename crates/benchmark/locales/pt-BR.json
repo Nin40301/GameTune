@@ -1,5 +1,5 @@
 {
-  "title":"Relatório de medições GameTune",
+  "title":"Relatório de medições Ametista",
   "note":"Medições descritivas, sem estimativa de ganho de FPS. Faixas sobrepostas ou diferenças dentro do ruído são inconclusivas. Primeira rodada descartada. Valores PresentMon descrevem intervalos entre apresentações, não necessariamente quadros exibidos",
   "metric_available_memory":"RAM disponível (MiB)",
   "metric_cpu":"CPU (%)",

@@ -1,6 +1,6 @@
-use gametune_catalog::load_embedded;
-use gametune_core::*;
-use gametune_exec_mock::{MockExecutor, MockHost, Stage};
+use ametista_catalog::load_embedded;
+use ametista_core::*;
+use ametista_exec_mock::{MockExecutor, MockHost, Stage};
 use std::path::PathBuf;
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 const NEWS: &str = "appx.microsoft.bingnews";

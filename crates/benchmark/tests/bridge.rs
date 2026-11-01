@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-use gametune_benchmark::service::{Action, FileAction};
+use ametista_benchmark::service::{Action, FileAction};
 #[test]
 fn bridge_rejects_free_paths_commands_and_unknown_fields() {
     for text in [

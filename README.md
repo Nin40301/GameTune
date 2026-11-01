@@ -1,4 +1,4 @@
-# GameTune
+# Ametista
 
 Aplicativo offline de ajustes do Windows para jogos. **Fase 6: monitor Rust
 independente e perfis temporários por jogo**, sobre o mesmo backend da CLI/UI.
@@ -25,7 +25,7 @@ Leia [como compilar e usar a interface](docs/desktop.md),
 - Ponto de restauração antes de aplicar na API WindowsSession, com limite diário
 - Appx **manual separado** com consentimento por app, aviso de ausência de undo,
   inventário AllUsers/provisionado, registro prévio de nome/PFN e reinstalação Store
-- `gametune-cli`: análise real sem admin, simulação padrão, JSON/pt-BR/en,
+- `ametista-cli`: análise real sem admin, simulação padrão, JSON/pt-BR/en,
   aplicação confirmada, histórico/desfazer e comandos Appx separados
 - Interface com Início, Itens, Revisão, Limpeza de apps, Histórico e Configurações;
   pt-BR/en, claro/escuro, teclado, detalhes, consentimentos e testes axe
@@ -46,10 +46,10 @@ Leia [como compilar e usar a interface](docs/desktop.md),
 ## Executar a CLI
 
 ```powershell
-cargo build -p gametune-cli --locked --offline
-target/debug/gametune-cli.exe --profile safe --dry-run --json
-target/debug/gametune-cli.exe --list
-target/debug/gametune-cli.exe --help --lang en
+cargo build -p ametista-cli --locked --offline
+target/debug/ametista-cli.exe --profile safe --dry-run --json
+target/debug/ametista-cli.exe --list
+target/debug/ametista-cli.exe --help --lang en
 ```
 
 Sem flags é somente leitura. Nenhum ajuste é aplicado sem `--apply --confirm`.
@@ -70,8 +70,8 @@ cargo fetch --locked
 cargo fmt --all --check
 cargo clippy --workspace --all-targets --locked --offline -- -D warnings
 cargo test --workspace --locked --offline
-cargo run -p gametune-catalog --example simulate --locked --offline
-cargo run -p gametune-catalog --example removed_apps --locked --offline -- outputs/appx-reinstall-demo.html
+cargo run -p ametista-catalog --example simulate --locked --offline
+cargo run -p ametista-catalog --example removed_apps --locked --offline -- outputs/appx-reinstall-demo.html
 ```
 
 Os exemplos usam mocks, não removem apps e não aplicam o catálogo. O segundo gera
@@ -83,7 +83,7 @@ do Windows; testes IPC criam apenas pipes efêmeros sem lançar o helper/UAC.
 Para compilar, sem executar, a suíte administrativa:
 
 ```powershell
-cargo test -p gametune-windows-runtime --features vm-tests --locked --offline --no-run
+cargo test -p ametista-windows-runtime --features vm-tests --locked --offline --no-run
 ```
 
 Para executá-la, siga [Windows em VM descartável](docs/windows-vm.md). Não use
@@ -135,11 +135,11 @@ avisa que a remoção afeta todos os usuários e novos perfis.
 Estado de produção:
 
 ```text
-%ProgramData%\GameTune\machine.lock
-%ProgramData%\GameTune\scope-owner.json
-%ProgramData%\GameTune\<SID interativo>\journal.wal
-%ProgramData%\GameTune\<SID interativo>\journal.json
-%ProgramData%\GameTune\<SID interativo>\removed-apps.json
+%ProgramData%\Ametista\machine.lock
+%ProgramData%\Ametista\scope-owner.json
+%ProgramData%\Ametista\<SID interativo>\journal.wal
+%ProgramData%\Ametista\<SID interativo>\journal.json
+%ProgramData%\Ametista\<SID interativo>\removed-apps.json
 ```
 
 Diretórios, arquivos e temporários herdam acesso somente a Administradores/SYSTEM.

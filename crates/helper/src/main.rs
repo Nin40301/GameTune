@@ -4,7 +4,7 @@ fn main() -> std::process::ExitCode {
     let args: Vec<_> = std::env::args().skip(1).collect();
     if args.len() != 4
         || args[0] != "--nonce"
-        || !gametune_ipc::valid_nonce(&args[1])
+        || !ametista_ipc::valid_nonce(&args[1])
         || args[2] != "--parent"
     {
         return std::process::ExitCode::from(2);
@@ -26,7 +26,7 @@ fn main() -> std::process::ExitCode {
         };
         std::process::ExitCode::from(
             if runtime
-                .block_on(gametune_ipc::pipe::serve(args[1].clone(), parent))
+                .block_on(ametista_ipc::pipe::serve(args[1].clone(), parent))
                 .is_ok()
             {
                 0

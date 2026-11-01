@@ -1,11 +1,11 @@
 {
-  "title": "GameTune · Monitor de jogos",
-  "open": "Abra o GameTune",
+  "title": "Ametista · Monitor de jogos",
+  "open": "Abra o Ametista",
   "stop": "Pare e restaure",
-  "idle": "GameTune · Aguardando um jogo",
-  "active": "GameTune · Perfil temporário ativo",
-  "recovering": "GameTune · Restaurando configurações originais",
-  "consent": "GameTune · Aguardando autorização do Windows",
-  "readonly": "GameTune · Somente observação",
-  "error": "GameTune · Falha na observação ou recuperação"
+  "idle": "Ametista · Aguardando um jogo",
+  "active": "Ametista · Perfil temporário ativo",
+  "recovering": "Ametista · Restaurando configurações originais",
+  "consent": "Ametista · Aguardando autorização do Windows",
+  "readonly": "Ametista · Somente observação",
+  "error": "Ametista · Falha na observação ou recuperação"
 }

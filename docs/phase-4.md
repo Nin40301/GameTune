@@ -19,7 +19,7 @@ PowerShell de leitura, sem localizar/encerrar processos de terceiros. Evidência
 cancelada/expirada ou de operação incerta não autoriza nova aplicação.
 
 Uma execução local não elevada consultou **88 itens, sem falhas, em 5,41 s**,
-comparada à amostra de aproximadamente 33 s da fase anterior. ProgramData/GameTune
+comparada à amostra de aproximadamente 33 s da fase anterior. ProgramData/Ametista
 continuou ausente. É uma amostra de latência, não medição de FPS ou garantia em
 outras máquinas. Cache é apenas de leitura; toda escrita recaptura o original.
 
@@ -62,12 +62,12 @@ Uma reaplicação também recaptura alvos com journal Applied: divergência exte
 
 Nas verificações iniciais executei a suíte herdada que ainda incluía **duas
 rotinas de integração de HKCU fora do opt-in de VM**. Elas escreveram somente em
-HKCU/Software/GameTuneTest e passaram com limpeza, mas isso contrariou a restrição
+HKCU/Software/AmetistaTest e passaram com limpeza, mas isso contrariou a restrição
 desta fase. Nenhum alvo real do catálogo foi aplicado por essas rotinas.
 
-Ambas agora têm ignore e exigem feature vm-tests mais GAMETUNE_DISPOSABLE_VM.
+Ambas agora têm ignore e exigem feature vm-tests mais AMETISTA_DISPOSABLE_VM.
 O workflow de VM as executa explicitamente. A suíte normal final tem dois testes
-ignorados; a ausência da chave GameTuneTest foi confirmada somente para leitura.
+ignorados; a ausência da chave AmetistaTest foi confirmada somente para leitura.
 O ocorrido não foi apresentado como ausência absoluta de escritas no host.
 
 ## Arquivos criados/alterados
@@ -98,7 +98,7 @@ cd ../..
 cargo fmt --all --check
 cargo clippy --workspace --all-targets --all-features --locked --offline -- -D warnings
 cargo test --workspace --locked --offline
-cargo build -p gametune-desktop -p gametune-helper --release --locked --offline
+cargo build -p ametista-desktop -p ametista-helper --release --locked --offline
 ./tools/verify-desktop.ps1
 ```
 

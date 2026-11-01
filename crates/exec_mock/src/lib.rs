@@ -1,7 +1,7 @@
 #![forbid(unsafe_code)]
 //! Deterministic fake Windows state, shared by all executor kinds. No OS mutations.
 
-use gametune_core::{
+use ametista_core::{
     ActionType, ExecError, ExecResult, Executor, Item, RegistryValue, ServiceMode, Snapshot, Target,
 };
 use std::{

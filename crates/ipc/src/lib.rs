@@ -20,6 +20,8 @@ pub enum Error {
     CatalogMismatch,
     #[error("invalid_payload")]
     InvalidPayload,
+    #[error("legacy_data")]
+    LegacyData,
     #[error("identity_mismatch")]
     Identity,
     #[error("replay")]

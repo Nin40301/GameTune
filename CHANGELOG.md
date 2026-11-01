@@ -1,3 +1,7 @@
+# Fase 6.5 — Renomeação
+
+GameTune passou a se chamar Ametista. O titular histórico permanece GameTune contributors (NOTICE). Não há migração de dados: a pasta antiga em ProgramData bloqueia escritas, sem apagar ou mover conteúdo. A tag v0.6.0 preserva o checkpoint anterior.
+
 # Changelog
 
 ## 0.6.0 — Fase 6 — 2026-11-01

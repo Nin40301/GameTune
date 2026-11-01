@@ -1,5 +1,5 @@
 [package]
-name = "gametune-acceptance"
+name = "ametista-acceptance"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -7,16 +7,16 @@ publish.workspace = true
 license.workspace = true
 
 [dev-dependencies]
-gametune-windows-runtime.workspace = true
-gametune-core.workspace = true
-gametune-catalog.workspace = true
-gametune-exec-mock.workspace = true
-gametune-exec-registry = { path = "../exec_registry" }
-gametune-exec-service = { path = "../exec_service" }
-gametune-exec-scheduled-task = { path = "../exec_scheduled_task" }
-gametune-exec-appx = { path = "../exec_appx" }
-gametune-exec-startup = { path = "../exec_startup" }
-gametune-exec-power = { path = "../exec_power" }
+ametista-windows-runtime.workspace = true
+ametista-core.workspace = true
+ametista-catalog.workspace = true
+ametista-exec-mock.workspace = true
+ametista-exec-registry = { path = "../exec_registry" }
+ametista-exec-service = { path = "../exec_service" }
+ametista-exec-scheduled-task = { path = "../exec_scheduled_task" }
+ametista-exec-appx = { path = "../exec_appx" }
+ametista-exec-startup = { path = "../exec_startup" }
+ametista-exec-power = { path = "../exec_power" }
 serde_json.workspace = true
 tempfile.workspace = true
 

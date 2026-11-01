@@ -2,7 +2,7 @@ use crate::{
     WindowsContext, WindowsExecutor, registry,
     transport::{self, Script},
 };
-use gametune_core::*;
+use ametista_core::*;
 use serde::{Deserialize, Serialize};
 use std::{
     collections::BTreeMap,

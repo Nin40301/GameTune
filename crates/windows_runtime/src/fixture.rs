@@ -3,7 +3,7 @@ use crate::{
     WindowsContext, registry, startup,
     transport::{self, Script},
 };
-use gametune_core::*;
+use ametista_core::*;
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::path::PathBuf;
@@ -17,7 +17,7 @@ pub struct VmFixture {
 }
 impl VmFixture {
     pub fn create() -> ExecResult<Self> {
-        if std::env::var("GAMETUNE_DISPOSABLE_VM").as_deref() != Ok("I_HAVE_A_SNAPSHOT") {
+        if std::env::var("AMETISTA_DISPOSABLE_VM").as_deref() != Ok("I_HAVE_A_SNAPSHOT") {
             return Err(ExecError::Protected);
         }
         let context = WindowsContext::detect()?;
@@ -34,8 +34,8 @@ impl VmFixture {
             Script::Fixture,
             &json!({"operation":"setup","nonce":nonce,"sid":context.interactive_sid()}),
         )?;
-        let base = gametune_catalog::load_embedded().map_err(crate::failed)?;
-        let name = format!("GameTuneTest_{nonce}");
+        let base = ametista_catalog::load_embedded().map_err(crate::failed)?;
+        let name = format!("AmetistaTest_{nonce}");
         let digest = format!("{:x}", Sha256::digest(nonce.as_bytes()));
         let guid = format!(
             "47544e54-{}-{}-{}-{}",
@@ -51,7 +51,7 @@ impl VmFixture {
                 "reg.cortana",
                 Target::Registry {
                     hive: Hive::HKCU,
-                    path: format!("Software\\GameTuneTest\\{nonce}\\Settings"),
+                    path: format!("Software\\AmetistaTest\\{nonce}\\Settings"),
                     name: "OnlyTest".into(),
                     value: 1,
                 },
@@ -68,7 +68,7 @@ impl VmFixture {
                 "task",
                 "task.consolidator",
                 Target::ScheduledTask {
-                    path: "\\GameTuneTest\\".into(),
+                    path: "\\AmetistaTest\\".into(),
                     name: name.clone(),
                 },
             ),

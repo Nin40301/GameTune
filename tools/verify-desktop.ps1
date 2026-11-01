@@ -5,7 +5,7 @@ $null=New-Item -ItemType Directory -Path $evidence -Force
 $kits=Join-Path ${env:ProgramFiles(x86)} 'Windows Kits/10/bin'
 $mt=Get-ChildItem -LiteralPath $kits -Filter mt.exe -Recurse -File | Where-Object {$_.Directory.Name -eq 'x64'} | Sort-Object FullName | Select-Object -Last 1
 if(-not $mt){throw 'Windows SDK mt.exe is required'}
-foreach($spec in @(@('gametune','asInvoker'),@('gametune-helper','requireAdministrator'),@('gametune-monitor','asInvoker'))){
+foreach($spec in @(@('ametista','asInvoker'),@('ametista-helper','requireAdministrator'),@('ametista-monitor','asInvoker'))){
     $exe=Join-Path $root ('target/release/'+$spec[0]+'.exe')
     $manifest=Join-Path $evidence ($spec[0]+'.manifest.xml')
     & $mt.FullName -nologo ("-inputresource:"+$exe+';#1') ("-out:"+$manifest)
@@ -16,7 +16,7 @@ foreach($spec in @(@('gametune','asInvoker'),@('gametune-helper','requireAdminis
 }
 $assets=Join-Path $root 'apps/desktop/dist/assets'
 foreach($asset in Get-ChildItem -LiteralPath $assets -Filter '*.js' -File){
-    if((Get-Content -LiteralPath $asset.FullName -Raw) -match '__gametuneTest|createMockBackend|test-backend'){throw 'Mock backend leaked into production assets'}
+    if((Get-Content -LiteralPath $asset.FullName -Raw) -match '__ametistaTest|createMockBackend|test-backend'){throw 'Mock backend leaked into production assets'}
 }
 $cap=Get-Content -LiteralPath (Join-Path $root 'apps/desktop/src-tauri/capabilities/main.json') -Raw | ConvertFrom-Json
 $expected=@('allow-bootstrap','allow-analysis-start','allow-analysis-state','allow-analysis-cancel','allow-prepare-review','allow-execute-review','allow-lab-action','allow-lab-file','allow-games-action')

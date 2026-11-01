@@ -10,9 +10,9 @@
   "playwrightPassed":10,
   "axeAuditsWithoutViolations":25,
   "uacOrMutatingVmHarnessExecuted":false,
-  "initialLegacyHkcuTestException":{"occurred":true,"routines":2,"namespace":"HKCU/Software/GameTuneTest","fixturesCleaned":true,"nowRequireVmOptIn":true},
-  "readOnlyAnalysis":{"rows":88,"failures":0,"elapsedSecondsOneSample":5.4133263,"programDataGameTuneCreated":false},
-  "manifests":{"gametune":"asInvoker","gametune-helper":"requireAdministrator"},
+  "initialLegacyHkcuTestException":{"occurred":true,"routines":2,"namespace":"HKCU/Software/AmetistaTest","fixturesCleaned":true,"nowRequireVmOptIn":true},
+  "readOnlyAnalysis":{"rows":88,"failures":0,"elapsedSecondsOneSample":5.4133263,"programDataAmetistaCreated":false},
+  "manifests":{"ametista":"asInvoker","ametista-helper":"requireAdministrator"},
   "productionMockBackendPresent":false,
   "linuxExecutedLocally":false
 }

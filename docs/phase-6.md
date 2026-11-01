@@ -6,7 +6,7 @@
   experimentais do wry. SmartScreen, sandbox e GPU não são desativados
 - Gates separados e fechados: UI aberta <=150 MiB; monitor Rust <=15 MiB e CPU
   <0,5%. UI preserva o limite de CPU <1%. Sem elevar limites por host ocupado
-- `gametune-monitor.exe` asInvoker, Rust/Win32, sem WebView, iniciado sob demanda
+- `ametista-monitor.exe` asInvoker, Rust/Win32, sem WebView, iniciado sob demanda
   em Configurações, com bandeja. A UI pode fechar sem encerrar o monitor
 - Descoberta apenas por configurações locais Steam/Epic/Battle.net/Riot/Minecraft;
   adição manual por seletor `.exe`; candidatos nunca habilitam perfis sozinhos
@@ -54,10 +54,10 @@ cargo clippy --workspace --all-targets --all-features --locked --offline -- -D w
 cargo test --workspace --locked --offline
 cargo build --workspace --release --locked --offline
 ./tools/verify-desktop.ps1
-cargo build -p gametune-metrics --example budget --release --locked --offline
+cargo build -p ametista-metrics --example budget --release --locked --offline
 ./tools/test-resource-budget.ps1 -Mode interface
 ./tools/test-resource-budget.ps1 -Mode game_monitor
-cargo build -p gametune-watcher --example synthetic_game --example wmi_probe --release --locked --offline
+cargo build -p ametista-watcher --example synthetic_game --example wmi_probe --release --locked --offline
 ./tools/test-game-events.ps1
 ```
 

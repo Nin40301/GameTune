@@ -1,5 +1,5 @@
-use gametune_catalog::load_embedded;
-use gametune_core::*;
+use ametista_catalog::load_embedded;
+use ametista_core::*;
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 
 #[test]

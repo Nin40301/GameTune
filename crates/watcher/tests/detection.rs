@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-use gametune_watcher::*;
+use ametista_watcher::*;
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 fn game(path: &str, ids: &[&str]) -> Game {
     let mut game = Game::manual(path.into()).unwrap_or_else(|e| panic!("fixture: {e}"));

@@ -1,14 +1,14 @@
-//! VM-only HKCU integration, exclusively below Software\GameTuneTest.
+//! VM-only HKCU integration, exclusively below Software\AmetistaTest.
 #![cfg(windows)]
 use crate::{WindowsContext, registry};
-use gametune_core::{ExecError, Hive, RegistryValue};
+use ametista_core::{ExecError, Hive, RegistryValue};
 use std::collections::BTreeMap;
 use winreg::{RegKey, enums::*};
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 static TEST_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
 fn require_vm() -> TestResult {
     if !cfg!(feature = "vm-tests")
-        || std::env::var("GAMETUNE_DISPOSABLE_VM").as_deref() != Ok("I_HAVE_A_SNAPSHOT")
+        || std::env::var("AMETISTA_DISPOSABLE_VM").as_deref() != Ok("I_HAVE_A_SNAPSHOT")
     {
         return Err("dedicated HKCU tests require vm-tests and the disposable VM opt-in".into());
     }
@@ -51,12 +51,12 @@ fn dedicated_hkcu_raw_types_and_missing_keys_roundtrip() -> TestResult {
     let _guard = TEST_LOCK.lock().map_err(|_| "native test lock poisoned")?;
     let context = WindowsContext::current_test_user()?;
     let name = unique();
-    let root_path = format!("Software\\GameTuneTest\\{name}");
-    assert!(root_path.starts_with("Software\\GameTuneTest\\R"));
+    let root_path = format!("Software\\AmetistaTest\\{name}");
+    assert!(root_path.starts_with("Software\\AmetistaTest\\R"));
     let users = RegKey::predef(HKEY_USERS);
     let absolute = format!("{}\\{root_path}", context.interactive_sid());
     let parent_existed = RegKey::predef(HKEY_CURRENT_USER)
-        .open_subkey("Software\\GameTuneTest")
+        .open_subkey("Software\\AmetistaTest")
         .is_ok();
     let (root, _) = users.create_subkey(&absolute)?;
     let result = (|| -> TestResult {
@@ -157,7 +157,7 @@ fn dedicated_hkcu_raw_types_and_missing_keys_roundtrip() -> TestResult {
     drop(root);
     users.delete_subkey_all(&absolute)?;
     if !parent_existed {
-        let _ = RegKey::predef(HKEY_CURRENT_USER).delete_subkey("Software\\GameTuneTest");
+        let _ = RegKey::predef(HKEY_CURRENT_USER).delete_subkey("Software\\AmetistaTest");
     }
     result
 }
@@ -169,7 +169,7 @@ fn dedicated_hkcu_recovery_keeps_foreign_values_in_created_keys() -> TestResult 
     let _guard = TEST_LOCK.lock().map_err(|_| "native test lock poisoned")?;
     let context = WindowsContext::current_test_user()?;
     let name = unique();
-    let path = format!("Software\\GameTuneTest\\{name}");
+    let path = format!("Software\\AmetistaTest\\{name}");
     let (original, missing) = registry::capture(&context, Hive::HKCU, &path, "OnlyTest")?;
     let value = RegistryValue {
         kind: 3,
@@ -187,10 +187,10 @@ fn dedicated_hkcu_recovery_keeps_foreign_values_in_created_keys() -> TestResult 
     );
     let users = RegKey::predef(HKEY_USERS);
     let absolute = format!("{}\\{path}", context.interactive_sid());
-    assert!(path.starts_with("Software\\GameTuneTest\\R"));
+    assert!(path.starts_with("Software\\AmetistaTest\\R"));
     users.delete_subkey_all(&absolute)?;
     for parent in missing.iter().filter(|p| p.as_str() != path).rev() {
-        if parent == "Software\\GameTuneTest" {
+        if parent == "Software\\AmetistaTest" {
             let _ = users.delete_subkey(format!("{}\\{parent}", context.interactive_sid()));
         }
     }

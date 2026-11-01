@@ -7,7 +7,7 @@ ou falha. O código não confirma a existência de snapshot do hipervisor.
 
 1. Compile/copie UI e helper de produção com features padrão, na mesma pasta.
    Rode `tools/verify-desktop.ps1` no checkout para conferir manifestos e assets.
-2. Abra **gametune.exe pelo usuário comum**. Confirme ausência de UAC na abertura,
+2. Abra **ametista.exe pelo usuário comum**. Confirme ausência de UAC na abertura,
    funcionamento de Simule, progresso e cancelamento. Registre edição/build,
    usuário/SID de teste, screenshot e resultados. Não use dados pessoais.
 3. Selecione somente `reg.edge_preload` em Itens. Antes, capture no PowerShell
@@ -37,9 +37,9 @@ ou falha. O código não confirma a existência de snapshot do hipervisor.
 Testes de fixtures continuam separados:
 
 ```powershell
-$env:GAMETUNE_DISPOSABLE_VM='I_HAVE_A_SNAPSHOT'
-cargo test -p gametune-windows-runtime --features vm-tests --test windows_vm --locked --offline -- --ignored --test-threads=1
-cargo test -p gametune-windows-runtime --features vm-tests --lib dedicated_hkcu --locked --offline -- --ignored --test-threads=1
+$env:AMETISTA_DISPOSABLE_VM='I_HAVE_A_SNAPSHOT'
+cargo test -p ametista-windows-runtime --features vm-tests --test windows_vm --locked --offline -- --ignored --test-threads=1
+cargo test -p ametista-windows-runtime --features vm-tests --lib dedicated_hkcu --locked --offline -- --ignored --test-threads=1
 ```
 
 O ensaio Safe/Balanced com dois reinícios continua em windows-real-profiles.md.

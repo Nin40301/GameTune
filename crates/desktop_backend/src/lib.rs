@@ -1,9 +1,9 @@
 #![forbid(unsafe_code)]
 mod models;
-use gametune_core::*;
-use gametune_ipc::Command;
-pub use gametune_ipc::Reply as IpcReply;
-use gametune_windows_runtime::{WindowsSession, scan};
+use ametista_core::*;
+use ametista_ipc::Command;
+pub use ametista_ipc::Reply as IpcReply;
+use ametista_windows_runtime::{WindowsSession, scan};
 pub use models::*;
 use std::{
     collections::{BTreeMap, BTreeSet},
@@ -213,7 +213,7 @@ impl Desktop {
             // Startup IDs are bound to the current user/Run value, including undo.
             connect()?.catalog().clone()
         } else {
-            gametune_catalog::load_embedded().map_err(error)?
+            ametista_catalog::load_embedded().map_err(error)?
         };
         let unique: BTreeSet<_> = selection.ids.iter().collect();
         if unique.len() != selection.ids.len() || selection.ids.len() > 512 {
@@ -247,7 +247,7 @@ impl Desktop {
                 .or_insert(0) += 1;
         }
         let review = Review {
-            ticket: gametune_ipc::nonce().map_err(error)?,
+            ticket: ametista_ipc::nonce().map_err(error)?,
             kind: selection.kind,
             ids: selection.ids,
             counts,
@@ -320,17 +320,17 @@ impl Desktop {
         Ok(command)
     }
 }
-pub async fn execute(command: Command) -> std::result::Result<gametune_ipc::Reply, String> {
+pub async fn execute(command: Command) -> std::result::Result<ametista_ipc::Reply, String> {
     #[cfg(windows)]
     {
-        gametune_ipc::pipe::request(command)
+        ametista_ipc::pipe::request(command)
             .await
             .map_err(|e| e.to_string())
     }
     #[cfg(not(windows))]
     {
         let _ = command;
-        Err(gametune_ipc::Error::Windows.to_string())
+        Err(ametista_ipc::Error::Windows.to_string())
     }
 }
 
@@ -354,7 +354,7 @@ mod tests {
     fn fixture() -> TestResultWith<Desktop> {
         let state = Desktop::default();
         *state.evidence.lock().map_err(error)? = Some(Evidence {
-            catalog: gametune_catalog::load_embedded()?,
+            catalog: ametista_catalog::load_embedded()?,
             machine: Machine {
                 build: 26200,
                 edition: Edition::Pro,
@@ -472,7 +472,7 @@ mod tests {
             ids: vec!["appx.microsoft.copilot".into()],
         })?;
         let mut approved = approval(review.ticket);
-        approved.apps.push(gametune_ipc::AppConsent {
+        approved.apps.push(ametista_ipc::AppConsent {
             item_id: "appx.microsoft.gamingservices".into(),
             no_undo: true,
             gaming_risk: true,

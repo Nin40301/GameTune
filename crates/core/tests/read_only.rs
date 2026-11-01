@@ -1,4 +1,4 @@
-use gametune_core::*;
+use ametista_core::*;
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 fn item() -> std::result::Result<Item, Box<dyn std::error::Error>> {
     let document: serde_json::Value =

@@ -12,8 +12,8 @@ Desde a Fase 4, os dois testes nativos HKCU também são ignorados por padrão e
 exigem `vm-tests` + opt-in. Na VM:
 
 ```powershell
-$env:GAMETUNE_DISPOSABLE_VM = 'I_HAVE_A_SNAPSHOT'
-cargo test -p gametune-windows-runtime --features vm-tests --lib dedicated_hkcu --locked --offline -- --ignored --test-threads=1
+$env:AMETISTA_DISPOSABLE_VM = 'I_HAVE_A_SNAPSHOT'
+cargo test -p ametista-windows-runtime --features vm-tests --lib dedicated_hkcu --locked --offline -- --ignored --test-threads=1
 ```
 
 O ensaio da janela/UAC está em [desktop-vm.md](desktop-vm.md).
@@ -26,7 +26,7 @@ O ensaio da janela/UAC está em [desktop-vm.md](desktop-vm.md).
 2. Execute `cargo fetch --locked` enquanto a VM ainda tem rede. Depois desligue
    a rede da VM. Não instale jogos, contas pessoais ou dados de produção.
 3. Desligue a VM e crie um checkpoint/snapshot no hipervisor. Nome sugerido:
-   `GameTune-before-phase2`. Reinicie a partir desse estado.
+   `Ametista-before-phase2`. Reinicie a partir desse estado.
 4. Dentro da VM, abra um PowerShell **como administrador**, no checkout. A VM
    precisa oferecer planos de energia clássicos para validar o roundtrip de
    criação e ativação de um plano. Modern Standby pode rejeitar essa operação;
@@ -35,8 +35,8 @@ O ensaio da janela/UAC está em [desktop-vm.md](desktop-vm.md).
 ## Executar
 
 ```powershell
-$env:GAMETUNE_DISPOSABLE_VM = 'I_HAVE_A_SNAPSHOT'
-cargo test -p gametune-windows-runtime --features vm-tests --test windows_vm --locked --offline -- --ignored --test-threads=1
+$env:AMETISTA_DISPOSABLE_VM = 'I_HAVE_A_SNAPSHOT'
+cargo test -p ametista-windows-runtime --features vm-tests --test windows_vm --locked --offline -- --ignored --test-threads=1
 ```
 
 O opt-in registra que existe um snapshot, não detecta nem cria um snapshot do
@@ -45,17 +45,17 @@ Não use `--all-features` em uma compilação de produção.
 
 O teste cria somente:
 
-- `HKU\<SID interativo>\Software\GameTuneTest\V<pid>_<nonce>` e valores dedicados
-- Serviço `GameTuneTest_V<pid>_<nonce>`, executando um serviço .NET compilado
+- `HKU\<SID interativo>\Software\AmetistaTest\V<pid>_<nonce>` e valores dedicados
+- Serviço `AmetistaTest_V<pid>_<nonce>`, executando um serviço .NET compilado
   pelo teste, com início automático atrasado para verificar a restauração
-- Tarefa `\GameTuneTest\GameTuneTest_V<pid>_<nonce>`, com helper próprio e data
+- Tarefa `\AmetistaTest\AmetistaTest_V<pid>_<nonce>`, com helper próprio e data
   futura, sem executar aplicações reais
 - Uma entrada de teste em Run/StartupApproved, identificada pelo mesmo nome,
   apontando para o helper que não executa ações fora do SCM
 - Plano clonado com GUID iniciado por `47544e54-`; o único plano que pode ser
   excluído pelo executor no teste é o que ele criou
-- `%ProgramData%\GameTuneTestFixtures\<nonce>` e, no teste de ACL, um diretório
-  separado `%ProgramData%\GameTuneTestStore\<SID>`
+- `%ProgramData%\AmetistaTestFixtures\<nonce>` e, no teste de ACL, um diretório
+  separado `%ProgramData%\AmetistaTestStore\<SID>`
 
 Registro normal, serviço, tarefa e inicialização usam uma allowlist de fixtures
 compilada somente com `test-targets`/`vm-tests`. Não há substituição de IDs do
@@ -116,6 +116,6 @@ não substitui a matriz administrativa. Appx real não é removido nos testes:
 o fluxo irreversível é testado com mocks, inventários e falhas injetadas.
 
 O workflow manual `windows-vm.yml` usa exclusivamente runner próprio com label
-`gametune-disposable`, iniciado em desktop interativo elevado dentro da VM.
+`ametista-disposable`, iniciado em desktop interativo elevado dentro da VM.
 Nunca associe esse label a uma máquina pessoal ou runner de produção. A execução
 precisa ser disparada manualmente com a confirmação de snapshot.

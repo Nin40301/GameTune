@@ -45,9 +45,9 @@ pub fn text_report(report: &Response, locale: &Locale) -> String {
         out.push_str(&format!(
             " [{}]",
             locale.text(match item.observation.scope {
-                gametune_core::ReadScope::CurrentUserOnly => "currentUserOnly",
-                gametune_core::ReadScope::AllUsers => "allUsers",
-                gametune_core::ReadScope::InteractiveUser => "interactiveUser",
+                ametista_core::ReadScope::CurrentUserOnly => "currentUserOnly",
+                ametista_core::ReadScope::AllUsers => "allUsers",
+                ametista_core::ReadScope::InteractiveUser => "interactiveUser",
                 _ => "machine",
             })
         ));

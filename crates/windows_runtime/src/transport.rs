@@ -1,4 +1,4 @@
-use gametune_core::{ExecError, ExecResult};
+use ametista_core::{ExecError, ExecResult};
 use serde::{Serialize, de::DeserializeOwned};
 use std::sync::atomic::{AtomicBool, Ordering};
 

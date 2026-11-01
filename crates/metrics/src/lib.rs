@@ -272,7 +272,7 @@ mod tests {
                     pid: 1,
                     parent: 0,
                     created: 1,
-                    name: "GameTune.exe".into(),
+                    name: "Ametista.exe".into(),
                     working_set: 40,
                     private_working_set: 20,
                     cpu_ticks: t,

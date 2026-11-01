@@ -1,5 +1,5 @@
 [package]
-name = "gametune-helper"
+name = "ametista-helper"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -7,12 +7,12 @@ license.workspace = true
 publish.workspace = true
 build = "build.rs"
 [[bin]]
-name = "gametune-helper"
+name = "ametista-helper"
 path = "src/main.rs"
 test = false
 bench = false
 [dependencies]
-gametune-ipc.workspace = true
+ametista-ipc.workspace = true
 tokio.workspace = true
 [build-dependencies]
 embed-resource = "3"

@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-use gametune_cli::{args::Options, *};
+use ametista_cli::{args::Options, *};
 use std::{io::Write, process::ExitCode};
 fn main() -> ExitCode {
     let args: Vec<_> = std::env::args_os()

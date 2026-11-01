@@ -19,8 +19,8 @@
   "manifestsAndEightPermissionsVerified":true,
   "productionMockBackendPresent":false,
   "uacOrMutatingVmHarnessExecuted":false,
-  "programDataGameTuneCreated":false,
-  "hkcuGameTuneTestCreated":false,
+  "programDataAmetistaCreated":false,
+  "hkcuAmetistaTestCreated":false,
   "linuxExecutedLocally":false,
   "presentmonExecutableDownloadedOrRunByApp":false,
   "presentmonIntegration":"offline CSV v1 import; parser tested with synthetic captures",
@@ -29,5 +29,5 @@
   "latestArtifactResourceGate":{"idle":{"samples":60,"peakPrivateBytes":81313792,"peakCpuPercent":0.6510416666666666,"passed":true},"monitor":{"samples":60,"peakPrivateBytes":83615744,"peakCpuPercent":0.5249343832020997,"passed":true}},
   "exploratoryFailures":[{"variant":"initial GPU composition","peakPrivateBytes":137879552,"peakCpuPercent":1.953125},{"variant":"software composition earlier build","peakPrivateBytes":83013632,"peakCpuPercent":1.171875},{"variant":"software composition earlier build","peakPrivateBytes":86974464,"peakCpuPercent":0.6510416666666666},{"variant":"idle, near-final software composition","peakPrivateBytes":84176896,"peakCpuPercent":1.3020833333333333}],
   "performanceAcceptance":"pending consistency and Windows/WebView/DPI matrix; latest samples passed but earlier violations remain material",
-  "artifactSha256":{"gametune.exe":"a30c57f6184a169935f5ebcfe4d03f426bfdbb4d4759d56ac3524ab122a21e8a","gametune-helper.exe":"11597e5984c1404712150c7e7884b49d804cdd2d9bdb1518dbc98457f868f5c6"}
+  "artifactSha256":{"ametista.exe":"a30c57f6184a169935f5ebcfe4d03f426bfdbb4d4759d56ac3524ab122a21e8a","ametista-helper.exe":"11597e5984c1404712150c7e7884b49d804cdd2d9bdb1518dbc98457f868f5c6"}
 }

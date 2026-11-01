@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-use gametune_ipc::*;
+use ametista_ipc::*;
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 #[test]
 fn game_frames_reject_replay_foreign_nonce_free_paths_and_unapproved_ids() -> TestResult {
@@ -34,7 +34,7 @@ fn game_frames_reject_replay_foreign_nonce_free_paths_and_unapproved_ids() -> Te
 }
 #[test]
 fn initial_session_authorization_only_accepts_safe_temporary_subset() -> TestResult {
-    let catalog = gametune_catalog::load_embedded()?;
+    let catalog = ametista_catalog::load_embedded()?;
     for id in [
         "reg.cortana",
         "svc.xblauthmanager",

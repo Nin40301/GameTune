@@ -2,7 +2,7 @@
 
 ## Resultado
 
-CLI de produção `gametune-cli` sobre WindowsSession com análise sem elevação,
+CLI de produção `ametista-cli` sobre WindowsSession com análise sem elevação,
 simulação padrão, seleção de perfil, aplicação confirmada, listagem, desfazer,
 ações Appx separadas e saída JSON/texto em pt-BR/en. Importação aceita somente IDs.
 Não adiciona dependências externas; parser fechado testado para os poucos comandos.
@@ -33,7 +33,7 @@ não foi executado localmente nesta máquina Windows.
 
 Análise real local, sem admin, no Windows 11 Pro build 26200: **88 linhas** (86
 descritores + 2 entradas descobertas), 7 selecionadas no Seguro, nenhuma falha de
-leitura, saída 0; ProgramData/GameTune não existia e continuou ausente. Tempo
+leitura, saída 0; ProgramData/Ametista não existia e continuou ausente. Tempo
 medido de uma execução: aproximadamente 33 segundos. Isso valida leitura local,
 não ganho de desempenho nem aceite da matriz Windows.
 
@@ -57,10 +57,10 @@ cargo fmt --all --check
 cargo clippy --workspace --all-targets --locked --offline -- -D warnings
 cargo clippy --workspace --all-targets --all-features --locked --offline -- -D warnings
 cargo test --workspace --locked --offline
-cargo test -p gametune-windows-runtime --features vm-tests,real-profile-tests --locked --offline --no-run
-cargo build -p gametune-cli --release --locked --offline
-target/release/gametune-cli.exe --list --json
-target/release/gametune-cli.exe --profile safe --dry-run --json
+cargo test -p ametista-windows-runtime --features vm-tests,real-profile-tests --locked --offline --no-run
+cargo build -p ametista-cli --release --locked --offline
+target/release/ametista-cli.exe --list --json
+target/release/ametista-cli.exe --profile safe --dry-run --json
 ```
 
 Rodar os harnesses administrativos exige seguir `windows-vm.md` ou

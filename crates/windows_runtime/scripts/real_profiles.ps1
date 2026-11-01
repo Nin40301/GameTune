@@ -1,13 +1,13 @@
 # DESTRUCTIVE VM TEST ONLY. Never embedded in a default-feature release.
 Require-Admin
-if($env:GAMETUNE_DISPOSABLE_VM -cne 'I_HAVE_A_SNAPSHOT' -or $env:GAMETUNE_REAL_PROFILES -cne 'I_ACCEPT_REAL_CATALOG_CHANGES_AND_REBOOTS'){Fail 'protected'}
+if($env:AMETISTA_DISPOSABLE_VM -cne 'I_HAVE_A_SNAPSHOT' -or $env:AMETISTA_REAL_PROFILES -cne 'I_ACCEPT_REAL_CATALOG_CHANGES_AND_REBOOTS'){Fail 'protected'}
 $sid=[string]$p.sid
 if($sid -cnotmatch '^S-1-5-[0-9-]{1,176}$' -or $p.operation -notin @('step','verify','recover')){Fail 'protected'}
 $computer=Get-CimInstance Win32_ComputerSystem
 if(($computer.Manufacturer+' '+$computer.Model) -notmatch 'Virtual|VMware|VirtualBox|KVM|QEMU|Xen|Parallels|Bochs'){Fail 'failed' 'A disposable virtual machine is required'}
 $exe=[IO.Path]::GetFullPath([string]$p.exe)
-if([IO.Path]::GetFileName($exe) -cne 'gametune-cli.exe' -or -not [IO.File]::Exists($exe)){Fail 'failed' 'Build the default-feature debug CLI first'}
-$root=Join-Path ([Environment]::GetFolderPath('CommonApplicationData')) 'GameTuneRealProfileTests'
+if([IO.Path]::GetFileName($exe) -cne 'ametista-cli.exe' -or -not [IO.File]::Exists($exe)){Fail 'failed' 'Build the default-feature debug CLI first'}
+$root=Join-Path ([Environment]::GetFolderPath('CommonApplicationData')) 'AmetistaRealProfileTests'
 $directory=Join-Path $root $sid
 foreach($path in @($root,$directory)){
     if([IO.Directory]::Exists($path) -and ([IO.File]::GetAttributes($path) -band [IO.FileAttributes]::ReparsePoint)){Fail 'protected'}
@@ -80,7 +80,7 @@ function Smoke {
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-public static class GameTuneVmWindows {
+public static class AmetistaVmWindows {
     delegate bool EnumProc(IntPtr hwnd,IntPtr param);
     [DllImport("user32.dll")] static extern bool EnumWindows(EnumProc cb,IntPtr p);
     [DllImport("user32.dll")] static extern bool EnumChildWindows(IntPtr w,EnumProc cb,IntPtr p);
@@ -96,7 +96,7 @@ public static class GameTuneVmWindows {
     }
 }
 '@
-    $desktop=Get-GameTuneDesktop $sid
+    $desktop=Get-AmetistaDesktop $sid
     $edge=Join-Path ([Environment]::GetFolderPath('ProgramFilesX86')) 'Microsoft\Edge\Application\msedge.exe'
     if(-not [IO.File]::Exists($edge)){$edge=Join-Path ([Environment]::GetFolderPath('ProgramFiles')) 'Microsoft\Edge\Application\msedge.exe'}
     if(-not [IO.File]::Exists($edge)){throw 'Edge missing'}
@@ -115,7 +115,7 @@ public static class GameTuneVmWindows {
             foreach($process in @(Get-CimInstance Win32_Process -Filter ("Name='"+$spec.name+"'"))){
                 if($process.ExecutablePath -notmatch $spec.pattern -or $process.SessionId -ne [Diagnostics.Process]::GetCurrentProcess().SessionId){continue}
                 $owner=Invoke-CimMethod -InputObject $process -MethodName GetOwnerSid
-                if($owner.Sid -ceq $sid -and [GameTuneVmWindows]::Responsive([uint32]$process.ProcessId)){$found=@{responsive=$true;path=$process.ExecutablePath;pid=$process.ProcessId};break}
+                if($owner.Sid -ceq $sid -and [AmetistaVmWindows]::Responsive([uint32]$process.ProcessId)){$found=@{responsive=$true;path=$process.ExecutablePath;pid=$process.ProcessId};break}
             }
             if($found){break};Start-Sleep -Milliseconds 500
         }
@@ -138,7 +138,7 @@ try {
         Emit @{status='complete';evidence=$directory};return
     }
     if(-not $state){
-        $history=Cli -arguments @('--undo');if($history.result.needsRecovery -or @($history.result.entries|Where-Object {$_.status -ne 'reverted'}).Count -gt 0){throw 'Use a clean VM without active GameTune history'}
+        $history=Cli -arguments @('--undo');if($history.result.needsRecovery -or @($history.result.entries|Where-Object {$_.status -ne 'reverted'}).Count -gt 0){throw 'Use a clean VM without active Ametista history'}
         $state=[pscustomobject]@{version=1;sid=$sid;machine=$machineGuid;stage='ready';profile='safe';bootBefore='';ids=@();before=$null;completed=@();baselineSmoke=(Smoke)}
     }
     if($state.stage -eq 'complete'){Emit @{status='complete';evidence=$directory};return}

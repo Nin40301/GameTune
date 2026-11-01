@@ -1,9 +1,9 @@
 # Fixed FFI only to identify the existing desktop window owner. No process handles.
-function Get-GameTuneDesktop([string]$expectedSid) {
+function Get-AmetistaDesktop([string]$expectedSid) {
     Add-Type -TypeDefinition @'
 using System;
 using System.Runtime.InteropServices;
-public static class GameTuneDesktopOwner {
+public static class AmetistaDesktopOwner {
     [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
 }
 '@
@@ -12,7 +12,7 @@ public static class GameTuneDesktopOwner {
     $desktop=$shell.Windows().FindWindowSW([ref]$location,[ref]$root,8,[ref]$desktopHwnd,1)
     if($null -eq $desktop -or $desktopHwnd -eq 0){Fail 'unavailable'}
     [uint32]$ownerPid=0
-    $null=[GameTuneDesktopOwner]::GetWindowThreadProcessId([IntPtr]$desktopHwnd,[ref]$ownerPid)
+    $null=[AmetistaDesktopOwner]::GetWindowThreadProcessId([IntPtr]$desktopHwnd,[ref]$ownerPid)
     $owner=Get-CimInstance Win32_Process -Filter "ProcessId=$ownerPid"
     $expected=Join-Path ([Environment]::GetFolderPath('Windows')) 'explorer.exe'
     if($null -eq $owner -or $owner.ExecutablePath -ine $expected -or $owner.SessionId -ne [Diagnostics.Process]::GetCurrentProcess().SessionId){Fail 'protected'}

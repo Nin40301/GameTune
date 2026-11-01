@@ -34,7 +34,7 @@ pub fn pipe_name(nonce: &str) -> Result<String> {
     if !valid_nonce(nonce) {
         return Err(Error::InvalidPayload);
     }
-    Ok(format!(r"\\.\pipe\GameTune.v1.{nonce}"))
+    Ok(format!(r"\\.\pipe\Ametista.v1.{nonce}"))
 }
 pub fn server(nonce: &str, sid: &str) -> Result<NamedPipeServer> {
     let name = pipe_name(nonce)?;
@@ -210,9 +210,9 @@ pub fn launch_helper(nonce: &str) -> Result<Helper> {
     }
     let own = std::env::current_exe()?.canonicalize()?;
     let parent = own.parent().ok_or(Error::Operation)?;
-    let helper = parent.join("gametune-helper.exe").canonicalize()?;
+    let helper = parent.join("ametista-helper.exe").canonicalize()?;
     if helper.parent() != Some(parent)
-        || helper.file_name().and_then(|s| s.to_str()) != Some("gametune-helper.exe")
+        || helper.file_name().and_then(|s| s.to_str()) != Some("ametista-helper.exe")
     {
         return Err(Error::Identity);
     }

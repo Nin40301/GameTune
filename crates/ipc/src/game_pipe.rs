@@ -1,8 +1,8 @@
 //! Authenticated helper stays alive only for one active game session. EOF/timeout
 //! always attempts WAL rollback; a helper/OS crash leaves recovery to next launch.
 use crate::*;
-use gametune_core::Outcome;
-use gametune_windows_runtime::WindowsSession;
+use ametista_core::Outcome;
+use ametista_windows_runtime::WindowsSession;
 use std::time::Duration;
 use tokio::{
     io::{AsyncReadExt, AsyncWriteExt},
@@ -32,6 +32,20 @@ pub async fn serve(
     token: String,
     allowed: Vec<String>,
 ) -> Result<()> {
+    if let Err(ametista_core::ExecError::Failed(message)) = session.context.ensure_elevated()
+        && message == "legacy_data"
+    {
+        reply(
+            &mut stream,
+            Reply {
+                ok: false,
+                result: serde_json::Value::Null,
+                error: Some("legacy_data".into()),
+            },
+        )
+        .await?;
+        return Ok(());
+    }
     let store = session
         .context
         .protected_game_store()
@@ -126,7 +140,7 @@ impl Client {
             &mut stream,
             &serde_json::to_vec(&Envelope {
                 version: 1,
-                catalog_hash: gametune_catalog::embedded_hash(),
+                catalog_hash: ametista_catalog::embedded_hash(),
                 nonce: token.clone(),
                 sequence: 1,
                 command: Command::TemporarySession { ids, confirm: true },

@@ -1,5 +1,5 @@
-use gametune_cli::{args::*, *};
-use gametune_core::*;
+use ametista_cli::{args::*, *};
+use ametista_core::*;
 use serde_json::{Value, json};
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 fn parse(args: &[&str]) -> std::result::Result<Options, Failure> {
@@ -16,7 +16,7 @@ struct Fake {
 impl Fake {
     fn new() -> TestResultWith<Self> {
         Ok(Self {
-            catalog: gametune_catalog::load_embedded()?,
+            catalog: ametista_catalog::load_embedded()?,
             writes: 0,
             reads: 0,
             opens: 0,
@@ -284,7 +284,7 @@ fn binary_json_is_single_document_with_documented_exit_codes() -> TestResult {
         (vec!["--bad", "--json", "--lang", "en"], 2),
         (vec!["--help", "--json"], 0),
     ] {
-        let out = std::process::Command::new(env!("CARGO_BIN_EXE_gametune-cli"))
+        let out = std::process::Command::new(env!("CARGO_BIN_EXE_ametista-cli"))
             .args(args)
             .output()?;
         assert_eq!(out.status.code(), Some(expected));

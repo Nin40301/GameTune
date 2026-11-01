@@ -2,7 +2,7 @@
 Add-Type -TypeDefinition @'
 using System;
 using System.Runtime.InteropServices;
-public static class GameTuneSession {
+public static class AmetistaSession {
     [DllImport("wtsapi32.dll", CharSet=CharSet.Unicode, SetLastError=true)]
     static extern bool WTSQuerySessionInformation(IntPtr server, int session, int kind, out IntPtr buffer, out int size);
     [DllImport("wtsapi32.dll")] static extern void WTSFreeMemory(IntPtr pointer);
@@ -20,8 +20,8 @@ if($p.testCurrentUser){
     $sid=[Security.Principal.WindowsIdentity]::GetCurrent().User.Value
 }else{
     if ($session -eq 0) { Fail 'failed' 'No interactive desktop session' }
-    $userName = [GameTuneSession]::Query($session,5)
-    $domainName = [GameTuneSession]::Query($session,7)
+    $userName = [AmetistaSession]::Query($session,5)
+    $domainName = [AmetistaSession]::Query($session,7)
     if ([string]::IsNullOrEmpty($userName)) { Fail 'failed' 'Interactive session has no user' }
     # Resolve locally without domain/name lookup (which could contact a server).
     # GetOwnerSid is called ONLY for the canonical Windows shell in this session.

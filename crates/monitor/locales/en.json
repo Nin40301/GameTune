@@ -1,11 +1,11 @@
 {
-  "title": "GameTune · Game monitor",
-  "open": "Open GameTune",
+  "title": "Ametista · Game monitor",
+  "open": "Open Ametista",
   "stop": "Stop and restore",
-  "idle": "GameTune · Waiting for a game",
-  "active": "GameTune · Temporary profile active",
-  "recovering": "GameTune · Restoring original settings",
-  "consent": "GameTune · Waiting for Windows consent",
-  "readonly": "GameTune · Observation only",
-  "error": "GameTune · Observation or recovery failed"
+  "idle": "Ametista · Waiting for a game",
+  "active": "Ametista · Temporary profile active",
+  "recovering": "Ametista · Restoring original settings",
+  "consent": "Ametista · Waiting for Windows consent",
+  "readonly": "Ametista · Observation only",
+  "error": "Ametista · Observation or recovery failed"
 }

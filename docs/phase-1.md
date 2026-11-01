@@ -32,7 +32,7 @@ Não houve execução de ajustes reais nem necessidade de elevação.
 | `cargo fmt --all --check` | Passou |
 | `cargo clippy --workspace --all-targets --locked --offline -- -D warnings` | Passou sem avisos |
 | `cargo build --workspace --release --locked --offline` | Passou |
-| `cargo run -p gametune-catalog --example simulate --locked --offline` | JSON com dryRun true, 2 itens planejados em Windows 10 Pro fictício |
+| `cargo run -p ametista-catalog --example simulate --locked --offline` | JSON com dryRun true, 2 itens planejados em Windows 10 Pro fictício |
 
 Na primeira máquina, execute `cargo fetch --locked` para obter dependências de
 compilação. Depois os comandos acima funcionam com o cache e sem rede.

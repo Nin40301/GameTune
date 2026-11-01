@@ -6,7 +6,7 @@ pub mod service;
 mod service_tests;
 pub mod stats;
 pub mod store;
-use gametune_metrics::Sample;
+use ametista_metrics::Sample;
 use serde::{Deserialize, Serialize};
 
 pub const RUNS: usize = 5;

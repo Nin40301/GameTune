@@ -1,6 +1,6 @@
-use gametune_catalog::load_embedded;
-use gametune_core::*;
-use gametune_exec_mock::{MockExecutor, MockHost};
+use ametista_catalog::load_embedded;
+use ametista_core::*;
+use ametista_exec_mock::{MockExecutor, MockHost};
 
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 fn machine() -> Machine {
@@ -33,7 +33,7 @@ fn risk_and_level_filters_hold_independently_of_verification() -> TestResult {
             assert_ne!(item.risk, Risk::High);
             assert_ne!(item.level, 0);
             assert_eq!(item.revert, Revert::Auto);
-            assert!(!gametune_core::protection::is_protected(item));
+            assert!(!ametista_core::protection::is_protected(item));
         }
     }
     let safe = Preset::Safe.select(&catalog, machine());

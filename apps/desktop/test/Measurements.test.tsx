@@ -10,7 +10,7 @@ test('dashboard renders measured fields and can pause without a system operation
   await screen.findByText('6 GiB')
   await user.click(screen.getByRole('button', { name: pt.pauseMetrics }))
   expect(await screen.findByText(pt.metricsPaused)).toBeVisible()
-  expect(window.__gametuneTest?.executions).toHaveLength(0)
+  expect(window.__ametistaTest?.executions).toHaveLength(0)
 })
 test('benchmark requires all conditions and can discard a partial run', async () => {
   const user = userEvent.setup()
@@ -24,7 +24,7 @@ test('benchmark requires all conditions and can discard a partial run', async ()
   await user.click(start)
   await user.click(await screen.findByRole('button', { name: pt.cancelRun }))
   expect(await screen.findByText(pt.benchmarkInterrupted)).toBeVisible()
-  expect(window.__gametuneTest?.executions).toHaveLength(0)
+  expect(window.__ametistaTest?.executions).toHaveLength(0)
 })
 test('FPS stays absent without PresentMon and exports default to anonymized', async () => {
   render(<Measurements backend={createMockBackend()} language="pt-BR" />)

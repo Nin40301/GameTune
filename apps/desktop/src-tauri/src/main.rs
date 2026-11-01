@@ -8,11 +8,11 @@ fn main() {
 }
 #[cfg(windows)]
 fn run() {
-    use gametune_benchmark::{
+    use ametista_benchmark::{
         report::{self, Format},
         service::{Action, FileAction as LabFile, Lab, Status},
     };
-    use gametune_desktop_backend::*;
+    use ametista_desktop_backend::*;
     use std::sync::Arc;
     use tauri::Manager;
     #[tauri::command]
@@ -71,7 +71,7 @@ fn run() {
                         Format::Json => "json",
                         Format::Html => "html",
                     };
-                    let name = format!("GameTune-report.{extension}");
+                    let name = format!("Ametista-report.{extension}");
                     if let Some(path) = rfd::FileDialog::new()
                         .add_filter(extension, &[extension])
                         .set_file_name(name)
@@ -101,7 +101,7 @@ fn run() {
     }
     #[tauri::command]
     async fn bootstrap() -> Result<Bootstrap, String> {
-        tauri::async_runtime::spawn_blocking(gametune_desktop_backend::bootstrap)
+        tauri::async_runtime::spawn_blocking(ametista_desktop_backend::bootstrap)
             .await
             .map_err(|_| "operation_failed".to_string())?
     }
@@ -132,13 +132,13 @@ fn run() {
         state: tauri::State<'_, Arc<Desktop>>,
         lab: tauri::State<'_, Arc<Lab>>,
         approval: Approval,
-    ) -> Result<gametune_desktop_backend::IpcReply, String> {
-        if std::env::var_os("GAMETUNE_RESOURCE_MODE").is_some() {
+    ) -> Result<ametista_desktop_backend::IpcReply, String> {
+        if std::env::var_os("AMETISTA_RESOURCE_MODE").is_some() {
             return Err("read_only".into());
         }
         let _mutation = lab.guard_mutation().map_err(|e| e.to_string())?;
         let command = state.consume_review(approval)?;
-        let applied = matches!(&command, gametune_ipc::Command::Apply { .. });
+        let applied = matches!(&command, ametista_ipc::Command::Apply { .. });
         let reply = execute(command).await?;
         let ids = applied_ids(&reply);
         if applied && !ids.is_empty() {
@@ -163,7 +163,7 @@ fn run() {
         ])
         .setup(|app| {
             let directory = app.path().app_local_data_dir()?.join("measurements");
-            let monitor = std::env::var("GAMETUNE_RESOURCE_MODE").as_deref() != Ok("idle");
+            let monitor = std::env::var("AMETISTA_RESOURCE_MODE").as_deref() != Ok("idle");
             app.manage(Arc::new(Lab::open(&directory, monitor)?));
             app.manage(Arc::new(games::Games::new(
                 app.path().app_local_data_dir()?.join("games"),

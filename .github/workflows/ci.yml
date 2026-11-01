@@ -1,4 +1,4 @@
-name: GameTune Rust
+name: Ametista Rust
 
 on:
   push:
@@ -45,22 +45,22 @@ jobs:
       - name: Test without network
         run: cargo test --workspace --locked --offline
       - name: Compile VM harness without running administrative tests
-        run: cargo test -p gametune-windows-runtime --features vm-tests,real-profile-tests --locked --offline --no-run
+        run: cargo test -p ametista-windows-runtime --features vm-tests,real-profile-tests --locked --offline --no-run
       - name: Lint all harnesses without running them
         run: cargo clippy --workspace --all-targets --all-features --locked --offline -- -D warnings
       - name: Build default-feature release (no fixture authorization)
         run: cargo build --workspace --release --locked --offline
       - name: Run mock simulation
-        run: cargo run -p gametune-catalog --example simulate --locked --offline
+        run: cargo run -p ametista-catalog --example simulate --locked --offline
       - name: CLI closed catalog without Windows access
-        run: cargo run -p gametune-cli --locked --offline -- --list --json
+        run: cargo run -p ametista-cli --locked --offline -- --list --json
       - name: Publish default-feature CLI
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: gametune-cli-${{ matrix.os }}
+          name: ametista-cli-${{ matrix.os }}
           path: |
-            target/release/gametune-cli
-            target/release/gametune-cli.exe
+            target/release/ametista-cli
+            target/release/ametista-cli.exe
             docs/cli.md
             LICENSE
             NOTICE
@@ -72,11 +72,11 @@ jobs:
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: gametune-desktop-windows-x64
+          name: ametista-desktop-windows-x64
           path: |
-            target/release/gametune.exe
-            target/release/gametune-helper.exe
-            target/release/gametune-monitor.exe
+            target/release/ametista.exe
+            target/release/ametista-helper.exe
+            target/release/ametista-monitor.exe
             docs/games.md
             docs/desktop.md
             docs/desktop-security.md

@@ -15,13 +15,13 @@ import type {
 } from './types'
 declare global {
   interface Window {
-    __gametuneTest?: { executions: Approval[]; reviews: Selection[]; cancelled: number }
+    __ametistaTest?: { executions: Approval[]; reviews: Selection[]; cancelled: number }
   }
 }
 export function createMockBackend(): Backend {
   const items = catalog.items as unknown as Item[]
   const trace = { executions: [] as Approval[], reviews: [] as Selection[], cancelled: 0 }
-  window.__gametuneTest = trace
+  window.__ametistaTest = trace
   let id = 0,
     completed = 0,
     status: Analysis['status'] = 'idle',

@@ -1,5 +1,5 @@
 {
-  "title":"GameTune measurement report",
+  "title":"Ametista measurement report",
   "note":"Descriptive measurements, not an FPS gain estimate. Overlapping ranges or differences within noise are inconclusive. First run discarded. PresentMon values describe intervals between presents, not necessarily displayed frames",
   "metric_available_memory":"Available RAM (MiB)",
   "metric_cpu":"CPU (%)",

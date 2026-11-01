@@ -1,5 +1,5 @@
 [package]
-name = "gametune-exec-registry"
+name = "ametista-exec-registry"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -7,9 +7,9 @@ publish.workspace = true
 license.workspace = true
 
 [dependencies]
-gametune-windows-runtime.workspace = true
-gametune-core.workspace = true
-gametune-exec-mock.workspace = true
+ametista-windows-runtime.workspace = true
+ametista-core.workspace = true
+ametista-exec-mock.workspace = true
 
 [lints]
 workspace = true
