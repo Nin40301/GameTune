@@ -43,3 +43,9 @@ reutilizados. package-lock.json e Cargo.lock fixam resoluções. CI usa Node 26 
 Actions por SHA. Compilar/instalar dependências pode usar rede; executar a UI
 de produção usa somente assets locais e IPC. Os testes de navegador rodam apenas
 contra 127.0.0.1 e mocks, sem aplicar configurações reais.
+
+## Fase 6.5 — camada visual
+
+- `@fontsource-variable/plus-jakarta-sans`: família variável solicitada, WOFF2 local, licença OFL-1.1 incluída na distribuição. Nenhuma chamada a CDN. [Fontsource](https://fontsource.org/fonts/plus-jakarta-sans/use)
+- `lucide-react`: SVGs acessíveis de traço simples, imports explícitos e tree shaking; substitui glifos/emoji sem biblioteca de gráficos ou animação. Licença ISC incluída na distribuição. [Documentação oficial](https://lucide.dev/guide/react)
+- Nenhuma dependência Rust nova; sem mudança na CSP `font-src self` existente.
