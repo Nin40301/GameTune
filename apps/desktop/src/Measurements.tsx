@@ -1,3 +1,4 @@
+import { Checkbox } from './components/Checkbox'
 import { useEffect, useState, type ReactNode } from 'react'
 import { StatusOrb } from './components/StatusOrb'
 import { Icon } from './components/Icon'
@@ -298,8 +299,7 @@ export function Measurements({
                     <legend>{t('confirmConditions')}</legend>
                     {(['appsClosed', 'sameWorkload', 'cooled', 'samePower'] as const).map((key) => (
                       <label className="check-line" key={key}>
-                        <input
-                          type="checkbox"
+                        <Checkbox
                           checked={conditions[key]}
                           onChange={(e) =>
                             setConditions({ ...conditions, [key]: e.target.checked })
@@ -346,11 +346,7 @@ export function Measurements({
               <details>
                 <summary>{t('resetExperiment')}</summary>
                 <label className="check-line">
-                  <input
-                    type="checkbox"
-                    checked={reset}
-                    onChange={(e) => setReset(e.target.checked)}
-                  />
+                  <Checkbox checked={reset} onChange={(e) => setReset(e.target.checked)} />
                   {t('confirmReset')}
                 </label>
                 <button
@@ -482,11 +478,7 @@ export function Measurements({
           <section className="surface results-panel">
             <h2>{t('exportMeasurements')}</h2>
             <label className="check-line">
-              <input
-                type="checkbox"
-                checked={anonymize}
-                onChange={(e) => setAnonymize(e.target.checked)}
-              />
+              <Checkbox checked={anonymize} onChange={(e) => setAnonymize(e.target.checked)} />
               {t('anonymizeReport')}
             </label>
             <p className="muted">{t('anonymizeNote')}</p>

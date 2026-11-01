@@ -1,3 +1,4 @@
+import { Checkbox } from './components/Checkbox'
 import { useEffect, useState } from 'react'
 import type { Backend, Game, GamesAction, GamesView, Language } from './types'
 import { translator } from './i18n'
@@ -86,7 +87,7 @@ export function GamesPanel({
           )}
           {!live && (
             <label className="check-line">
-              <input type="checkbox" checked={ack} onChange={(e) => setAck(e.target.checked)} />
+              <Checkbox checked={ack} onChange={(e) => setAck(e.target.checked)} />
               {t('monitorConsent')}
             </label>
           )}
@@ -173,8 +174,7 @@ export function GamesPanel({
                     <legend>{t('gameActions')}</legend>
                     {view?.actions.map((action) => (
                       <label className="game-action" key={action.id}>
-                        <input
-                          type="checkbox"
+                        <Checkbox
                           checked={editing.actionIds.includes(action.id)}
                           disabled={compatible[action.id] === false}
                           onChange={(e) =>
@@ -194,8 +194,7 @@ export function GamesPanel({
                       </label>
                     ))}
                     <label className="check-line">
-                      <input
-                        type="checkbox"
+                      <Checkbox
                         checked={editing.consent}
                         onChange={(e) => setEditing({ ...editing, consent: e.target.checked })}
                       />
@@ -227,8 +226,7 @@ export function GamesPanel({
                   <details className="remove-game">
                     <summary>{t('removeGame')}</summary>
                     <label className="check-line">
-                      <input
-                        type="checkbox"
+                      <Checkbox
                         checked={remove}
                         disabled={live}
                         onChange={(e) => setRemove(e.target.checked)}

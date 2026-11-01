@@ -1,0 +1,82 @@
+{
+  "phase": "6.5-polish",
+  "date": "2026-11-01",
+  "rust": {
+    "passed": 122,
+    "failed": 0,
+    "ignoredVm": 2
+  },
+  "components": {
+    "passed": 19
+  },
+  "playwright": {
+    "uniqueScenariosPassed": 45,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "designRepeatedPassed": 20,
+    "finalCapturesRepeatedPassed": 12,
+    "note": "Repeated cases are not counted as additional unique tests"
+  },
+  "axe": {
+    "matrixAudits": 128,
+    "violations": 0,
+    "matrixContrastIncomplete": 128,
+    "limitation": "Pseudo-element backgrounds remain incomplete in axe; retained in original results"
+  },
+  "contrastSampling": {
+    "method": "45 background pixel samples per visible text range; text hidden only during background capture; WCAG luminance; disabled and occluded text excluded",
+    "limitations": "Visible viewport only; sampled grid, not every glyph pixel; complements axe and visual review; no screen-reader or native WebView validation",
+    "cases": 144,
+    "textRanges": 5276,
+    "failures": []
+  },
+  "resources": {
+    "baselinePhase6": {
+      "peakPrivateBytes": 139309056,
+      "peakCpuPercent": 0.769230769,
+      "historical": true
+    },
+    "beforePolishPhase65": null,
+    "conditions": "No game open (user confirmed), native visible Home, light theme, 1100x740 configured window, real sampler on, 30s warmup + 60s samples; unchanged limits; no tolerance for busy host",
+    "results": {
+      "full": {
+        "passed": false,
+        "peakCpuPercent": 3.120936280884265,
+        "peakPrivateBytes": 249864192,
+        "samples": 60,
+        "peakMiB": 238.2890625,
+        "limits": [
+          157286400,
+          1.0
+        ],
+        "durationSeconds": 60.0055857
+      },
+      "reduced": {
+        "passed": false,
+        "peakCpuPercent": 1.5748031496062993,
+        "peakPrivateBytes": 252305408,
+        "samples": 60,
+        "peakMiB": 240.6171875,
+        "limits": [
+          157286400,
+          1.0
+        ],
+        "durationSeconds": 60.0041488
+      }
+    },
+    "passed": false,
+    "note": "Gates preceded only final select-width and mobile-brand CSS refinements; desktop Home and collector unchanged"
+  },
+  "nativeBuild": {
+    "sha256": "063cbcda1e593a87efcc67416a90e20bb94afbce8be548e7ea7de0d265be16ab",
+    "signed": false
+  },
+  "screenshots": {
+    "viewport": 64,
+    "fullPage": 20,
+    "backend": "mock",
+    "language": "pt-BR",
+    "effects": "full"
+  }
+}

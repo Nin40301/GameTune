@@ -86,7 +86,7 @@
   "reviewApps": "Review removal",
   "noApps": "No removable catalog apps were found in this analysis",
   "reviewTitle": "Check before authorizing",
-  "reviewIntro": "No changes have been made. Acknowledge the risks below to continue",
+  "reviewIntro": "Review the risks and confirm to continue",
   "byType": "Summary by type",
   "registry": "Registry",
   "service": "Services",
@@ -319,5 +319,7 @@
   "short_benchmark": "Metrics",
   "short_games": "Games",
   "short_settings": "Settings",
-  "tableNavigation": "Horizontally scrollable table"
+  "tableNavigation": "Horizontally scrollable table",
+  "more": "More",
+  "searchPlaceholder": "Search for a setting or description"
 }

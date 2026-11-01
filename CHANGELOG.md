@@ -1,3 +1,12 @@
+# Polimento da Fase 6.5 — 2026-11-01
+
+- Tracking dos títulos suavizado, hierarquia simplificada e status de análise contextual
+- Revisão compacta agrupada por risco, ícones por tipo e Checkbox acessível compartilhado
+- Busca/categoria refinadas, espaço reservado para ações e navegação móvel com quatro itens e Mais
+- Novas capturas e testes; backend e segurança preservados
+- Gates nativos executados sem jogos: Completo 238,29 MiB/3,1209%; Reduzido 240,62 MiB/1,5748%; ambos reprovados, limites inalterados
+- Veja docs/phase-6.5-polish.md para evidências e pendências
+
 # Fase 6.5 — Renomeação
 
 GameTune passou a se chamar Ametista. O titular histórico permanece GameTune contributors (NOTICE). Não há migração de dados: a pasta antiga em ProgramData bloqueia escritas, sem apagar ou mover conteúdo. A tag v0.6.0 preserva o checkpoint anterior.

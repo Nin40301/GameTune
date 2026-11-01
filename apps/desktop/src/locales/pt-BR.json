@@ -86,7 +86,7 @@
   "reviewApps": "Revise a remoção",
   "noApps": "Nenhum app removível do catálogo encontrado nesta análise",
   "reviewTitle": "Confira antes de autorizar",
-  "reviewIntro": "Nenhuma alteração foi feita. Confirme os riscos abaixo para continuar",
+  "reviewIntro": "Confira os riscos e confirme para continuar",
   "byType": "Resumo por tipo",
   "registry": "Registro",
   "service": "Serviços",
@@ -319,5 +319,7 @@
   "short_benchmark": "Medições",
   "short_games": "Jogos",
   "short_settings": "Ajustes",
-  "tableNavigation": "Tabela com rolagem horizontal"
+  "tableNavigation": "Tabela com rolagem horizontal",
+  "more": "Mais",
+  "searchPlaceholder": "Busque um ajuste ou uma descrição"
 }

@@ -1,3 +1,4 @@
+import { Checkbox } from './components/Checkbox'
 import { useEffect, useRef, useState } from 'react'
 import type {
   Analysis,
@@ -32,6 +33,7 @@ const emptyAnalysis: Analysis = {
   observations: [],
   error: null,
 }
+const primaryNavigation: Page[] = ['home', 'items', 'benchmark', 'games']
 const navigation: Page[] = [
   'home',
   'items',
@@ -74,6 +76,18 @@ export function App({ backend }: { backend: Backend }) {
     preference('effects', 'reduced') === 'full' ? 'full' : 'reduced',
   )
   const [advanced, setAdvanced] = useState(() => preference('advanced', 'false') === 'true')
+  const [compactNavigation, setCompactNavigation] = useState(
+    () =>
+      typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 900px)').matches,
+  )
+  const moreMenu = useRef<HTMLDetailsElement>(null)
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return
+    const media = window.matchMedia('(max-width: 900px)')
+    const update = () => setCompactNavigation(media.matches)
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
   const [gameRecovery, setGameRecovery] = useState(false)
   const [page, setPage] = useState<Page>('home'),
     [data, setData] = useState<Bootstrap | null>(null)
@@ -265,6 +279,34 @@ export function App({ backend }: { backend: Backend }) {
     !(item.type === 'startup' && !item.target.entry)
   const activeHistory =
     history.journal?.entries.filter((entry) => entry.status !== 'reverted') ?? []
+  function navigate(item: Page) {
+    setPage(item)
+    setSearch('')
+    setCategory('all')
+    if (moreMenu.current) moreMenu.current.open = false
+  }
+  function navigationButton(item: Page) {
+    return (
+      <button
+        type="button"
+        aria-label={t(item)}
+        aria-current={page === item ? 'page' : undefined}
+        disabled={busy || (item === 'review' && !review)}
+        onClick={() => navigate(item)}
+      >
+        <span className="nav-symbol" aria-hidden="true">
+          <Icon name={item} />
+        </span>
+        <span className="nav-label">{t(item)}</span>
+        <span className="nav-short" aria-hidden="true">
+          {t(`short_${item}`)}
+        </span>
+        {item === 'items' && selected.length > 0 && (
+          <span className="nav-count">{selected.length}</span>
+        )}
+      </button>
+    )
+  }
   return (
     <div className="app-shell app-bg">
       <a className="skip-link" href="#main">
@@ -281,37 +323,37 @@ export function App({ backend }: { backend: Backend }) {
         <nav className="nav" data-index={navigation.indexOf(page)} aria-label={t('nav')}>
           <span className="nav__pill" aria-hidden="true" />
           <ul>
-            {navigation.map((item) => (
-              <li key={item}>
-                <button
-                  type="button"
-                  aria-label={t(item)}
-                  aria-current={page === item ? 'page' : undefined}
-                  disabled={busy || (item === 'review' && !review)}
-                  onClick={() => {
-                    setPage(item)
-                    setSearch('')
-                    setCategory('all')
+            {(compactNavigation ? primaryNavigation : navigation).map((item) => (
+              <li key={item}>{navigationButton(item)}</li>
+            ))}
+            {compactNavigation && (
+              <li className="more-navigation">
+                <details
+                  ref={moreMenu}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      event.currentTarget.open = false
+                      event.currentTarget.querySelector('summary')?.focus()
+                    }
                   }}
                 >
-                  <span className="nav-symbol" aria-hidden="true">
-                    <Icon name={item} />
-                  </span>
-                  <span className="nav-label">{t(item)}</span>
-                  <span className="nav-short" aria-hidden="true">
-                    {t(`short_${item}`)}
-                  </span>
-                  {item === 'items' && selected.length > 0 && (
-                    <span className="nav-count">{selected.length}</span>
-                  )}
-                </button>
+                  <summary aria-label={t('more')} data-active={!primaryNavigation.includes(page)}>
+                    <Icon name="more" />
+                    <span>{t('more')}</span>
+                  </summary>
+                  <div className="more-panel" aria-label={t('more')}>
+                    {navigation
+                      .filter((item) => !primaryNavigation.includes(item))
+                      .map((item) => (
+                        <div key={item}>{navigationButton(item)}</div>
+                      ))}
+                  </div>
+                </details>
               </li>
-            ))}
+            )}
           </ul>
         </nav>
         <div className="sidebar-footer">
-          <span className="status-dot" />
-          {t('offline')}
           <span className="version">v{version}</span>
         </div>
       </aside>
@@ -322,7 +364,6 @@ export function App({ backend }: { backend: Backend }) {
               <BrandMark />
               {t('brand')}
             </span>
-            <span>{t(page)}</span>
           </span>
           <div>
             <span className="pill">
@@ -339,17 +380,24 @@ export function App({ backend }: { backend: Backend }) {
             {import.meta.env.MODE === 'test' && <div className="test-mode">{t('testMode')}</div>}
             <div className="page-heading">
               <div>
-                <p className="eyebrow">
-                  {t('brand')} / {t(page)}
-                </p>
                 <h1 ref={heading} tabIndex={-1}>
                   {title}
                 </h1>
               </div>
               {page === 'items' && (
-                <span className="counter">
-                  {selected.length} {t('selected').toLocaleLowerCase()}
-                </span>
+                <div className="heading-actions">
+                  <span className="counter">
+                    {selected.length} {t('selected').toLocaleLowerCase()}
+                  </span>
+                  <Button
+                    variant="glass"
+                    icon={<Icon name="search" />}
+                    disabled={!data || scanning || busy}
+                    onClick={() => void analyze()}
+                  >
+                    {t('analyze')}
+                  </Button>
+                </div>
               )}
             </div>
             {error && (
@@ -371,7 +419,9 @@ export function App({ backend }: { backend: Backend }) {
                 </button>
               </div>
             )}
-            {(scanning || analysis.status === 'cancelled' || ready) && (
+            {(scanning ||
+              ((analysis.status === 'cancelled' || ready) &&
+                ['home', 'items', 'apps'].includes(page))) && (
               <section className="scan-status" aria-label={t('progress')}>
                 <div>
                   <strong role="status" aria-live="polite">
@@ -421,11 +471,13 @@ export function App({ backend }: { backend: Backend }) {
                 )}
               </section>
             )}
-            {ready && analysis.observations.some((row) => row.error) && (
-              <p className="notice warning" role="status">
-                {t('readError')}
-              </p>
-            )}
+            {ready &&
+              ['home', 'items', 'apps'].includes(page) &&
+              analysis.observations.some((row) => row.error) && (
+                <p className="notice warning" role="status">
+                  {t('readError')}
+                </p>
+              )}
             {page === 'home' && (
               <>
                 <p className="intro">{t('homeIntro')}</p>
@@ -496,36 +548,36 @@ export function App({ backend }: { backend: Backend }) {
                 <div className="toolbar glass">
                   <label className="search-label">
                     <span>{t('search')}</span>
-                    <input
-                      type="search"
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <span className="search-field">
+                      <Icon name="search" />
+                      <input
+                        type="search"
+                        placeholder={t('searchPlaceholder')}
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </span>
                   </label>
                   <label>
                     {t('category')}
-                    <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                      <option value="all">{t('all')}</option>
-                      {[
-                        ...new Set(
-                          (data?.items ?? [])
-                            .filter((item) => item.type !== 'appx')
-                            .map((item) => item.category),
-                        ),
-                      ].map((value) => (
-                        <option key={value} value={value}>
-                          {categoryLabel(value)}
-                        </option>
-                      ))}
-                    </select>
+                    <span className="select-field">
+                      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                        <option value="all">{t('all')}</option>
+                        {[
+                          ...new Set(
+                            (data?.items ?? [])
+                              .filter((item) => item.type !== 'appx')
+                              .map((item) => item.category),
+                          ),
+                        ].map((value) => (
+                          <option key={value} value={value}>
+                            {categoryLabel(value)}
+                          </option>
+                        ))}
+                      </select>
+                      <Icon name="chevronDown" />
+                    </span>
                   </label>
-                  <button
-                    className="button"
-                    disabled={!data || scanning}
-                    onClick={() => void analyze()}
-                  >
-                    {t('analyze')}
-                  </button>
                 </div>
                 <div className="item-list surface">
                   {[...new Set(list.map((item) => item.category))].map((group) => (
@@ -859,13 +911,7 @@ function ItemRow({
       <div className="item-select">
         {item.type === 'appx' ? (
           <label className="checkbox-target">
-            <input
-              type="checkbox"
-              checked={checked}
-              disabled={disabled}
-              onChange={onToggle}
-              aria-label={name}
-            />
+            <Checkbox checked={checked} disabled={disabled} onChange={onToggle} aria-label={name} />
           </label>
         ) : (
           <Switch checked={checked} disabled={disabled} onChange={onToggle} label={name} />
@@ -1012,8 +1058,7 @@ function ReviewScreen({
     const itemId = id.slice(id.indexOf(':') + 1)
     return (
       <label className="consent" key={id}>
-        <input
-          type="checkbox"
+        <Checkbox
           checked={acks[id] ?? false}
           aria-describedby={`review-heading-${itemId} review-risk-${itemId}`}
           disabled={busy}
@@ -1055,64 +1100,94 @@ function ReviewScreen({
       {review.kind === 'reinstall' && <p>{t('reinstallReview')}</p>}
       {(review.kind === 'undo' || review.kind === 'undo_all') && <p>{t('undoReview')}</p>}
       <section className="surface review-summary glass" aria-label={t('byType')}>
-        <h2>{t('byType')}</h2>
-        <dl>
+        <dl className="review-metrics">
           {Object.entries(review.counts).map(([kind, count]) => (
             <div key={kind}>
-              <dt>{t(kind)}</dt>
+              <dt>
+                <Icon
+                  name={
+                    kind === 'appx'
+                      ? 'apps'
+                      : kind === 'service'
+                        ? 'service'
+                        : kind === 'scheduled_task'
+                          ? 'task'
+                          : kind === 'power'
+                            ? 'power'
+                            : kind === 'startup'
+                              ? 'startup'
+                              : 'registry'
+                  }
+                />
+                {t(kind)}
+              </dt>
               <dd>{count}</dd>
             </div>
           ))}
         </dl>
       </section>
       <div className="review-timeline">
-        {review.items.map((item) => (
-          <section className="review-item" key={item.id}>
-            <span className="timeline-marker">
-              <Icon
-                name={
-                  item.type === 'appx'
-                    ? 'apps'
-                    : item.type === 'power'
-                      ? 'power'
-                      : item.type === 'service'
-                        ? 'service'
-                        : 'registry'
-                }
-              />
-            </span>
-            <div className="section-top">
-              <h2 id={`review-heading-${item.id}`}>{item.name[language]}</h2>
-              <span className={`risk-badge ${item.risk}`}>
-                <Icon
-                  name={item.risk === 'high' ? 'high' : item.risk === 'low' ? 'warning' : 'safe'}
-                />
-                {t(
-                  item.risk === 'high' ? 'riskHigh' : item.risk === 'low' ? 'riskLow' : 'riskNone',
-                )}
-              </span>
-            </div>
-            <p id={`review-risk-${item.id}`}>{item.riskNote[language]}</p>
-            {item.requiresReboot && (
-              <p className="notice warning">
-                <Icon name="warning" />
-                {t('reboot')}
-              </p>
-            )}
-            {removal && ack(`undo:${item.id}`, t('ackNoUndo'))}
-            {item.risk === 'high' &&
-              (removal || review.kind === 'apply') &&
-              ack(`risk:${item.id}`, t('ackRisk'))}
-            {!item.verified &&
-              (removal || review.kind === 'apply') &&
-              ack(`unverified:${item.id}`, t('ackUnverified'))}
-          </section>
-        ))}
+        {(['none', 'low', 'high'] as const)
+          .filter((risk) => review.items.some((item) => item.risk === risk))
+          .map((risk) => (
+            <section
+              className={`review-risk-group ${risk}`}
+              key={risk}
+              aria-label={t(risk === 'high' ? 'riskHigh' : risk === 'low' ? 'riskLow' : 'riskNone')}
+            >
+              <h2 className="risk-group-heading">
+                <Icon name={risk === 'high' ? 'high' : 'safe'} />
+                {t(risk === 'high' ? 'riskHigh' : risk === 'low' ? 'riskLow' : 'riskNone')}
+                <span className="num">
+                  {review.items.filter((item) => item.risk === risk).length}
+                </span>
+              </h2>
+              {review.items
+                .filter((item) => item.risk === risk)
+                .map((item) => (
+                  <section className="review-item" key={item.id}>
+                    <span className="timeline-marker">
+                      <Icon
+                        name={
+                          item.type === 'appx'
+                            ? 'apps'
+                            : item.type === 'power'
+                              ? 'power'
+                              : item.type === 'service'
+                                ? 'service'
+                                : item.type === 'scheduled_task'
+                                  ? 'task'
+                                  : item.type === 'startup'
+                                    ? 'startup'
+                                    : 'registry'
+                        }
+                      />
+                    </span>
+                    <div className="section-top">
+                      <h2 id={`review-heading-${item.id}`}>{item.name[language]}</h2>
+                    </div>
+                    <p id={`review-risk-${item.id}`}>{item.riskNote[language]}</p>
+                    {item.requiresReboot && (
+                      <p className="notice warning">
+                        <Icon name="warning" />
+                        {t('reboot')}
+                      </p>
+                    )}
+                    {removal && ack(`undo:${item.id}`, t('ackNoUndo'))}
+                    {item.risk === 'high' &&
+                      (removal || review.kind === 'apply') &&
+                      ack(`risk:${item.id}`, t('ackRisk'))}
+                    {!item.verified &&
+                      (removal || review.kind === 'apply') &&
+                      ack(`unverified:${item.id}`, t('ackUnverified'))}
+                  </section>
+                ))}
+            </section>
+          ))}
       </div>
       <div className="final-consent">
         <label className="consent">
-          <input
-            type="checkbox"
+          <Checkbox
             checked={confirmed}
             disabled={busy}
             onChange={(e) => setConfirmed(e.target.checked)}

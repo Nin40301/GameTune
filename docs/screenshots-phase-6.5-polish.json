@@ -1,0 +1,765 @@
+{
+  "backend": "mock",
+  "language": "pt-BR",
+  "effects": "full",
+  "count": 84,
+  "inspection": "Viewport matrix inspected through contact sheets and enlarged originals; supplemental full-page captures include fixed navigation at original viewport position",
+  "images": [
+    {
+      "file": "apps-dark-1100.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "a4d3c1be2e65f2338ac39137a97e66293cc7384d36f0df962e12e16d71202d4f"
+    },
+    {
+      "file": "apps-dark-1440-full.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1250,
+      "fullPage": true,
+      "sha256": "20ed2f1e73b59ed09bc24554e490da7d61c9dd29088ded5ba44ee54bce5d950d"
+    },
+    {
+      "file": "apps-dark-1440.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "174e3e9d14c0e29e3fb1f78737691003ebe2538c784be679b81fd925563824ba"
+    },
+    {
+      "file": "apps-dark-390-full.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 390,
+      "height": 1942,
+      "fullPage": true,
+      "sha256": "370e9d99a980f6b38aa86249eea687bace45c38e4711faeab03378f0689e5f4c"
+    },
+    {
+      "file": "apps-dark-390.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "2fbfcc1936c2ea0df478597dfe14403284be5d0fc9fa24d1f56c399eaf4ed1f8"
+    },
+    {
+      "file": "apps-dark-768.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "e7ba9bbac0053644d1535151e2b5027643e17164ed52fabcc335848a239e7c91"
+    },
+    {
+      "file": "apps-light-1100.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "a69541dda673bcaaec5df1055ac0c4b28f591c90a790f5dccbb4eb28dab3132c"
+    },
+    {
+      "file": "apps-light-1440-full.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 1440,
+      "height": 1250,
+      "fullPage": true,
+      "sha256": "7cc42848fbce6214ab99a4ab993613775da44539b58cd29ac5eae76068b29460"
+    },
+    {
+      "file": "apps-light-1440.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "de515f6732dc793db6c379cf149dbccda1ae9941097d01b670ef5afde07206aa"
+    },
+    {
+      "file": "apps-light-390-full.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 390,
+      "height": 1942,
+      "fullPage": true,
+      "sha256": "1318e9e053811696f0ab992f5bfcb429e636b78347c37c5f0f5d343b177929a1"
+    },
+    {
+      "file": "apps-light-390.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "f6c899b522e22bb5eeea13aa482195203c4844b148b2899a55074f1b93bd14aa"
+    },
+    {
+      "file": "apps-light-768.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "b3e3612cd9caa586a76c4d1de38088ad5ee4df136a6910363c2a039caf92188a"
+    },
+    {
+      "file": "benchmark-dark-1100.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "363661e48837b74b6eeb935cdcf4fa1ab8fad226506994df210701841501afd9"
+    },
+    {
+      "file": "benchmark-dark-1440-full.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1866,
+      "fullPage": true,
+      "sha256": "a0dc02b27b68116cccc48da5671d60c5a3fec73d9e3baee437fe2acda786b76a"
+    },
+    {
+      "file": "benchmark-dark-1440.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "c81aecd56ea0884e7d17e6bfa2c61dfbedf6dedb3532a81aaa0804dabd58ad1d"
+    },
+    {
+      "file": "benchmark-dark-390-full.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 390,
+      "height": 2750,
+      "fullPage": true,
+      "sha256": "7352390e0ea610ef56e128fc5598f03144f0006caafd428cbba1afb197a94d8c"
+    },
+    {
+      "file": "benchmark-dark-390.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "2fbd254ddc66157b0bd3e221db25c42479cd48fb3502ecf93dd6f6b016f811f1"
+    },
+    {
+      "file": "benchmark-dark-768.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "7dc7b675653fe6139fc5580c78b52cf544e8785233d4916b35411e60179c4c62"
+    },
+    {
+      "file": "benchmark-light-1100.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "3d8ec02c20fa5e10919482abb2db18543e2e3c91550207d3e837c47af3105543"
+    },
+    {
+      "file": "benchmark-light-1440-full.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 1440,
+      "height": 1866,
+      "fullPage": true,
+      "sha256": "0c350fefb6dd4d41a53c9f95cc20b965551fe606bb0998540eedc9b5c71fe5df"
+    },
+    {
+      "file": "benchmark-light-1440.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "1c0de6498ebffb68d282d7cf07d02b40aba7721e6aba73d0d91eed91ebdb7fa6"
+    },
+    {
+      "file": "benchmark-light-390-full.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 390,
+      "height": 2750,
+      "fullPage": true,
+      "sha256": "62c1c78ff05fe58fc4f45913ee09bdc1e82769d8b9b3de7ee97b80ed98817a1f"
+    },
+    {
+      "file": "benchmark-light-390.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "a60a232ad546f477036113421fb1c8026b6771d8711d2e4413d7a4049bfb1116"
+    },
+    {
+      "file": "benchmark-light-768.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "eb91026d1aa859301cbf90572abb32cd0fbb22f248b73723178ac82a240ad8f9"
+    },
+    {
+      "file": "games-dark-1100.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "2d4ed6292d6aafca952097fc9a3bfe3802233f5dead2d7ff978fa6f64aaa89c5"
+    },
+    {
+      "file": "games-dark-1440-full.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1717,
+      "fullPage": true,
+      "sha256": "a4bf815d322c85754bbfef688466e9f566908780795762a8d29f720d43be6b94"
+    },
+    {
+      "file": "games-dark-1440.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "f3dfb7ab5a4017c06fae2336a490f083ee2f6789f86c837439cda62d3584caa5"
+    },
+    {
+      "file": "games-dark-390-full.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 390,
+      "height": 2489,
+      "fullPage": true,
+      "sha256": "debf685cf843eb26805ebfe6ccbb467d648fecb42eb4abb53142710bbaac73db"
+    },
+    {
+      "file": "games-dark-390.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "189fe8ef1b607ecac284d31282516d84416dfe78a066274dcf5a75a150b649f5"
+    },
+    {
+      "file": "games-dark-768.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "9eafb9181e54036fe4bf80d65057d6d1f97cc6ba54c74632216c37d0a481932a"
+    },
+    {
+      "file": "games-light-1100.png",
+      "page": "games",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "a8c6d5d47c09eb7a5a2fb39bdfb08fd501851e803df3c535b4fc961be8015751"
+    },
+    {
+      "file": "games-light-1440-full.png",
+      "page": "games",
+      "theme": "light",
+      "width": 1440,
+      "height": 1717,
+      "fullPage": true,
+      "sha256": "dd85af586b933d58b54c4477cd0d6922db95e456087df6cb7471aea1a09adb3b"
+    },
+    {
+      "file": "games-light-1440.png",
+      "page": "games",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "8f3b23defb2eda6805572be0cc7f7c4e692a110a440468512ab219f16e0957e6"
+    },
+    {
+      "file": "games-light-390-full.png",
+      "page": "games",
+      "theme": "light",
+      "width": 390,
+      "height": 2489,
+      "fullPage": true,
+      "sha256": "85b12d1cb0a388c501ccfebd83d39bf144f4652bb99dee82c6a1b59346f59c68"
+    },
+    {
+      "file": "games-light-390.png",
+      "page": "games",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "48d176b4235ea4ccdc06a548ed1426c9313460e81db0b8217fcc8db486bfae9f"
+    },
+    {
+      "file": "games-light-768.png",
+      "page": "games",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "1af72e7a6d2d11195382ef2bdbc8d27fe1e1253598a0e08f6ee8c8e150947fe6"
+    },
+    {
+      "file": "history-dark-1100.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "bc857838364279604eb32863c1e108e1cd91b6490247c970db3aaa216892d35a"
+    },
+    {
+      "file": "history-dark-1440-full.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": true,
+      "sha256": "d9f649f4caf500af7518ae53c97a6a4637b490653eb896f80941a379798e077d"
+    },
+    {
+      "file": "history-dark-1440.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "d9f649f4caf500af7518ae53c97a6a4637b490653eb896f80941a379798e077d"
+    },
+    {
+      "file": "history-dark-390-full.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 390,
+      "height": 1016,
+      "fullPage": true,
+      "sha256": "d20f28855344f1340d5573541036b5aa648b89360f7b425d624ca475f62a41a1"
+    },
+    {
+      "file": "history-dark-390.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "6a8d5a961e2b3bbe2b368f6774ef4b63e917239d36432552a938b432c1252f99"
+    },
+    {
+      "file": "history-dark-768.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "c9706a8f3021d69d07554e9e3bf317236383c9f94f7ad79d51058262cf84d07b"
+    },
+    {
+      "file": "history-light-1100.png",
+      "page": "history",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "f908cc0ef3af3042d6196fcc023055b69a7e012f72630ae30cba7cc8a0f70ba7"
+    },
+    {
+      "file": "history-light-1440-full.png",
+      "page": "history",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": true,
+      "sha256": "46759402da2f0123729ec3a04b9f188291dc37d0958687626fea24b44ca52a5c"
+    },
+    {
+      "file": "history-light-1440.png",
+      "page": "history",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "46759402da2f0123729ec3a04b9f188291dc37d0958687626fea24b44ca52a5c"
+    },
+    {
+      "file": "history-light-390-full.png",
+      "page": "history",
+      "theme": "light",
+      "width": 390,
+      "height": 1016,
+      "fullPage": true,
+      "sha256": "69f6a856080cd6c52d8f0d1215e043ca4507bfe9ab35d6cdf70a46b8745e8fcd"
+    },
+    {
+      "file": "history-light-390.png",
+      "page": "history",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "e4f78b25631ecd4f7eb6777dd27033e430ff2da8749b7ad0d0f06ee67cb8b7e2"
+    },
+    {
+      "file": "history-light-768.png",
+      "page": "history",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "e9020833e6cbe7eebb18da410bc126141eb8c7e5369f3f7e69c8f24189839fc4"
+    },
+    {
+      "file": "home-dark-1100.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "a413602a3fe4304a7e2b0a725a74ccc75e7574277d8f7c0175f7bf927b70eb70"
+    },
+    {
+      "file": "home-dark-1440-full.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1326,
+      "fullPage": true,
+      "sha256": "8bc39a2f4c46148dd1280bf323f59cbfe35506308129e2618995743cd3c1f13c"
+    },
+    {
+      "file": "home-dark-1440.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "a19f202e85876f766ffda11dcbacb72c06f9f2a250cd2f53f9fbc7770f8d5d9b"
+    },
+    {
+      "file": "home-dark-390-full.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 390,
+      "height": 2137,
+      "fullPage": true,
+      "sha256": "04fc278e0314de576646912e5dd6ba52a52808268c303fcd76d43331567d0818"
+    },
+    {
+      "file": "home-dark-390.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "b558d716c2d5c70afa8cf4b5a528d1f62f1a4c978a7b7521c6aa976f629fac5a"
+    },
+    {
+      "file": "home-dark-768.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "a47b2d23a8b9e28e45d8e31936d26e2bf90b43b2d06eb55bb9fd4c11a83b1a67"
+    },
+    {
+      "file": "home-light-1100.png",
+      "page": "home",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "03744677f38d1db4c5a50c0564fefbcfb4b16a21aec7b9562cb959591bdce013"
+    },
+    {
+      "file": "home-light-1440-full.png",
+      "page": "home",
+      "theme": "light",
+      "width": 1440,
+      "height": 1326,
+      "fullPage": true,
+      "sha256": "d954f879427acb03dd6043f7c6f47f6039a4c4eabfa33743940efddeac435db3"
+    },
+    {
+      "file": "home-light-1440.png",
+      "page": "home",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "c8327e0b1e0f0d22b28b6457e915d106c90a309993d5711ae4faa1da4c959ea7"
+    },
+    {
+      "file": "home-light-390-full.png",
+      "page": "home",
+      "theme": "light",
+      "width": 390,
+      "height": 2137,
+      "fullPage": true,
+      "sha256": "3c7264827d5d858da841b36b9486ef3105e2e9f67ab94deb3b538058f37f603d"
+    },
+    {
+      "file": "home-light-390.png",
+      "page": "home",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "b465c2fcb08740c120c274db465317ba27ef4deacfbc5dfa79ed28d05b9ab97e"
+    },
+    {
+      "file": "home-light-768.png",
+      "page": "home",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "c43bc7dfeac7c827e8a836a2025ed56e0b68f77c664894a431293b48a7377f17"
+    },
+    {
+      "file": "items-dark-1100.png",
+      "page": "items",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "f9ca77ec4a642fd1ed19d7652b544cae1eb708444ad1d15cce78d56610a85215"
+    },
+    {
+      "file": "items-dark-1440.png",
+      "page": "items",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "08b7772491fe57f42425a7a56db3cfb1658b95ccfe89272b97f001617df91853"
+    },
+    {
+      "file": "items-dark-390.png",
+      "page": "items",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "c8ca9251906e813cd736c9a4ff7840821c8c3f7455d7ce6f27db4e0c2f29fbb6"
+    },
+    {
+      "file": "items-dark-768.png",
+      "page": "items",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "1c7f4d820b6a6222e347754122a90ab25b577a744b26dc01c49ac99873a8cff4"
+    },
+    {
+      "file": "items-light-1100.png",
+      "page": "items",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "d643b6d30f0ecb1e22da2b7e543b0a03fe00175d4dcb0e8c202e84c31c8418df"
+    },
+    {
+      "file": "items-light-1440.png",
+      "page": "items",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "c1b6a16d45e6305be688983fe3d123e6fc91c55106ae7b5b0fa731d2a6679eff"
+    },
+    {
+      "file": "items-light-390.png",
+      "page": "items",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "d86d863aa1855dcb0ecfbcb521bac715c960047b930cc8a8e4c974791d7cb2c6"
+    },
+    {
+      "file": "items-light-768.png",
+      "page": "items",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "650d20e05fbd425e91e800c66f6e04f43ade928ed87579549a11c8ce257bb3d0"
+    },
+    {
+      "file": "review-dark-1100.png",
+      "page": "review",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "6c337868803280a227f2820a0d20c3392029015d4989d15bbbfd5697221c152a"
+    },
+    {
+      "file": "review-dark-1440.png",
+      "page": "review",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "fd5f860ca8769ace20aa63e94307ddde9aafa1c31f940ba373abe6e872508f6c"
+    },
+    {
+      "file": "review-dark-390.png",
+      "page": "review",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "e74295c37ef91cba01c96bfe495929b8cd57edb90fa9d95f232776e0c4ee3130"
+    },
+    {
+      "file": "review-dark-768.png",
+      "page": "review",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "58e27e408d396107833dbc0a4daddf3eeb24b4f924044cef520d31a82e1f2387"
+    },
+    {
+      "file": "review-light-1100.png",
+      "page": "review",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "cd2d1e359c5edc5a98ea9d741070b518ae5adcd75fa467568d8a851703ff9175"
+    },
+    {
+      "file": "review-light-1440.png",
+      "page": "review",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "7d7564cc7f93063810bcfaeb2bdabb0a83ac15e5245a45e7272c36683979f0a8"
+    },
+    {
+      "file": "review-light-390.png",
+      "page": "review",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "cf316b7a25139fe33e9d2479796cb5c06681d7cfe13fc123be0f0f356b3702f0"
+    },
+    {
+      "file": "review-light-768.png",
+      "page": "review",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "6b491f67b897607ff86283218c049731ec68b8722114ca9a488d1d55fb56fbea"
+    },
+    {
+      "file": "settings-dark-1100.png",
+      "page": "settings",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "97830fbb2f867d0a747f2e26e01d1777125820e01b4884f9871fe06800075423"
+    },
+    {
+      "file": "settings-dark-1440.png",
+      "page": "settings",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "5c363514d30bfbd14a79c197ca7ce1f3cb31262615f1b155fc23dd931438a95f"
+    },
+    {
+      "file": "settings-dark-390.png",
+      "page": "settings",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "db74e9866ddec61403132e6b0acc64a978d26416937f4fe1cb3a875c9d8433a4"
+    },
+    {
+      "file": "settings-dark-768.png",
+      "page": "settings",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "b674d9c5f62fd1fe272f782821162746469995f8cd00537ed747dde789b659ad"
+    },
+    {
+      "file": "settings-light-1100.png",
+      "page": "settings",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "1ea98df1e98f3d9c4e8503d9763f7252279a89ff9d0d203e305ca13ab68278fd"
+    },
+    {
+      "file": "settings-light-1440.png",
+      "page": "settings",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "0d7bc4154fef32da65fb70de0d36c4ac44a14049e51d0363a416c07007722101"
+    },
+    {
+      "file": "settings-light-390.png",
+      "page": "settings",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "ec5afe18113487dc0b1af7d009e9c5485829b03ada60225ed6304e8e582caa13"
+    },
+    {
+      "file": "settings-light-768.png",
+      "page": "settings",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "fullPage": false,
+      "sha256": "3ac02bfe725924b04d0b94e8e899d4ca6a80a7f6c7842b44c1cf9fe0983b1cae"
+    }
+  ]
+}
