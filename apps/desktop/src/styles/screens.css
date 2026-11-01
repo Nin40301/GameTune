@@ -1194,3 +1194,35 @@ main {
     flex-basis: 100%;
   }
 }
+
+/* A solid marker identifies selection independently of translucent surfaces. */
+.nav__pill::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 16px;
+  width: 3px;
+  height: 16px;
+  border-radius: 4px;
+  background: #6d28d9;
+}
+@media (max-width: 900px) {
+  .sidebar .nav button[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    width: 16px;
+    height: 3px;
+    border-radius: 4px;
+    background: #6d28d9;
+  }
+}
+@media (forced-colors: active) {
+  .segmented__thumb {
+    outline: 1px solid ButtonText;
+  }
+}
+
+.test-mode {
+  color: var(--ink-soft);
+}

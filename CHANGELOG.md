@@ -89,3 +89,10 @@ GameTune passou a se chamar Ametista. O titular histórico permanece GameTune co
 
 Na versão 0.1.0, executores reais, desktop, CLI, métricas, watcher e instaladores
 ainda estavam pendentes.
+
+## Fase 6.5 — Camada visual
+
+- Interface clara branco/lilás e escura violeta-tinta, fonte variável local e ícones SVG
+- StatusOrb com RAM medida, componentes acessíveis, navegação inferior e efeitos reduzidos
+- Preservados os contratos, consentimentos, catálogo e segurança
+- Gates de consumo pós-redesign pendentes a pedido do usuário; sem afirmação de ganho de FPS ou redução de RAM

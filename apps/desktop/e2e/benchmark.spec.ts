@@ -12,7 +12,7 @@ for (const locale of ['pt-BR', 'en'] as const)
         { locale, theme },
       )
       await page.goto('/?benchmark-complete=1')
-      await page.getByRole('button', { name: 'Benchmark', exact: true }).click()
+      await page.getByRole('button', { name: /Medições|Measurements/, exact: true }).click()
       await expect(
         page.getByText(locale === 'en' ? 'Inconclusive' : 'Inconclusivo', { exact: true }),
       ).toBeVisible()
@@ -33,7 +33,7 @@ for (const locale of ['pt-BR', 'en'] as const)
   }
 test('guided run is read-only, cancelable and keyboard accessible', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('button', { name: 'Benchmark', exact: true }).click()
+  await page.getByRole('button', { name: /Medições|Measurements/, exact: true }).click()
   const start = page.getByRole('button', { name: 'Inicie uma rodada de 60 s' })
   await expect(start).toBeDisabled()
   for (const box of await page
@@ -58,6 +58,6 @@ for (const width of [390, 768, 1440])
   test(`benchmark layout at ${width}`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/')
-    await page.getByRole('button', { name: 'Benchmark', exact: true }).click()
+    await page.getByRole('button', { name: /Medições|Measurements/, exact: true }).click()
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   })

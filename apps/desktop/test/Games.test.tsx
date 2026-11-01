@@ -9,7 +9,7 @@ test('game registration starts disabled and needs profile consent', async () => 
   render(<GamesPanel backend={createMockBackend()} language="pt-BR" />)
   await user.click(await screen.findByRole('button', { name: pt.addGame }))
   await user.click(await screen.findByRole('button', { name: /Sample.exe/ }))
-  await user.click(screen.getByRole('checkbox', { name: pt.enableProfile }))
+  await user.click(screen.getByRole('radio', { name: pt.profileOn }))
   expect(screen.getByRole('button', { name: pt.saveGame })).toBeDisabled()
   await user.click(screen.getByRole('checkbox', { name: /Ative o Modo de Jogo/ }))
   await user.click(screen.getByRole('checkbox', { name: pt.gameConsent }))

@@ -1,0 +1,1305 @@
+{
+  "method": "45 background pixel samples per visible text range; text hidden only during background capture; WCAG luminance; disabled and occluded text excluded",
+  "limitations": "Visible viewport only; sampled grid, not every glyph pixel; complements axe and visual review; no screen-reader or native WebView validation",
+  "cases": 144,
+  "textRanges": 5818,
+  "failures": [],
+  "reports": [
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1440,
+      "page": "home",
+      "textRanges": 59,
+      "minimumRatio": 5.6848975229780505,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1440,
+      "page": "home-shimmer",
+      "textRanges": 59,
+      "minimumRatio": 5.518493887176681,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1440,
+      "page": "items",
+      "textRanges": 63,
+      "minimumRatio": 4.567844905653563,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1440,
+      "page": "apps",
+      "textRanges": 64,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1440,
+      "page": "review",
+      "textRanges": 45,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1440,
+      "page": "history",
+      "textRanges": 45,
+      "minimumRatio": 5.733047681607725,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1440,
+      "page": "benchmark",
+      "textRanges": 57,
+      "minimumRatio": 5.461959443905578,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1440,
+      "page": "games",
+      "textRanges": 50,
+      "minimumRatio": 5.733047681607725,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1440,
+      "page": "settings",
+      "textRanges": 44,
+      "minimumRatio": 5.674158668629694,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1100,
+      "page": "home",
+      "textRanges": 61,
+      "minimumRatio": 5.717412909214195,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1100,
+      "page": "home-shimmer",
+      "textRanges": 61,
+      "minimumRatio": 5.518493887176681,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1100,
+      "page": "items",
+      "textRanges": 57,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1100,
+      "page": "apps",
+      "textRanges": 60,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1100,
+      "page": "review",
+      "textRanges": 45,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1100,
+      "page": "history",
+      "textRanges": 45,
+      "minimumRatio": 5.733047681607725,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1100,
+      "page": "benchmark",
+      "textRanges": 44,
+      "minimumRatio": 5.461959443905578,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1100,
+      "page": "games",
+      "textRanges": 43,
+      "minimumRatio": 5.733047681607725,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 1100,
+      "page": "settings",
+      "textRanges": 44,
+      "minimumRatio": 5.710720929331198,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 768,
+      "page": "home",
+      "textRanges": 35,
+      "minimumRatio": 5.459333830405247,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 768,
+      "page": "home-shimmer",
+      "textRanges": 35,
+      "minimumRatio": 5.459333830405247,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 768,
+      "page": "items",
+      "textRanges": 36,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 768,
+      "page": "apps",
+      "textRanges": 42,
+      "minimumRatio": 4.567844905653563,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 768,
+      "page": "review",
+      "textRanges": 26,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 768,
+      "page": "history",
+      "textRanges": 29,
+      "minimumRatio": 5.459333830405247,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 768,
+      "page": "benchmark",
+      "textRanges": 28,
+      "minimumRatio": 5.459333830405247,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 768,
+      "page": "games",
+      "textRanges": 23,
+      "minimumRatio": 5.459333830405247,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 768,
+      "page": "settings",
+      "textRanges": 23,
+      "minimumRatio": 5.459333830405247,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 390,
+      "page": "home",
+      "textRanges": 23,
+      "minimumRatio": 4.985053295386111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 390,
+      "page": "home-shimmer",
+      "textRanges": 23,
+      "minimumRatio": 4.985053295386111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 390,
+      "page": "items",
+      "textRanges": 31,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 390,
+      "page": "apps",
+      "textRanges": 31,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 390,
+      "page": "review",
+      "textRanges": 25,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 390,
+      "page": "history",
+      "textRanges": 26,
+      "minimumRatio": 4.985053295386111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 390,
+      "page": "benchmark",
+      "textRanges": 32,
+      "minimumRatio": 4.985053295386111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 390,
+      "page": "games",
+      "textRanges": 24,
+      "minimumRatio": 4.985053295386111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "light",
+      "width": 390,
+      "page": "settings",
+      "textRanges": 27,
+      "minimumRatio": 4.985053295386111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1440,
+      "page": "home",
+      "textRanges": 59,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1440,
+      "page": "home-shimmer",
+      "textRanges": 59,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1440,
+      "page": "items",
+      "textRanges": 63,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1440,
+      "page": "apps",
+      "textRanges": 64,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1440,
+      "page": "review",
+      "textRanges": 45,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1440,
+      "page": "history",
+      "textRanges": 45,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1440,
+      "page": "benchmark",
+      "textRanges": 57,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1440,
+      "page": "games",
+      "textRanges": 50,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1440,
+      "page": "settings",
+      "textRanges": 44,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1100,
+      "page": "home",
+      "textRanges": 61,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1100,
+      "page": "home-shimmer",
+      "textRanges": 61,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1100,
+      "page": "items",
+      "textRanges": 57,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1100,
+      "page": "apps",
+      "textRanges": 60,
+      "minimumRatio": 5.313173785031327,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1100,
+      "page": "review",
+      "textRanges": 45,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1100,
+      "page": "history",
+      "textRanges": 45,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1100,
+      "page": "benchmark",
+      "textRanges": 44,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1100,
+      "page": "games",
+      "textRanges": 43,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 1100,
+      "page": "settings",
+      "textRanges": 44,
+      "minimumRatio": 5.313173785031327,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 768,
+      "page": "home",
+      "textRanges": 35,
+      "minimumRatio": 6.253760083318302,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 768,
+      "page": "home-shimmer",
+      "textRanges": 35,
+      "minimumRatio": 5.524632083141035,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 768,
+      "page": "items",
+      "textRanges": 36,
+      "minimumRatio": 5.679964993744791,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 768,
+      "page": "apps",
+      "textRanges": 42,
+      "minimumRatio": 7.555301057987831,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 768,
+      "page": "review",
+      "textRanges": 26,
+      "minimumRatio": 7.378939476535111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 768,
+      "page": "history",
+      "textRanges": 29,
+      "minimumRatio": 6.330942621105283,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 768,
+      "page": "benchmark",
+      "textRanges": 28,
+      "minimumRatio": 6.455207921315284,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 768,
+      "page": "games",
+      "textRanges": 23,
+      "minimumRatio": 5.9704977172159195,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 768,
+      "page": "settings",
+      "textRanges": 23,
+      "minimumRatio": 7.378939476535111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 390,
+      "page": "home",
+      "textRanges": 23,
+      "minimumRatio": 6.538570858934874,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 390,
+      "page": "home-shimmer",
+      "textRanges": 23,
+      "minimumRatio": 6.538570858934874,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 390,
+      "page": "items",
+      "textRanges": 31,
+      "minimumRatio": 5.895410407123866,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 390,
+      "page": "apps",
+      "textRanges": 31,
+      "minimumRatio": 6.597006138067461,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 390,
+      "page": "review",
+      "textRanges": 25,
+      "minimumRatio": 6.597006138067461,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 390,
+      "page": "history",
+      "textRanges": 26,
+      "minimumRatio": 6.597006138067461,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 390,
+      "page": "benchmark",
+      "textRanges": 32,
+      "minimumRatio": 6.568811425207761,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 390,
+      "page": "games",
+      "textRanges": 24,
+      "minimumRatio": 5.9704977172159195,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "pt-BR",
+      "theme": "dark",
+      "width": 390,
+      "page": "settings",
+      "textRanges": 27,
+      "minimumRatio": 6.597006138067461,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "page": "home",
+      "textRanges": 57,
+      "minimumRatio": 5.706100894168025,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "page": "home-shimmer",
+      "textRanges": 57,
+      "minimumRatio": 5.518493887176681,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "page": "items",
+      "textRanges": 60,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "page": "apps",
+      "textRanges": 67,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "page": "review",
+      "textRanges": 44,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "page": "history",
+      "textRanges": 44,
+      "minimumRatio": 5.781474175558307,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "page": "benchmark",
+      "textRanges": 56,
+      "minimumRatio": 5.553285303106576,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "page": "games",
+      "textRanges": 48,
+      "minimumRatio": 5.781474175558307,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "page": "settings",
+      "textRanges": 43,
+      "minimumRatio": 5.674158668629694,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1100,
+      "page": "home",
+      "textRanges": 60,
+      "minimumRatio": 5.737328969058484,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1100,
+      "page": "home-shimmer",
+      "textRanges": 60,
+      "minimumRatio": 5.469093318690845,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1100,
+      "page": "items",
+      "textRanges": 57,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1100,
+      "page": "apps",
+      "textRanges": 61,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1100,
+      "page": "review",
+      "textRanges": 45,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1100,
+      "page": "history",
+      "textRanges": 45,
+      "minimumRatio": 5.737328969058484,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1100,
+      "page": "benchmark",
+      "textRanges": 44,
+      "minimumRatio": 5.553285303106576,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1100,
+      "page": "games",
+      "textRanges": 43,
+      "minimumRatio": 5.737328969058484,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1100,
+      "page": "settings",
+      "textRanges": 44,
+      "minimumRatio": 5.710720929331198,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "page": "home",
+      "textRanges": 34,
+      "minimumRatio": 5.50617248415293,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "page": "home-shimmer",
+      "textRanges": 34,
+      "minimumRatio": 5.469093318690845,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "page": "items",
+      "textRanges": 36,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "page": "apps",
+      "textRanges": 37,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "page": "review",
+      "textRanges": 26,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "page": "history",
+      "textRanges": 29,
+      "minimumRatio": 5.50617248415293,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "page": "benchmark",
+      "textRanges": 28,
+      "minimumRatio": 5.50617248415293,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "page": "games",
+      "textRanges": 23,
+      "minimumRatio": 5.50617248415293,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "page": "settings",
+      "textRanges": 23,
+      "minimumRatio": 5.50617248415293,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "page": "home",
+      "textRanges": 23,
+      "minimumRatio": 5.029093870221049,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "page": "home-shimmer",
+      "textRanges": 23,
+      "minimumRatio": 5.029093870221049,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "page": "items",
+      "textRanges": 30,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "page": "apps",
+      "textRanges": 30,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "page": "review",
+      "textRanges": 25,
+      "minimumRatio": 4.620787214211348,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "page": "history",
+      "textRanges": 25,
+      "minimumRatio": 5.029093870221049,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "page": "benchmark",
+      "textRanges": 31,
+      "minimumRatio": 5.029093870221049,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "page": "games",
+      "textRanges": 26,
+      "minimumRatio": 5.029093870221049,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "page": "settings",
+      "textRanges": 26,
+      "minimumRatio": 5.029093870221049,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "page": "home",
+      "textRanges": 57,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "page": "home-shimmer",
+      "textRanges": 57,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "page": "items",
+      "textRanges": 60,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "page": "apps",
+      "textRanges": 67,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "page": "review",
+      "textRanges": 44,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "page": "history",
+      "textRanges": 44,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "page": "benchmark",
+      "textRanges": 56,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "page": "games",
+      "textRanges": 48,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "page": "settings",
+      "textRanges": 43,
+      "minimumRatio": 5.155303147626568,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1100,
+      "page": "home",
+      "textRanges": 60,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1100,
+      "page": "home-shimmer",
+      "textRanges": 60,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1100,
+      "page": "items",
+      "textRanges": 57,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1100,
+      "page": "apps",
+      "textRanges": 61,
+      "minimumRatio": 5.313173785031327,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1100,
+      "page": "review",
+      "textRanges": 45,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1100,
+      "page": "history",
+      "textRanges": 45,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1100,
+      "page": "benchmark",
+      "textRanges": 44,
+      "minimumRatio": 5.313173785031327,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1100,
+      "page": "games",
+      "textRanges": 43,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1100,
+      "page": "settings",
+      "textRanges": 44,
+      "minimumRatio": 5.233754353574482,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "page": "home",
+      "textRanges": 34,
+      "minimumRatio": 6.221725371743878,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "page": "home-shimmer",
+      "textRanges": 34,
+      "minimumRatio": 5.469093318690845,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "page": "items",
+      "textRanges": 36,
+      "minimumRatio": 5.679964993744791,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "page": "apps",
+      "textRanges": 37,
+      "minimumRatio": 7.555301057987831,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "page": "review",
+      "textRanges": 26,
+      "minimumRatio": 7.378939476535111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "page": "history",
+      "textRanges": 29,
+      "minimumRatio": 6.425129015888606,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "page": "benchmark",
+      "textRanges": 28,
+      "minimumRatio": 6.56157307898549,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "page": "games",
+      "textRanges": 23,
+      "minimumRatio": 6.014572996867435,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "page": "settings",
+      "textRanges": 23,
+      "minimumRatio": 7.378939476535111,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "page": "home",
+      "textRanges": 23,
+      "minimumRatio": 6.51221147032418,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "page": "home-shimmer",
+      "textRanges": 23,
+      "minimumRatio": 6.51221147032418,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "page": "items",
+      "textRanges": 30,
+      "minimumRatio": 5.938740472508066,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "page": "apps",
+      "textRanges": 30,
+      "minimumRatio": 6.558699503475949,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "page": "review",
+      "textRanges": 25,
+      "minimumRatio": 6.558699503475949,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "page": "history",
+      "textRanges": 25,
+      "minimumRatio": 6.558699503475949,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "page": "benchmark",
+      "textRanges": 31,
+      "minimumRatio": 6.558699503475949,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "page": "games",
+      "textRanges": 26,
+      "minimumRatio": 6.014572996867435,
+      "belowApplicableThreshold": 0
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "page": "settings",
+      "textRanges": 26,
+      "minimumRatio": 6.558699503475949,
+      "belowApplicableThreshold": 0
+    }
+  ]
+}

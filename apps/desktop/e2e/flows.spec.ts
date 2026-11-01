@@ -82,7 +82,7 @@ test('keyboard navigation, dialog focus and local settings', async ({ page }) =>
   ).toBeFocused()
   await page.getByRole('button', { name: 'Configurações', exact: true }).click()
   await page.getByLabel('Idioma', { exact: true }).selectOption('en')
-  await page.getByLabel('Light', { exact: true }).check()
+  await page.getByRole('radio', { name: 'Light', exact: true }).click()
   await page.reload()
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
@@ -93,9 +93,9 @@ for (const language of ['pt-BR', 'en'])
       await page.goto('/')
       await page.getByRole('button', { name: /^Simule/ }).click()
       await expect(page.getByText('Análise concluída. Nenhuma alteração foi feita')).toBeVisible()
-      if (theme === 'light' || language === 'en') {
+      if (theme === 'dark' || language === 'en') {
         await page.getByRole('button', { name: 'Configurações', exact: true }).click()
-        if (theme === 'light') await page.getByLabel('Claro', { exact: true }).check()
+        if (theme === 'dark') await page.getByRole('radio', { name: 'Escuro', exact: true }).click()
         if (language === 'en') await page.getByLabel('Idioma', { exact: true }).selectOption('en')
       }
       const names =

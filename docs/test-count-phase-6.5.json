@@ -1,0 +1,54 @@
+{
+  "phase": "6.5",
+  "date": "2026-11-01",
+  "rust": {
+    "passed": 122,
+    "failed": 0,
+    "ignoredVm": 2
+  },
+  "components": {
+    "passed": 18
+  },
+  "playwright": {
+    "expected": 43,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "axe": {
+    "matrixAudits": 128,
+    "otherFlowAudits": 38,
+    "forcedColorsAudits": 1,
+    "violations": 0,
+    "matrixContrastIncomplete": 128,
+    "limitation": "Pseudo-element backgrounds prevent automated axe contrast determination; results retained"
+  },
+  "contrastSampling": {
+    "cases": 144,
+    "textRanges": 5818,
+    "failures": 0,
+    "limitation": "Visible viewport only; sampled grid, not every glyph pixel; complements axe and visual review; no screen-reader or native WebView validation"
+  },
+  "screenshots": {
+    "count": 64,
+    "inspected": 64,
+    "backend": "mock"
+  },
+  "resourceGate": {
+    "limitsUnchanged": true,
+    "interfaceMaxMiB": 150,
+    "interfaceCpuBelowPercent": 1,
+    "monitorMaxMiB": 15,
+    "monitorCpuBelowPercent": 0.5,
+    "baselinePhase6": {
+      "interfacePrivateResidentBytes": 139309056,
+      "interfacePeakCpuPercent": 0.769230769,
+      "monitorPrivateResidentBytes": 2277376,
+      "monitorPeakCpuPercent": 0.131061599
+    },
+    "full": null,
+    "reduced": null,
+    "status": "pending at user request",
+    "newPreferencesDefaultEffects": "reduced"
+  }
+}

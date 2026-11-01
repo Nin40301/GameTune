@@ -46,7 +46,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 25%) 50%, transparent 70%);
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 8%) 50%, transparent 70%);
   transform: translateX(-120%);
   transition: transform 600ms var(--ease-out);
 }
