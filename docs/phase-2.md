@@ -63,7 +63,7 @@ Host: Windows 11 Pro x64 build 26200, Rust/Cargo 1.98.1, terminal sem elevação
 | Checagem | Situação |
 | --- | --- |
 | Testes normais | 51 testes passaram |
-| Registro nativo dedicado | 2 testes dentro dos 50, somente HKCU\Software\GameTuneTest |
+| Registro nativo dedicado | 2 testes incluídos nos 51, somente HKCU\Software\GameTuneTest |
 | fmt e Clippy padrão | Passaram sem avisos |
 | Clippy com feature vm-tests | Passou sem avisos |
 | Build release, features padrão | Passou |
@@ -71,6 +71,12 @@ Host: Windows 11 Pro x64 build 26200, Rust/Cargo 1.98.1, terminal sem elevação
 | Harness de VM | Compila; não executado neste host |
 | Integração administrativa Home/Pro e UAC com outra conta | Pendente |
 | Execução remota dos workflows GitHub | Não realizada |
+
+Recontagem após a entrega: **51 = 26 + 6 + 7 + 2 + 4 + 6**, respectivamente
+foundation, manual_apps, safety_boundaries, scopes_and_sources, core e
+windows-runtime. Os dois testes nativos integram os seis do runtime; não são
+testes adicionais. Esse total é do Windows, sem habilitar os testes ignorados
+de VM. A referência anterior a “dentro dos 50” era um erro de edição.
 
 Os testes novos cobrem consentimento por app, confirmação reforçada, gravação de
 PFN antes da ação, falha parcial, crash de remoção, reconciliação, botão Store,

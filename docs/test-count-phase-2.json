@@ -1,0 +1,17 @@
+{
+  "phase": 2,
+  "platform": "Windows 11 Pro x64",
+  "baselineCommit": "7c2ee9009510392e7e6a952f5543b7917fd52a5e",
+  "command": "cargo test --workspace --locked --offline",
+  "suites": {
+    "foundation": 26,
+    "manual_apps": 6,
+    "safety_boundaries": 7,
+    "scopes_and_sources": 2,
+    "core": 4,
+    "windows_runtime": 6
+  },
+  "totalPassed": 51,
+  "nativeHkcuIncluded": 2,
+  "administrativeVmExecuted": false
+}
