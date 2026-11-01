@@ -1,0 +1,7 @@
+/target/
+/work/
+/outputs/
+*.pfx
+*.p12
+*.pem
+.env

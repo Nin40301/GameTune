@@ -1,0 +1,432 @@
+[
+  {
+    "kind": "registry",
+    "hive": "HKCU",
+    "path": "Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+    "name": "TurnOffWindowsCopilot",
+    "value": 1
+  },
+  {
+    "kind": "registry",
+    "hive": "HKCU",
+    "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+    "name": "ShowCopilotButton",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+    "name": "DisableAIDataAnalysis",
+    "value": 1
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.Copilot"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.Windows.Ai.Copilot.Provider"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.549981C3F5F10"
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+    "name": "AllowCortana",
+    "value": 0
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.GamingApp"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.XboxApp"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.XboxGamingOverlay"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.XboxGameOverlay"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.XboxSpeechToTextOverlay"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.XboxIdentityProvider"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.GamingServices"
+  },
+  {
+    "kind": "service",
+    "name": "XblAuthManager",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "XblGameSave",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "XboxNetApiSvc",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "XboxGipSvc",
+    "mode": "disabled"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.BingNews"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.BingWeather"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.GetHelp"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.Getstarted"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.WindowsFeedbackHub"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.MicrosoftOfficeHub"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.People"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.MixedReality.Portal"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.Microsoft3DViewer"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.Print3D"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.SkypeApp"
+  },
+  {
+    "kind": "appx",
+    "name": "MicrosoftTeams"
+  },
+  {
+    "kind": "appx",
+    "name": "MSTeams"
+  },
+  {
+    "kind": "appx",
+    "name": "Clipchamp.Clipchamp"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.Todos"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.PowerAutomateDesktop"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.YourPhone"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.WindowsMaps"
+  },
+  {
+    "kind": "appx",
+    "name": "MicrosoftCorporationII.MicrosoftFamily"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.Windows.DevHome"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.ZuneVideo"
+  },
+  {
+    "kind": "appx",
+    "name": "microsoft.windowscommunicationsapps"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.MicrosoftSolitaireCollection"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.ZuneMusic"
+  },
+  {
+    "kind": "appx",
+    "name": "Microsoft.OutlookForWindows"
+  },
+  {
+    "kind": "service",
+    "name": "DiagTrack",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "dmwappushservice",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "diagnosticshub.standardcollector.service",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "RetailDemo",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "WMPNetworkSvc",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "RemoteRegistry",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "Fax",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "WerSvc",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "MapsBroker",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "wisvc",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "PhoneSvc",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "SEMgrSvc",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "icssvc",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "DoSvc",
+    "mode": "manual"
+  },
+  {
+    "kind": "service",
+    "name": "lfsvc",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "WSearch",
+    "mode": "disabled"
+  },
+  {
+    "kind": "service",
+    "name": "SysMain",
+    "mode": "disabled"
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+    "name": "AllowTelemetry",
+    "value": 0
+  },
+  {
+    "kind": "scheduled_task",
+    "path": "\\Microsoft\\Windows\\Application Experience\\",
+    "name": "Microsoft Compatibility Appraiser"
+  },
+  {
+    "kind": "scheduled_task",
+    "path": "\\Microsoft\\Windows\\Application Experience\\",
+    "name": "ProgramDataUpdater"
+  },
+  {
+    "kind": "scheduled_task",
+    "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\",
+    "name": "Consolidator"
+  },
+  {
+    "kind": "scheduled_task",
+    "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\",
+    "name": "UsbCeip"
+  },
+  {
+    "kind": "scheduled_task",
+    "path": "\\Microsoft\\Windows\\Feedback\\Siuf\\",
+    "name": "DmClient"
+  },
+  {
+    "kind": "scheduled_task",
+    "path": "\\Microsoft\\Windows\\Windows Error Reporting\\",
+    "name": "QueueReporting"
+  },
+  {
+    "kind": "scheduled_task",
+    "path": "\\Microsoft\\Windows\\Maps\\",
+    "name": "MapsToastTask"
+  },
+  {
+    "kind": "scheduled_task",
+    "path": "\\Microsoft\\Windows\\Maps\\",
+    "name": "MapsUpdateTask"
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+    "name": "DisableWindowsConsumerFeatures",
+    "value": 1
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo",
+    "name": "DisabledByGroupPolicy",
+    "value": 1
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Dsh",
+    "name": "AllowNewsAndInterests",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKCU",
+    "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+    "name": "SystemPaneSuggestionsEnabled",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKCU",
+    "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+    "name": "SilentInstalledAppsEnabled",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKCU",
+    "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+    "name": "SubscribedContent-338389Enabled",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKCU",
+    "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+    "name": "Start_IrisRecommendations",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR",
+    "name": "AllowGameDVR",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKCU",
+    "path": "System\\GameConfigStore",
+    "name": "GameDVR_Enabled",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKCU",
+    "path": "Software\\Microsoft\\GameBar",
+    "name": "AutoGameModeEnabled",
+    "value": 1
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+    "name": "StartupBoostEnabled",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+    "name": "BackgroundModeEnabled",
+    "value": 0
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+    "name": "HwSchMode",
+    "value": 2
+  },
+  {
+    "kind": "power",
+    "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"
+  },
+  {
+    "kind": "registry",
+    "hive": "HKLM",
+    "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy",
+    "name": "LetAppsRunInBackground",
+    "value": 2
+  },
+  {
+    "kind": "startup",
+    "hive": "HKCU"
+  },
+  {
+    "kind": "startup",
+    "hive": "HKLM"
+  }
+]

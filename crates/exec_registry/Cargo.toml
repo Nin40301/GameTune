@@ -1,0 +1,13 @@
+[package]
+name = "gametune-exec-registry"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+gametune-core.workspace = true
+gametune-exec-mock.workspace = true
+
+[lints]
+workspace = true

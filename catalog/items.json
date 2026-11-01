@@ -1,0 +1,3275 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "reg.copilot",
+      "type": "registry",
+      "category": "ai",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O painel clássico do Copilot pode ficar indisponível",
+        "en": "The classic Copilot panel may become unavailable"
+      },
+      "name": {
+        "pt-BR": "Desativar Copilot clássico",
+        "en": "Disable classic Copilot"
+      },
+      "description": {
+        "pt-BR": "Desativa o Copilot clássico por política. O app Copilot independente pode não ser afetado. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Disable classic Copilot by policy. The standalone Copilot app may be unaffected. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKCU",
+        "path": "Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+        "name": "TurnOffWindowsCopilot",
+        "value": 1
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.copilot_button",
+      "type": "registry",
+      "category": "ai",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O atalho visual do Copilot fica oculto",
+        "en": "The visual Copilot shortcut is hidden"
+      },
+      "name": {
+        "pt-BR": "Ocultar botão do Copilot",
+        "en": "Hide Copilot button"
+      },
+      "description": {
+        "pt-BR": "Oculta o botão do Copilot na barra de tarefas. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Hide the Copilot taskbar button. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "ShowCopilotButton",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.recall",
+      "type": "registry",
+      "category": "ai",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O histórico visual do Recall pode ficar indisponível",
+        "en": "Recall visual history may become unavailable"
+      },
+      "name": {
+        "pt-BR": "Desativar análise do Recall",
+        "en": "Disable Recall analysis"
+      },
+      "description": {
+        "pt-BR": "Solicita a desativação da análise de IA do Recall. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Request disabling Recall AI analysis. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+        "name": "DisableAIDataAnalysis",
+        "value": 1
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.copilot",
+      "type": "appx",
+      "category": "ai",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.Copilot",
+        "en": "Remove Microsoft.Copilot"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.Copilot"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.windows.ai.copilot.provider",
+      "type": "appx",
+      "category": "ai",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.Windows.Ai.Copilot.Provider",
+        "en": "Remove Microsoft.Windows.Ai.Copilot.Provider"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.Windows.Ai.Copilot.Provider"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.549981c3f5f10",
+      "type": "appx",
+      "category": "cortana",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.549981C3F5F10",
+        "en": "Remove Microsoft.549981C3F5F10"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.549981C3F5F10"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.cortana",
+      "type": "registry",
+      "category": "cortana",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "A assistente Cortana fica indisponível. Não altera a busca de arquivos",
+        "en": "The Cortana assistant becomes unavailable. Does not change file search"
+      },
+      "name": {
+        "pt-BR": "Desativar Cortana",
+        "en": "Disable Cortana"
+      },
+      "description": {
+        "pt-BR": "Desativa a Cortana por política nas edições compatíveis. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Disable Cortana by policy on supported editions. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+        "name": "AllowCortana",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": true,
+      "verificationNote": "Documentação oficial confirma o mapeamento; eficácia deve ser medida na VM",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowcortana"
+      ],
+      "supportedEditions": [
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.gamingapp",
+      "type": "appx",
+      "category": "xbox",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.GamingApp",
+        "en": "Remove Microsoft.GamingApp"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.GamingApp"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.xboxapp",
+      "type": "appx",
+      "category": "xbox",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.XboxApp",
+        "en": "Remove Microsoft.XboxApp"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.XboxApp"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.xboxgamingoverlay",
+      "type": "appx",
+      "category": "xbox",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.XboxGamingOverlay",
+        "en": "Remove Microsoft.XboxGamingOverlay"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.XboxGamingOverlay"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.xboxgameoverlay",
+      "type": "appx",
+      "category": "xbox",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.XboxGameOverlay",
+        "en": "Remove Microsoft.XboxGameOverlay"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.XboxGameOverlay"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.xboxspeechtotextoverlay",
+      "type": "appx",
+      "category": "xbox",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.XboxSpeechToTextOverlay",
+        "en": "Remove Microsoft.XboxSpeechToTextOverlay"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.XboxSpeechToTextOverlay"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.xboxidentityprovider",
+      "type": "appx",
+      "category": "xbox",
+      "level": 3,
+      "risk": "high",
+      "riskNote": {
+        "pt-BR": "Pode impedir Minecraft Bedrock, Game Pass e jogos da Microsoft Store de abrir ou autenticar",
+        "en": "May prevent Minecraft Bedrock, Game Pass and Microsoft Store games from launching or signing in"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.XboxIdentityProvider",
+        "en": "Remove Microsoft.XboxIdentityProvider"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.XboxIdentityProvider"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.gamingservices",
+      "type": "appx",
+      "category": "xbox",
+      "level": 3,
+      "risk": "high",
+      "riskNote": {
+        "pt-BR": "Pode impedir Minecraft Bedrock, Game Pass e jogos da Microsoft Store de abrir ou autenticar",
+        "en": "May prevent Minecraft Bedrock, Game Pass and Microsoft Store games from launching or signing in"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.GamingServices",
+        "en": "Remove Microsoft.GamingServices"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.GamingServices"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.xblauthmanager",
+      "type": "service",
+      "category": "xbox",
+      "level": 3,
+      "risk": "high",
+      "riskNote": {
+        "pt-BR": "Pode impedir Minecraft Bedrock, Game Pass e jogos da Microsoft Store de abrir ou autenticar",
+        "en": "May prevent Minecraft Bedrock, Game Pass and Microsoft Store games from launching or signing in"
+      },
+      "name": {
+        "pt-BR": "Desativar Autenticação Xbox",
+        "en": "Disable Xbox authentication"
+      },
+      "description": {
+        "pt-BR": "Interrompe a autenticação Xbox Live. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Stop Xbox Live authentication. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "XblAuthManager",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.xblgamesave",
+      "type": "service",
+      "category": "xbox",
+      "level": 3,
+      "risk": "high",
+      "riskNote": {
+        "pt-BR": "Pode impedir Minecraft Bedrock, Game Pass e jogos da Microsoft Store de abrir ou autenticar",
+        "en": "May prevent Minecraft Bedrock, Game Pass and Microsoft Store games from launching or signing in"
+      },
+      "name": {
+        "pt-BR": "Desativar Jogos salvos do Xbox",
+        "en": "Disable Xbox game saves"
+      },
+      "description": {
+        "pt-BR": "Interrompe a sincronização de jogos salvos. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Stop game save synchronization. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "XblGameSave",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.xboxnetapisvc",
+      "type": "service",
+      "category": "xbox",
+      "level": 3,
+      "risk": "high",
+      "riskNote": {
+        "pt-BR": "Pode impedir Minecraft Bedrock, Game Pass e jogos da Microsoft Store de abrir ou autenticar — Bloqueado pela proteção de serviços de rede",
+        "en": "May prevent Minecraft Bedrock, Game Pass and Microsoft Store games from launching or signing in — Blocked by network service protection"
+      },
+      "name": {
+        "pt-BR": "Desativar Rede Xbox Live",
+        "en": "Disable Xbox Live networking"
+      },
+      "description": {
+        "pt-BR": "Oferece conectividade para jogos Xbox Live. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Provide Xbox Live game connectivity. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "XboxNetApiSvc",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.xboxgipsvc",
+      "type": "service",
+      "category": "xbox",
+      "level": 3,
+      "risk": "high",
+      "riskNote": {
+        "pt-BR": "Pode impedir o controle Xbox sem fio ou seu adaptador de funcionar",
+        "en": "May stop wireless Xbox controllers or their adapters from working"
+      },
+      "name": {
+        "pt-BR": "Desativar Acessórios Xbox",
+        "en": "Disable Xbox accessories"
+      },
+      "description": {
+        "pt-BR": "Interrompe a comunicação com acessórios Xbox. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Stop Xbox accessory communication. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "XboxGipSvc",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.bingnews",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.BingNews",
+        "en": "Remove Microsoft.BingNews"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.BingNews"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.bingweather",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.BingWeather",
+        "en": "Remove Microsoft.BingWeather"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.BingWeather"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.gethelp",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.GetHelp",
+        "en": "Remove Microsoft.GetHelp"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.GetHelp"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.getstarted",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.Getstarted",
+        "en": "Remove Microsoft.Getstarted"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.Getstarted"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.windowsfeedbackhub",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.WindowsFeedbackHub",
+        "en": "Remove Microsoft.WindowsFeedbackHub"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.WindowsFeedbackHub"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.microsoftofficehub",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.MicrosoftOfficeHub",
+        "en": "Remove Microsoft.MicrosoftOfficeHub"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.MicrosoftOfficeHub"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.people",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.People",
+        "en": "Remove Microsoft.People"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.People"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.mixedreality.portal",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.MixedReality.Portal",
+        "en": "Remove Microsoft.MixedReality.Portal"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.MixedReality.Portal"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.microsoft3dviewer",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.Microsoft3DViewer",
+        "en": "Remove Microsoft.Microsoft3DViewer"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.Microsoft3DViewer"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.print3d",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.Print3D",
+        "en": "Remove Microsoft.Print3D"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.Print3D"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.skypeapp",
+      "type": "appx",
+      "category": "apps",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.SkypeApp",
+        "en": "Remove Microsoft.SkypeApp"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.SkypeApp"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoftteams",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover MicrosoftTeams",
+        "en": "Remove MicrosoftTeams"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "MicrosoftTeams"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.msteams",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover MSTeams",
+        "en": "Remove MSTeams"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "MSTeams"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.clipchamp.clipchamp",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Clipchamp.Clipchamp",
+        "en": "Remove Clipchamp.Clipchamp"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Clipchamp.Clipchamp"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.todos",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.Todos",
+        "en": "Remove Microsoft.Todos"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.Todos"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.powerautomatedesktop",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.PowerAutomateDesktop",
+        "en": "Remove Microsoft.PowerAutomateDesktop"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.PowerAutomateDesktop"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.yourphone",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.YourPhone",
+        "en": "Remove Microsoft.YourPhone"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.YourPhone"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.windowsmaps",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.WindowsMaps",
+        "en": "Remove Microsoft.WindowsMaps"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.WindowsMaps"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoftcorporationii.microsoftfamily",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover MicrosoftCorporationII.MicrosoftFamily",
+        "en": "Remove MicrosoftCorporationII.MicrosoftFamily"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "MicrosoftCorporationII.MicrosoftFamily"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.windows.devhome",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.Windows.DevHome",
+        "en": "Remove Microsoft.Windows.DevHome"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.Windows.DevHome"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.zunevideo",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.ZuneVideo",
+        "en": "Remove Microsoft.ZuneVideo"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.ZuneVideo"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.windowscommunicationsapps",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover microsoft.windowscommunicationsapps",
+        "en": "Remove microsoft.windowscommunicationsapps"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "microsoft.windowscommunicationsapps"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.microsoftsolitairecollection",
+      "type": "appx",
+      "category": "apps",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.MicrosoftSolitaireCollection",
+        "en": "Remove Microsoft.MicrosoftSolitaireCollection"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.MicrosoftSolitaireCollection"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.zunemusic",
+      "type": "appx",
+      "category": "apps",
+      "level": 3,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.ZuneMusic",
+        "en": "Remove Microsoft.ZuneMusic"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.ZuneMusic"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "appx.microsoft.outlookforwindows",
+      "type": "appx",
+      "category": "apps",
+      "level": 3,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O app fica indisponível. Reinstalação manual não recupera dados nem garante a versão original",
+        "en": "The app becomes unavailable. Manual reinstall cannot recover data or guarantee the original version"
+      },
+      "name": {
+        "pt-BR": "Remover Microsoft.OutlookForWindows",
+        "en": "Remove Microsoft.OutlookForWindows"
+      },
+      "description": {
+        "pt-BR": "Remova o app instalado e seu provisionamento. Reinstalação manual pode exigir internet e não recupera dados nem a versão original",
+        "en": "Remove the installed app and its provisioning. Manual reinstall may need internet and cannot recover data or the original version"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "appx",
+        "name": "Microsoft.OutlookForWindows"
+      },
+      "revert": "manual",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.diagtrack",
+      "type": "service",
+      "category": "services",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pode reduzir dados disponíveis para diagnosticar falhas",
+        "en": "May reduce data available to troubleshoot failures"
+      },
+      "name": {
+        "pt-BR": "Desativar Diagnóstico conectado",
+        "en": "Disable Connected diagnostics"
+      },
+      "description": {
+        "pt-BR": "Reduz a coleta de diagnóstico em segundo plano. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Reduce background diagnostic collection. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "DiagTrack",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.dmwappushservice",
+      "type": "service",
+      "category": "services",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pode afetar dispositivos gerenciados pela organização",
+        "en": "May affect devices managed by an organization"
+      },
+      "name": {
+        "pt-BR": "Desativar Mensagens de gerenciamento",
+        "en": "Disable Device management messages"
+      },
+      "description": {
+        "pt-BR": "Interrompe o roteamento de mensagens de gerenciamento. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Stop routing device management messages. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "dmwappushservice",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.diagnosticshub.standardcollector.service",
+      "type": "service",
+      "category": "services",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Ferramentas de diagnóstico podem deixar de coletar dados",
+        "en": "Diagnostic tools may stop collecting data"
+      },
+      "name": {
+        "pt-BR": "Desativar Coletor de diagnóstico",
+        "en": "Disable Diagnostic collector"
+      },
+      "description": {
+        "pt-BR": "Interrompe a coleta de diagnóstico do desenvolvedor. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Stop developer diagnostic collection. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "diagnosticshub.standardcollector.service",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.retaildemo",
+      "type": "service",
+      "category": "services",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O modo de demonstração deixa de funcionar",
+        "en": "Retail demonstration mode stops working"
+      },
+      "name": {
+        "pt-BR": "Desativar Demonstração de loja",
+        "en": "Disable Retail demonstration"
+      },
+      "description": {
+        "pt-BR": "Desativa a demonstração para lojas. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Disable retail demonstration mode. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "RetailDemo",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.wmpnetworksvc",
+      "type": "service",
+      "category": "services",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Bloqueado pela proteção de serviços de rede",
+        "en": "Blocked by network service protection"
+      },
+      "name": {
+        "pt-BR": "Desativar Compartilhamento de mídia",
+        "en": "Disable Media sharing"
+      },
+      "description": {
+        "pt-BR": "Compartilha mídia pela rede. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Share media over the network. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "WMPNetworkSvc",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.remoteregistry",
+      "type": "service",
+      "category": "services",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pode afetar o suporte remoto da organização",
+        "en": "May affect organization remote support"
+      },
+      "name": {
+        "pt-BR": "Desativar Registro remoto",
+        "en": "Disable Remote registry"
+      },
+      "description": {
+        "pt-BR": "Desativa o acesso remoto ao registro. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Disable remote registry access. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "RemoteRegistry",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.fax",
+      "type": "service",
+      "category": "services",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Fax deixa de funcionar",
+        "en": "Fax stops working"
+      },
+      "name": {
+        "pt-BR": "Desativar Fax",
+        "en": "Disable Fax"
+      },
+      "description": {
+        "pt-BR": "Desativa o envio e recebimento de fax. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Disable sending and receiving faxes. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "Fax",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.wersvc",
+      "type": "service",
+      "category": "services",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pode reduzir informações para investigar travamentos",
+        "en": "May reduce information available to investigate crashes"
+      },
+      "name": {
+        "pt-BR": "Desativar Relatórios de erros",
+        "en": "Disable Error reporting"
+      },
+      "description": {
+        "pt-BR": "Interrompe relatórios de erros em segundo plano. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Stop background error reporting. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "WerSvc",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.mapsbroker",
+      "type": "service",
+      "category": "services",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Mapas offline podem deixar de atualizar",
+        "en": "Offline maps may stop updating"
+      },
+      "name": {
+        "pt-BR": "Desativar Mapas baixados",
+        "en": "Disable Downloaded maps"
+      },
+      "description": {
+        "pt-BR": "Interrompe o gerenciamento de mapas offline. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Stop offline map management. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "MapsBroker",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.wisvc",
+      "type": "service",
+      "category": "services",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pode afetar a participação no Windows Insider",
+        "en": "May affect Windows Insider enrollment"
+      },
+      "name": {
+        "pt-BR": "Desativar Programa Windows Insider",
+        "en": "Disable Windows Insider program"
+      },
+      "description": {
+        "pt-BR": "Desativa o serviço de avaliação do Windows. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Disable Windows preview service. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "wisvc",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.phonesvc",
+      "type": "service",
+      "category": "services",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Recursos integrados de telefone podem parar",
+        "en": "Integrated phone features may stop"
+      },
+      "name": {
+        "pt-BR": "Desativar Integração de telefone",
+        "en": "Disable Phone integration"
+      },
+      "description": {
+        "pt-BR": "Desativa a integração de telefonia. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Disable phone integration. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "PhoneSvc",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.semgrsvc",
+      "type": "service",
+      "category": "services",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pagamentos e NFC podem deixar de funcionar",
+        "en": "Payments and NFC may stop working"
+      },
+      "name": {
+        "pt-BR": "Desativar Pagamentos e NFC",
+        "en": "Disable Payments and NFC"
+      },
+      "description": {
+        "pt-BR": "Desativa o gerenciamento de pagamentos e NFC. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Disable payments and NFC management. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "SEMgrSvc",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.icssvc",
+      "type": "service",
+      "category": "services",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Bloqueado pela proteção de serviços de rede",
+        "en": "Blocked by network service protection"
+      },
+      "name": {
+        "pt-BR": "Desativar Hotspot móvel",
+        "en": "Disable Mobile hotspot"
+      },
+      "description": {
+        "pt-BR": "Compartilha internet com outros dispositivos. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Share internet with other devices. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "icssvc",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.dosvc",
+      "type": "service",
+      "category": "services",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pode afetar a distribuição de downloads entre PCs. Não desativa o Windows Update",
+        "en": "May affect peer download distribution. Does not disable Windows Update"
+      },
+      "name": {
+        "pt-BR": "Usar início manual em Otimização de Entrega",
+        "en": "Use manual startup for Delivery Optimization"
+      },
+      "description": {
+        "pt-BR": "Muda o início da Otimização de Entrega para manual. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Set Delivery Optimization startup to manual. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "DoSvc",
+        "mode": "manual"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.lfsvc",
+      "type": "service",
+      "category": "services",
+      "level": 3,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Apps que usam localização podem falhar",
+        "en": "Apps that use location may fail"
+      },
+      "name": {
+        "pt-BR": "Desativar Localização",
+        "en": "Disable Location"
+      },
+      "description": {
+        "pt-BR": "Desativa a localização do dispositivo. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Disable device location. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "lfsvc",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.wsearch",
+      "type": "service",
+      "category": "services",
+      "level": 3,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "A busca de arquivos pode ficar lenta ou incompleta",
+        "en": "File search may become slower or incomplete"
+      },
+      "name": {
+        "pt-BR": "Desativar Indexação de arquivos",
+        "en": "Disable File indexing"
+      },
+      "description": {
+        "pt-BR": "Interrompe a indexação de arquivos. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Stop file indexing. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "WSearch",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "svc.sysmain",
+      "type": "service",
+      "category": "services",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Só pré-selecione em SSD ou NVMe. O carregamento pode piorar",
+        "en": "Preselect only on SSD or NVMe. Loading may become slower"
+      },
+      "name": {
+        "pt-BR": "Desativar Pré-carregamento de apps",
+        "en": "Disable App preloading"
+      },
+      "description": {
+        "pt-BR": "Interrompe o pré-carregamento de apps. Desfazer restaura o modo de início e o estado de execução",
+        "en": "Stop app preloading. Undo restores startup mode and running state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "service",
+        "name": "SysMain",
+        "mode": "disabled"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": true,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.telemetry",
+      "type": "registry",
+      "category": "telemetry",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "A edição pode impor um nível mínimo diferente. Não garante ausência de tráfego",
+        "en": "The edition may enforce another minimum level. Does not guarantee zero traffic"
+      },
+      "name": {
+        "pt-BR": "Reduzir dados de diagnóstico",
+        "en": "Reduce diagnostic data"
+      },
+      "description": {
+        "pt-BR": "Solicita o menor nível configurado de diagnóstico. O resultado depende da edição. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Request the configured minimum diagnostic level. Results depend on edition. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+        "name": "AllowTelemetry",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "task.microsoft_compatibility_appraiser",
+      "type": "scheduled_task",
+      "category": "telemetry",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Relatórios de diagnóstico ou atualizações de mapas podem deixar de ocorrer",
+        "en": "Diagnostic reports or map updates may stop"
+      },
+      "name": {
+        "pt-BR": "Desabilitar Microsoft Compatibility Appraiser",
+        "en": "Disable Microsoft Compatibility Appraiser"
+      },
+      "description": {
+        "pt-BR": "Desabilite esta tarefa agendada. Desfazer restaura seu estado de habilitação",
+        "en": "Disable this scheduled task. Undo restores its enabled state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "scheduled_task",
+        "path": "\\Microsoft\\Windows\\Application Experience\\",
+        "name": "Microsoft Compatibility Appraiser"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "task.programdataupdater",
+      "type": "scheduled_task",
+      "category": "telemetry",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Relatórios de diagnóstico ou atualizações de mapas podem deixar de ocorrer",
+        "en": "Diagnostic reports or map updates may stop"
+      },
+      "name": {
+        "pt-BR": "Desabilitar ProgramDataUpdater",
+        "en": "Disable ProgramDataUpdater"
+      },
+      "description": {
+        "pt-BR": "Desabilite esta tarefa agendada. Desfazer restaura seu estado de habilitação",
+        "en": "Disable this scheduled task. Undo restores its enabled state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "scheduled_task",
+        "path": "\\Microsoft\\Windows\\Application Experience\\",
+        "name": "ProgramDataUpdater"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "task.consolidator",
+      "type": "scheduled_task",
+      "category": "telemetry",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Relatórios de diagnóstico ou atualizações de mapas podem deixar de ocorrer",
+        "en": "Diagnostic reports or map updates may stop"
+      },
+      "name": {
+        "pt-BR": "Desabilitar Consolidator",
+        "en": "Disable Consolidator"
+      },
+      "description": {
+        "pt-BR": "Desabilite esta tarefa agendada. Desfazer restaura seu estado de habilitação",
+        "en": "Disable this scheduled task. Undo restores its enabled state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "scheduled_task",
+        "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\",
+        "name": "Consolidator"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "task.usbceip",
+      "type": "scheduled_task",
+      "category": "telemetry",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Relatórios de diagnóstico ou atualizações de mapas podem deixar de ocorrer",
+        "en": "Diagnostic reports or map updates may stop"
+      },
+      "name": {
+        "pt-BR": "Desabilitar UsbCeip",
+        "en": "Disable UsbCeip"
+      },
+      "description": {
+        "pt-BR": "Desabilite esta tarefa agendada. Desfazer restaura seu estado de habilitação",
+        "en": "Disable this scheduled task. Undo restores its enabled state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "scheduled_task",
+        "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\",
+        "name": "UsbCeip"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "task.dmclient",
+      "type": "scheduled_task",
+      "category": "telemetry",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Relatórios de diagnóstico ou atualizações de mapas podem deixar de ocorrer",
+        "en": "Diagnostic reports or map updates may stop"
+      },
+      "name": {
+        "pt-BR": "Desabilitar DmClient",
+        "en": "Disable DmClient"
+      },
+      "description": {
+        "pt-BR": "Desabilite esta tarefa agendada. Desfazer restaura seu estado de habilitação",
+        "en": "Disable this scheduled task. Undo restores its enabled state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "scheduled_task",
+        "path": "\\Microsoft\\Windows\\Feedback\\Siuf\\",
+        "name": "DmClient"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "task.queuereporting",
+      "type": "scheduled_task",
+      "category": "telemetry",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Relatórios de diagnóstico ou atualizações de mapas podem deixar de ocorrer",
+        "en": "Diagnostic reports or map updates may stop"
+      },
+      "name": {
+        "pt-BR": "Desabilitar QueueReporting",
+        "en": "Disable QueueReporting"
+      },
+      "description": {
+        "pt-BR": "Desabilite esta tarefa agendada. Desfazer restaura seu estado de habilitação",
+        "en": "Disable this scheduled task. Undo restores its enabled state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "scheduled_task",
+        "path": "\\Microsoft\\Windows\\Windows Error Reporting\\",
+        "name": "QueueReporting"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "task.mapstoasttask",
+      "type": "scheduled_task",
+      "category": "telemetry",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Relatórios de diagnóstico ou atualizações de mapas podem deixar de ocorrer",
+        "en": "Diagnostic reports or map updates may stop"
+      },
+      "name": {
+        "pt-BR": "Desabilitar MapsToastTask",
+        "en": "Disable MapsToastTask"
+      },
+      "description": {
+        "pt-BR": "Desabilite esta tarefa agendada. Desfazer restaura seu estado de habilitação",
+        "en": "Disable this scheduled task. Undo restores its enabled state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "scheduled_task",
+        "path": "\\Microsoft\\Windows\\Maps\\",
+        "name": "MapsToastTask"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "task.mapsupdatetask",
+      "type": "scheduled_task",
+      "category": "telemetry",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Relatórios de diagnóstico ou atualizações de mapas podem deixar de ocorrer",
+        "en": "Diagnostic reports or map updates may stop"
+      },
+      "name": {
+        "pt-BR": "Desabilitar MapsUpdateTask",
+        "en": "Disable MapsUpdateTask"
+      },
+      "description": {
+        "pt-BR": "Desabilite esta tarefa agendada. Desfazer restaura seu estado de habilitação",
+        "en": "Disable this scheduled task. Undo restores its enabled state"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "scheduled_task",
+        "path": "\\Microsoft\\Windows\\Maps\\",
+        "name": "MapsUpdateTask"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.consumer_features",
+      "type": "registry",
+      "category": "ads",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "A política pode ser ignorada em algumas edições",
+        "en": "The policy may be ignored on some editions"
+      },
+      "name": {
+        "pt-BR": "Desativar sugestões de apps",
+        "en": "Disable app suggestions"
+      },
+      "description": {
+        "pt-BR": "Desativa experiências promocionais do Windows onde a política é aceita. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Disable Windows promotional experiences where the policy is supported. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+        "name": "DisableWindowsConsumerFeatures",
+        "value": 1
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.advertising",
+      "type": "registry",
+      "category": "ads",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Anúncios podem deixar de ser personalizados",
+        "en": "Ads may no longer be personalized"
+      },
+      "name": {
+        "pt-BR": "Desativar identificação para anúncios",
+        "en": "Disable advertising ID"
+      },
+      "description": {
+        "pt-BR": "Desativa o identificador usado para anúncios personalizados. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Disable the identifier used for personalized advertising. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo",
+        "name": "DisabledByGroupPolicy",
+        "value": 1
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.widgets",
+      "type": "registry",
+      "category": "ads",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Notícias e clima no painel ficam indisponíveis",
+        "en": "Panel news and weather become unavailable"
+      },
+      "name": {
+        "pt-BR": "Desativar Widgets",
+        "en": "Disable Widgets"
+      },
+      "description": {
+        "pt-BR": "Desativa o painel Widgets onde a política é aceita. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Disable the Widgets panel where the policy is supported. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Dsh",
+        "name": "AllowNewsAndInterests",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.systempanesuggestionsenabled",
+      "type": "registry",
+      "category": "ads",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Sugestões do Windows podem deixar de aparecer",
+        "en": "Windows suggestions may no longer appear"
+      },
+      "name": {
+        "pt-BR": "Desativar sugestão SystemPaneSuggestionsEnabled",
+        "en": "Disable suggestion SystemPaneSuggestionsEnabled"
+      },
+      "description": {
+        "pt-BR": "Desativa sugestões ou instalações promocionais automáticas. Desfazer restaura o valor original",
+        "en": "Disable automatic promotional suggestions or installations. Undo restores the original value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SystemPaneSuggestionsEnabled",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.silentinstalledappsenabled",
+      "type": "registry",
+      "category": "ads",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Sugestões do Windows podem deixar de aparecer",
+        "en": "Windows suggestions may no longer appear"
+      },
+      "name": {
+        "pt-BR": "Desativar sugestão SilentInstalledAppsEnabled",
+        "en": "Disable suggestion SilentInstalledAppsEnabled"
+      },
+      "description": {
+        "pt-BR": "Desativa sugestões ou instalações promocionais automáticas. Desfazer restaura o valor original",
+        "en": "Disable automatic promotional suggestions or installations. Undo restores the original value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SilentInstalledAppsEnabled",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.subscribedcontent-338389enabled",
+      "type": "registry",
+      "category": "ads",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Sugestões do Windows podem deixar de aparecer",
+        "en": "Windows suggestions may no longer appear"
+      },
+      "name": {
+        "pt-BR": "Desativar sugestão SubscribedContent-338389Enabled",
+        "en": "Disable suggestion SubscribedContent-338389Enabled"
+      },
+      "description": {
+        "pt-BR": "Desativa sugestões ou instalações promocionais automáticas. Desfazer restaura o valor original",
+        "en": "Disable automatic promotional suggestions or installations. Undo restores the original value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "name": "SubscribedContent-338389Enabled",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.iris",
+      "type": "registry",
+      "category": "ads",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Recomendações podem sumir do menu Iniciar",
+        "en": "Recommendations may disappear from Start"
+      },
+      "name": {
+        "pt-BR": "Desativar recomendações no Iniciar",
+        "en": "Disable Start recommendations"
+      },
+      "description": {
+        "pt-BR": "Solicita a desativação de recomendações no menu Iniciar. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Request disabling Start menu recommendations. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "name": "Start_IrisRecommendations",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.game_dvr_policy",
+      "type": "registry",
+      "category": "gaming",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "A gravação de jogos do Windows fica indisponível",
+        "en": "Windows game recording becomes unavailable"
+      },
+      "name": {
+        "pt-BR": "Desativar gravação de jogos em segundo plano",
+        "en": "Disable background game recording"
+      },
+      "description": {
+        "pt-BR": "Desativa a gravação e transmissão de jogos por política no Windows 10. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Disable game recording and broadcasting by policy on Windows 10. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR",
+        "name": "AllowGameDVR",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": true,
+      "verificationNote": "Mapeamento documentado; a Microsoft informa aplicação apenas no Windows 10. maxBuild impede seleção no Windows 11. Validar eficácia em VM",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-applicationmanagement#allowgamedvr"
+      ],
+      "supportedEditions": [
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": 21999
+    },
+    {
+      "id": "reg.game_dvr_user",
+      "type": "registry",
+      "category": "gaming",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "A gravação de jogos em segundo plano pode parar",
+        "en": "Background game recording may stop"
+      },
+      "name": {
+        "pt-BR": "Desativar Game DVR do usuário",
+        "en": "Disable user Game DVR"
+      },
+      "description": {
+        "pt-BR": "Desativa Game DVR para o usuário interativo. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Disable Game DVR for the interactive user. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKCU",
+        "path": "System\\GameConfigStore",
+        "name": "GameDVR_Enabled",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.game_mode",
+      "type": "registry",
+      "category": "gaming",
+      "level": 1,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O resultado varia por jogo e deve ser medido",
+        "en": "Results vary by game and must be measured"
+      },
+      "name": {
+        "pt-BR": "Ativar Modo de Jogo",
+        "en": "Enable Game Mode"
+      },
+      "description": {
+        "pt-BR": "Ativa a preferência Modo de Jogo do Windows. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Enable the Windows Game Mode preference. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\GameBar",
+        "name": "AutoGameModeEnabled",
+        "value": 1
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.edge_preload",
+      "type": "registry",
+      "category": "gaming",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "O primeiro início do Edge pode demorar mais",
+        "en": "The first Edge launch may take longer"
+      },
+      "name": {
+        "pt-BR": "Desativar pré-carregamento do Edge",
+        "en": "Disable Edge startup boost"
+      },
+      "description": {
+        "pt-BR": "Desativa o pré-carregamento do Edge. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Disable Edge startup preloading. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+        "name": "StartupBoostEnabled",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.edge_background",
+      "type": "registry",
+      "category": "gaming",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Notificações e extensões em segundo plano podem parar",
+        "en": "Background notifications and extensions may stop"
+      },
+      "name": {
+        "pt-BR": "Desativar Edge em segundo plano",
+        "en": "Disable Edge background mode"
+      },
+      "description": {
+        "pt-BR": "Desativa a execução do Edge em segundo plano. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Disable Edge background execution. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+        "name": "BackgroundModeEnabled",
+        "value": 0
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.hags",
+      "type": "registry",
+      "category": "gaming",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Exige GPU e driver compatíveis e reinício. O desempenho pode piorar",
+        "en": "Requires compatible GPU and driver and restart. Performance may decrease"
+      },
+      "name": {
+        "pt-BR": "Ativar agendamento de GPU por hardware",
+        "en": "Enable hardware GPU scheduling"
+      },
+      "description": {
+        "pt-BR": "Solicita agendamento de GPU acelerado por hardware. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Request hardware accelerated GPU scheduling. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+        "name": "HwSchMode",
+        "value": 2
+      },
+      "revert": "auto",
+      "requiresReboot": true,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "power.high_performance",
+      "type": "power",
+      "category": "gaming",
+      "level": 2,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pode alterar a disponibilidade deste recurso",
+        "en": "May affect availability of this feature"
+      },
+      "name": {
+        "pt-BR": "Ativar Alto Desempenho",
+        "en": "Enable High Performance"
+      },
+      "description": {
+        "pt-BR": "Ative Alto Desempenho. Pode aumentar calor e consumo. Desfazer restaura o plano anterior e remove apenas planos criados pelo app",
+        "en": "Activate High Performance. Heat and power use may increase. Undo restores the previous plan and removes only plans created by the app"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "power",
+        "guid": "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "reg.background_apps",
+      "type": "registry",
+      "category": "apps",
+      "level": 3,
+      "risk": "high",
+      "riskNote": {
+        "pt-BR": "Apps da Store como WhatsApp podem deixar de notificar quando estiverem fechados",
+        "en": "Store apps such as WhatsApp may stop notifying when closed"
+      },
+      "name": {
+        "pt-BR": "Bloquear apps em segundo plano",
+        "en": "Block background apps"
+      },
+      "description": {
+        "pt-BR": "Bloqueia a execução em segundo plano de apps da Store. Desfazer restaura tipo e bytes originais ou remove o valor criado",
+        "en": "Block Store app background execution. Undo restores original type and bytes or removes the created value"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "registry",
+        "hive": "HKLM",
+        "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy",
+        "name": "LetAppsRunInBackground",
+        "value": 2
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "startup.hkcu",
+      "type": "startup",
+      "category": "apps",
+      "level": 0,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pode alterar a disponibilidade deste recurso",
+        "en": "May affect availability of this feature"
+      },
+      "name": {
+        "pt-BR": "Revisar inicialização HKCU",
+        "en": "Review startup HKCU"
+      },
+      "description": {
+        "pt-BR": "Descubra entradas de inicialização. Escolha cada entrada manualmente. Entradas essenciais ficam ocultas",
+        "en": "Discover startup entries. Select each entry manually. Essential entries stay hidden"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "startup",
+        "hive": "HKCU"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    },
+    {
+      "id": "startup.hklm",
+      "type": "startup",
+      "category": "apps",
+      "level": 0,
+      "risk": "low",
+      "riskNote": {
+        "pt-BR": "Pode alterar a disponibilidade deste recurso",
+        "en": "May affect availability of this feature"
+      },
+      "name": {
+        "pt-BR": "Revisar inicialização HKLM",
+        "en": "Review startup HKLM"
+      },
+      "description": {
+        "pt-BR": "Descubra entradas de inicialização. Escolha cada entrada manualmente. Entradas essenciais ficam ocultas",
+        "en": "Discover startup entries. Select each entry manually. Essential entries stay hidden"
+      },
+      "minBuild": 19045,
+      "target": {
+        "kind": "startup",
+        "hive": "HKLM"
+      },
+      "revert": "auto",
+      "requiresReboot": false,
+      "verified": false,
+      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "sources": [],
+      "supportedEditions": [
+        "home",
+        "pro",
+        "enterprise",
+        "education"
+      ],
+      "requiresSsd": false,
+      "maxBuild": null
+    }
+  ]
+}
