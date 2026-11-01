@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import type { Backend, Game, GamesAction, GamesView, Language } from './types'
 import { translator } from './i18n'
+import { Icon } from './components/Icon'
+import { Segmented } from './components/Segmented'
 export function GamesPanel({
   backend,
   language,
@@ -142,7 +144,10 @@ export function GamesPanel({
                         setRemove(false)
                       }}
                     >
-                      <strong>{game.name}</strong>
+                      <strong>
+                        <Icon name="games" />
+                        {game.name}
+                      </strong>
                       <span>
                         {t(
                           view.monitor.activeGames.includes(game.id)
@@ -158,7 +163,7 @@ export function GamesPanel({
               </ul>
               <p className="muted small">{t('monitorSettingsHint')}</p>
             </section>
-            <section className="surface game-editor">
+            <section className="surface game-editor glass">
               <h2>{t('temporaryProfile')}</h2>
               {editing ? (
                 <>
@@ -196,14 +201,19 @@ export function GamesPanel({
                       />
                       {t('gameConsent')}
                     </label>
-                    <label className="check-line">
-                      <input
-                        type="checkbox"
-                        checked={editing.enabled}
-                        onChange={(e) => setEditing({ ...editing, enabled: e.target.checked })}
+                    <div className="game-profile-segment">
+                      <span>{t('enableProfile')}</span>
+                      <Segmented
+                        label={t('enableProfile')}
+                        value={editing.enabled ? 'on' : 'off'}
+                        onChange={(value) => setEditing({ ...editing, enabled: value === 'on' })}
+                        options={[
+                          { value: 'off', label: t('profileOff') },
+                          { value: 'on', label: t('profileOn') },
+                        ]}
+                        disabled={busy || live}
                       />
-                      {t('enableProfile')}
-                    </label>
+                    </div>
                   </fieldset>
                   <button
                     className="button primary"
@@ -247,7 +257,10 @@ export function GamesPanel({
             {view?.candidates.map((candidate, index) => (
               <article key={`${candidate.launcher}-${index}`}>
                 <div>
-                  <h3>{candidate.name}</h3>
+                  <h3>
+                    <Icon name={candidate.launcher === 'minecraft' ? 'minecraft' : 'games'} />
+                    {candidate.name}
+                  </h3>
                   <p className="muted small">{t(`launcher_${candidate.launcher}`)}</p>
                   <p className="mono break-text">{candidate.exe ?? candidate.installDir}</p>
                 </div>
