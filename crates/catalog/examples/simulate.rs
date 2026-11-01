@@ -13,16 +13,38 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let item_ids = Preset::Safe.select(&catalog, machine);
     let host = MockHost::default();
     for id in &item_ids {
-        host.seed(
-            catalog.get(id)?,
-            Snapshot::Registry {
+        let item = catalog.get(id)?;
+        let snapshot = match item.action_type {
+            ActionType::Registry => Snapshot::Registry {
                 value: None,
-                created_keys: Vec::new(),
+                created_keys: vec![],
             },
-        )?;
+            ActionType::Service => Snapshot::Service {
+                start_mode: 3,
+                delayed_auto_start: None,
+                running: false,
+            },
+            ActionType::ScheduledTask => Snapshot::ScheduledTask {
+                enabled: true,
+                definition: None,
+            },
+            ActionType::Power => Snapshot::Power {
+                active_guid: "381b4222-f694-41f0-9685-ff5bb260df2e".into(),
+                existing_guids: vec!["381b4222-f694-41f0-9685-ff5bb260df2e".into()],
+            },
+            _ => return Err("automatic profile contains a manual-only kind".into()),
+        };
+        host.seed(item, snapshot)?;
     }
     let mut executors = Executors::default();
-    executors.insert(MockExecutor::new(ActionType::Registry, host));
+    for kind in [
+        ActionType::Registry,
+        ActionType::Service,
+        ActionType::ScheduledTask,
+        ActionType::Power,
+    ] {
+        executors.insert(MockExecutor::new(kind, host.clone()));
+    }
     let engine = Engine {
         catalog: &catalog,
         machine,

@@ -1,4 +1,4 @@
-name: Foundation
+name: GameTune Rust
 
 on:
   push:
@@ -33,15 +33,18 @@ jobs:
         run: cargo clippy --workspace --all-targets --locked --offline -- -D warnings
       - name: Test without network
         run: cargo test --workspace --locked --offline
-      - name: Build foundation
+      - name: Compile VM harness without running administrative tests
+        run: cargo test -p gametune-windows-runtime --features vm-tests --locked --offline --no-run
+      - name: Build default-feature release (no fixture authorization)
         run: cargo build --workspace --release --locked --offline
       - name: Run mock simulation
         run: cargo run -p gametune-catalog --example simulate --locked --offline
       - name: Publish validated catalog
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: foundation-catalog-${{ matrix.os }}
+          name: validated-catalog-${{ matrix.os }}
           path: |
             catalog/*.json
             Cargo.lock
+            docs/catalog-sources.md
           retention-days: 14

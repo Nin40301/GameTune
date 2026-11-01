@@ -6,15 +6,19 @@ pub mod journal;
 pub mod model;
 pub mod profile;
 pub mod protection;
+pub mod removal;
 
 pub use engine::*;
 pub use executor::*;
 pub use journal::*;
 pub use model::*;
 pub use profile::*;
+pub use removal::*;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
+    #[error("Windows preflight failed: {0}")]
+    Preflight(String),
     #[error("invalid catalog: {0}")]
     InvalidCatalog(String),
     #[error("unknown item: {0}")]

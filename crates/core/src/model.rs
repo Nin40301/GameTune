@@ -51,6 +51,13 @@ pub enum ServiceMode {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct StartupTarget {
+    pub name: String,
+    pub fingerprint: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Target {
     Registry {
@@ -72,6 +79,8 @@ pub enum Target {
     },
     Startup {
         hive: Hive,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        entry: Option<StartupTarget>,
     },
     Power {
         guid: String,
@@ -99,7 +108,12 @@ impl Target {
             Self::Service { name, .. } => format!("service:{name}"),
             Self::ScheduledTask { path, name } => format!("scheduled_task:{path}{name}"),
             Self::Appx { name } => format!("appx:{name}"),
-            Self::Startup { hive } => format!("startup:{hive:?}:discovery"),
+            Self::Startup { hive, entry } => format!(
+                "startup:{hive:?}:{}",
+                entry
+                    .as_ref()
+                    .map_or("discovery", |e| e.fingerprint.as_str())
+            ),
             Self::Power { .. } => "power:active".into(),
         }
         .to_ascii_lowercase()
@@ -117,6 +131,8 @@ pub struct Localized {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Item {
+    #[serde(default = "default_automatic")]
+    pub automatic: bool,
     pub id: String,
     #[serde(rename = "type")]
     pub action_type: ActionType,
@@ -136,6 +152,10 @@ pub struct Item {
     pub sources: Vec<String>,
     pub supported_editions: Vec<Edition>,
     pub requires_ssd: bool,
+}
+
+fn default_automatic() -> bool {
+    true
 }
 
 #[derive(Debug, Clone)]

@@ -23,6 +23,8 @@ pub enum Snapshot {
     },
     ScheduledTask {
         enabled: bool,
+        #[serde(default)]
+        definition: Option<String>,
     },
     Appx {
         packages: Vec<String>,
@@ -61,8 +63,14 @@ pub enum ExecError {
     AccessDenied,
     #[error("executor type mismatch")]
     TypeMismatch,
-    #[error("real Windows executor is unavailable in phase 1")]
+    #[error("executor is unavailable on this platform")]
     Unavailable,
+    #[error("resource changed after analysis; analyze again before applying")]
+    Conflict,
+    #[error("operation timed out; inspect the recovery journal before retrying")]
+    Timeout,
+    #[error("explicit per-app removal acknowledgement is required")]
+    RemovalConfirmationRequired,
     #[error("protected resource; catalog inclusion does not authorize execution")]
     Protected,
     #[error("manual reinstall required")]
@@ -76,6 +84,12 @@ pub type ExecResult<T> = std::result::Result<T, ExecError>;
 /// Implementations capture state without mutation; restore must be idempotent.
 /// A failure from apply may follow a partial change: the original must remain recoverable.
 pub trait Executor {
+    fn execution_scope(&self) -> Option<&str> {
+        None
+    }
+    fn ensure_write_ready(&self) -> ExecResult<()> {
+        Ok(())
+    }
     fn action_type(&self) -> ActionType;
     fn capture(&self, item: &Item) -> ExecResult<Snapshot>;
     fn apply(&mut self, item: &Item) -> ExecResult<()>;

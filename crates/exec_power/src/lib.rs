@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
-//! Power executor boundary. Real Windows implementation is a phase 2 deliverable.
-use gametune_core::{ActionType, ExecError, ExecResult, Executor, Item, Snapshot};
+//! Power executor, backed by validated Windows operations or an explicit mock.
+use gametune_core::{ActionType, ExecResult, Executor, Item, Snapshot};
 use gametune_exec_mock::MockHost;
 
 pub struct MockExecutor(gametune_exec_mock::MockExecutor);
@@ -27,19 +27,33 @@ impl Executor for MockExecutor {
     }
 }
 
-/// Fails closed on every OS, including Windows. Never silently substitutes a mock.
-pub struct WindowsExecutor;
+/// Real Windows adapter with validated catalog targets and interactive-user scope.
+pub struct WindowsExecutor(gametune_windows_runtime::WindowsExecutor);
+impl WindowsExecutor {
+    pub fn new(context: gametune_windows_runtime::WindowsContext) -> Self {
+        Self(gametune_windows_runtime::WindowsExecutor::new(
+            ActionType::Power,
+            context,
+        ))
+    }
+}
 impl Executor for WindowsExecutor {
     fn action_type(&self) -> ActionType {
         ActionType::Power
     }
-    fn capture(&self, _item: &Item) -> ExecResult<Snapshot> {
-        Err(ExecError::Unavailable)
+    fn execution_scope(&self) -> Option<&str> {
+        self.0.execution_scope()
     }
-    fn apply(&mut self, _item: &Item) -> ExecResult<()> {
-        Err(ExecError::Unavailable)
+    fn ensure_write_ready(&self) -> ExecResult<()> {
+        self.0.ensure_write_ready()
     }
-    fn restore(&mut self, _item: &Item, _original: &Snapshot) -> ExecResult<()> {
-        Err(ExecError::Unavailable)
+    fn capture(&self, item: &Item) -> ExecResult<Snapshot> {
+        self.0.capture(item)
+    }
+    fn apply(&mut self, item: &Item) -> ExecResult<()> {
+        self.0.apply(item)
+    }
+    fn restore(&mut self, item: &Item, original: &Snapshot) -> ExecResult<()> {
+        self.0.restore(item, original)
     }
 }

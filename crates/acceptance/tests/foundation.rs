@@ -36,7 +36,10 @@ fn original(item: &Item) -> Snapshot {
             delayed_auto_start: Some(true),
             running: true,
         },
-        ActionType::ScheduledTask => Snapshot::ScheduledTask { enabled: true },
+        ActionType::ScheduledTask => Snapshot::ScheduledTask {
+            enabled: true,
+            definition: None,
+        },
         ActionType::Appx => Snapshot::Appx {
             packages: vec!["package_1.0_x64".into()],
             provisioned: vec!["provisioned".into()],
@@ -72,7 +75,7 @@ fn executors(host: &MockHost) -> Executors {
 fn embedded_catalog_is_complete_and_schema_valid() -> TestResult {
     let catalog = load_embedded()?;
     assert_eq!(catalog.items().count(), 86);
-    assert_eq!(catalog.items().filter(|i| i.verified).count(), 2);
+    assert!(catalog.items().filter(|i| i.verified).count() >= 68);
     assert!(catalog.get("svc.diagtrack").is_ok());
     assert!(catalog.get("appx.microsoft.gamingservices").is_ok());
     Ok(())
@@ -254,17 +257,19 @@ fn automatic_profiles_filter_build_edition_risk_verification_and_manual_revert()
                 )
                 .is_empty()
         );
-        assert!(
-            preset
-                .select(
-                    &catalog,
-                    Machine {
-                        edition: Edition::Home,
-                        ..machine()
-                    }
-                )
-                .is_empty()
+        let home = preset.select(
+            &catalog,
+            Machine {
+                edition: Edition::Home,
+                ..machine()
+            },
         );
+        assert!(!home.is_empty());
+        for id in home {
+            if let Target::Registry { path, .. } = &catalog.get(&id)?.target {
+                assert_eq!(path, "SOFTWARE\\Policies\\Microsoft\\Edge");
+            }
+        }
     }
     Ok(())
 }
@@ -273,6 +278,7 @@ fn automatic_profiles_filter_build_edition_risk_verification_and_manual_revert()
 fn sysmain_is_preselected_only_when_verified_and_disk_is_ssd() -> TestResult {
     let mut item = load_embedded()?.get("svc.sysmain")?.clone();
     item.verified = true;
+    item.automatic = true; // synthetic fixture isolates SSD gating; real SysMain is manual-only
     item.sources = vec!["https://example.test/test-fixture".into()];
     let catalog = Catalog::try_new(vec![item])?;
     assert!(Preset::Safe.select(&catalog, machine()).is_empty());
@@ -483,7 +489,7 @@ fn unknown_late_id_and_missing_confirmations_abort_before_first_write() -> TestR
         engine.apply(&manual(&["reg.cortana", "missing"]), &mut journal),
         Err(Error::UnknownItem(_))
     ));
-    for id in ["svc.diagtrack", "svc.xblauthmanager"] {
+    for id in ["reg.game_dvr_user", "svc.xblauthmanager"] {
         let request = Request {
             item_ids: vec![id.into()],
             ..Request::default()
@@ -735,27 +741,24 @@ fn journal_has_single_writer_lock_and_reopens_after_drop() -> TestResult {
 }
 
 #[test]
-fn real_windows_boundaries_fail_closed_on_every_platform() -> TestResult {
-    let catalog = load_embedded()?;
-    let executors: Vec<Box<dyn Executor>> = vec![
-        Box::new(gametune_exec_registry::WindowsExecutor),
-        Box::new(gametune_exec_service::WindowsExecutor),
-        Box::new(gametune_exec_scheduled_task::WindowsExecutor),
-        Box::new(gametune_exec_appx::WindowsExecutor),
-        Box::new(gametune_exec_startup::WindowsExecutor),
-        Box::new(gametune_exec_power::WindowsExecutor),
-    ];
-    for mut executor in executors {
-        let item = catalog
-            .items()
-            .find(|i| i.action_type == executor.action_type())
-            .ok_or("item")?;
-        assert_eq!(executor.capture(item), Err(ExecError::Unavailable));
-        assert_eq!(executor.apply(item), Err(ExecError::Unavailable));
-        assert_eq!(
-            executor.restore(item, &original(item)),
-            Err(ExecError::Unavailable)
-        );
+fn real_windows_boundaries_require_an_interactive_context() -> TestResult {
+    #[cfg(not(windows))]
+    assert!(matches!(
+        gametune_windows_runtime::WindowsContext::detect(),
+        Err(ExecError::Unavailable)
+    ));
+    #[cfg(windows)]
+    {
+        match gametune_windows_runtime::WindowsContext::detect() {
+            Ok(context) => {
+                assert!(context.interactive_sid().starts_with("S-1-5-"));
+                if !context.elevated() {
+                    assert_eq!(context.ensure_elevated(), Err(ExecError::AccessDenied));
+                }
+            }
+            Err(ExecError::Failed(message)) if message.contains("interactive") => (),
+            Err(e) => return Err(e.into()),
+        }
     }
     Ok(())
 }

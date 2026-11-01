@@ -40,8 +40,8 @@ fn risk_and_level_filters_hold_independently_of_verification() -> TestResult {
     let balanced = Preset::Balanced.select(&catalog, machine());
     let aggressive = Preset::Aggressive.select(&catalog, machine());
     assert!(safe.contains(&"svc.diagtrack".into()));
-    assert!(!safe.contains(&"svc.wersvc".into()));
-    assert!(balanced.contains(&"svc.wersvc".into()));
+    assert!(!safe.contains(&"svc.mapsbroker".into()));
+    assert!(balanced.contains(&"svc.mapsbroker".into()));
     assert!(!balanced.contains(&"svc.wsearch".into()));
     assert!(aggressive.contains(&"svc.wsearch".into()));
     Ok(())

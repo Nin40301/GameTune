@@ -1,0 +1,12 @@
+{
+  "appx.history": "Histórico de remoção de apps",
+  "appx.remove": "Remover app",
+  "appx.confirm": "Confirme a remoção deste app",
+  "appx.noUndo": "A remoção afeta todos os usuários e novos perfis. Desfazer não reinstala apps removidos. A reinstalação pela Microsoft Store pode exigir internet e não recupera dados nem garante a versão original",
+  "appx.gamingRisk": "Entendo que remover esta dependência pode impedir Minecraft Bedrock, Game Pass e jogos da Microsoft Store de abrir ou autenticar",
+  "appx.reinstall": "Reinstalar pela Microsoft Store",
+  "appx.status.prepared": "Tentativa interrompida. Verifique o estado do app",
+  "appx.status.removed": "Remoção concluída",
+  "appx.status.failed": "A tentativa falhou e pode ter removido parte dos pacotes",
+  "appx.demo": "Demonstração com dados fictícios. Nenhum app instalado foi removido"
+}

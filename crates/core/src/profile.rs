@@ -19,7 +19,8 @@ impl Preset {
         catalog
             .items()
             .filter(|i| {
-                !crate::protection::is_protected(i)
+                i.automatic
+                    && !crate::protection::is_protected(i)
                     && i.verified
                     && i.level > 0
                     && i.level <= level

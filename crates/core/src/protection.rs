@@ -6,6 +6,9 @@ const APPROVED_TARGETS: &str = include_str!("approved_targets.json");
 /// The appendix lists these network services but the absolute protection rule wins.
 /// Keep their descriptions for transparency, never grant execution or preselection.
 pub fn is_protected(item: &Item) -> bool {
+    if matches!(&item.target,Target::Registry{name,..} if name=="DisableAIDataAnalysis") {
+        return true;
+    }
     matches!(&item.target, Target::Service { name, .. }
         if ["icssvc", "WMPNetworkSvc", "XboxNetApiSvc"].contains(&name.as_str()))
 }
@@ -13,7 +16,7 @@ pub fn is_protected(item: &Item) -> bool {
 pub fn validate(item: &Item) -> Result<()> {
     let allowed: Vec<Target> = serde_json::from_str(APPROVED_TARGETS)?;
     let invalid = |why: &str| Error::InvalidCatalog(format!("{}: {why}", item.id));
-    if !allowed.contains(&item.target) {
+    if !allowed.contains(&item.target) && !valid_dynamic_startup(item) && !valid_test_target(item) {
         return Err(invalid("target is outside the safety allowlist"));
     }
     if item.action_type != item.target.action_type()
@@ -65,4 +68,92 @@ pub fn validate(item: &Item) -> Result<()> {
         return Err(invalid("HAGS requires a restart warning"));
     }
     Ok(())
+}
+
+pub fn permitted_startup_name(name: &str) -> bool {
+    [
+        "Steam",
+        "Discord",
+        "Spotify",
+        "EpicGamesLauncher",
+        "com.squirrel.Teams.Teams",
+        "MicrosoftTeams",
+        "MSTeams",
+        "Skype",
+    ]
+    .contains(&name)
+}
+fn valid_dynamic_startup(item: &Item) -> bool {
+    let Target::Startup {
+        hive,
+        entry: Some(entry),
+    } = &item.target
+    else {
+        return false;
+    };
+    let prefix = match hive {
+        crate::Hive::HKCU => "startup.hkcu.",
+        crate::Hive::HKLM => "startup.hklm.",
+    };
+    permitted_startup_name(&entry.name)
+        && entry.fingerprint.len() == 64
+        && entry.fingerprint.bytes().all(|b| b.is_ascii_hexdigit())
+        && item.id == format!("{prefix}{}", entry.fingerprint)
+        && item.level == 0
+        && item.revert == Revert::Auto
+}
+
+#[cfg(not(feature = "test-targets"))]
+fn valid_test_target(_: &Item) -> bool {
+    false
+}
+
+/// Compiled out of production. Only fixed dedicated fixture namespaces are accepted.
+#[cfg(feature = "test-targets")]
+pub fn valid_test_target(item: &Item) -> bool {
+    fn safe_suffix(s: &str) -> bool {
+        !s.is_empty() && s.len() < 80 && s.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'_')
+    }
+    if !item.id.starts_with("test.") {
+        return false;
+    }
+    match &item.target {
+        Target::Registry {
+            hive: crate::Hive::HKCU,
+            path,
+            name,
+            ..
+        } => {
+            path.strip_prefix("Software\\GameTuneTest\\")
+                .is_some_and(|s| s.split('\\').all(safe_suffix))
+                && safe_suffix(name)
+        }
+        Target::Service { name, .. } => name.strip_prefix("GameTuneTest_").is_some_and(safe_suffix),
+        Target::ScheduledTask { path, name } => {
+            path == "\\GameTuneTest\\"
+                && name.strip_prefix("GameTuneTest_").is_some_and(safe_suffix)
+        }
+        Target::Startup {
+            hive: crate::Hive::HKCU,
+            entry: Some(e),
+        } => {
+            e.name
+                .strip_prefix("GameTuneTest_")
+                .is_some_and(safe_suffix)
+                && e.fingerprint.len() == 64
+                && e.fingerprint.bytes().all(|b| b.is_ascii_hexdigit())
+        }
+        Target::Power { guid } => {
+            guid.starts_with("47544e54-")
+                && guid.len() == 36
+                && guid.bytes().enumerate().all(|(i, b)| {
+                    if [8, 13, 18, 23].contains(&i) {
+                        b == b'-'
+                    } else {
+                        b.is_ascii_hexdigit()
+                    }
+                })
+        }
+        _ => false,
+    }
 }

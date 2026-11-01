@@ -1,59 +1,49 @@
-# Journal e recuperação
+# Journal — formato 2 e recuperação
 
-O formato canônico de escrita é `journal.wal`, uma sequência JSON Lines UTF-8.
-Cada registro contém versão, sequência, hash anterior, entrada completa e
-SHA-256 do payload canônico. As entradas contêm chave normalizada, ID, alvo,
-snapshot tipado, instante RFC 3339 UTC, status e erro tipado opcional.
-`Journal::export_json` gera a projeção padrão JSON do modelo pedido para
-`journal.json`. A projeção não participa da recuperação. Manter um WAL separado
-evita reescrever um array inteiro no caminho crítico de cada alteração.
-
-Fluxo de aplicação:
+`journal.wal` é JSON Lines append-only: versão 2, escopo máquina/SID, sequência,
+hash anterior, entrada e SHA-256 canônico. A entrada guarda alvo, ID, tipo/bytes ou
+estado completo relevante, timestamp e resultado. XML de tarefa é guardado para
+detectar mudanças fora da habilitação. `journal.json` é só uma projeção de leitura.
 
 ```text
-capturar estado -> Prepared + sync_all -> alterar -> Applied + sync_all
-                                                -> Failed + sync_all
+capturar -> Prepared + sync_all -> aplicar -> Applied ou Failed + sync_all
+original ativo -> Reverting + sync_all -> restaurar -> Reverted ou UndoFailed
 ```
 
-Fluxo de reversão:
+O primeiro original fica imutável até Reverted. Reaplicar Applied não substitui
+o original. Undo usa a ordem inversa de preparação e pode ser repetido. Uma
+falha parcial preserva o original e exige recuperação antes de novo lote.
+Cauda incompleta é descartada após validar o prefixo; corrupção completa bloqueia
+abertura. Falha de escrita envenena o escritor e impede a ação subsequente.
 
-```text
-Prepared/Applied/Failed/UndoFailed -> Reverting + sync_all -> restaurar
-Reverting -> Reverted + sync_all | UndoFailed + sync_all
-```
+Executores Windows exigem `open_scoped`, com o mesmo escopo do contexto. A API de
+produção abre isso exclusivamente no armazenamento protegido. Um lock global e
+`scope-owner.json` bloqueiam outro usuário enquanto houver originais ativos.
+O usuário anterior precisa desfazer antes de outra sessão assumir ajustes globais.
 
-Uma falha pode ocorrer após uma alteração parcial. Por isso `Failed` continua
-com o original e exige recuperação. Reaplicar um item `Applied` não grava nem
-substitui o original. Após `Reverted`, uma nova aplicação captura um novo
-original. Desfazer novamente não altera nada. A ordem de rollback é a inversa
-da preparação, inclusive após reabrir o arquivo.
+O formato 1 da fundação não tem migração automática para o formato 2. Nenhuma
+operação Windows era habilitada naquela versão. Preserve journals antigos de
+testes para análise; não os edite/renomeie como journal de produção. Migrações
+futuras precisam ser explícitas e testadas, principalmente se um alvo mudar.
 
-`Journal::open` adquire lock exclusivo do sistema operacional antes de ler.
-Valida sequência, checksum, identidade do original e transições. Uma linha
-completa inválida bloqueia abertura e mantém o arquivo. Uma cauda sem newline é
-uma gravação interrompida: o prefixo completo é validado antes de truncar a
-cauda e sincronizar. A UI futura deve mostrar `discarded_torn_tail` ao usuário.
-Falhas de escrita envenenam o escritor; ele deve ser reaberto antes de continuar.
+Registro: captura raw do winreg, distingue ausente/zero e guarda chaves ausentes.
+Undo remove só valores criados e só exclui chaves criadas se não houver valores
+nem subchaves. Conteúdo de terceiros gera conflito; não é apagado. Inicialização
+preserva os bytes exatos e exige que o vínculo com Run não tenha mudado.
 
-O motor não confia em alvos do journal: resolve o ID no catálogo embutido e
-compara o alvo. Mudanças de alvo em uma atualização exigem migração revisada.
-Checksum não é autenticação contra um administrador malicioso; a DACL da Fase 2
-é obrigatória. Não importe journals recebidos de terceiros.
+Serviços: não parar dependentes nem iniciar dependências silenciosamente.
+Tarefas: alterar somente Enabled; XML divergente impede reativação. Energia:
+restaurar o plano anterior e remover apenas o plano criado pela ação. Mudanças
+externas observáveis geram Conflict; não restaurar todos os planos do Windows.
 
-Limites desta fase:
+Appx usa **outro histórico**, `removed-apps.json`: nome/PFN e Prepared são escritos
+e sincronizados antes de remover. Arquivo é substituído atomicamente no mesmo
+volume, com lock próprio. Removed/Failed são persistidos depois. Se houver crash
+em Prepared, reconciliar pelo inventário atual; não chamar isso de undo.
+Uma tentativa parcialmente removida continua oferecendo os PFNs capturados.
 
-- Testes reproduzem janelas de crash truncando registros e mantendo o estado
-  fictício já alterado. Não equivalem a testes de corte de energia.
-- `sync_all` depende das garantias do sistema de arquivos e do armazenamento.
-  A durabilidade da criação do diretório/arquivo precisa ser verificada no
-  adaptador Windows antes de habilitar ações reais.
-- Não há migração entre versões, journal por SID, ACL, backup de recuperação,
-  retomada para concluir o lote ou limite/compactação do WAL nesta fase.
-- O chamador fornece um diretório de teste existente. Nenhum teste modifica
-  `%ProgramData%`, registro, serviços, tarefas ou energia do host.
-- Estado original de registro inclui a lista de chaves ausentes antes da ação;
-  o executor real deverá remover só chaves criadas e ainda vazias, sem apagar
-  dados criados por terceiros. Alterações concorrentes do Windows devem gerar
-  conflito visível, em vez de alegar restauração exata sem comparação.
-
-Referência: [Rust File::sync_all e locking](https://doc.rust-lang.org/std/fs/struct.File.html).
+Limites: sync_all depende do sistema de arquivos e do armazenamento. Nenhum teste
+de corte elétrico foi realizado nesta entrega. Checksum não autentica contra
+administrador. Ainda não há compactação/migração de histórico, retomada para
+concluir lote nem política de sobrescrever mudanças externas. Restaurar valores
+não apaga logs do Windows nem preserva timestamps de auditoria.

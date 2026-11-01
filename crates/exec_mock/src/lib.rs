@@ -85,11 +85,16 @@ impl Executor for MockExecutor {
         if let Some(error) = state.failures.get(&(item.target.key(), Stage::Capture)) {
             return Err(error.clone());
         }
-        state
+        let snapshot = state
             .resources
             .get(&item.target.key())
             .cloned()
-            .ok_or(ExecError::NotFound)
+            .ok_or(ExecError::NotFound)?;
+        if matches!(&snapshot,Snapshot::Appx{packages,provisioned,..} if packages.is_empty()&&provisioned.is_empty())
+        {
+            return Err(ExecError::NotFound);
+        }
+        Ok(snapshot)
     }
     fn apply(&mut self, item: &Item) -> ExecResult<()> {
         self.check(item)?;
@@ -123,8 +128,11 @@ impl Executor for MockExecutor {
                 delayed_auto_start,
                 running: false,
             },
-            (Target::ScheduledTask { .. }, Snapshot::ScheduledTask { .. }) => {
-                Snapshot::ScheduledTask { enabled: false }
+            (Target::ScheduledTask { .. }, Snapshot::ScheduledTask { definition, .. }) => {
+                Snapshot::ScheduledTask {
+                    enabled: false,
+                    definition,
+                }
             }
             (Target::Appx { .. }, Snapshot::Appx { .. }) => Snapshot::Appx {
                 packages: Vec::new(),

@@ -186,22 +186,29 @@ pub struct JournalEntry {
 #[serde(deny_unknown_fields)]
 struct Record {
     version: u8,
+    scope: Option<String>,
     seq: u64,
     previous: String,
     entry: JournalEntry,
     hash: String,
 }
 
-fn digest(seq: u64, previous: &str, entry: &JournalEntry) -> Result<String> {
+fn digest(
+    seq: u64,
+    previous: &str,
+    scope: &Option<String>,
+    entry: &JournalEntry,
+) -> Result<String> {
     Ok(format!(
         "{:x}",
-        Sha256::digest(serde_json::to_vec(&(1_u8, seq, previous, entry))?)
+        Sha256::digest(serde_json::to_vec(&(2_u8, seq, previous, scope, entry))?)
     ))
 }
 
 /// Durable append-only WAL. Never overwrite an original while its change is active.
 /// Exclusive OS file lock is held until drop. A write error poisons this instance.
 pub struct Journal {
+    scope: Option<String>,
     file: File,
     entries: BTreeMap<String, JournalEntry>,
     order: BTreeMap<String, u64>,
@@ -214,6 +221,18 @@ pub struct Journal {
 impl Journal {
     /// The caller creates/protects the parent directory. No implicit ProgramData writes.
     pub fn open(path: impl AsRef<Path>) -> Result<Self> {
+        Self::open_inner(path.as_ref(), None)
+    }
+
+    pub fn open_scoped(path: impl AsRef<Path>, scope: &str) -> Result<Self> {
+        Self::open_inner(path.as_ref(), Some(scope.to_owned()))
+    }
+
+    pub fn scope(&self) -> Option<&str> {
+        self.scope.as_deref()
+    }
+
+    fn open_inner(path: &Path, scope: Option<String>) -> Result<Self> {
         let mut file = OpenOptions::new()
             .read(true)
             .write(true)
@@ -226,6 +245,7 @@ impl Journal {
         file.read_to_end(&mut bytes)?;
         let complete_len = bytes.iter().rposition(|b| *b == b'\n').map_or(0, |p| p + 1);
         let mut journal = Self {
+            scope,
             file,
             entries: BTreeMap::new(),
             order: BTreeMap::new(),
@@ -240,10 +260,12 @@ impl Journal {
         {
             let record: Record =
                 serde_json::from_slice(line).map_err(|e| Error::CorruptJournal(e.to_string()))?;
-            if record.version != 1
+            if record.version != 2
+                || record.scope != journal.scope
                 || record.seq != journal.seq + 1
                 || record.previous != journal.hash
-                || digest(record.seq, &record.previous, &record.entry)? != record.hash
+                || digest(record.seq, &record.previous, &record.scope, &record.entry)?
+                    != record.hash
             {
                 return Err(Error::CorruptJournal(
                     "sequence or checksum mismatch".into(),
@@ -362,9 +384,10 @@ impl Journal {
         }
         self.validate_transition(&entry)?;
         let seq = self.seq + 1;
-        let hash = digest(seq, &self.hash, &entry)?;
+        let hash = digest(seq, &self.hash, &self.scope, &entry)?;
         let record = Record {
-            version: 1,
+            version: 2,
+            scope: self.scope.clone(),
             seq,
             previous: self.hash.clone(),
             entry,

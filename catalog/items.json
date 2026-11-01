@@ -29,17 +29,19 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Mapeamento oficial, política legada e descontinuada; não bloqueia o novo app independente. Home não documentado",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-windowsai#turnoffwindowscopilot"
+      ],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.copilot_button",
@@ -70,26 +72,26 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "verificationNote": "Mapeamento exato ainda sem fonte oficial suficiente. Home excluído. Somente manual com aviso de não verificado",
       "sources": [],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.recall",
       "type": "registry",
       "category": "ai",
       "level": 1,
-      "risk": "low",
+      "risk": "high",
       "riskNote": {
-        "pt-BR": "O histórico visual do Recall pode ficar indisponível",
-        "en": "Recall visual history may become unavailable"
+        "pt-BR": "Pode apagar o histórico existente do Recall. Restaurar o registro não recupera esse histórico. Ação bloqueada",
+        "en": "May delete existing Recall history. Restoring the registry does not recover that history. Action blocked"
       },
       "name": {
         "pt-BR": "Desativar análise do Recall",
@@ -99,7 +101,7 @@
         "pt-BR": "Solicita a desativação da análise de IA do Recall. Desfazer restaura tipo e bytes originais ou remove o valor criado",
         "en": "Request disabling Recall AI analysis. Undo restores original type and bytes or removes the created value"
       },
-      "minBuild": 19045,
+      "minBuild": 26100,
       "target": {
         "kind": "registry",
         "hive": "HKLM",
@@ -107,19 +109,21 @@
         "name": "DisableAIDataAnalysis",
         "value": 1
       },
-      "revert": "auto",
+      "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Mapeamento oficial a partir de Windows 11 24H2 com KB5055627. A política pode apagar snapshots existentes; execução bloqueada pois restaurar DWORD não restaura esses dados",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-windowsai#disableaidataanalysis"
+      ],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.copilot",
@@ -146,9 +150,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -156,7 +163,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.windows.ai.copilot.provider",
@@ -193,7 +201,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.549981c3f5f10",
@@ -220,9 +229,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -230,7 +242,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "reg.cortana",
@@ -271,7 +284,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "appx.microsoft.gamingapp",
@@ -298,9 +312,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -308,7 +325,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.xboxapp",
@@ -335,9 +353,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -345,7 +365,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.xboxgamingoverlay",
@@ -372,9 +393,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -382,7 +406,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.xboxgameoverlay",
@@ -409,9 +434,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -419,7 +446,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.xboxspeechtotextoverlay",
@@ -446,9 +474,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -456,7 +486,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.xboxidentityprovider",
@@ -483,9 +514,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -493,7 +526,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.gamingservices",
@@ -530,7 +564,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.xblauthmanager",
@@ -558,9 +593,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -568,7 +605,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.xblgamesave",
@@ -596,9 +634,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -606,7 +646,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.xboxnetapisvc",
@@ -634,9 +675,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC; execução bloqueada pela proteção de rede",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -644,7 +687,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.xboxgipsvc",
@@ -672,9 +716,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -682,7 +728,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "appx.microsoft.bingnews",
@@ -709,9 +756,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -719,7 +769,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.bingweather",
@@ -746,9 +797,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -756,7 +809,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.gethelp",
@@ -783,9 +837,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -793,7 +849,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.getstarted",
@@ -820,9 +877,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -830,7 +889,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.windowsfeedbackhub",
@@ -857,9 +917,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -867,7 +929,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.microsoftofficehub",
@@ -894,9 +957,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -904,7 +969,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.people",
@@ -931,9 +997,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -941,7 +1009,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.mixedreality.portal",
@@ -968,9 +1037,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -978,7 +1050,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.microsoft3dviewer",
@@ -1005,9 +1078,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1015,7 +1090,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.print3d",
@@ -1042,9 +1118,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1052,7 +1130,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.skypeapp",
@@ -1079,9 +1158,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1089,7 +1170,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoftteams",
@@ -1116,9 +1198,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1126,7 +1211,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.msteams",
@@ -1153,9 +1239,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1163,7 +1252,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.clipchamp.clipchamp",
@@ -1190,9 +1280,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1200,7 +1293,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.todos",
@@ -1227,9 +1321,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1237,7 +1334,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.powerautomatedesktop",
@@ -1264,9 +1362,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1274,7 +1375,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.yourphone",
@@ -1301,9 +1403,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1311,7 +1416,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.windowsmaps",
@@ -1338,9 +1444,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1348,7 +1456,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoftcorporationii.microsoftfamily",
@@ -1385,7 +1494,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.windows.devhome",
@@ -1412,9 +1522,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1422,7 +1535,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.zunevideo",
@@ -1449,9 +1563,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1459,7 +1575,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.windowscommunicationsapps",
@@ -1486,9 +1603,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1496,7 +1615,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.microsoftsolitairecollection",
@@ -1523,9 +1643,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1533,7 +1655,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.zunemusic",
@@ -1560,9 +1683,11 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome do pacote confirmado em documentação histórica da Microsoft; a versão e a presença atuais são verificadas por inventário. Remoção exclusivamente manual",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1570,7 +1695,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "appx.microsoft.outlookforwindows",
@@ -1597,9 +1723,12 @@
       },
       "revert": "manual",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome exato no inventário VDOT referenciado pelo Microsoft Learn, fixado por commit. Isto confirma identidade, não recomenda remoção para jogos. Confirme o inventário local",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/AppxPackages.json"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1607,7 +1736,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.diagtrack",
@@ -1635,9 +1765,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1645,7 +1777,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.dmwappushservice",
@@ -1673,9 +1806,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC; mantido apenas manual porque o guia desaconselha desativação ou não oferece orientação",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1683,7 +1818,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.diagnosticshub.standardcollector.service",
@@ -1711,9 +1847,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC; mantido apenas manual porque o guia desaconselha desativação ou não oferece orientação",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1721,7 +1859,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.retaildemo",
@@ -1749,9 +1888,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1759,7 +1900,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.wmpnetworksvc",
@@ -1787,9 +1929,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC; execução bloqueada pela proteção de rede",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1797,7 +1941,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.remoteregistry",
@@ -1825,9 +1970,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC; mantido apenas manual porque o guia desaconselha desativação ou não oferece orientação",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1835,7 +1982,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.fax",
@@ -1863,9 +2011,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1873,7 +2023,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.wersvc",
@@ -1901,9 +2052,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC; mantido apenas manual porque o guia desaconselha desativação ou não oferece orientação",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1911,7 +2064,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.mapsbroker",
@@ -1939,9 +2093,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1949,7 +2105,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.wisvc",
@@ -1977,9 +2134,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -1987,7 +2146,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.phonesvc",
@@ -2015,9 +2175,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2025,7 +2187,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.semgrsvc",
@@ -2053,9 +2216,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2063,7 +2228,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.icssvc",
@@ -2091,9 +2257,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC; execução bloqueada pela proteção de rede",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2101,7 +2269,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.dosvc",
@@ -2129,9 +2298,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC; mantido apenas manual porque o guia desaconselha desativação ou não oferece orientação",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2139,7 +2310,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "svc.lfsvc",
@@ -2167,9 +2339,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2177,7 +2351,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.wsearch",
@@ -2205,9 +2380,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2215,7 +2392,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "svc.sysmain",
@@ -2243,9 +2421,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Identidade e finalidade documentadas no guia IoT. Não é recomendação de ganho em jogos; valide presença e dependências no PC; mantido apenas manual porque o guia desaconselha desativação ou não oferece orientação",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2253,7 +2433,8 @@
         "education"
       ],
       "requiresSsd": true,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "reg.telemetry",
@@ -2283,17 +2464,18 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "O valor zero só tem suporte em Enterprise/Education/Server. Não incluir Home ou Pro para prometer diagnóstico desligado",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-system#allowtelemetry"
+      ],
       "supportedEditions": [
-        "home",
-        "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "task.microsoft_compatibility_appraiser",
@@ -2322,8 +2504,10 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verificationNote": "Pesquisa Microsoft Learn/VDOT não confirma de forma suficiente o par caminho+nome exato. Mantido não verificado e fora dos perfis automáticos",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2331,7 +2515,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "task.programdataupdater",
@@ -2360,8 +2545,10 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verificationNote": "Pesquisa Microsoft Learn/VDOT não confirma de forma suficiente o par caminho+nome exato. Mantido não verificado e fora dos perfis automáticos",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2369,7 +2556,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "task.consolidator",
@@ -2398,8 +2586,10 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verificationNote": "Pesquisa Microsoft Learn/VDOT não confirma de forma suficiente o par caminho+nome exato. Mantido não verificado e fora dos perfis automáticos",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2407,7 +2597,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "task.usbceip",
@@ -2436,8 +2627,10 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verificationNote": "Pesquisa Microsoft Learn/VDOT não confirma de forma suficiente o par caminho+nome exato. Mantido não verificado e fora dos perfis automáticos",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2445,7 +2638,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "task.dmclient",
@@ -2474,8 +2668,10 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verificationNote": "Pesquisa Microsoft Learn/VDOT não confirma de forma suficiente o par caminho+nome exato. Mantido não verificado e fora dos perfis automáticos",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2483,7 +2679,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "task.queuereporting",
@@ -2512,8 +2709,10 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verificationNote": "Pesquisa Microsoft Learn/VDOT não confirma de forma suficiente o par caminho+nome exato. Mantido não verificado e fora dos perfis automáticos",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2521,7 +2720,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "task.mapstoasttask",
@@ -2550,8 +2750,10 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verificationNote": "Pesquisa Microsoft Learn/VDOT não confirma de forma suficiente o par caminho+nome exato. Mantido não verificado e fora dos perfis automáticos",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2559,7 +2761,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "task.mapsupdatetask",
@@ -2588,8 +2791,10 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verificationNote": "Pesquisa Microsoft Learn/VDOT não confirma de forma suficiente o par caminho+nome exato. Mantido não verificado e fora dos perfis automáticos",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2597,7 +2802,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.consumer_features",
@@ -2627,17 +2833,18 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Política documentada somente em Enterprise/Education; excluída de Home e Pro",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowwindowsconsumerfeatures"
+      ],
       "supportedEditions": [
-        "home",
-        "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.advertising",
@@ -2667,17 +2874,19 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Mapeamento oficial DisabledByGroupPolicy. Home não documentado",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#disableadvertisingid"
+      ],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.widgets",
@@ -2697,7 +2906,7 @@
         "pt-BR": "Desativa o painel Widgets onde a política é aceita. Desfazer restaura tipo e bytes originais ou remove o valor criado",
         "en": "Disable the Widgets panel where the policy is supported. Undo restores original type and bytes or removes the created value"
       },
-      "minBuild": 19045,
+      "minBuild": 22000,
       "target": {
         "kind": "registry",
         "hive": "HKLM",
@@ -2707,17 +2916,19 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "AllowNewsAndInterests em Dsh documentado no Windows 11 Pro/Enterprise/Education; Home não documentado",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-newsandinterests#allownewsandinterests"
+      ],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.systempanesuggestionsenabled",
@@ -2747,17 +2958,20 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Nome, caminho e DWORD no exemplo VDOT de hive de usuário. Não garante eficácia em todas as edições; apenas manual e Home excluído",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration",
+        "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/c93dfb2db35a16584efebb27a626a2f51c503c54/2009/ConfigurationFiles/DefaultUserSettings.json"
+      ],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "reg.silentinstalledappsenabled",
@@ -2788,16 +3002,16 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "verificationNote": "Mapeamento exato ainda sem fonte oficial suficiente. Home excluído. Somente manual com aviso de não verificado",
       "sources": [],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.subscribedcontent-338389enabled",
@@ -2828,16 +3042,16 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "verificationNote": "Mapeamento exato ainda sem fonte oficial suficiente. Home excluído. Somente manual com aviso de não verificado",
       "sources": [],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.iris",
@@ -2857,7 +3071,7 @@
         "pt-BR": "Solicita a desativação de recomendações no menu Iniciar. Desfazer restaura tipo e bytes originais ou remove o valor criado",
         "en": "Request disabling Start menu recommendations. Undo restores original type and bytes or removes the created value"
       },
-      "minBuild": 19045,
+      "minBuild": 22000,
       "target": {
         "kind": "registry",
         "hive": "HKCU",
@@ -2867,9 +3081,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Mapeamento HKCU documentado para leitura do estado no Windows 11. Contrato não garante escrita como API pública; mantido apenas manual até validação funcional por edição",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/apps/develop/settings/settings-windows-11"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2877,7 +3093,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "reg.game_dvr_policy",
@@ -2918,7 +3135,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": 21999
+      "maxBuild": 21999,
+      "automatic": true
     },
     {
       "id": "reg.game_dvr_user",
@@ -2949,16 +3167,16 @@
       "revert": "auto",
       "requiresReboot": false,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "verificationNote": "Mapeamento exato ainda sem fonte oficial suficiente. Home excluído. Somente manual com aviso de não verificado",
       "sources": [],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.game_mode",
@@ -2978,7 +3196,7 @@
         "pt-BR": "Ativa a preferência Modo de Jogo do Windows. Desfazer restaura tipo e bytes originais ou remove o valor criado",
         "en": "Enable the Windows Game Mode preference. Undo restores original type and bytes or removes the created value"
       },
-      "minBuild": 19045,
+      "minBuild": 22000,
       "target": {
         "kind": "registry",
         "hive": "HKCU",
@@ -2988,9 +3206,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Mapeamento HKCU documentado para leitura do estado no Windows 11. Contrato não garante escrita como API pública; mantido apenas manual até validação funcional por edição",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/apps/develop/settings/settings-windows-11"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -2998,7 +3218,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "reg.edge_preload",
@@ -3028,9 +3249,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Política do navegador documentada com REG_DWORD, suporte Windows e perfis Microsoft pessoais; não depende de MDM do Windows. Verifique versão instalada do Edge",
+      "sources": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/startupboostenabled"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -3038,7 +3261,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.edge_background",
@@ -3068,9 +3292,11 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Política do navegador documentada com REG_DWORD, suporte Windows e perfis Microsoft pessoais; não depende de MDM do Windows. Verifique versão instalada do Edge",
+      "sources": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/backgroundmodeenabled"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -3078,7 +3304,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.hags",
@@ -3109,16 +3336,16 @@
       "revert": "auto",
       "requiresReboot": true,
       "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
+      "verificationNote": "Mapeamento exato ainda sem fonte oficial suficiente. Home excluído. Somente manual com aviso de não verificado",
       "sources": [],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "power.high_performance",
@@ -3145,9 +3372,12 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "GUID High Performance documentado. Nem todo dispositivo oferece o plano; falhar sem forçar Modern Standby e sem restaurar todos os planos",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/win32/power/power-setting-guids",
+        "https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/powercfg-command-line-options"
+      ],
       "supportedEditions": [
         "home",
         "pro",
@@ -3155,7 +3385,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "reg.background_apps",
@@ -3185,17 +3416,19 @@
       },
       "revert": "auto",
       "requiresReboot": false,
-      "verified": false,
-      "verificationNote": "Fonte: Apêndice A. Confirmação documental e teste por build/edição pendentes; excluído dos perfis automáticos",
-      "sources": [],
+      "verified": true,
+      "verificationNote": "Política documentada em Pro/Enterprise/Education. Bloqueio global interrompe notificações; alto risco, nunca automático",
+      "sources": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#letappsruninbackground"
+      ],
       "supportedEditions": [
-        "home",
         "pro",
         "enterprise",
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": true
     },
     {
       "id": "startup.hkcu",
@@ -3232,7 +3465,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     },
     {
       "id": "startup.hklm",
@@ -3269,7 +3503,8 @@
         "education"
       ],
       "requiresSsd": false,
-      "maxBuild": null
+      "maxBuild": null,
+      "automatic": false
     }
   ]
 }

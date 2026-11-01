@@ -137,6 +137,17 @@ impl Engine<'_> {
                 ));
                 continue;
             }
+            self.check_scope(item, journal)?;
+            if let Err(error) = self
+                .executors
+                .get(item.action_type)
+                .and_then(|e| e.ensure_write_ready())
+            {
+                report
+                    .items
+                    .push(item_report(item, Err(error), Outcome::Applied));
+                continue;
+            }
             let original = match self
                 .executors
                 .get(item.action_type)
@@ -171,6 +182,7 @@ impl Engine<'_> {
     fn validate_journal(&self, journal: &Journal) -> Result<()> {
         for entry in journal.entries().filter(|e| e.status != Status::Reverted) {
             let item = self.catalog.get(&entry.item_id)?;
+            self.check_scope(item, journal)?;
             if crate::protection::is_protected(item)
                 || item.target != entry.target
                 || item.target.key() != entry.key
@@ -179,6 +191,18 @@ impl Engine<'_> {
                     "catalog target changed; recovery migration required".into(),
                 ));
             }
+        }
+        Ok(())
+    }
+
+    fn check_scope(&self, item: &Item, journal: &Journal) -> Result<()> {
+        if let Ok(executor) = self.executors.get(item.action_type)
+            && let Some(scope) = executor.execution_scope()
+            && journal.scope() != Some(scope)
+        {
+            return Err(Error::CorruptJournal(
+                "machine/interactive SID scope mismatch".into(),
+            ));
         }
         Ok(())
     }
@@ -203,6 +227,16 @@ impl Engine<'_> {
         };
         for entry in entries {
             let item = self.catalog.get(&entry.item_id)?;
+            if let Err(error) = self
+                .executors
+                .get(item.action_type)
+                .and_then(|e| e.ensure_write_ready())
+            {
+                report
+                    .items
+                    .push(item_report(item, Err(error), Outcome::Reverted));
+                continue;
+            }
             journal.transition(&entry.key, Status::Reverting, None)?;
             let result = self
                 .executors

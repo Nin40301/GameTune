@@ -222,6 +222,25 @@
                       "HKCU",
                       "HKLM"
                     ]
+                  },
+                  "entry": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 160
+                      },
+                      "fingerprint": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "fingerprint"
+                    ]
                   }
                 },
                 "required": [
@@ -294,6 +313,9 @@
               "null"
             ],
             "minimum": 19045
+          },
+          "automatic": {
+            "type": "boolean"
           }
         },
         "required": [

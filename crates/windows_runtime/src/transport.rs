@@ -1,0 +1,201 @@
+use gametune_core::{ExecError, ExecResult};
+use serde::{Serialize, de::DeserializeOwned};
+
+#[derive(Clone, Copy)]
+pub(crate) enum Script {
+    #[cfg(all(test, windows))]
+    Parse,
+    Identity,
+    Service,
+    Task,
+    Power,
+    Appx,
+    Storage,
+    RestorePoint,
+    Store,
+    #[cfg(feature = "vm-tests")]
+    Fixture,
+}
+impl Script {
+    fn text(self) -> &'static str {
+        match self {
+            #[cfg(all(test, windows))]
+            Self::Parse => include_str!("../scripts/parse.ps1"),
+            Self::Identity => include_str!("../scripts/identity.ps1"),
+            Self::Service => include_str!("../scripts/service.ps1"),
+            Self::Task => include_str!("../scripts/task.ps1"),
+            Self::Power => include_str!("../scripts/power.ps1"),
+            Self::Appx => include_str!("../scripts/appx.ps1"),
+            Self::Storage => include_str!("../scripts/storage.ps1"),
+            Self::RestorePoint => include_str!("../scripts/restore_point.ps1"),
+            Self::Store => include_str!("../scripts/store.ps1"),
+            #[cfg(feature = "vm-tests")]
+            Self::Fixture => include_str!("../scripts/fixture.ps1"),
+        }
+    }
+    fn timeout(self) -> std::time::Duration {
+        std::time::Duration::from_secs(match self {
+            Self::Appx | Self::RestorePoint => 180,
+            _ => 45,
+        })
+    }
+}
+
+#[derive(serde::Deserialize)]
+struct Envelope<T> {
+    ok: bool,
+    value: Option<T>,
+    error: Option<ExecError>,
+}
+
+pub(crate) fn run<T: DeserializeOwned>(script: Script, params: &impl Serialize) -> ExecResult<T> {
+    let bytes = run_bytes(script, &serde_json::to_vec(params).map_err(crate::failed)?)?;
+    let envelope: Envelope<T> = serde_json::from_slice(&bytes)
+        .map_err(|_| ExecError::Failed("invalid fixed-script response".into()))?;
+    if envelope.ok {
+        envelope
+            .value
+            .ok_or_else(|| ExecError::Failed("missing fixed-script result".into()))
+    } else {
+        Err(envelope
+            .error
+            .unwrap_or_else(|| ExecError::Failed("fixed Windows operation failed".into())))
+    }
+}
+
+#[cfg(not(windows))]
+fn run_bytes(script: Script, _: &[u8]) -> ExecResult<Vec<u8>> {
+    let _ = (script.text(), script.timeout());
+    Err(ExecError::Unavailable)
+}
+
+#[cfg(windows)]
+fn run_bytes(script: Script, params: &[u8]) -> ExecResult<Vec<u8>> {
+    use base64::{Engine as _, engine::general_purpose::STANDARD};
+    use std::{
+        io::{Read, Write},
+        os::windows::process::CommandExt,
+        process::{Command, Stdio},
+        time::Instant,
+    };
+    // SystemRoot comes from protected HKLM, not user-controlled PATH/environment.
+    let system = crate::registry::system_root()?;
+    let executable =
+        std::path::Path::new(&system).join("System32/WindowsPowerShell/v1.0/powershell.exe");
+    let code = format!(
+        "{}\ntry {{\n{}\n}} catch {{\n{}\n}}",
+        include_str!("../scripts/prelude.ps1"),
+        script.text(),
+        include_str!("../scripts/catch.ps1")
+    );
+    let utf16: Vec<u8> = code.encode_utf16().flat_map(u16::to_le_bytes).collect();
+    let mut child = Command::new(executable)
+        .env(
+            "PSModulePath",
+            std::path::Path::new(&system).join("System32/WindowsPowerShell/v1.0/Modules"),
+        )
+        .env("PATH", std::path::Path::new(&system).join("System32"))
+        .args([
+            "-NoLogo",
+            "-NoProfile",
+            "-NonInteractive",
+            "-EncodedCommand",
+            &STANDARD.encode(utf16),
+        ])
+        .creation_flags(0x0800_0000)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(crate::io_error)?;
+    let mut input = child
+        .stdin
+        .take()
+        .ok_or_else(|| ExecError::Failed("missing stdin".into()))?;
+    let stdout = child
+        .stdout
+        .take()
+        .ok_or_else(|| ExecError::Failed("missing stdout".into()))?;
+    let stderr = child
+        .stderr
+        .take()
+        .ok_or_else(|| ExecError::Failed("missing stderr".into()))?;
+    // Drain bounded output concurrently; never wait with a full pipe.
+    let read = |stream: Box<dyn Read + Send>| {
+        std::thread::spawn(move || {
+            let mut bytes = Vec::new();
+            stream
+                .take(4 * 1024 * 1024 + 1)
+                .read_to_end(&mut bytes)
+                .map(|_| bytes)
+        })
+    };
+    let out = read(Box::new(stdout));
+    let err = read(Box::new(stderr));
+    if let Err(e) = input.write_all(params) {
+        let _ = child.kill();
+        let _ = child.wait();
+        let _ = out.join();
+        let _ = err.join();
+        return Err(crate::io_error(e));
+    }
+    drop(input);
+    let start = Instant::now();
+    let status = loop {
+        if let Some(status) = child.try_wait().map_err(crate::io_error)? {
+            break status;
+        }
+        if start.elapsed() > script.timeout() {
+            let _ = child.kill();
+            let _ = child.wait();
+            return Err(ExecError::Timeout);
+        }
+        std::thread::sleep(std::time::Duration::from_millis(25));
+    };
+    let stdout = out
+        .join()
+        .map_err(|_| ExecError::Failed("stdout reader failed".into()))?
+        .map_err(crate::io_error)?;
+    let _stderr = err
+        .join()
+        .map_err(|_| ExecError::Failed("stderr reader failed".into()))?
+        .map_err(crate::io_error)?;
+    if !status.success() || stdout.len() > 4 * 1024 * 1024 {
+        return Err(ExecError::Failed(
+            "fixed Windows operation exited unexpectedly or exceeded output limit".into(),
+        ));
+    }
+    Ok(stdout)
+}
+#[cfg(all(test, windows))]
+mod tests {
+    use super::*;
+    #[test]
+    fn embedded_powershell_sources_parse() -> std::result::Result<(), Box<dyn std::error::Error>> {
+        let sources = [
+            include_str!("../scripts/prelude.ps1"),
+            include_str!("../scripts/catch.ps1"),
+            Script::Identity.text(),
+            Script::Service.text(),
+            Script::Task.text(),
+            Script::Power.text(),
+            Script::Appx.text(),
+            Script::Storage.text(),
+            Script::RestorePoint.text(),
+            Script::Store.text(),
+            include_str!("../scripts/fixture.ps1"),
+        ];
+        let fixture = include_str!("../scripts/fixture.ps1");
+        let csharp = fixture
+            .split("Add-Type -TypeDefinition @'\n")
+            .nth(1)
+            .and_then(|s| s.split("\n'@").next())
+            .ok_or("missing fixed service-helper source")?;
+        let valid: bool = run(
+            Script::Parse,
+            &serde_json::json!({"sources":sources,"serviceHelper":csharp}),
+        )?;
+        assert!(valid);
+        Ok(())
+    }
+}

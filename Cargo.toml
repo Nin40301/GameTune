@@ -1,9 +1,10 @@
 [workspace]
 resolver = "2"
-members = ["crates/core", "crates/catalog", "crates/exec_mock", "crates/exec_registry", "crates/exec_service", "crates/exec_scheduled_task", "crates/exec_appx", "crates/exec_startup", "crates/exec_power", "crates/acceptance"]
+members = ["crates/core", "crates/catalog", "crates/exec_mock", "crates/exec_registry", "crates/exec_service", "crates/exec_scheduled_task", "crates/exec_appx", "crates/exec_startup", "crates/exec_power", "crates/acceptance", "crates/windows_runtime"]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.2.0"
+license = "Apache-2.0"
 edition = "2024"
 rust-version = "1.98"
 publish = false
@@ -19,6 +20,8 @@ tempfile = "3"
 gametune-core = { path = "crates/core" }
 gametune-catalog = { path = "crates/catalog" }
 gametune-exec-mock = { path = "crates/exec_mock" }
+gametune-windows-runtime = { path = "crates/windows_runtime" }
+base64 = "0.22"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"

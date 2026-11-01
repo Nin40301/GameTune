@@ -1,118 +1,127 @@
 # GameTune
 
-Fundação de um aplicativo offline para ajustes transparentes e reversíveis do
-Windows voltados a jogos. Nome provisório. **Fase 1 implementada**: biblioteca
-Rust, catálogo, simulação com mocks, journal e testes. Ainda não há aplicativo
-desktop, CLI de produção ou instalador. Os executores Windows reais retornam
-`Unavailable`, inclusive no Windows.
+Backend offline de ajustes do Windows para jogos. Fase 1 aprovada; **implementação
+da Fase 2 entregue, com aceite administrativo em VM ainda pendente**. Não há UI
+Tauri, CLI de produção ou instalador nesta etapa. Licença Apache-2.0.
 
-## Executar
+## O que está implementado
+
+- Núcleo Rust com IDs fechados, simulação padrão, importação de perfis e WAL
+- Registro Windows com tipo/bytes originais e remoção segura de chaves criadas
+- Serviços com início, DelayedAutoStart, execução e espera limitada, sem cascata
+- Tarefas via COM com habilitação, XML original e detecção de alterações externas
+- Energia com plano anterior, inventário, criação quando suportada e undo
+- Inicialização via StartupApproved, com IDs por entrada descoberta e snapshot
+- Identidade interativa local, HKCU em HKEY_USERS e escopo máquina/SID no journal
+- ProgramData protegido, bloqueio global e exclusividade de originais entre usuários
+- Ponto de restauração antes de aplicar na API WindowsSession, com limite diário
+- Appx **manual separado** com consentimento por app, aviso de ausência de undo,
+  inventário AllUsers/provisionado, registro prévio de nome/PFN e reinstalação Store
+
+O catálogo tem 86 descritores e 68 identidades/mapeamentos documentados, incluindo
+58 dos 73 itens de nível 1/2. `verified` não significa ganho medido nem recomendação
+para jogos. Veja [fontes e limites por item](docs/catalog-sources.md).
+
+## Verificar sem alterar configurações pessoais
 
 Requisitos: Rust estável (testado com 1.98.1), Git e, no Windows, Visual Studio
-Build Tools com as ferramentas C++ e Windows SDK. Não use terminal elevado.
-Dependências de compilação são baixadas pelo Cargo; a biblioteca não usa rede.
+Build Tools C++ e Windows SDK. Não eleve o terminal para os testes normais.
 
 ```powershell
 cargo fetch --locked
-cargo test --workspace --locked --offline
 cargo fmt --all --check
 cargo clippy --workspace --all-targets --locked --offline -- -D warnings
+cargo test --workspace --locked --offline
 cargo run -p gametune-catalog --example simulate --locked --offline
+cargo run -p gametune-catalog --example removed_apps --locked --offline -- outputs/appx-reinstall-demo.html
 ```
 
-O exemplo usa **um Windows 10 Pro fictício**, com valores de registro ausentes.
-Imprime JSON de simulação do perfil Seguro sem consultar o PC, criar journal,
-abrir processos ou alterar configurações. Não é o `gametune-cli` da Fase 3.
+Os exemplos usam mocks, não removem apps e não aplicam o catálogo. O segundo gera
+um HTML offline com o aviso e botões de reinstalação. Só clicar no link abre a
+Microsoft Store. Os testes normais fazem duas integrações reais de registro,
+**apenas em HKCU\Software\GameTuneTest**, removendo seus próprios recursos.
 
-## Estrutura criada
+Para compilar, sem executar, a suíte administrativa:
+
+```powershell
+cargo test -p gametune-windows-runtime --features vm-tests --locked --offline --no-run
+```
+
+Para executá-la, siga [Windows em VM descartável](docs/windows-vm.md). Não use
+`--all-features` em releases. O CI comum testa Linux/Windows e só compila os
+testes administrativos. Um workflow manual separado aceita runner de VM dedicado.
+
+## Estrutura
 
 ```text
-GameTune/
-├── .github/workflows/ci.yml
-├── Cargo.toml, Cargo.lock, rust-toolchain.toml
-├── catalog/
-│   ├── items.json                 # 86 descritores do Apêndice A
-│   ├── schema.json
-│   ├── profile.schema.json
-│   └── sha256.json
-├── crates/
-│   ├── core/src/                  # domínio, motor, journal, perfis, proteção
-│   ├── catalog/src/               # carregador de dados embutidos
-│   ├── catalog/examples/          # demonstração sem alteração real
-│   ├── exec_mock/src/             # estado fictício e injeção de falhas
-│   ├── exec_registry/src/
-│   ├── exec_service/src/
-│   ├── exec_scheduled_task/src/
-│   ├── exec_appx/src/
-│   ├── exec_startup/src/
-│   ├── exec_power/src/
-│   └── acceptance/tests/          # testes portáveis entre crates
-├── docs/
-│   ├── architecture.md
-│   ├── catalog.md
-│   ├── journal.md
-│   ├── security.md
-│   └── phase-1.md
-├── tools/update-catalog-hashes.py
-├── CHANGELOG.md
-└── LICENSE                        # escolha pendente
+catalog/                   catálogo, schemas e hashes embutidos
+crates/core/               domínio, motor, WAL, perfis, remoção manual Appx
+crates/catalog/            carregador e exemplos sem efeitos reais
+crates/exec_mock/           estado fictício e falhas injetadas
+crates/exec_{tipo}/         seis adaptadores Windows e mocks
+crates/windows_runtime/    identidade, armazenamento, APIs e scripts fixos
+  scripts/                 código confiável embutido, parâmetros JSON por stdin
+  tests/windows_vm.rs      roundtrip de fixtures, ignorado por padrão
+locales/                   pt-BR e en para avisos e botões Appx
+tools/                     manutenção de hashes (parser PowerShell nos testes Rust)
+docs/                      arquitetura, fontes, segurança, fases e VM
+.github/workflows/         CI portátil e integração manual em VM
 ```
 
-Pastas futuras: `apps/desktop` (Tauri 2, React, TypeScript strict, Tailwind e
-i18n), `crates/cli`, `crates/metrics`, `crates/watcher` e um auxiliar elevado.
-Elas serão criadas nas fases correspondentes, com implementações verificáveis.
+## API para a próxima fase
 
-## Uso e reversão da biblioteca
+`WindowsSession::connect` identifica a sessão e monta o catálogo com entradas
+permitidas de inicialização. `simulate` aceita Request com IDs. `apply` exige
+elevação, armazenamento protegido e ponto de restauração; `undo` restaura só as
+configurações reversíveis. `remove_app` aceita AppRemovalConsent separado;
+`reconcile_app_removal` resolve tentativas interrompidas pelo inventário atual.
+Nenhum desses métodos recebe código, serviço, comando ou caminho livre da UI.
 
-1. Carregue o catálogo por `gametune_catalog::load_embedded()`.
-2. Selecione IDs com `Preset::select` ou importe um `Profile` validado.
-3. Use `Engine::run` para simular. Esse é o caminho padrão e não exige journal.
-4. Apenas após revisão, use `Engine::apply` com um `Journal` exclusivo.
-5. Use `Engine::undo(&[], ...)` para desfazer tudo, ou passe IDs para desfazer
-   itens específicos. Operações incompletas exigem recuperação antes de reaplicar.
+Na Fase 3, a CLI usará essa API. Na Fase 4, a UI permanecerá asInvoker e chamará
+um auxiliar elevado só para aplicar/desfazer. A solicitação UAC e o protocolo IPC
+ainda não existem. O frontend não acessará executores diretamente.
 
-Nesta fase, só o estado dos mocks pode mudar. Os exemplos de testes mostram o
-fluxo completo. O histórico auditável permanece após desfazer: reversão restaura
-configurações, não apaga registros de auditoria.
+`preview_app_removal` informa explicitamente `allUsers: false` quando o inventário
+é apenas do usuário corrente. O Windows exige elevação para AllUsers/provisionado;
+a remoção recaptura esse inventário completo após elevar. O consentimento por app
+avisa que a remoção afeta todos os usuários e novos perfis.
 
-## Decisões de segurança
+Estado de produção:
 
-- Simulação padrão; catálogos externos e comandos livres não são aceitos.
-- Só dois mapeamentos estão documentalmente verificados. Os demais têm
-  `verified: false`; não entram automaticamente em nenhum perfil.
-- Os perfis Home ficam vazios até haver verificação de políticas aplicáveis.
-- Itens de alto risco exigem confirmação por ID a cada solicitação manual.
-- Remover Appx não oferece reversão exata: dados e versão original podem se
-  perder. Esses itens são manuais, fora dos perfis automáticos e bloqueados no
-  motor desta fase. Reinstalação pela Store será uma função distinta na Fase 2.
-- `icssvc`, `WMPNetworkSvc` e `XboxNetApiSvc` aparecem no apêndice mas são serviços
-  de rede. Permanecem visíveis no catálogo, com execução bloqueada pela regra
-  absoluta de proteção, inclusive se houver confirmação manual.
-- Game DVR por política tem limite de build para Windows 10, conforme a
-  [documentação da Microsoft](https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-applicationmanagement#allowgamedvr).
+```text
+%ProgramData%\GameTune\machine.lock
+%ProgramData%\GameTune\scope-owner.json
+%ProgramData%\GameTune\<SID interativo>\journal.wal
+%ProgramData%\GameTune\<SID interativo>\journal.json
+%ProgramData%\GameTune\<SID interativo>\removed-apps.json
+```
 
-## CI e entrega futura
+Diretórios, arquivos e temporários herdam acesso somente a Administradores/SYSTEM.
+O token elevado precisa ter proprietário padrão Administradores/SYSTEM. Um
+segundo usuário não pode iniciar alterações globais enquanto o primeiro tiver
+entradas reversíveis ativas. Desfazer não apaga registros de auditoria.
 
-GitHub Actions executa formato, Clippy, testes offline, build release e simulação
-em Linux e Windows. Não foi publicado um repositório remoto nesta fase.
-Os artefatos atuais são o catálogo validado e o lockfile; instalador NSIS/MSI e
-ZIP portátil executável pertencem à Fase 7.
+## Limites relevantes
 
-Na Fase 7, configurar assinatura Tauri via segredos `WINDOWS_CERTIFICATE_BASE64`
-e `WINDOWS_CERTIFICATE_PASSWORD`, importação em armazenamento temporário do
-runner e seleção pelo thumbprint. **Nenhum certificado é lido nem uma assinatura
-é executada no pipeline atual**. Certificados e segredos ficam fora do Git.
+- Appx não é automaticamente reversível. Reinstalar pela Store não recupera
+  dados nem garante versão, disponibilidade ou reprovisionamento. GamingServices
+  e XboxIdentityProvider exigem confirmação reforçada e nunca entram em presets.
+- Home exclui políticas de Windows sem suporte documental. Preferências de
+  usuário documentadas apenas para leitura continuam manuais até validação funcional.
+- Recall está bloqueado: a política pode apagar snapshots, que um DWORD restaurado
+  não recupera. SysMain e serviços desaconselhados pela fonte ficam só manuais.
+- Não são alterados Defender, Update (exceto o alvo permitido de Delivery
+  Optimization), UAC, SmartScreen, firewall, TPM/Secure Boot, VBS/HVCI ou drivers.
+- Modern Standby e algumas GPUs/builds podem rejeitar ajustes. O programa registra
+  erro e preserva o original; não restaura todos os planos nem força compatibilidade.
+- Ainda faltam testes administrativos na matriz Home/Pro, teste UAC com outra conta,
+  Appx real dedicado, corte de energia, UI, métricas, watcher e empacotamento.
+- Sem promessas de FPS, limpeza de registro, esvaziamento de working sets ou handles
+  em jogos. A identificação lê apenas metadados da sessão e do shell canônico.
 
-## Limites e próximos passos
+Leia [resumo da Fase 2](docs/phase-2.md), [journal](docs/journal.md),
+[segurança](docs/security.md) e [manutenção do catálogo](docs/catalog.md).
 
-Ainda faltam executores Windows, DACL em ProgramData, identificação do usuário
-interativo, ponto de restauração, UI, métricas, watcher, empacotamento e testes em
-VM. A Fase 1 não comprova ganhos de FPS, metas de consumo ou compatibilidade
-prática com Minecraft/anti-cheat. A matriz Home/Pro de Windows 10 22H2 e Windows
-11 23H2/24H2+ continua pendente. Consulte `docs/phase-1.md`.
-
-Não há limpeza de registro, esvaziamento de working sets, acesso à memória de
-jogos, hooks, DLLs ou drivers. Futuras alterações devem ser testadas primeiro em
-VM. Um ponto de restauração será uma proteção adicional, não substitui o journal.
-
-A licença está pendente de escolha do titular; veja `LICENSE`.
+Assinatura/instaladores entram na Fase 7. Certificado e senha serão segredos
+`WINDOWS_CERTIFICATE_BASE64` e `WINDOWS_CERTIFICATE_PASSWORD`; nenhum certificado
+é usado pelo pipeline atual. Veja [LICENSE](LICENSE) e [NOTICE](NOTICE).
