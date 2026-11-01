@@ -4,6 +4,8 @@ declare const __TEST_BACKEND__: boolean
 export async function createBackend(): Promise<Backend> {
   if (__TEST_BACKEND__) return (await import('./test-backend')).createMockBackend()
   return {
+    lab: (action) => invoke('lab_action', { action }),
+    labFile: (action) => invoke('lab_file', { action }),
     bootstrap: () => invoke('bootstrap'),
     start: () => invoke('analysis_start'),
     state: () => invoke('analysis_state'),

@@ -9,6 +9,7 @@ import type {
   Observation,
   Review,
   Selection,
+  LabStatus,
 } from './types'
 declare global {
   interface Window {
@@ -89,7 +90,91 @@ export function createMockBackend(): Backend {
     scope: item.type === 'appx' ? 'current_user_only' : 'machine',
     removable: item.type === 'appx' ? installed.includes(item.id) : null,
   }))
+  const lab: LabStatus = {
+    protocol: {
+      version: 1,
+      phase: 'before',
+      baselineBoot: null,
+      powerPlan: null,
+      before: [],
+      after: [],
+      interrupted: false,
+      pendingRun: false,
+      appliedIds: [],
+      presentmon: [],
+    },
+    latest: {
+      uptimeMs: 100000,
+      timestampMs: Date.now(),
+      totalBytes: 16 * 1073741824,
+      availableBytes: 6 * 1073741824,
+      cpuPercent: 4.5,
+      processCount: 120,
+      top: [{ name: 'fixture.exe', count: 2, memoryBytes: 100 * 1048576 }],
+      appPrivateBytes: 40 * 1048576,
+      appCpuPercent: 0.2,
+      appProcesses: 5,
+      boot: 'fixture',
+      powerPlan: 'fixture-plan',
+    },
+    monitor: true,
+    elapsedSeconds: 0,
+    error: null,
+    comparisons: [],
+    presentmonAvailable: false,
+  }
+  if (new URLSearchParams(location.search).has('benchmark-complete')) {
+    lab.protocol.phase = 'complete'
+    lab.protocol.before = Array.from({ length: 5 }, (_, i) => ({
+      warmup: i === 0,
+      durationMs: 60000,
+    }))
+    lab.protocol.after = [...lab.protocol.before]
+    const d = {
+      runs: 4,
+      median: 10,
+      p5: 9,
+      p95: 12,
+      minimum: 9,
+      maximum: 12,
+      mad: 1,
+      runMedians: [9, 10, 11, 12],
+    }
+    lab.comparisons = [
+      {
+        metric: 'cpu',
+        before: d,
+        after: d,
+        medianDifference: 0,
+        noiseBand: 3,
+        conclusion: 'inconclusive',
+      },
+    ]
+  }
   return {
+    lab: async (action) => {
+      if (action.kind === 'monitor') lab.monitor = action.enabled
+      if (action.kind === 'start') {
+        if (!Object.values(action.conditions).every(Boolean)) throw 'benchmark_conditions'
+        lab.protocol.pendingRun = true
+        lab.elapsedSeconds = 1
+      }
+      if (action.kind === 'cancel') {
+        lab.protocol.pendingRun = false
+        lab.protocol.interrupted = true
+      }
+      if (action.kind === 'reset' && action.confirm) {
+        lab.protocol.phase = 'before'
+        lab.protocol.before = []
+        lab.protocol.after = []
+        lab.comparisons = []
+      }
+      return structuredClone(lab)
+    },
+    labFile: async (action) => {
+      if (action.kind === 'choose_presentmon') lab.presentmonAvailable = true
+      return structuredClone(lab)
+    },
     bootstrap: async () => bootstrap,
     start: async () => {
       id++

@@ -1,4 +1,4 @@
-# Arquitetura — uma página, atualizada na Fase 4
+# Arquitetura — atualizada na Fase 5
 
 **Produto:** Tauri 2 + React + TypeScript strict + Tailwind no Windows. Assets,
 catálogo e pt-BR/en locais; tema escuro/claro; sem rede no WebView. Não há engine
@@ -18,13 +18,13 @@ cancelada. A análise não cria journal, checkpoint ou ProgramData. A janela é
 asInvoker e recusa operação normal quando iniciada elevada. Bootstrap/presets e
 revisões são calculados em Rust; preferências/search/tema são apenas de UI.
 
-**Revisão e privilégio:** seis comandos Tauri, limitados à janela local main,
+**Revisão e privilégio:** oito comandos Tauri tipados, limitados à janela local main,
 preparam ticket aleatório vinculado a operação/IDs e prazo de 120 s. Após revisão
 e consentimentos, o ticket é consumido. ipc lança o helper irmão com manifesto
 requireAdministrator via UAC. Pipe local de uso único com DACL por SID interativo,
 PID/SID reais, nonce, hash do catálogo, limites de tamanho/prazos e rejeição de
 replay. O helper revalida tudo e chama WindowsSession; encerra após responder.
-Só o módulo native.rs admite FFI unsafe comentada. Não há serviço elevado
+Só módulos native.rs de IPC/métricas admitem FFI unsafe comentada. Não há serviço elevado
 persistente. Ler o histórico protegido pode exigir UAC explícito, sem abrir o WAL.
 
 **Transação:** WindowsSession recaptura o estado elevado, usa o hive do SID do
@@ -40,8 +40,17 @@ consentimento individual de ausência de undo e risco reforçado. Nome/PFN e
 inventário são persistidos antes da ação. Reinstalar abre somente Store URI
 validada no desktop interativo, após ação explícita; não recupera dados/versão.
 
+**Medições:** metrics consulta snapshot global NT, RAM/CPU e plano/boot somente
+leitura; não abre processos individuais. Um sampler serve painel e benchmark.
+benchmark mantém protocolo versionado com lock, checksum e escrita atômica no
+AppData do usuário; 5 × 60 s por condição, descarte da primeira, reboot e plano
+constante. Medianas por rodada, p5/p95/MAD e faixa conservadora de ruído; sem
+promessa de ganho. PresentMon é somente importação CSV externa. Exportadores
+offline/anonimizados usam seletores nativos, sem expor caminhos livres à UI.
+
 **Verificação/entrega:** Rust estável, formato/Clippy, TS/ESLint, componentes,
 Playwright com mock isolado, axe, testes reais não elevados de pipe e harnesses
 mutáveis exclusivamente opt-in de VM. Código-fonte, binários portáteis e evidência
-por fase. UAC/escritas/matriz Home/Pro ainda precisam de aceite em VM. Fases 5–7
-acrescentam métricas/benchmark, sessões por jogo e instalador/assinatura/acabamento.
+por fase. Gates reais somam RAM privada e CPU de toda a árvore WebView2. UAC,
+reinícios e matriz Home/Pro ainda precisam de aceite em VM. Fases 6–7 acrescentam
+sessões por jogo e instalador/assinatura/acabamento.

@@ -2,8 +2,12 @@
 
 ## Superfície do WebView
 
-Somente a janela local `main` recebe seis permissões: bootstrap, iniciar/consultar/
-cancelar análise, preparar revisão e executar revisão. AppManifest enumera esses
+Somente a janela local `main` recebe oito permissões: bootstrap, iniciar/consultar/
+cancelar análise, preparar revisão, executar revisão e os comandos tipados
+`lab_action`/`lab_file`. Estes últimos controlam somente coleta/estado e seletores
+nativos de importação/exportação; não aceitam caminhos fornecidos pela UI,
+comandos livres ou operações elevadas. Payloads desconhecidos são rejeitados.
+AppManifest enumera esses
 comandos para o controle de acesso do Tauri 2; não se depende da permissão implícita
 de comandos customizados. Não há plugins de execução, arquivos ou rede.
 
@@ -13,6 +17,11 @@ frames ou formulários. Navegação externa e novas janelas são negadas. Soment
 build de desenvolvimento é permitida navegação para 127.0.0.1:1420. Mocks ficam
 em importação eliminada por constante de build; o verificador recusa esses símbolos
 nos assets de produção. Preferências locais não autorizam operações.
+
+O sampler usa um snapshot global NT, sem handles individuais de jogos. Ajustes
+ficam bloqueados enquanto uma rodada está ativa; uma reserva impede a corrida
+inversa de iniciar coleta durante a execução do auxiliar. Os dados do benchmark
+no AppData não concedem autorização ao motor nem substituem consentimentos.
 
 ## Named pipe de uso único
 

@@ -1,7 +1,7 @@
 export type Language = 'pt-BR' | 'en'
 export type Theme = 'dark' | 'light'
 export type Kind = 'registry' | 'service' | 'scheduled_task' | 'appx' | 'startup' | 'power'
-export type Page = 'home' | 'items' | 'apps' | 'review' | 'history' | 'settings'
+export type Page = 'home' | 'items' | 'apps' | 'review' | 'history' | 'settings' | 'benchmark'
 export type ReviewKind = 'apply' | 'remove_apps' | 'undo' | 'undo_all' | 'history' | 'reinstall'
 export interface Localized {
   'pt-BR': string
@@ -100,10 +100,87 @@ export interface Reply {
   error: string | null
 }
 export interface Backend {
+  lab(action: LabAction): Promise<LabStatus>
+  labFile(action: LabFile): Promise<LabStatus>
   bootstrap(): Promise<Bootstrap>
   start(): Promise<number>
   state(): Promise<Analysis>
   cancel(): Promise<void>
   review(selection: Selection): Promise<Review>
   execute(approval: Approval): Promise<Reply>
+}
+export interface MetricSample {
+  uptimeMs: number
+  timestampMs: number
+  totalBytes: number
+  availableBytes: number
+  cpuPercent: number | null
+  processCount: number
+  top: { name: string; count: number; memoryBytes: number }[]
+  appPrivateBytes: number
+  appCpuPercent: number | null
+  appProcesses: number
+  boot: string
+  powerPlan: string
+}
+export interface Conditions {
+  appsClosed: boolean
+  sameWorkload: boolean
+  cooled: boolean
+  samePower: boolean
+}
+export type LabAction =
+  | { kind: 'status' | 'cancel' }
+  | { kind: 'monitor'; enabled: boolean }
+  | { kind: 'start'; conditions: Conditions }
+  | { kind: 'reset'; confirm: boolean }
+export type LabFile =
+  | { kind: 'choose_presentmon' | 'import_capture' }
+  | { kind: 'export'; format: 'json' | 'html'; anonymize: boolean; english: boolean }
+export interface Distribution {
+  runs: number
+  median: number
+  p5: number
+  p95: number
+  minimum: number
+  maximum: number
+  mad: number
+  runMedians: number[]
+}
+export interface Comparison {
+  metric: string
+  before: Distribution
+  after: Distribution
+  medianDifference: number
+  noiseBand: number
+  conclusion: 'inconclusive' | 'difference_observed'
+}
+export interface FrameCapture {
+  application: string
+  frames: number
+  averageFps: number
+  onePercentLowFps: number
+  frameTime: Pick<Distribution, 'median' | 'p5' | 'p95' | 'minimum' | 'maximum' | 'mad'>
+  frameTimeP99: number
+  intervalColumn: string
+}
+export interface LabStatus {
+  protocol: {
+    version: number
+    phase: 'before' | 'await_apply' | 'await_reboot' | 'after' | 'complete'
+    baselineBoot: string | null
+    powerPlan: string | null
+    before: { warmup: boolean; durationMs: number }[]
+    after: { warmup: boolean; durationMs: number }[]
+    interrupted: boolean
+    pendingRun: boolean
+    appliedIds: string[]
+    presentmon: FrameCapture[]
+  }
+  latest: MetricSample | null
+  monitor: boolean
+  elapsedSeconds: number
+  error: string | null
+  comparisons: Comparison[]
+  presentmonAvailable: boolean
 }

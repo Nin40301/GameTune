@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.0 — Fase 5 — 2026-11-01
+
+- RAM/CPU/processos reais por snapshot global, top 12 agrupado, sem handles de jogos
+- Coleta compartilhada em background, 2 s no painel e 1 s durante benchmark
+- Cinco rodadas de 60 s por condição, primeira descartada; persistência atômica,
+  crash/retomada, lacunas/suspensão e validação de boot/plano de energia
+- Medianas por rodada, p5/p95/MAD, pisos conservadores e resultado inconclusivo
+- PresentMon por importação CSV v1, sem download, execução ou sessão ETW pelo app
+- JSON/HTML offline com CSP, escaping e anonimização por projeção
+- Gates reais incluindo WebView2, sem elevar limites ou esvaziar working sets
+- Composição da própria janela por software para reduzir custo de GPU/memória
+- Testes sintéticos, persistência/reboot, bridge, componentes e Playwright/axe
+- Aceite de aplicar/reiniciar/desfazer continua exclusivo da VM
+
 ## 0.4.0 — Fase 4 — 2026-11-01
 
 - UI Tauri 2/React/TypeScript strict/Tailwind em pt-BR/en, dark/light e seis telas

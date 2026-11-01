@@ -1,0 +1,436 @@
+import { useEffect, useState } from 'react'
+import type { Backend, Conditions, LabAction, LabFile, LabStatus, Language } from './types'
+import { translator } from './i18n'
+
+const unchecked: Conditions = {
+  appsClosed: false,
+  sameWorkload: false,
+  cooled: false,
+  samePower: false,
+}
+export function Measurements({
+  backend,
+  language,
+  dashboard = false,
+}: {
+  backend: Backend
+  language: Language
+  dashboard?: boolean
+}) {
+  const [status, setStatus] = useState<LabStatus | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [busy, setBusy] = useState(false)
+  const [conditions, setConditions] = useState<Conditions>(unchecked)
+  const [reset, setReset] = useState(false)
+  const [anonymize, setAnonymize] = useState(true)
+  const [saved, setSaved] = useState(false)
+  const t = translator(language)
+  const number = (value: number | null | undefined, digits = 1) =>
+    value == null
+      ? '—'
+      : new Intl.NumberFormat(language, { maximumFractionDigits: digits }).format(value)
+  const gib = (value: number | undefined) =>
+    value == null ? '—' : `${number(value / 1073741824)} GiB`
+  useEffect(() => {
+    let alive = true,
+      pending = false
+    const poll = () => {
+      if (pending || document.visibilityState === 'hidden') return
+      pending = true
+      void backend
+        .lab({ kind: 'status' })
+        .then((s) => {
+          if (alive) setStatus(s)
+        })
+        .catch((e: unknown) => {
+          if (alive) setError(typeof e === 'string' ? e : 'metrics_unavailable')
+        })
+        .finally(() => {
+          pending = false
+        })
+    }
+    poll()
+    const timer = setInterval(poll, dashboard ? 2000 : 1000)
+    return () => {
+      alive = false
+      clearInterval(timer)
+    }
+  }, [backend, dashboard])
+  async function act(action: LabAction) {
+    setBusy(true)
+    setError(null)
+    setSaved(false)
+    try {
+      setStatus(await backend.lab(action))
+      if (action.kind === 'start') setConditions(unchecked)
+    } catch (e) {
+      setError(typeof e === 'string' ? e : 'operation_failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+  async function file(action: LabFile) {
+    setBusy(true)
+    setError(null)
+    setSaved(false)
+    try {
+      setStatus(await backend.labFile(action))
+      if (action.kind === 'export') setSaved(true)
+    } catch (e) {
+      setError(typeof e === 'string' ? e : 'operation_failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+  const sample = status?.latest,
+    p = status?.protocol
+  const running = p?.pendingRun ?? false
+  const completed =
+    p?.phase === 'after' || p?.phase === 'complete' ? p.after.length : (p?.before.length ?? 0)
+  return (
+    <section className="measurements" aria-label={t(dashboard ? 'measuredDashboard' : 'benchmark')}>
+      {(error || status?.error) && (
+        <p className="notice danger" role="alert">
+          {t(error ?? status?.error ?? 'metrics_unavailable')}
+        </p>
+      )}
+      {dashboard ? (
+        <>
+          <div className="section-top">
+            <h2>{t('measuredDashboard')}</h2>
+            <button
+              className="button subtle"
+              disabled={busy || !status}
+              onClick={() => {
+                void act({ kind: 'monitor', enabled: !status?.monitor })
+              }}
+            >
+              {t(status?.monitor ? 'pauseMetrics' : 'resumeMetrics')}
+            </button>
+          </div>
+          {!status?.monitor && <p className="notice">{t('metricsPaused')}</p>}
+          <div className="metric-grid">
+            <article className="surface metric">
+              <h3>{t('availableRam')}</h3>
+              <strong>{gib(sample?.availableBytes)}</strong>
+              <p>
+                {t('totalRam')} {gib(sample?.totalBytes)}
+              </p>
+            </article>
+            <article className="surface metric">
+              <h3>{t('systemCpu')}</h3>
+              <strong>{number(sample?.cpuPercent)} %</strong>
+              <p>{t('cpuNote')}</p>
+            </article>
+            <article className="surface metric">
+              <h3>{t('processCount')}</h3>
+              <strong>{number(sample?.processCount, 0)}</strong>
+              <p>{t('systemSnapshot')}</p>
+            </article>
+            <article className="surface metric">
+              <h3>{t('appFootprint')}</h3>
+              <strong>{sample ? number(sample.appPrivateBytes / 1048576) : '—'} MiB</strong>
+              <p>
+                {number(sample?.appCpuPercent, 2)} % CPU · {number(sample?.appProcesses, 0)}{' '}
+                {t('processCount').toLocaleLowerCase()}
+              </p>
+            </article>
+          </div>
+          <p className="muted">{t('metricNote')}</p>
+          <details className="surface process-list">
+            <summary>{t('topMemory')}</summary>
+            {sample ? (
+              <div className="table-scroll">
+                <table>
+                  <caption>{t('groupedMemory')}</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">{t('processName')}</th>
+                      <th scope="col">{t('instances')}</th>
+                      <th scope="col">MiB</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sample.top.map((row) => (
+                      <tr key={row.name}>
+                        <th scope="row">{row.name}</th>
+                        <td>{row.count}</td>
+                        <td>{number(row.memoryBytes / 1048576)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p>{t('metricsWaiting')}</p>
+            )}
+          </details>
+          {sample && (
+            <p className="sample-stamp">
+              {t('sampleTime')}{' '}
+              <time dateTime={new Date(sample.timestampMs).toISOString()}>
+                {new Date(sample.timestampMs).toLocaleTimeString(language)}
+              </time>
+            </p>
+          )}
+        </>
+      ) : (
+        <>
+          <p className="intro">{t('benchmarkIntro')}</p>
+          <div className="benchmark-layout">
+            <section className="surface benchmark-protocol">
+              <p className="eyebrow">{t('protocol')}</p>
+              <h2>{t(`phase_${p?.phase ?? 'before'}`)}</h2>
+              <p>{t('benchmarkRules')}</p>
+              <ol className="benchmark-steps">
+                <li>
+                  {t('beforeRuns')} <strong>{p?.before.length ?? 0} / 5</strong>
+                </li>
+                <li>{t('applyReboot')}</li>
+                <li>
+                  {t('afterRuns')} <strong>{p?.after.length ?? 0} / 5</strong>
+                </li>
+              </ol>
+              {p?.interrupted && (
+                <p className="notice warning" role="status">
+                  {t('benchmarkInterrupted')}
+                </p>
+              )}
+              {p?.phase === 'await_apply' && (
+                <p className="notice warning">{t('awaitApplyNote')}</p>
+              )}
+              {p?.phase === 'await_reboot' && (
+                <p className="notice warning">{t('awaitRebootNote')}</p>
+              )}
+              <p className="muted">
+                {t('powerPlan')}{' '}
+                <span className="mono break-text">{p?.powerPlan ?? sample?.powerPlan ?? '—'}</span>
+              </p>
+              {running ? (
+                <div className="run-progress">
+                  <p role="status">
+                    {t('runInProgress')} {completed + 1} / 5 · {status?.elapsedSeconds ?? 0} / 60 s
+                  </p>
+                  <progress
+                    max={60}
+                    value={status?.elapsedSeconds ?? 0}
+                    aria-label={t('runProgress')}
+                  />
+                  <button
+                    className="button secondary"
+                    disabled={busy}
+                    onClick={() => {
+                      void act({ kind: 'cancel' })
+                    }}
+                  >
+                    {t('cancelRun')}
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <fieldset
+                    disabled={busy || p?.phase === 'await_apply' || p?.phase === 'complete'}
+                  >
+                    <legend>{t('confirmConditions')}</legend>
+                    {(['appsClosed', 'sameWorkload', 'cooled', 'samePower'] as const).map((key) => (
+                      <label className="check-line" key={key}>
+                        <input
+                          type="checkbox"
+                          checked={conditions[key]}
+                          onChange={(e) =>
+                            setConditions({ ...conditions, [key]: e.target.checked })
+                          }
+                        />
+                        {t(`condition_${key}`)}
+                      </label>
+                    ))}
+                  </fieldset>
+                  {!status?.monitor && (
+                    <button
+                      className="button secondary"
+                      disabled={busy}
+                      onClick={() => {
+                        void act({ kind: 'monitor', enabled: true })
+                      }}
+                    >
+                      {t('resumeMetrics')}
+                    </button>
+                  )}
+                  <button
+                    className="button primary"
+                    disabled={
+                      busy ||
+                      (!sample?.cpuPercent && sample?.cpuPercent !== 0) ||
+                      !Object.values(conditions).every(Boolean) ||
+                      p?.phase === 'await_apply' ||
+                      p?.phase === 'complete'
+                    }
+                    onClick={() => {
+                      void act({ kind: 'start', conditions })
+                    }}
+                  >
+                    {t('startRun')}
+                  </button>
+                </>
+              )}
+            </section>
+            <aside className="surface benchmark-notes">
+              <h2>{t('readResults')}</h2>
+              <p>{t('noiseExplanation')}</p>
+              <p>{t('temperatureNote')}</p>
+              <p>{t('persistenceNote')}</p>
+              <details>
+                <summary>{t('resetExperiment')}</summary>
+                <label className="check-line">
+                  <input
+                    type="checkbox"
+                    checked={reset}
+                    onChange={(e) => setReset(e.target.checked)}
+                  />
+                  {t('confirmReset')}
+                </label>
+                <button
+                  className="button secondary"
+                  disabled={!reset || running || busy}
+                  onClick={() => {
+                    void act({ kind: 'reset', confirm: true })
+                    setReset(false)
+                  }}
+                >
+                  {t('resetExperiment')}
+                </button>
+              </details>
+            </aside>
+          </div>
+          <section className="surface results-panel">
+            <h2>{t('comparison')}</h2>
+            {!status?.comparisons.length ? (
+              <p>{t('noComparison')}</p>
+            ) : (
+              <>
+                <p>{t('comparisonNote')}</p>
+                <div className="table-scroll">
+                  <table>
+                    <caption>{t('runMediansCaption')}</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">{t('metric')}</th>
+                        <th scope="col">{t('before')}</th>
+                        <th scope="col">{t('after')}</th>
+                        <th scope="col">{t('noiseBand')}</th>
+                        <th scope="col">{t('conclusion')}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {status.comparisons.map((c) => (
+                        <tr key={c.metric}>
+                          <th scope="row">{t(`metric_${c.metric}`)}</th>
+                          <td>
+                            {number(c.before.median)}
+                            <small>
+                              p5 {number(c.before.p5)} · p95 {number(c.before.p95)}
+                            </small>
+                            <small>
+                              MAD {number(c.before.mad)} ·{' '}
+                              {c.before.runMedians.map((v) => number(v)).join(' / ')}
+                            </small>
+                          </td>
+                          <td>
+                            {number(c.after.median)}
+                            <small>
+                              p5 {number(c.after.p5)} · p95 {number(c.after.p95)}
+                            </small>
+                            <small>
+                              MAD {number(c.after.mad)} ·{' '}
+                              {c.after.runMedians.map((v) => number(v)).join(' / ')}
+                            </small>
+                          </td>
+                          <td>± {number(c.noiseBand)}</td>
+                          <td>
+                            <span className="pill">{t(c.conclusion)}</span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
+          </section>
+          <section className="surface results-panel">
+            <h2>{t('optionalPresentmon')}</h2>
+            <p>{t('presentmonExplanation')}</p>
+            <div className="action-row">
+              <button
+                className="button secondary"
+                disabled={busy || running}
+                onClick={() => {
+                  void file({ kind: 'choose_presentmon' })
+                }}
+              >
+                {t('choosePresentmon')}
+              </button>
+              <button
+                className="button secondary"
+                disabled={busy || running || !status?.presentmonAvailable}
+                onClick={() => {
+                  void file({ kind: 'import_capture' })
+                }}
+              >
+                {t('importPresentmon')}
+              </button>
+            </div>
+            <p className="muted">{t('presentmonDefinition')}</p>
+            {status?.presentmonAvailable &&
+              p?.presentmon.map((capture, index) => (
+                <article className="capture" key={index}>
+                  <h3>{capture.application}</h3>
+                  <dl>
+                    <dt>{t('averageFps')}</dt>
+                    <dd>{number(capture.averageFps)}</dd>
+                    <dt>{t('onePercentLow')}</dt>
+                    <dd>{number(capture.onePercentLowFps)}</dd>
+                    <dt>{t('frameTime')}</dt>
+                    <dd>
+                      {number(capture.frameTime.median)} ms · p95 {number(capture.frameTime.p95)} ms
+                      · p99 {number(capture.frameTimeP99)} ms
+                    </dd>
+                  </dl>
+                  <p>
+                    {capture.frames} {t('capturedFrames')}
+                  </p>
+                </article>
+              ))}
+          </section>
+          <section className="surface results-panel">
+            <h2>{t('exportMeasurements')}</h2>
+            <label className="check-line">
+              <input
+                type="checkbox"
+                checked={anonymize}
+                onChange={(e) => setAnonymize(e.target.checked)}
+              />
+              {t('anonymizeReport')}
+            </label>
+            <p className="muted">{t('anonymizeNote')}</p>
+            <div className="action-row">
+              {(['json', 'html'] as const).map((format) => (
+                <button
+                  key={format}
+                  className="button secondary"
+                  disabled={busy || !p}
+                  onClick={() => {
+                    void file({ kind: 'export', format, anonymize, english: language === 'en' })
+                  }}
+                >
+                  {t(format === 'json' ? 'exportJson' : 'exportHtml')}
+                </button>
+              ))}
+            </div>
+            {saved && <p role="status">{t('exportDialogDone')}</p>}
+          </section>
+        </>
+      )}
+    </section>
+  )
+}

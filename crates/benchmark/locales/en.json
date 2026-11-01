@@ -1,0 +1,14 @@
+{
+  "title":"GameTune measurement report",
+  "note":"Descriptive measurements, not an FPS gain estimate. Overlapping ranges or differences within noise are inconclusive. First run discarded. PresentMon values describe intervals between presents, not necessarily displayed frames",
+  "metric_available_memory":"Available RAM (MiB)",
+  "metric_cpu":"CPU (%)",
+  "metric_processes":"Processes",
+  "inconclusive":"Inconclusive",
+  "difference_observed":"Difference observed",
+  "columnMetric":"Metric",
+  "columnBefore":"Before: median [p5, p95]",
+  "columnAfter":"After: median [p5, p95]",
+  "columnNoise":"Noise band",
+  "columnConclusion":"Conclusion"
+}

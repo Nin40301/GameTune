@@ -14,6 +14,28 @@ use std::{
     time::{Duration, Instant},
 };
 type UiResult<T> = std::result::Result<T, String>;
+/// Only outcomes actually confirmed by the helper enter a benchmark intervention.
+/// A partial apply is still a real intervention; skipped/failed items never enter it.
+pub fn applied_ids(reply: &IpcReply) -> Vec<String> {
+    if !reply.ok {
+        return Vec::new();
+    }
+    let Some(value) = reply.result.get("operation") else {
+        return Vec::new();
+    };
+    let Ok(report) = serde_json::from_value::<Report>(value.clone()) else {
+        return Vec::new();
+    };
+    if report.dry_run {
+        return Vec::new();
+    }
+    report
+        .items
+        .into_iter()
+        .filter(|i| matches!(i.outcome, Outcome::Applied | Outcome::AlreadyApplied))
+        .map(|i| i.item_id)
+        .collect()
+}
 struct Evidence {
     catalog: Catalog,
     machine: Machine,
@@ -315,6 +337,19 @@ pub async fn execute(command: Command) -> std::result::Result<gametune_ipc::Repl
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn only_confirmed_real_apply_outcomes_enter_benchmark() {
+        let mut reply = IpcReply {
+            ok: true,
+            result: serde_json::json!({"operation":{"dryRun":false,"items":[{"itemId":"reg.copilot","outcome":"applied","error":null,"requiresReboot":false},{"itemId":"svc.fax","outcome":"skipped","error":null,"requiresReboot":false}]}}),
+            error: None,
+        };
+        assert_eq!(applied_ids(&reply), vec!["reg.copilot"]);
+        reply.result["operation"]["dryRun"] = true.into();
+        assert!(applied_ids(&reply).is_empty());
+        reply.ok = false;
+        assert!(applied_ids(&reply).is_empty());
+    }
     type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
     fn fixture() -> TestResultWith<Desktop> {
         let state = Desktop::default();

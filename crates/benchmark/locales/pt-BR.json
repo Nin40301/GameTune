@@ -1,0 +1,14 @@
+{
+  "title":"Relatório de medições GameTune",
+  "note":"Medições descritivas, sem estimativa de ganho de FPS. Faixas sobrepostas ou diferenças dentro do ruído são inconclusivas. Primeira rodada descartada. Valores PresentMon descrevem intervalos entre apresentações, não necessariamente quadros exibidos",
+  "metric_available_memory":"RAM disponível (MiB)",
+  "metric_cpu":"CPU (%)",
+  "metric_processes":"Processos",
+  "inconclusive":"Inconclusivo",
+  "difference_observed":"Diferença observada",
+  "columnMetric":"Métrica",
+  "columnBefore":"Antes: mediana [p5, p95]",
+  "columnAfter":"Depois: mediana [p5, p95]",
+  "columnNoise":"Faixa de ruído",
+  "columnConclusion":"Conclusão"
+}

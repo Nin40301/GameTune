@@ -1,9 +1,14 @@
-# GameTune Desktop — Fase 4
+# GameTune Desktop — Fases 4 e 5
 
 Interface Windows em Tauri 2, React, TypeScript strict e Tailwind. Usa o mesmo
 catálogo, presets, proteção, WindowsSession e journal da CLI. Disponível em
 pt-BR/en, escuro/claro, com navegação por teclado, diálogo de detalhes com foco
 contido/restaurado, regiões de status e testes axe AA. Não exibe métricas fictícias.
+
+Na Fase 5, Início inclui medições reais e Benchmark conduz as rodadas Antes/
+Depois. Leia [protocolo e limites](benchmark.md), [aceite de VM](benchmark-vm.md)
+e [resultados e consumo](phase-5.md). PresentMon é importação offline de CSV,
+sem execução da ferramenta pelo app. O aceite consistente de consumo é pendente.
 
 ## Compilar
 

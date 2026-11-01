@@ -1,0 +1,34 @@
+name: Read-only desktop resource budget
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  budget:
+    runs-on: [self-hosted, Windows, X64, gametune-desktop-standard-user]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '26'
+          package-manager-cache: false
+      - run: npm ci --no-audit --no-fund
+        working-directory: apps/desktop
+      - run: npm run build
+        working-directory: apps/desktop
+      - run: cargo build -p gametune-desktop -p gametune-helper --release --locked
+      - run: cargo build -p gametune-metrics --example budget --release --locked
+      - name: Idle, including WebView children
+        run: ./tools/test-resource-budget.ps1 -Mode idle
+      - name: Monitor, including WebView children
+        if: ${{ !cancelled() }}
+        run: ./tools/test-resource-budget.ps1 -Mode monitor
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: desktop-resource-budget
+          path: work/resource-budget/
+          retention-days: 7

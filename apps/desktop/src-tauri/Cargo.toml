@@ -15,9 +15,12 @@ test = false
 bench = false
 [dependencies]
 gametune-desktop-backend.workspace = true
+gametune-benchmark.workspace = true
+gametune-ipc.workspace = true
 serde.workspace = true
 [target.'cfg(windows)'.dependencies]
 tauri = { version = "2.12.3", default-features = false, features = ["wry", "compression", "common-controls-v6"] }
+rfd = { version = "0.17.2", default-features = false }
 [build-dependencies]
 tauri-build = { version = "2.7.2", features = [] }
 [lints]

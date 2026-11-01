@@ -8,6 +8,8 @@ fn main() {
                 "analysis_cancel",
                 "prepare_review",
                 "execute_review",
+                "lab_action",
+                "lab_file",
             ]))
             .windows_attributes(
                 tauri_build::WindowsAttributes::new().app_manifest(include_str!("app.manifest")),

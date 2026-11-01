@@ -1,4 +1,156 @@
 @import 'tailwindcss';
+.measurements {
+  margin-bottom: 28px;
+}
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.metric {
+  padding: 18px;
+  min-width: 0;
+}
+.metric h3 {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+.metric strong {
+  font-size: clamp(1.3rem, 2.4vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+.metric p,
+.sample-stamp,
+.measurements .muted {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.process-list {
+  padding: 16px;
+}
+.table-scroll {
+  overflow-x: auto;
+}
+.measurements table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+  font-size: 0.8rem;
+}
+.measurements caption {
+  text-align: left;
+  color: var(--muted);
+  padding: 12px 0;
+  font-size: 0.75rem;
+}
+.measurements th,
+.measurements td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.measurements td small {
+  display: block;
+  color: var(--muted);
+  margin-top: 5px;
+  white-space: nowrap;
+}
+.benchmark-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+}
+.benchmark-protocol,
+.benchmark-notes,
+.results-panel {
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.benchmark-layout p,
+.results-panel p {
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+.benchmark-steps {
+  padding-left: 20px;
+  line-height: 2;
+  font-size: 0.85rem;
+}
+.benchmark-steps strong {
+  color: var(--accent);
+  margin-left: 8px;
+}
+.measurements fieldset {
+  border: 0;
+  padding: 12px 0 18px;
+}
+.measurements legend {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+.measurements .check-line {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.measurements .check-line input {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.measurements .action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.run-progress progress {
+  width: 100%;
+  display: block;
+  margin: 16px 0;
+  accent-color: var(--accent);
+}
+.break-text {
+  overflow-wrap: anywhere;
+}
+.capture {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 16px;
+}
+.capture dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+@media (max-width: 1000px) {
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .benchmark-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .metric-grid {
+    gap: 8px;
+  }
+  .metric {
+    padding: 12px;
+  }
+  .benchmark-protocol,
+  .benchmark-notes,
+  .results-panel {
+    padding: 16px;
+  }
+}
 @theme {
   --font-sans: 'Bahnschrift', 'Segoe UI', sans-serif;
   --font-mono: 'Cascadia Code', 'Consolas', monospace;

@@ -6,8 +6,78 @@ fn main() {
 }
 #[cfg(windows)]
 fn run() {
+    use gametune_benchmark::{
+        report::{self, Format},
+        service::{Action, FileAction as LabFile, Lab, Status},
+    };
     use gametune_desktop_backend::*;
     use std::sync::Arc;
+    use tauri::Manager;
+    #[tauri::command]
+    async fn lab_action(lab: tauri::State<'_, Arc<Lab>>, action: Action) -> Result<Status, String> {
+        let lab = lab.inner().clone();
+        tauri::async_runtime::spawn_blocking(move || lab.action(action).map_err(|e| e.to_string()))
+            .await
+            .map_err(|_| "operation_failed".to_string())?
+    }
+    #[tauri::command]
+    async fn lab_file(lab: tauri::State<'_, Arc<Lab>>, action: LabFile) -> Result<Status, String> {
+        let lab = lab.inner().clone();
+        tauri::async_runtime::spawn_blocking(move || {
+            match action {
+                LabFile::ChoosePresentmon {} => {
+                    if let Some(path) = rfd::FileDialog::new()
+                        .add_filter("PresentMon", &["exe"])
+                        .pick_file()
+                    {
+                        lab.choose_presentmon(path).map_err(|e| e.to_string())?;
+                    }
+                }
+                LabFile::ImportCapture {} => {
+                    if let Some(path) = rfd::FileDialog::new()
+                        .add_filter("PresentMon CSV", &["csv"])
+                        .pick_file()
+                    {
+                        lab.import_capture(&path).map_err(|e| e.to_string())?;
+                    }
+                }
+                LabFile::Export {
+                    format,
+                    anonymize,
+                    english,
+                } => {
+                    let extension = match format {
+                        Format::Json => "json",
+                        Format::Html => "html",
+                    };
+                    let name = format!("GameTune-report.{extension}");
+                    if let Some(path) = rfd::FileDialog::new()
+                        .add_filter(extension, &[extension])
+                        .set_file_name(name)
+                        .save_file()
+                    {
+                        if path
+                            .extension()
+                            .is_none_or(|e| !e.eq_ignore_ascii_case(extension))
+                        {
+                            return Err("benchmark_storage".into());
+                        }
+                        let text = report::render(
+                            &lab.protocol().map_err(|e| e.to_string())?,
+                            format,
+                            anonymize,
+                            english,
+                        )
+                        .map_err(|e| e.to_string())?;
+                        std::fs::write(path, text).map_err(|_| "benchmark_storage".to_string())?;
+                    }
+                }
+            }
+            lab.status().map_err(|e| e.to_string())
+        })
+        .await
+        .map_err(|_| "operation_failed".to_string())?
+    }
     #[tauri::command]
     async fn bootstrap() -> Result<Bootstrap, String> {
         tauri::async_runtime::spawn_blocking(gametune_desktop_backend::bootstrap)
@@ -39,10 +109,23 @@ fn run() {
     #[tauri::command]
     async fn execute_review(
         state: tauri::State<'_, Arc<Desktop>>,
+        lab: tauri::State<'_, Arc<Lab>>,
         approval: Approval,
     ) -> Result<gametune_desktop_backend::IpcReply, String> {
+        if std::env::var_os("GAMETUNE_RESOURCE_MODE").is_some() {
+            return Err("read_only".into());
+        }
+        let _mutation = lab.guard_mutation().map_err(|e| e.to_string())?;
         let command = state.consume_review(approval)?;
-        execute(command).await
+        let applied = matches!(&command, gametune_ipc::Command::Apply { .. });
+        let reply = execute(command).await?;
+        let ids = applied_ids(&reply);
+        if applied && !ids.is_empty() {
+            // Keep the real apply result visible even if saving benchmark metadata fails.
+            // Lab exposes that storage error separately in its status.
+            let _ = lab.record_applied(ids);
+        }
+        Ok(reply)
     }
     let result = tauri::Builder::default()
         .manage(Arc::new(Desktop::default()))
@@ -52,9 +135,14 @@ fn run() {
             analysis_state,
             analysis_cancel,
             prepare_review,
-            execute_review
+            execute_review,
+            lab_action,
+            lab_file
         ])
         .setup(|app| {
+            let directory = app.path().app_local_data_dir()?.join("measurements");
+            let monitor = std::env::var("GAMETUNE_RESOURCE_MODE").as_deref() != Ok("idle");
+            app.manage(Arc::new(Lab::open(&directory, monitor)?));
             let config = app
                 .config()
                 .app
@@ -62,6 +150,13 @@ fn run() {
                 .first()
                 .ok_or("missing main window")?;
             tauri::WebviewWindowBuilder::from_config(app, config)?
+                // This UI has no 3D/canvas workload. Software composition avoids a
+                // dedicated GPU workload for our window; no system or game settings change.
+                .additional_browser_args("--disable-gpu --disable-features=msWebOOUI,msPdfOOUI")
+                .disable_drag_drop_handler()
+                // Isolate the profile from older builds with different WebView args.
+                // Do not disable SmartScreen, sandboxing or process isolation.
+                .data_directory(app.path().app_local_data_dir()?.join("webview-software"))
                 .on_navigation(|url| {
                     (url.scheme() == "http" && url.host_str() == Some("tauri.localhost"))
                         || (url.scheme() == "tauri" && url.host_str() == Some("localhost"))

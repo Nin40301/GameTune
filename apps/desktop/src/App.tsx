@@ -15,6 +15,8 @@ import type {
   Theme,
 } from './types'
 import { categoryKey, translator } from './i18n'
+import { Measurements } from './Measurements'
+import { version } from '../package.json'
 
 const emptyAnalysis: Analysis = {
   id: 0,
@@ -25,7 +27,7 @@ const emptyAnalysis: Analysis = {
   observations: [],
   error: null,
 }
-const navigation: Page[] = ['home', 'items', 'apps', 'review', 'history', 'settings']
+const navigation: Page[] = ['home', 'items', 'apps', 'review', 'history', 'benchmark', 'settings']
 const glyphs: Record<Page, string> = {
   home: '⌂',
   items: '☷',
@@ -33,6 +35,7 @@ const glyphs: Record<Page, string> = {
   review: '✓',
   history: '↶',
   settings: '⚙',
+  benchmark: '◴',
 }
 function preference(key: string, fallback: string) {
   try {
@@ -289,7 +292,7 @@ export function App({ backend }: { backend: Backend }) {
         <div className="sidebar-footer">
           <span className="status-dot" />
           {t('offline')}
-          <span className="version">v0.4</span>
+          <span className="version">v{version}</span>
         </div>
       </aside>
       <div className="workspace">
@@ -385,6 +388,7 @@ export function App({ backend }: { backend: Backend }) {
           {page === 'home' && (
             <>
               <p className="intro">{t('homeIntro')}</p>
+              <Measurements backend={backend} language={language} dashboard />
               <div className="home-layout">
                 <section className="surface profile-panel">
                   <div className="section-top">
@@ -714,6 +718,7 @@ export function App({ backend }: { backend: Backend }) {
               )}
             </>
           )}
+          {page === 'benchmark' && <Measurements backend={backend} language={language} />}
           {page === 'settings' && (
             <section className="surface settings-panel">
               <div className="setting-row">
@@ -767,7 +772,7 @@ export function App({ backend }: { backend: Backend }) {
           )}
           <footer className="content-footer">
             <span>
-              {t('brand')} <span className="mono">0.4.0</span>
+              {t('brand')} <span className="mono">{version}</span>
             </span>
             <span>
               {t('offline')} · {t('localOnly')}

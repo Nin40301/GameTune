@@ -19,9 +19,9 @@ foreach($asset in Get-ChildItem -LiteralPath $assets -Filter '*.js' -File){
     if((Get-Content -LiteralPath $asset.FullName -Raw) -match '__gametuneTest|createMockBackend|test-backend'){throw 'Mock backend leaked into production assets'}
 }
 $cap=Get-Content -LiteralPath (Join-Path $root 'apps/desktop/src-tauri/capabilities/main.json') -Raw | ConvertFrom-Json
-$expected=@('allow-bootstrap','allow-analysis-start','allow-analysis-state','allow-analysis-cancel','allow-prepare-review','allow-execute-review')
+$expected=@('allow-bootstrap','allow-analysis-start','allow-analysis-state','allow-analysis-cancel','allow-prepare-review','allow-execute-review','allow-lab-action','allow-lab-file')
 if(@(Compare-Object ($cap.permissions|Sort-Object) ($expected|Sort-Object)).Count -ne 0){throw 'Unexpected Tauri permission'}
 if($cap.windows.Count -ne 1 -or $cap.windows[0] -cne 'main'){throw 'Unexpected window capability'}
 $config=Get-Content -LiteralPath (Join-Path $root 'apps/desktop/src-tauri/tauri.conf.json') -Raw | ConvertFrom-Json
 if($config.app.security.csp -match 'unsafe-eval|unsafe-inline|https:|\*'){throw 'Unexpected CSP source'}
-Write-Output 'Verified: asInvoker, requireAdministrator, six permissions, restrictive CSP, no mock assets'
+Write-Output 'Verified: asInvoker, requireAdministrator, eight typed permissions, restrictive CSP, no mock assets'

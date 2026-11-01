@@ -1,12 +1,14 @@
 # GameTune
 
-Aplicativo offline de ajustes do Windows para jogos. **Fase 4: UI Tauri 2,
-React/TypeScript strict e Tailwind implementada**, sobre o mesmo backend da CLI.
+Aplicativo offline de ajustes do Windows para jogos. **Fase 5: métricas reais,
+benchmark persistente e exportação offline**, sobre o mesmo backend da CLI/UI.
 Aceite UAC/escritas/reinícios na matriz de VM ainda pendente. Licença Apache-2.0.
+O orçamento de RAM/CPU ainda não passou de forma consistente; o gate inclui
+WebView2 e reprova os excessos. Veja a evidência no relatório da Fase 5.
 
 Leia [como compilar e usar a interface](docs/desktop.md),
 [limite de privilégios e IPC](docs/desktop-security.md) e
-[relatório da Fase 4](docs/phase-4.md).
+[protocolo de benchmark](docs/benchmark.md) e [relatório da Fase 5](docs/phase-5.md).
 
 ## O que está implementado
 
@@ -29,6 +31,11 @@ Leia [como compilar e usar a interface](docs/desktop.md),
   DACL por SID, autenticação de PID/SID, nonce e rejeição de replay/payloads livres
 - Análise em background, progresso/cancelamento, quatro workers e inventário
   Appx compartilhado apenas na análise; toda escrita recaptura o estado
+- Painel com RAM/CPU/processos medidos, top 12 agrupado e consumo incluindo WebView2
+- Benchmark com 5 × 60 s por condição, descarte do aquecimento, retomada entre
+  reinícios, plano de energia constante, mediana/p5/p95/MAD e conclusão inconclusiva
+- Importação opcional de CSV PresentMon v1, sem executar ferramenta nem abrir jogos
+- Exportação JSON/HTML offline, anonimização padrão e gate real de RAM/CPU
 
 ## Executar a CLI
 
