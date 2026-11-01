@@ -1,8 +1,8 @@
 # GameTune
 
-Backend offline de ajustes do Windows para jogos. Fase 1 aprovada; **implementação
-da Fase 2 entregue, com aceite administrativo em VM ainda pendente**. Não há UI
-Tauri, CLI de produção ou instalador nesta etapa. Licença Apache-2.0.
+Backend offline de ajustes do Windows para jogos. **Fase 3: CLI implementada**;
+aceite administrativo/reinícios em VM ainda pendente. Não há UI Tauri ou
+instalador nesta etapa. Licença Apache-2.0.
 
 ## O que está implementado
 
@@ -17,6 +17,21 @@ Tauri, CLI de produção ou instalador nesta etapa. Licença Apache-2.0.
 - Ponto de restauração antes de aplicar na API WindowsSession, com limite diário
 - Appx **manual separado** com consentimento por app, aviso de ausência de undo,
   inventário AllUsers/provisionado, registro prévio de nome/PFN e reinstalação Store
+- `gametune-cli`: análise real sem admin, simulação padrão, JSON/pt-BR/en,
+  aplicação confirmada, histórico/desfazer e comandos Appx separados
+
+## Executar a CLI
+
+```powershell
+cargo build -p gametune-cli --locked --offline
+target/debug/gametune-cli.exe --profile safe --dry-run --json
+target/debug/gametune-cli.exe --list
+target/debug/gametune-cli.exe --help --lang en
+```
+
+Sem flags é somente leitura. Nenhum ajuste é aplicado sem `--apply --confirm`.
+Leia [comandos, Appx e códigos de saída](docs/cli.md) e o
+[ensaio com dois reinícios em VM](docs/windows-real-profiles.md).
 
 O catálogo tem 86 descritores e 68 identidades/mapeamentos documentados, incluindo
 58 dos 73 itens de nível 1/2. `verified` não significa ganho medido nem recomendação
@@ -62,13 +77,15 @@ crates/exec_{tipo}/         seis adaptadores Windows e mocks
 crates/windows_runtime/    identidade, armazenamento, APIs e scripts fixos
   scripts/                 código confiável embutido, parâmetros JSON por stdin
   tests/windows_vm.rs      roundtrip de fixtures, ignorado por padrão
-locales/                   pt-BR e en para avisos e botões Appx
+  tests/real_profiles_vm.rs aceite real após dois reinícios, opt-in adicional
+crates/cli/                binário de produção, parser fechado e testes
+locales/                   pt-BR e en para CLI, avisos e botões Appx
 tools/                     manutenção de hashes (parser PowerShell nos testes Rust)
 docs/                      arquitetura, fontes, segurança, fases e VM
 .github/workflows/         CI portátil e integração manual em VM
 ```
 
-## API para a próxima fase
+## API compartilhada
 
 `WindowsSession::connect` identifica a sessão e monta o catálogo com entradas
 permitidas de inicialização. `simulate` aceita Request com IDs. `apply` exige
@@ -77,7 +94,7 @@ configurações reversíveis. `remove_app` aceita AppRemovalConsent separado;
 `reconcile_app_removal` resolve tentativas interrompidas pelo inventário atual.
 Nenhum desses métodos recebe código, serviço, comando ou caminho livre da UI.
 
-Na Fase 3, a CLI usará essa API. Na Fase 4, a UI permanecerá asInvoker e chamará
+Na Fase 3, a CLI usa essa API e `inspect` para leitura sem escrita. Na Fase 4, a UI permanecerá asInvoker e chamará
 um auxiliar elevado só para aplicar/desfazer. A solicitação UAC e o protocolo IPC
 ainda não existem. O frontend não acessará executores diretamente.
 
@@ -119,7 +136,7 @@ entradas reversíveis ativas. Desfazer não apaga registros de auditoria.
 - Sem promessas de FPS, limpeza de registro, esvaziamento de working sets ou handles
   em jogos. A identificação lê apenas metadados da sessão e do shell canônico.
 
-Leia [resumo da Fase 2](docs/phase-2.md), [journal](docs/journal.md),
+Leia [resumo da Fase 3](docs/phase-3.md), [Fase 2 corrigida](docs/phase-2.md), [journal](docs/journal.md),
 [segurança](docs/security.md) e [manutenção do catálogo](docs/catalog.md).
 
 Assinatura/instaladores entram na Fase 7. Certificado e senha serão segredos

@@ -32,6 +32,29 @@ mod tests {
     };
     type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 
+    #[test]
+    fn read_only_journal_never_creates_or_repairs_files() -> TestResult {
+        let dir = tempfile::tempdir()?;
+        let missing = dir.path().join("absent/journal.wal");
+        assert!(Journal::read_only(&missing, "scope").is_err());
+        assert!(!dir.path().join("absent").exists());
+        let path = dir.path().join("journal.wal");
+        let mut journal = Journal::open_scoped(&path, "scope")?;
+        journal.prepare(&item()?, snapshot())?;
+        drop(journal);
+        OpenOptions::new()
+            .append(true)
+            .open(&path)?
+            .write_all(b"{\"torn")?;
+        let before = std::fs::read(&path)?;
+        let view = Journal::read_only(&path, "scope")?;
+        assert!(view.torn_tail && view.needs_recovery);
+        assert_eq!(view.entries.len(), 1);
+        assert_eq!(before, std::fs::read(&path)?);
+        assert!(Journal::read_only(&path, "other").is_err());
+        Ok(())
+    }
+
     fn item() -> Result<Item> {
         let document: serde_json::Value =
             serde_json::from_str(include_str!("../../../catalog/items.json"))?;
@@ -218,29 +241,51 @@ pub struct Journal {
     pub discarded_torn_tail: bool,
 }
 
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct JournalReadView {
+    pub entries: Vec<JournalEntry>,
+    pub needs_recovery: bool,
+    pub torn_tail: bool,
+}
+
 impl Journal {
     /// The caller creates/protects the parent directory. No implicit ProgramData writes.
     pub fn open(path: impl AsRef<Path>) -> Result<Self> {
-        Self::open_inner(path.as_ref(), None)
+        Self::open_inner(path.as_ref(), None, false)
     }
 
     pub fn open_scoped(path: impl AsRef<Path>, scope: &str) -> Result<Self> {
-        Self::open_inner(path.as_ref(), Some(scope.to_owned()))
+        Self::open_inner(path.as_ref(), Some(scope.to_owned()), false)
+    }
+
+    /// Never creates files, truncates torn tails or performs recovery writes.
+    pub fn read_only(path: impl AsRef<Path>, scope: &str) -> Result<JournalReadView> {
+        let journal = Self::open_inner(path.as_ref(), Some(scope.to_owned()), true)?;
+        Ok(JournalReadView {
+            entries: journal.entries().cloned().collect(),
+            needs_recovery: journal.needs_recovery() || journal.discarded_torn_tail,
+            torn_tail: journal.discarded_torn_tail,
+        })
     }
 
     pub fn scope(&self) -> Option<&str> {
         self.scope.as_deref()
     }
 
-    fn open_inner(path: &Path, scope: Option<String>) -> Result<Self> {
+    fn open_inner(path: &Path, scope: Option<String>, read_only: bool) -> Result<Self> {
         let mut file = OpenOptions::new()
             .read(true)
-            .write(true)
-            .create(true)
+            .write(!read_only)
+            .create(!read_only)
             .truncate(false)
             .open(path)?;
-        file.try_lock()
-            .map_err(|e| Error::JournalLocked(e.to_string()))?;
+        if read_only {
+            file.try_lock_shared()
+        } else {
+            file.try_lock()
+        }
+        .map_err(|e| Error::JournalLocked(e.to_string()))?;
         let mut bytes = Vec::new();
         file.read_to_end(&mut bytes)?;
         let complete_len = bytes.iter().rposition(|b| *b == b'\n').map_or(0, |p| p + 1);
@@ -283,7 +328,7 @@ impl Journal {
         }
         // An action runs only after the complete newline-terminated record is synced.
         // A torn completion therefore leaves its earlier prepared/reverting event intact.
-        if journal.discarded_torn_tail {
+        if journal.discarded_torn_tail && !read_only {
             journal.file.set_len(complete_len as u64)?;
             journal.file.sync_all()?;
         }

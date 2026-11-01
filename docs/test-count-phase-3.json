@@ -1,0 +1,33 @@
+{
+  "phase": 3,
+  "platform": "Windows 11 Pro x64 build 26200, non-administrator",
+  "command": "cargo test --workspace --locked --offline",
+  "suites": {
+    "acceptance/foundation": 26,
+    "acceptance/manual_apps": 6,
+    "acceptance/safety_boundaries": 7,
+    "acceptance/scopes_and_sources": 2,
+    "cli/cli": 9,
+    "core/unit": 5,
+    "core/read_only": 4,
+    "windows_runtime/unit": 6
+  },
+  "totalPassed": 65,
+  "nativeHkcuIncluded": 2,
+  "administrativeVmTestsCompiled": 3,
+  "administrativeVmTestsExecuted": 0,
+  "linuxExecutedLocally": false,
+  "readOnlyWindowsProbe": {
+    "elevated": false,
+    "catalogDescriptors": 86,
+    "discoveredStartupEntries": 2,
+    "rows": 88,
+    "selectedSafe": 7,
+    "states": {"already_applied": 3, "discovery": 2, "exists": 48, "missing": 35},
+    "readFailures": 0,
+    "exitCode": 0,
+    "programDataGameTuneExistedBefore": false,
+    "programDataGameTuneExistedAfter": false,
+    "elapsedSecondsOneSample": 32.6972388
+  }
+}

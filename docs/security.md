@@ -1,4 +1,4 @@
-# Segurança — implementação da Fase 2
+# Segurança — implementação até a Fase 3
 
 Entradas externas: IDs conhecidos e consentimentos, nunca código ou alvos livres.
 Perfis têm limite de 64 KiB e campos fechados; não importam confirmações. O lote
@@ -11,10 +11,14 @@ internos para composição/testes; nenhum comando Tauri deverá expô-los direta
 Ainda não há IPC, auxiliar UAC, assinatura, frontend ou instalador.
 
 Todos os crates proíbem unsafe em Rust. winreg encapsula a FFI de registro. Há
-uma FFI C# fixa e comentada para WTS, sem manipulação de jogos. Os demais scripts
+FFI C# fixa e comentada para WTS/desktop, sem manipulação de jogos. Os demais scripts
 usam cmdlets/.NET/COM oficiais. O transporte aceita enum interno, gera
-EncodedCommand só de código embutido e envia dados JSON por stdin. Não há
-Invoke-Expression, parâmetros convertidos em código ou scripts do usuário.
+EncodedCommand constante de inicialização e envia um envelope JSON por stdin.
+`fixedSource` é construído **exclusivamente** de constantes include_str do enum
+privado; `parameters` permanece um objeto separado. O bootstrap compila esse
+código fixo com ScriptBlock.Create para evitar o limite de 32K da linha de comando
+Windows, inclusive nos harnesses. Nenhuma API externa aceita `fixedSource`.
+Não há Invoke-Expression, parâmetros convertidos em código ou scripts do usuário.
 
 O PowerShell roda oculto, NoProfile/NonInteractive, com caminho obtido do HKLM,
 PATH e PSModulePath restritos ao Windows. Há timeout e leitura concorrente de
@@ -45,6 +49,14 @@ O histórico write-ahead é separado, com nome, PFNs, inventário e resultado. U
 de configurações não tenta reinstalar. Um relatório HTML offline contém links
 Store validados/escapados e CSP sem scripts; somente clique explícito abre Store.
 PFN é o formato pedido, ainda suportado mas descontinuado na documentação atual.
+Na CLI, abrir Store também exige --apply --confirm. O broker valida PID do HWND
+do desktop, caminho canônico explorer.exe, sessão e SID antes de ShellExecute;
+não abre Store no contexto da outra conta administrativa. Simular só retorna URI.
+
+A CLI só constrói LiveBackend e não oferece modo mock ou comandos livres.
+--apply exige --confirm e conflita com --dry-run. Leitura dos alvos não passa
+pelo preflight de escrita nem cria ProgramData. WAL em modo leitura usa arquivo
+existente e lock compartilhado, sem truncamento ou recuperação automática.
 
 Dependências diretas:
 
@@ -62,6 +74,9 @@ Dependências diretas:
 CI: Actions por SHA, contents read, sem credenciais Git persistidas. Build release
 usa features padrão; a suíte administrativa exige workflow manual e runner de VM
 dedicado, não PR de terceiros em máquina pessoal.
+O ensaio adicional real-profile-tests exige outro opt-in, VM reconhecida e dois
+reinícios manuais. Usa apenas IDs dos presets reais; nunca é executado pelo CI
+comum nem pelo workflow de fixtures. Código do ensaio não entra no release padrão.
 
 Pendências: validação administrativa Home/Pro, teste de elevação com outra conta,
 ensaios de energia/crash, assinatura, análise de dependências e threat model do

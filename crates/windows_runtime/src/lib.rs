@@ -5,6 +5,8 @@ pub mod fixture;
 #[cfg(test)]
 mod native_tests;
 mod platform;
+#[cfg(feature = "real-profile-tests")]
+pub mod real_profiles;
 mod registry;
 mod startup;
 mod storage;
@@ -22,6 +24,7 @@ struct Identity {
     session_id: u32,
     elevated: bool,
     file_owner_sid: String,
+    program_data: String,
     build: u32,
     edition: gametune_core::Edition,
 }
@@ -32,6 +35,11 @@ pub struct WindowsContext {
     scope: String,
 }
 impl WindowsContext {
+    pub(crate) fn state_directory(&self) -> std::path::PathBuf {
+        std::path::Path::new(&self.identity.program_data)
+            .join("GameTune")
+            .join(self.interactive_sid())
+    }
     #[cfg(all(windows, test))]
     fn current_test_user() -> ExecResult<Self> {
         let identity: Identity = transport::run(

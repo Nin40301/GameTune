@@ -1,9 +1,9 @@
 [workspace]
 resolver = "2"
-members = ["crates/core", "crates/catalog", "crates/exec_mock", "crates/exec_registry", "crates/exec_service", "crates/exec_scheduled_task", "crates/exec_appx", "crates/exec_startup", "crates/exec_power", "crates/acceptance", "crates/windows_runtime"]
+members = ["crates/core", "crates/catalog", "crates/exec_mock", "crates/exec_registry", "crates/exec_service", "crates/exec_scheduled_task", "crates/exec_appx", "crates/exec_startup", "crates/exec_power", "crates/acceptance", "crates/windows_runtime", "crates/cli"]
 
 [workspace.package]
-version = "0.2.0"
+version = "0.3.0"
 license = "Apache-2.0"
 edition = "2024"
 rust-version = "1.98"

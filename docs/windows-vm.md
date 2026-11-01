@@ -4,6 +4,10 @@ Os testes normais nunca aplicam o catálogo real. Os testes administrativos são
 ignorados por padrão e só existem com a feature `vm-tests`. Essa feature não deve
 ser usada em releases. O runner comum do GitHub apenas compila essa suíte.
 
+O ensaio novo de perfis **reais** é outra suíte, outra feature e outro opt-in:
+veja [dois reinícios e smoke tests](windows-real-profiles.md). As restrições de
+alvos dedicados deste documento continuam valendo para `windows_vm.rs`.
+
 ## Preparar
 
 1. Crie uma VM descartável x64 com Windows e um usuário de teste. Instale Rust

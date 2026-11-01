@@ -12,12 +12,12 @@ if($allUsers){
     $provisioned=@()
 }
 if($packages.Count -eq 0 -and $provisioned.Count -eq 0){Fail 'not_found'}
-if(@($packages | Where-Object {$_.NonRemovable -or $_.IsFramework -or $_.IsResourcePackage}).Count -gt 0){Fail 'protected'}
+if($p.operation -ne 'inspect' -and @($packages | Where-Object {$_.NonRemovable -or $_.IsFramework -or $_.IsResourcePackage}).Count -gt 0){Fail 'protected'}
 $families=@($packages | ForEach-Object {$_.PackageFamilyName})
 # Provisioned package names encode Name_version_arch_resource_PublisherId.
 foreach($package in $provisioned){$publisher=([string]$package.PackageName).Split('_')[-1];$families+=($name+'_'+$publisher)}
 $snapshot=@{type='appx';packages=@($packages.PackageFullName | Sort-Object -Unique);provisioned=@($provisioned.PackageName | Sort-Object -Unique);families=@($families | Sort-Object -Unique)}
-if($p.operation -eq 'capture'){Emit $snapshot;return}
+if($p.operation -in @('capture','inspect')){Emit $snapshot;return}
 if($p.operation -ne 'apply'){Fail 'manual_reinstall_required'}
 if(-not $allUsers){Fail 'access_denied'}
 if(($snapshot.packages -join '|') -ne (@($p.expected.packages) -join '|') -or ($snapshot.provisioned -join '|') -ne (@($p.expected.provisioned) -join '|') -or ($snapshot.families -join '|') -ne (@($p.expected.families) -join '|')){Fail 'conflict'}

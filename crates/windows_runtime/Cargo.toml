@@ -8,6 +8,7 @@ license.workspace = true
 
 [features]
 vm-tests = ["gametune-core/test-targets"]
+real-profile-tests = []
 
 [dependencies]
 gametune-core.workspace = true

@@ -1,6 +1,8 @@
 $scheduler=New-Object -ComObject Schedule.Service
 $scheduler.Connect()
-try {$folder=$scheduler.GetFolder([string]$p.path);$task=$folder.GetTask([string]$p.name)}
+$folderPath=([string]$p.path).TrimEnd('\')
+if($folderPath.Length -eq 0){$folderPath='\'}
+try {$folder=$scheduler.GetFolder($folderPath);$task=$folder.GetTask([string]$p.name)}
 catch {$exception=$_.Exception;while($exception.InnerException){$exception=$exception.InnerException};if(($exception.HResult -band 0xffff) -in @(2,3)){Fail 'not_found'};throw}
 if($p.operation -eq 'capture'){Emit @{type='scheduled_task';enabled=[bool]$task.Enabled;definition=[string]$task.Xml};return}
 Require-Admin

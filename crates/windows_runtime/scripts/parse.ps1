@@ -6,4 +6,5 @@ foreach($source in $p.sources){
 }
 # Compile the fixed fixture service in memory; never invoke it or register a service.
 Add-Type -TypeDefinition ([string]$p.serviceHelper) -ReferencedAssemblies System.dll,System.ServiceProcess.dll
+foreach($helper in $p.helpers){Add-Type -TypeDefinition ([string]$helper)}
 Emit $true

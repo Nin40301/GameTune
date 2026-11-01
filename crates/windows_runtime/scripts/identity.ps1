@@ -61,4 +61,4 @@ try {
 } finally { $machine.Dispose() }
 $edition = switch -Regex ($sku) { '^Core' {'home';break}; '^Professional' {'pro';break}; '^Enterprise' {'enterprise';break}; '^Education' {'education';break}; default { Fail 'failed' 'Unsupported Windows edition' } }
 $principal = [Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent())
-Emit @{sid=$sid;machineGuid=$guid;sessionId=$session;elevated=$principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator);fileOwnerSid=[Security.Principal.WindowsIdentity]::GetCurrent().Owner.Value;build=$build;edition=$edition}
+Emit @{sid=$sid;machineGuid=$guid;sessionId=$session;elevated=$principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator);fileOwnerSid=[Security.Principal.WindowsIdentity]::GetCurrent().Owner.Value;build=$build;edition=$edition;programData=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData)}

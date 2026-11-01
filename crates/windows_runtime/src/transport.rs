@@ -15,6 +15,8 @@ pub(crate) enum Script {
     Store,
     #[cfg(feature = "vm-tests")]
     Fixture,
+    #[cfg(feature = "real-profile-tests")]
+    RealProfiles,
 }
 impl Script {
     fn text(self) -> &'static str {
@@ -31,11 +33,15 @@ impl Script {
             Self::Store => include_str!("../scripts/store.ps1"),
             #[cfg(feature = "vm-tests")]
             Self::Fixture => include_str!("../scripts/fixture.ps1"),
+            #[cfg(feature = "real-profile-tests")]
+            Self::RealProfiles => include_str!("../scripts/real_profiles.ps1"),
         }
     }
     fn timeout(self) -> std::time::Duration {
         std::time::Duration::from_secs(match self {
             Self::Appx | Self::RestorePoint => 180,
+            #[cfg(feature = "real-profile-tests")]
+            Self::RealProfiles => 1800,
             _ => 45,
         })
     }
@@ -82,12 +88,18 @@ fn run_bytes(script: Script, params: &[u8]) -> ExecResult<Vec<u8>> {
     let system = crate::registry::system_root()?;
     let executable =
         std::path::Path::new(&system).join("System32/WindowsPowerShell/v1.0/powershell.exe");
-    let code = format!(
-        "{}\ntry {{\n{}\n}} catch {{\n{}\n}}",
-        include_str!("../scripts/prelude.ps1"),
+    // Only this private enum can select executable source. User values stay JSON data.
+    // The constant bootstrap avoids CreateProcess's 32K command-line limit for fixtures.
+    let code = "$ErrorActionPreference='Stop';[Console]::InputEncoding=[Text.UTF8Encoding]::new($false);[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false);$packet=[Console]::In.ReadToEnd()|ConvertFrom-Json;$p=$packet.parameters;& ([scriptblock]::Create([string]$packet.fixedSource))";
+    let fixed_source = format!(
+        "{}\n{}\ntry {{\n{}\n}} catch {{\n{}\n}}",
+        include_str!("../scripts/prelude.ps1")
+            .replace("$p = [Console]::In.ReadToEnd() | ConvertFrom-Json", ""),
+        include_str!("../scripts/desktop.ps1"),
         script.text(),
         include_str!("../scripts/catch.ps1")
     );
+    let packet=serde_json::to_vec(&serde_json::json!({"parameters":serde_json::from_slice::<serde_json::Value>(params).map_err(crate::failed)?,"fixedSource":fixed_source})).map_err(crate::failed)?;
     let utf16: Vec<u8> = code.encode_utf16().flat_map(u16::to_le_bytes).collect();
     let mut child = Command::new(executable)
         .env(
@@ -132,7 +144,7 @@ fn run_bytes(script: Script, params: &[u8]) -> ExecResult<Vec<u8>> {
     };
     let out = read(Box::new(stdout));
     let err = read(Box::new(stderr));
-    if let Err(e) = input.write_all(params) {
+    if let Err(e) = input.write_all(&packet) {
         let _ = child.kill();
         let _ = child.wait();
         let _ = out.join();
@@ -175,6 +187,7 @@ mod tests {
         let sources = [
             include_str!("../scripts/prelude.ps1"),
             include_str!("../scripts/catch.ps1"),
+            include_str!("../scripts/desktop.ps1"),
             Script::Identity.text(),
             Script::Service.text(),
             Script::Task.text(),
@@ -184,6 +197,7 @@ mod tests {
             Script::RestorePoint.text(),
             Script::Store.text(),
             include_str!("../scripts/fixture.ps1"),
+            include_str!("../scripts/real_profiles.ps1"),
         ];
         let fixture = include_str!("../scripts/fixture.ps1");
         let csharp = fixture
@@ -193,7 +207,10 @@ mod tests {
             .ok_or("missing fixed service-helper source")?;
         let valid: bool = run(
             Script::Parse,
-            &serde_json::json!({"sources":sources,"serviceHelper":csharp}),
+            &serde_json::json!({"sources":sources,"serviceHelper":csharp,"helpers":[
+                include_str!("../scripts/desktop.ps1").split("Add-Type -TypeDefinition @'\n").nth(1).and_then(|s|s.split("\n'@").next()).ok_or("desktop FFI source")?,
+                include_str!("../scripts/real_profiles.ps1").split("Add-Type -TypeDefinition @'\n").nth(1).and_then(|s|s.split("\n'@").next()).ok_or("VM window FFI source")?
+            ]}),
         )?;
         assert!(valid);
         Ok(())

@@ -26,6 +26,12 @@ impl WindowsExecutor {
         if protection::is_protected(item) {
             return Err(ExecError::Protected);
         }
+        self.authorize_read(item)
+    }
+    fn authorize_read(&self, item: &Item) -> ExecResult<()> {
+        if item.action_type != self.kind {
+            return Err(ExecError::TypeMismatch);
+        }
         #[cfg(feature = "vm-tests")]
         if protection::valid_test_target(item) {
             return Ok(());
@@ -349,10 +355,6 @@ impl WindowsContext {
         executors
     }
     pub fn open_reinstall(&self, action: &ReinstallAction) -> ExecResult<()> {
-        // Launch Store from the ordinary interactive UI, never from another elevated account.
-        if self.elevated() {
-            return Err(ExecError::AccessDenied);
-        }
         let catalog = gametune_catalog::load_embedded().map_err(crate::failed)?;
         let item = catalog
             .get(action.item_id())
@@ -367,7 +369,10 @@ impl WindowsContext {
         {
             return Err(ExecError::Protected);
         }
-        WindowsExecutor::script_write(Script::Store, &json!({"uri":action.uri()}))
+        WindowsExecutor::script_write(
+            Script::Store,
+            &json!({"uri":action.uri(),"expectedSid":self.interactive_sid(),"operation":"launch"}),
+        )
     }
 }
 
@@ -392,6 +397,48 @@ pub struct AppRemovalPreview {
     pub error: Option<ExecError>,
 }
 impl WindowsSession {
+    pub fn history_readonly(&self) -> Result<JournalReadView> {
+        match Journal::read_only(
+            self.context.state_directory().join("journal.wal"),
+            self.context.scope(),
+        ) {
+            Err(Error::Io(e)) if e.kind() == std::io::ErrorKind::NotFound => Ok(JournalReadView {
+                entries: vec![],
+                needs_recovery: false,
+                torn_tail: false,
+            }),
+            other => other,
+        }
+    }
+    pub fn reinstall_actions(&mut self, id: &str) -> Result<Vec<ReinstallAction>> {
+        let item = self.catalog.get(id)?;
+        if item.action_type != ActionType::Appx {
+            return Err(Error::UnknownItem(id.into()));
+        }
+        let history = RemovedApps::read_reinstall_actions(
+            self.context.state_directory().join("removed-apps.json"),
+            self.context.scope(),
+            &self.catalog,
+            id,
+        );
+        if let Ok(actions) = history {
+            return Ok(actions);
+        }
+        let preview = self.engine().preview_app_removal(id)?;
+        if let Ok(snapshot) = preview {
+            return reinstall_from_inventory(&self.catalog, id, &snapshot);
+        }
+        match history {
+            Err(Error::Io(e)) if e.kind() == std::io::ErrorKind::PermissionDenied => {
+                Err(Error::Io(e))
+            }
+            _ => match preview {
+                Err(ExecError::NotFound) => Ok(vec![]),
+                Err(error) => Err(Error::Preflight(error.to_string())),
+                Ok(_) => Ok(vec![]),
+            },
+        }
+    }
     pub fn connect() -> ExecResult<Self> {
         let context = WindowsContext::detect()?;
         let catalog = context.catalog_with_startup()?;
@@ -404,6 +451,53 @@ impl WindowsSession {
     }
     pub fn catalog(&self) -> &Catalog {
         &self.catalog
+    }
+    /// Inspect every catalog target without creating a store, journal or checkpoint.
+    pub fn inspect(&self) -> Vec<Observation> {
+        self.catalog
+            .items()
+            .map(|item| {
+                let reader = WindowsExecutor::new(item.action_type, self.context.clone());
+                let scope = match &item.target {
+                    Target::Appx { .. } => {
+                        if self.context.elevated() {
+                            ReadScope::AllUsers
+                        } else {
+                            ReadScope::CurrentUserOnly
+                        }
+                    }
+                    Target::Registry {
+                        hive: Hive::HKCU, ..
+                    }
+                    | Target::Startup {
+                        hive: Hive::HKCU, ..
+                    } => ReadScope::InteractiveUser,
+                    _ => ReadScope::Machine,
+                };
+                if let Target::Startup { hive, entry: None } = &item.target {
+                    let state = registry::capture(&self.context, *hive, registry::RUN, "");
+                    return Observation {
+                        item_id: item.id.clone(),
+                        presence: Presence::Discovery,
+                        exists: state.as_ref().ok().map(|(_, keys)| keys.is_empty()),
+                        key_exists: None,
+                        already_applied: None,
+                        current: None,
+                        current_dword: None,
+                        error: state.err(),
+                        scope: ReadScope::Discovery,
+                    };
+                }
+                let result = reader.authorize_read(item).and_then(|()| {
+                    if let Target::Appx { name } = &item.target {
+                        transport::run(Script::Appx, &json!({"operation":"inspect","name":name}))
+                    } else {
+                        reader.read(item)
+                    }
+                });
+                observe(item, result, scope)
+            })
+            .collect()
     }
     fn engine(&mut self) -> Engine<'_> {
         Engine {

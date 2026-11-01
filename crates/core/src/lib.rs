@@ -2,6 +2,7 @@
 
 pub mod engine;
 pub mod executor;
+pub mod inspection;
 pub mod journal;
 pub mod model;
 pub mod profile;
@@ -10,6 +11,7 @@ pub mod removal;
 
 pub use engine::*;
 pub use executor::*;
+pub use inspection::*;
 pub use journal::*;
 pub use model::*;
 pub use profile::*;

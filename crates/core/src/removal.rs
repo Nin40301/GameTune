@@ -52,6 +52,29 @@ pub struct RemovedApps {
 }
 
 impl RemovedApps {
+    /// Read existing history without creating a directory, lock or replacement file.
+    pub fn read_reinstall_actions(
+        path: impl AsRef<Path>,
+        scope: &str,
+        catalog: &crate::Catalog,
+        id: &str,
+    ) -> Result<Vec<ReinstallAction>> {
+        use std::io::Read;
+        let mut bytes = Vec::new();
+        File::open(path)?
+            .take(16 * 1024 * 1024 + 1)
+            .read_to_end(&mut bytes)?;
+        if bytes.len() > 16 * 1024 * 1024 {
+            return Err(Error::CorruptJournal(
+                "removal history exceeds read limit".into(),
+            ));
+        }
+        let document: Document = serde_json::from_slice(&bytes)?;
+        if document.version != 1 || document.scope.as_deref() != Some(scope) {
+            return Err(Error::CorruptJournal("removal scope mismatch".into()));
+        }
+        Self::actions(&document, catalog, id)
+    }
     pub fn open(path: impl AsRef<Path>, scope: Option<&str>) -> Result<Self> {
         let path = path.as_ref().to_owned();
         let lock = OpenOptions::new()
@@ -170,12 +193,18 @@ impl RemovedApps {
         catalog: &crate::Catalog,
         item_id: &str,
     ) -> Result<Vec<ReinstallAction>> {
+        Self::actions(&self.document, catalog, item_id)
+    }
+    fn actions(
+        document: &Document,
+        catalog: &crate::Catalog,
+        item_id: &str,
+    ) -> Result<Vec<ReinstallAction>> {
         let item = catalog.get(item_id)?;
         let Target::Appx { name } = &item.target else {
             return Err(Error::UnknownItem(item_id.into()));
         };
-        let entry = self
-            .document
+        let entry = document
             .entries
             .iter()
             .rev()
@@ -250,6 +279,31 @@ impl RemovedApps {
         html.push_str("</ul></html>");
         Ok(html)
     }
+}
+
+pub fn reinstall_from_inventory(
+    catalog: &crate::Catalog,
+    id: &str,
+    snapshot: &Snapshot,
+) -> Result<Vec<ReinstallAction>> {
+    let item = catalog.get(id)?;
+    let Target::Appx { name } = &item.target else {
+        return Err(Error::UnknownItem(id.into()));
+    };
+    let Snapshot::Appx { families, .. } = snapshot else {
+        return Err(Error::InvalidCatalog("not Appx inventory".into()));
+    };
+    families
+        .iter()
+        .map(|family| {
+            validate_family(name, family)?;
+            Ok(ReinstallAction {
+                item_id: id.into(),
+                family: family.clone(),
+                uri: format!("ms-windows-store://pdp/?PFN={family}"),
+            })
+        })
+        .collect()
 }
 
 #[derive(Debug, Clone, Serialize)]
