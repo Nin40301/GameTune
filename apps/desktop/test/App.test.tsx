@@ -16,6 +16,8 @@ test('starts read-only with Safe and cannot apply before analysis and review', a
   render(<App backend={createMockBackend()} />)
   await screen.findByRole('radio', { name: /Seguro/ })
   expect(screen.getByRole('radio', { name: /Seguro/ })).toBeChecked()
+  expect(document.documentElement.dataset.theme).toBe('light')
+  expect(document.documentElement.dataset.effects).toBe('reduced')
   expect(screen.queryByRole('button', { name: 'Aplique os ajustes' })).not.toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Revise os ajustes' })).toBeDisabled()
   await user.click(screen.getByRole('button', { name: 'Itens' }))
@@ -65,7 +67,7 @@ test('settings switch language and theme and translations have identical keys', 
   await user.click(screen.getByRole('button', { name: 'Configurações' }))
   await user.selectOptions(screen.getByLabelText('Idioma'), 'en')
   expect(await screen.findByRole('heading', { name: 'Make it yours' })).toBeVisible()
-  await user.click(screen.getByLabelText('Light'))
+  await user.click(screen.getByRole('radio', { name: 'Light' }))
   expect(document.documentElement.dataset.theme).toBe('light')
   expect(document.documentElement.lang).toBe('en')
   expect(

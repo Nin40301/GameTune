@@ -1,0 +1,585 @@
+{
+  "backend": "mock",
+  "language": "pt-BR",
+  "effects": "full",
+  "count": 64,
+  "note": "Fixtures visuais, nao representam medicoes do computador. Imagens abertas e inspecionadas individualmente.",
+  "images": [
+    {
+      "file": "home-light-1440.png",
+      "page": "home",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "77dc202005bf70dd616b55c2b391aef1fb1cbb5ec31c325c83062eed41113e23",
+      "inspected": true
+    },
+    {
+      "file": "items-light-1440.png",
+      "page": "items",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "a45af895f9e57617504d4d88de4bd36bf4aed6ae7b85a6234184918f9733a98b",
+      "inspected": true
+    },
+    {
+      "file": "apps-light-1440.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "b7dd80af3c707bca3dc202cf58b880bd087b5ae9dd8a10e2567edb71a988d8fd",
+      "inspected": true
+    },
+    {
+      "file": "review-light-1440.png",
+      "page": "review",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "dd6a903145a28a7b2426dbe11b654a46dcf3e7603f2d9bc5ebdf0cc109c9531e",
+      "inspected": true
+    },
+    {
+      "file": "history-light-1440.png",
+      "page": "history",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "815ff636474411252f62f16629593ee95b1789c99b3e65535849ec80b6c39812",
+      "inspected": true
+    },
+    {
+      "file": "benchmark-light-1440.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "5929d5786bdcf3aedf630e3b9907af630b10fdacba74184f64ab926c5b0d69ec",
+      "inspected": true
+    },
+    {
+      "file": "games-light-1440.png",
+      "page": "games",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "9107f997566bc7fe649e47c569041d526fd7d0694cc5ef7b60fa9d3bac71015d",
+      "inspected": true
+    },
+    {
+      "file": "settings-light-1440.png",
+      "page": "settings",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "6cfbb84e42c3e887c0f38ca0aa4c1af2d7b33f9f45ad04d8033e70e58b7960a7",
+      "inspected": true
+    },
+    {
+      "file": "home-light-1100.png",
+      "page": "home",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "cada9a101f1846ffeaf19b3ec5a72bb2b7e9ad9d64f420236b7ee4c00515e0ce",
+      "inspected": true
+    },
+    {
+      "file": "items-light-1100.png",
+      "page": "items",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "5c58744e70328fcfdf2726585f39330a8ea8f4a9c43f3ff759164779294aef3b",
+      "inspected": true
+    },
+    {
+      "file": "apps-light-1100.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "ec94d3412ac4733e0fb1eabf25a569e115e427ddcedba9d6ae46434f6696b291",
+      "inspected": true
+    },
+    {
+      "file": "review-light-1100.png",
+      "page": "review",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "1e50d26166dffda4c15ba826b6e899b9e8058dc4e6fb4dc70a6a7ace8553ad99",
+      "inspected": true
+    },
+    {
+      "file": "history-light-1100.png",
+      "page": "history",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "2f4f7052c1e1c355622083b04592623b9dd1fc1adbc1ea78199fc3aee0b06fdd",
+      "inspected": true
+    },
+    {
+      "file": "benchmark-light-1100.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "1f491abf71fe5ae5ac40c7941aacb6153d6fc2e76f4ae7346f3b837cd785b640",
+      "inspected": true
+    },
+    {
+      "file": "games-light-1100.png",
+      "page": "games",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "080897fe260d8039f3cceb02c74c70e36d03c2a91e7348125cb7407a7ae1d6a9",
+      "inspected": true
+    },
+    {
+      "file": "settings-light-1100.png",
+      "page": "settings",
+      "theme": "light",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "9ceefa04f28926d964feddee771672bb36fd4b9bce4b4cfbcfeb923f4775eaa5",
+      "inspected": true
+    },
+    {
+      "file": "home-light-768.png",
+      "page": "home",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "sha256": "d0c5f7791def608b1ea545856e13d8004be0f3a706dc12b04fb9770326f50a24",
+      "inspected": true
+    },
+    {
+      "file": "items-light-768.png",
+      "page": "items",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "sha256": "166ddbb9dce02344cfda87590f61f899b14fb1ae80c39c2755a791fc4ec38605",
+      "inspected": true
+    },
+    {
+      "file": "apps-light-768.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "sha256": "a379c493e8a62b65f2031adc9603b23482a95b7c3d1376c5cef32382a7b6f982",
+      "inspected": true
+    },
+    {
+      "file": "review-light-768.png",
+      "page": "review",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "sha256": "d8281e1f7e59fb894edbf8053dd4e65fd406607909fcefd2cc695f809910542e",
+      "inspected": true
+    },
+    {
+      "file": "history-light-768.png",
+      "page": "history",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "sha256": "0cc5256d1ca67be07fd66517c69e9bbb5c0c62097fe0a279c747d366d68b6e6d",
+      "inspected": true
+    },
+    {
+      "file": "benchmark-light-768.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "sha256": "f20cc7c03f0c1ab90886fbdc5fbf7688a5d9ea2c3c1cca21bb525962653e7dcb",
+      "inspected": true
+    },
+    {
+      "file": "games-light-768.png",
+      "page": "games",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "sha256": "3c7e8c5195ed39fa81306449b3af3b823ffff243c987d9d32f3700279abbf7fc",
+      "inspected": true
+    },
+    {
+      "file": "settings-light-768.png",
+      "page": "settings",
+      "theme": "light",
+      "width": 768,
+      "height": 1000,
+      "sha256": "73aee986bc4a978787a14b5a2ba6537e07bcd76b7cf6dcce57e30ee6f74b3ef3",
+      "inspected": true
+    },
+    {
+      "file": "home-light-390.png",
+      "page": "home",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "sha256": "b513cc0b46a0b2f6d9c649b9e21cd9ae7c78f0b67fad75de1c288f704fe1bc2a",
+      "inspected": true
+    },
+    {
+      "file": "items-light-390.png",
+      "page": "items",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "sha256": "880f1e023caa432bef20b77ab2664c46f0b9290b4bdb49f490bd1b12aa00e0e2",
+      "inspected": true
+    },
+    {
+      "file": "apps-light-390.png",
+      "page": "apps",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "sha256": "7804b676cfabafc0ba9d0530ec0a8482da2f5c58f787330704ef5006e60898ca",
+      "inspected": true
+    },
+    {
+      "file": "review-light-390.png",
+      "page": "review",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "sha256": "66ec50f28c3e689c43fd368acd3008d4ebc0402148cfe92c4ebdd20caf177488",
+      "inspected": true
+    },
+    {
+      "file": "history-light-390.png",
+      "page": "history",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "sha256": "527338427b6e9653e3f2eba02b991d4af7d1c71eb583972159f234edae93ea55",
+      "inspected": true
+    },
+    {
+      "file": "benchmark-light-390.png",
+      "page": "benchmark",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "sha256": "e6e32c37d14012af7bfd6f9c3a00af8dd3358d4b3dc177070f82f61754e33d01",
+      "inspected": true
+    },
+    {
+      "file": "games-light-390.png",
+      "page": "games",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "sha256": "be6b3fe5d2ad4a90980e6eb3257bc9f8d8260cc262b20c47fdc752a086b9d0d9",
+      "inspected": true
+    },
+    {
+      "file": "settings-light-390.png",
+      "page": "settings",
+      "theme": "light",
+      "width": 390,
+      "height": 1000,
+      "sha256": "bcfaf755c11aeabb17ab3696f6fa6a8936ff1bd5a175123dc60f03fdc581bbe7",
+      "inspected": true
+    },
+    {
+      "file": "home-dark-1440.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "d8deda14fba2709c8b5c2ad9d7c0a7fed0e11bfdd08699072e7d4cb2f6bc44a5",
+      "inspected": true
+    },
+    {
+      "file": "items-dark-1440.png",
+      "page": "items",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "7a27fd4f31c7d5fc8698680bb3318e06059758a4c1662da81198b1b964ccf1d7",
+      "inspected": true
+    },
+    {
+      "file": "apps-dark-1440.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "7ba5b160737c600aabf8e591d0917f620cef47c3e7b352a22b25ebb622139728",
+      "inspected": true
+    },
+    {
+      "file": "review-dark-1440.png",
+      "page": "review",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "7bc9223b0cfd9f73eb4fff52ba524180c05a890230443f5e2b93ed2962f479de",
+      "inspected": true
+    },
+    {
+      "file": "history-dark-1440.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "d1d9a271b43fb6632cdfe3711af113e89076186e9412ae05dd75f61c3247a3ea",
+      "inspected": true
+    },
+    {
+      "file": "benchmark-dark-1440.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "f3801a3f97449a384679d93d865c7f2a52d6085bd26908428b3a99e537393fdf",
+      "inspected": true
+    },
+    {
+      "file": "games-dark-1440.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "033f6442896d2629e681aa14ce25d5cb9396839d1a1c8b8358f5eee450660220",
+      "inspected": true
+    },
+    {
+      "file": "settings-dark-1440.png",
+      "page": "settings",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "bf192fa1708840c507071a5f858786d5fc024b0e63a8926338b2f3ec54d13fb8",
+      "inspected": true
+    },
+    {
+      "file": "home-dark-1100.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "bdea175651893b6c2b8d2fce4e19a62c7a37eb1795f1095ee86dac9372316c25",
+      "inspected": true
+    },
+    {
+      "file": "items-dark-1100.png",
+      "page": "items",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "dc0e3d67fe955829900d0c40cd4f8adc5107eb04e6bd823c13ae663a80d1c077",
+      "inspected": true
+    },
+    {
+      "file": "apps-dark-1100.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "9acb39a82a6110caf99587ab5f805bd2f5f2d97550984a08a4a7bfb6202cb390",
+      "inspected": true
+    },
+    {
+      "file": "review-dark-1100.png",
+      "page": "review",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "ccc7dabc375d1ce71f06264e46175ae62afe6eeff2929eda923423ff4dd340fc",
+      "inspected": true
+    },
+    {
+      "file": "history-dark-1100.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "274ec73a7c3dcbacb61b37e17327cab6c9f5a8687b1ec6674b1fa39b47a28ef0",
+      "inspected": true
+    },
+    {
+      "file": "benchmark-dark-1100.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "d8369343065cf843819a054c498517ca74c88cf13dabb81d31f4a863732401d7",
+      "inspected": true
+    },
+    {
+      "file": "games-dark-1100.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "43ce7c4479d1fecac9ffd3abb30d7d7a965bc4705924a57d519dd976495265bf",
+      "inspected": true
+    },
+    {
+      "file": "settings-dark-1100.png",
+      "page": "settings",
+      "theme": "dark",
+      "width": 1100,
+      "height": 1000,
+      "sha256": "cf496a3e4f11bffd6ee3ee2fa850c09ef9f81e6909aef5cb9a49c2a2f076ee4d",
+      "inspected": true
+    },
+    {
+      "file": "home-dark-768.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "sha256": "e2a4c40190b0cb246733ff59401b67b80d51a07f2da409be9731b9a7f2a3f82b",
+      "inspected": true
+    },
+    {
+      "file": "items-dark-768.png",
+      "page": "items",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "sha256": "5614bc204f21d6a231deb579889f2a97a9ec3ac8e9628d963167075c3282053c",
+      "inspected": true
+    },
+    {
+      "file": "apps-dark-768.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "sha256": "2d54610dfeb574546063aedb91ea25b7e63cea395842f6c0ea57182e85b63bf4",
+      "inspected": true
+    },
+    {
+      "file": "review-dark-768.png",
+      "page": "review",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "sha256": "674eaf20b8cae5ca5adca6686c8f087ec4f9f58264b641ad1228d2d71c2a71fc",
+      "inspected": true
+    },
+    {
+      "file": "history-dark-768.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "sha256": "b101b5404c9ecc6d6fdc5128802ef0dd78b3c8d70bda4a306c7ac967ddf8200e",
+      "inspected": true
+    },
+    {
+      "file": "benchmark-dark-768.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "sha256": "24be7488ad451cf48667a826e930b5e201ff44ea06eade07d7346005182f2452",
+      "inspected": true
+    },
+    {
+      "file": "games-dark-768.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "sha256": "f8564d5f504cddb6b2b5effc5f14d295f686818f0c1ecde1421a218c70fae8f6",
+      "inspected": true
+    },
+    {
+      "file": "settings-dark-768.png",
+      "page": "settings",
+      "theme": "dark",
+      "width": 768,
+      "height": 1000,
+      "sha256": "b1fca38e50d4c23309ff7765fef84a60d9a9fc5800adf9a64cb5cf1c306ae8f6",
+      "inspected": true
+    },
+    {
+      "file": "home-dark-390.png",
+      "page": "home",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "sha256": "317e410b44ff5112ecb1a391be7983ab61208fa043e374d663b014bef665daed",
+      "inspected": true
+    },
+    {
+      "file": "items-dark-390.png",
+      "page": "items",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "sha256": "2c96a3c7af2cf5ad4cd8a89588f383e7ab31ff527c7ddfeac7822ecbf73b021d",
+      "inspected": true
+    },
+    {
+      "file": "apps-dark-390.png",
+      "page": "apps",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "sha256": "509b734a51577827779988948a6bea34f8c31cd9ef1f8705a286b2c35d44b564",
+      "inspected": true
+    },
+    {
+      "file": "review-dark-390.png",
+      "page": "review",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "sha256": "8909ffa0d4e24068c6401c2958a0c06c5154a916f3cb401200cece00b866c166",
+      "inspected": true
+    },
+    {
+      "file": "history-dark-390.png",
+      "page": "history",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "sha256": "d585179a370db754d6e54ae68848cf83c69f417824ba7e685323ded191246e14",
+      "inspected": true
+    },
+    {
+      "file": "benchmark-dark-390.png",
+      "page": "benchmark",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "sha256": "34993ec890bf1c9d6c29c6425e484e9a42e3fb5b8f77a955f56fc2fae153d788",
+      "inspected": true
+    },
+    {
+      "file": "games-dark-390.png",
+      "page": "games",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "sha256": "46d77f578a84772b9afc9fb7a2b02a5ca2a98d2b910c19059d50b5d5559a7ce6",
+      "inspected": true
+    },
+    {
+      "file": "settings-dark-390.png",
+      "page": "settings",
+      "theme": "dark",
+      "width": 390,
+      "height": 1000,
+      "sha256": "0e2c55562f4fdc9be7079779a4204f793a4025f760a8d7f7971c25547f6d38d1",
+      "inspected": true
+    }
+  ]
+}

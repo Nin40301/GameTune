@@ -173,3 +173,7 @@ Leia [resumo da Fase 3](docs/phase-3.md), [Fase 2 corrigida](docs/phase-2.md), [
 Assinatura/instaladores entram na Fase 7. Certificado e senha serão segredos
 `WINDOWS_CERTIFICATE_BASE64` e `WINDOWS_CERTIFICATE_PASSWORD`; nenhum certificado
 é usado pelo pipeline atual. Veja [LICENSE](LICENSE) e [NOTICE](NOTICE).
+
+## Fase 6.5 — Ametista e interface
+
+A marca e os binários usam `Ametista`/`ametista`. Tema claro e efeitos reduzidos são o padrão para novas preferências. A interface oferece pt-BR/en, StatusOrb com RAM medida e vidro opcional. [Relatório da Fase 6.5](docs/phase-6.5.md) e [plano](docs/phase-6.5-plan.md). Os gates de consumo do redesign estão pendentes a pedido do usuário; não há alegação de melhora.

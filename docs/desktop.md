@@ -1,8 +1,8 @@
-# Ametista Desktop — Fases 4 a 6
+# Ametista Desktop — Fases 4 a 6.5
 
 Interface Windows em Tauri 2, React, TypeScript strict e Tailwind. Usa o mesmo
 catálogo, presets, proteção, WindowsSession e journal da CLI. Disponível em
-pt-BR/en, escuro/claro, com navegação por teclado, diálogo de detalhes com foco
+pt-BR/en, claro/escuro, com navegação por teclado, diálogo de detalhes com foco
 contido/restaurado, regiões de status e testes axe AA. Não exibe métricas fictícias.
 
 Na Fase 5, Início inclui medições reais e Benchmark conduz as rodadas Antes/
@@ -70,7 +70,7 @@ ponte para o helper. Não é um modo selecionável no produto instalado.
 5. Em **Histórico**, desfaça itens ou tudo após revisão. Reinstalar abre a página
    validada da Store após ação/revisão explícita; **Desfazer não reinstala apps**
    nem recupera dados. O app não instala automaticamente pela Store.
-6. Em **Configurações**, escolha idioma, tema e modo avançado. Preferências são
+6. Em **Configurações**, escolha idioma, tema, efeitos visuais e modo avançado. Preferências são
    locais, nunca concedem consentimento ou mudam o catálogo.
 
 A análise roda fora da thread da janela, informa progresso por item e é
@@ -124,3 +124,7 @@ Tauri. Não há plugin shell, fs, http ou updater. Fontes/documentação do cat�
 aparecem como texto, sem navegação automática. A Store pode usar rede ao ser
 aberta por solicitação explícita. Desenvolvimento/instalação de dependências usa
 rede de build; o produto em execução não depende dela.
+
+## Camada visual da Fase 6.5
+
+Tema claro e efeitos Reduzidos por padrão para novas preferências. O modo Completo usa vidro em poucas superfícies, com fonte local e nenhuma alteração na CSP. Suporte mínimo de 390 px, navegação inferior e controles por teclado. [Relatório e pendências de consumo](phase-6.5.md).
