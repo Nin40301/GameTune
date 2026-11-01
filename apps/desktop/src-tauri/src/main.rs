@@ -1,5 +1,7 @@
 #![forbid(unsafe_code)]
 #![cfg_attr(windows, windows_subsystem = "windows")]
+#[cfg(windows)]
+mod games;
 fn main() {
     #[cfg(windows)]
     run();
@@ -15,8 +17,27 @@ fn run() {
     use tauri::Manager;
     #[tauri::command]
     async fn lab_action(lab: tauri::State<'_, Arc<Lab>>, action: Action) -> Result<Status, String> {
+        if matches!(action, Action::Start { .. }) && games::monitor_running()? {
+            return Err("monitor_benchmark_conflict".into());
+        }
         let lab = lab.inner().clone();
         tauri::async_runtime::spawn_blocking(move || lab.action(action).map_err(|e| e.to_string()))
+            .await
+            .map_err(|_| "operation_failed".to_string())?
+    }
+    #[tauri::command]
+    async fn games_action(
+        lab: tauri::State<'_, Arc<Lab>>,
+        state: tauri::State<'_, Arc<games::Games>>,
+        action: games::Action,
+    ) -> Result<games::View, String> {
+        let _guard = if matches!(action, games::Action::Start { .. }) {
+            Some(lab.guard_mutation().map_err(|e| e.to_string())?)
+        } else {
+            None
+        };
+        let state = state.inner().clone();
+        tauri::async_runtime::spawn_blocking(move || state.action(action))
             .await
             .map_err(|_| "operation_failed".to_string())?
     }
@@ -137,12 +158,16 @@ fn run() {
             prepare_review,
             execute_review,
             lab_action,
-            lab_file
+            lab_file,
+            games_action
         ])
         .setup(|app| {
             let directory = app.path().app_local_data_dir()?.join("measurements");
             let monitor = std::env::var("GAMETUNE_RESOURCE_MODE").as_deref() != Ok("idle");
             app.manage(Arc::new(Lab::open(&directory, monitor)?));
+            app.manage(Arc::new(games::Games::new(
+                app.path().app_local_data_dir()?.join("games"),
+            )?));
             let config = app
                 .config()
                 .app
@@ -150,13 +175,11 @@ fn run() {
                 .first()
                 .ok_or("missing main window")?;
             tauri::WebviewWindowBuilder::from_config(app, config)?
-                // This UI has no 3D/canvas workload. Software composition avoids a
-                // dedicated GPU workload for our window; no system or game settings change.
-                .additional_browser_args("--disable-gpu --disable-features=msWebOOUI,msPdfOOUI")
+                // Empty supported options property suppresses wry's experimental
+                // default switches too. No custom Chromium/WebView flags.
+                .additional_browser_args("")
                 .disable_drag_drop_handler()
-                // Isolate the profile from older builds with different WebView args.
-                // Do not disable SmartScreen, sandboxing or process isolation.
-                .data_directory(app.path().app_local_data_dir()?.join("webview-software"))
+                .data_directory(app.path().app_local_data_dir()?.join("webview-standard"))
                 .on_navigation(|url| {
                     (url.scheme() == "http" && url.host_str() == Some("tauri.localhost"))
                         || (url.scheme() == "tauri" && url.host_str() == Some("localhost"))

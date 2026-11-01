@@ -2,11 +2,13 @@
 
 ## Superfície do WebView
 
-Somente a janela local `main` recebe oito permissões: bootstrap, iniciar/consultar/
+Somente a janela local `main` recebe nove permissões: bootstrap, iniciar/consultar/
 cancelar análise, preparar revisão, executar revisão e os comandos tipados
 `lab_action`/`lab_file`. Estes últimos controlam somente coleta/estado e seletores
 nativos de importação/exportação; não aceitam caminhos fornecidos pela UI,
 comandos livres ou operações elevadas. Payloads desconhecidos são rejeitados.
+`games_action` lê/salva biblioteca com IDs temporários validados, usa seletor
+nativo para `.exe` e inicia apenas o monitor irmão fixo. Não executa o jogo.
 AppManifest enumera esses
 comandos para o controle de acesso do Tauri 2; não se depende da permissão implícita
 de comandos customizados. Não há plugins de execução, arquivos ou rede.
@@ -22,6 +24,23 @@ O sampler usa um snapshot global NT, sem handles individuais de jogos. Ajustes
 ficam bloqueados enquanto uma rodada está ativa; uma reserva impede a corrida
 inversa de iniciar coleta durante a execução do auxiliar. Os dados do benchmark
 no AppData não concedem autorização ao motor nem substituem consentimentos.
+
+Nenhuma flag Chromium/WebView experimental é enviada. A configuração explícita
+de argumentos **vazios** também substitui os defaults experimentais do wry,
+incluindo sua desativação de SmartScreen. O diretório padrão desta versão é
+`webview-standard`; preferências antigas no perfil experimental não são migradas.
+Journal, biblioteca e medições ficam separados desse perfil do navegador.
+
+## Sessões temporárias por jogo
+
+O processo Rust da bandeja é asInvoker e independente do WebView. Após perfil
+autorizado e evento com caminho exato, abre sessão UAC/pipe SID/PID/nonce. O helper
+revalida o subconjunto embutido e mantém apenas essa sessão até fim/EOF/timeout.
+Frames sequenciados não aceitam caminhos, serviços ou scripts livres. Serviços
+são parados sem alterar StartMode, sem cascata e sem terminar processo à força.
+O WAL temporário protegido e lease de máquina ficam retidos; queda do monitor
+provoca tentativa de rollback, queda do helper/PC exige recuperação na próxima
+execução. Não há serviço elevado instalado. Veja [contrato e limites](games.md).
 
 ## Named pipe de uso único
 

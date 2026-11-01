@@ -8,6 +8,7 @@ pub mod model;
 pub mod profile;
 pub mod protection;
 pub mod removal;
+pub mod temporary;
 
 pub use engine::*;
 pub use executor::*;

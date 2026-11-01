@@ -19,16 +19,16 @@ jobs:
         working-directory: apps/desktop
       - run: npm run build
         working-directory: apps/desktop
-      - run: cargo build -p gametune-desktop -p gametune-helper --release --locked
+      - run: cargo build -p gametune-desktop -p gametune-helper -p gametune-monitor --release --locked
       - run: cargo build -p gametune-metrics --example budget --release --locked
-      - name: Idle, including WebView children
-        run: ./tools/test-resource-budget.ps1 -Mode idle
-      - name: Monitor, including WebView children
+      - name: Open interface, including WebView children, 150 MiB
+        run: ./tools/test-resource-budget.ps1 -Mode interface
+      - name: Independent Rust game monitor, 15 MiB and 0.5 percent
         if: ${{ !cancelled() }}
-        run: ./tools/test-resource-budget.ps1 -Mode monitor
+        run: ./tools/test-resource-budget.ps1 -Mode game_monitor
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: desktop-resource-budget
-          path: work/resource-budget/
+          path: work/resource-budget-phase-6/
           retention-days: 7

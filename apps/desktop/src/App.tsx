@@ -16,6 +16,7 @@ import type {
 } from './types'
 import { categoryKey, translator } from './i18n'
 import { Measurements } from './Measurements'
+import { GamesPanel } from './Games'
 import { version } from '../package.json'
 
 const emptyAnalysis: Analysis = {
@@ -27,7 +28,16 @@ const emptyAnalysis: Analysis = {
   observations: [],
   error: null,
 }
-const navigation: Page[] = ['home', 'items', 'apps', 'review', 'history', 'benchmark', 'settings']
+const navigation: Page[] = [
+  'home',
+  'items',
+  'apps',
+  'review',
+  'history',
+  'benchmark',
+  'games',
+  'settings',
+]
 const glyphs: Record<Page, string> = {
   home: '⌂',
   items: '☷',
@@ -36,6 +46,7 @@ const glyphs: Record<Page, string> = {
   history: '↶',
   settings: '⚙',
   benchmark: '◴',
+  games: '♜',
 }
 function preference(key: string, fallback: string) {
   try {
@@ -66,6 +77,7 @@ export function App({ backend }: { backend: Backend }) {
     preference('theme', 'dark') === 'light' ? 'light' : 'dark',
   )
   const [advanced, setAdvanced] = useState(() => preference('advanced', 'false') === 'true')
+  const [gameRecovery, setGameRecovery] = useState(false)
   const [page, setPage] = useState<Page>('home'),
     [data, setData] = useState<Bootstrap | null>(null)
   const [history, setHistory] = useState<History>({ available: false, journal: null, apps: [] })
@@ -98,6 +110,12 @@ export function App({ backend }: { backend: Backend }) {
   }, [advanced])
   useEffect(() => {
     let alive = true
+    void backend
+      .games({ kind: 'status' })
+      .then((view) => {
+        if (alive) setGameRecovery(view.monitor.recoveryPending && !view.monitor.running)
+      })
+      .catch(() => {})
     void backend
       .bootstrap()
       .then((value) => {
@@ -328,6 +346,20 @@ export function App({ backend }: { backend: Backend }) {
           {error && (
             <div className="notice danger" role="alert">
               {t(error)}
+            </div>
+          )}
+          {gameRecovery && page !== 'settings' && (
+            <div className="notice warning" role="status">
+              <p>{t('monitorRecovery')}</p>
+              <button
+                className="button secondary"
+                onClick={() => {
+                  setPage('settings')
+                  setGameRecovery(false)
+                }}
+              >
+                {t('reviewGameRecovery')}
+              </button>
             </div>
           )}
           {(scanning || analysis.status === 'cancelled' || ready) && (
@@ -719,8 +751,12 @@ export function App({ backend }: { backend: Backend }) {
             </>
           )}
           {page === 'benchmark' && <Measurements backend={backend} language={language} />}
+          {page === 'games' && (
+            <GamesPanel backend={backend} language={language} compatible={data?.compatible ?? {}} />
+          )}
           {page === 'settings' && (
             <section className="surface settings-panel">
+              <GamesPanel backend={backend} language={language} settings />
               <div className="setting-row">
                 <label htmlFor="language">{t('language')}</label>
                 <select

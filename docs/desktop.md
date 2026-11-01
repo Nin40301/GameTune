@@ -1,4 +1,4 @@
-# GameTune Desktop — Fases 4 e 5
+# GameTune Desktop — Fases 4 a 6
 
 Interface Windows em Tauri 2, React, TypeScript strict e Tailwind. Usa o mesmo
 catálogo, presets, proteção, WindowsSession e journal da CLI. Disponível em
@@ -8,7 +8,8 @@ contido/restaurado, regiões de status e testes axe AA. Não exibe métricas fic
 Na Fase 5, Início inclui medições reais e Benchmark conduz as rodadas Antes/
 Depois. Leia [protocolo e limites](benchmark.md), [aceite de VM](benchmark-vm.md)
 e [resultados e consumo](phase-5.md). PresentMon é importação offline de CSV,
-sem execução da ferramenta pelo app. O aceite consistente de consumo é pendente.
+sem execução da ferramenta pelo app. Na Fase 6, [Jogos](games.md) cadastra perfis
+temporários e Configurações inicia o monitor sem WebView, que sobrevive à janela.
 
 ## Compilar
 
@@ -23,12 +24,12 @@ cd apps/desktop
 npm ci --no-audit --no-fund
 npm run build
 cd ../..
-cargo build -p gametune-desktop -p gametune-helper --release --locked --offline
+cargo build -p gametune-desktop -p gametune-helper -p gametune-monitor --release --locked --offline
 ./tools/verify-desktop.ps1
 ```
 
-Os arquivos `target/release/gametune.exe` e `gametune-helper.exe` devem ficar
-juntos. O primeiro tem manifesto **asInvoker**, o segundo **requireAdministrator**.
+Os arquivos `target/release/gametune.exe`, `gametune-helper.exe` e `gametune-monitor.exe` devem ficar
+juntos. UI/monitor têm manifesto **asInvoker**, o helper **requireAdministrator**.
 O build padrão inclui assets locais, não depende do servidor Vite e exclui mocks
 e autorização de fixtures. Não use `--all-features` para um release de produção.
 Os executáveis ainda não são assinados; instalador e assinatura entram na Fase 7.

@@ -110,32 +110,41 @@ de um nome de usuário. Caminhos de processos e do PresentMon não são coletado
 no protocolo. IDs do catálogo, GUID do plano e horários permanecem. Arquivos
 locais do experimento não são anonimizados retroativamente pela exportação.
 
-## Orçamento do próprio app
+## Orçamentos separados — atualizados na Fase 6
 
 ```powershell
-cargo build -p gametune-desktop -p gametune-helper --release --locked --offline
+cargo build -p gametune-desktop -p gametune-helper -p gametune-monitor --release --locked --offline
 cargo build -p gametune-metrics --example budget --release --locked --offline
-./tools/test-resource-budget.ps1 -Mode idle
-./tools/test-resource-budget.ps1 -Mode monitor
+./tools/test-resource-budget.ps1 -Mode interface
+./tools/test-resource-budget.ps1 -Mode game_monitor
 ```
 
-Execute no desktop interativo, sem administrador, sem outra instância do GameTune.
-O harness cria apenas sua janela e arquivos do app, espera 30 s e mede 60 s.
-Idle pausa o coletor interno; monitor usa o painel normal. Inclui processo raiz
-e **todos** os descendentes, identificados por PID/parent/creation time no snapshot.
-RAM é **working set privado residente somado** (Task Manager), evitando duplicar
-páginas compartilhadas. Não é soma de commit ou apenas o processo Rust. CPU é
-normalizada por toda a capacidade da máquina e usa **o máximo de amostras de 1 s**.
+Desktop interativo sem administrador, sem outra instância. A interface permanece
+aberta e visível, com o dashboard real. O monitor é outro processo Rust, sem
+WebView, em modo somente leitura para esse ensaio. Ambos usam o mesmo coletor/gate,
+30 s de aquecimento e 60 s de coleta. RAM é working set privado residente somado
+da árvore inteira; CPU é o **máximo de amostras de 1 s**, normalizado por toda a
+capacidade da máquina. Nenhum working set é esvaziado e nenhum processo externo
+é encerrado. Páginas compartilhadas não são contadas várias vezes.
 
-O comando falha se pico de RAM >=80 MiB ou CPU >=1%, coleta incompleta ou erro.
-Não muda o limite em máquinas ocupadas. Fecha apenas a janela que criou; não
-encerra jogos. Evidência local em `work/resource-budget/`. Uma falha desse gate
-significa orçamento não atendido, mesmo com testes funcionais verdes.
+| Perfil fechado do gate | RAM privada máxima | CPU máxima de 1 s |
+| --- | --- | --- |
+| Interface aberta | <=150 MiB | <1%, meta anterior preservada |
+| Monitor de jogos Rust | <=15 MiB | <0,5% |
 
-O protótipo usa janela inicial de 1100 × 740 e composição por software apenas
-na própria WebView, sem alterar driver/GPU/energia do Windows. Não desativa
-SmartScreen, sandbox ou isolamento de processos. As flags de WebView usadas
-para isso são experimentais: a [Microsoft desaconselha flags em produção](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/webview-features-flags).
-Essa dependência precisa de revisão antes do empacotamento da Fase 7; não é
-garantia de consumo para todas as versões do runtime, DPI, tamanhos de janela
-ou máquinas. O gate continua reportando falha se a execução exceder o orçamento.
+Limites não são ajustados por host ocupado. Coleta incompleta, valores ausentes,
+picos fora do limite ou gaps excessivos reprovam. O teste fecha somente a janela
+que criou ou pede parada pelo nonce da instância do monitor; não termina jogos.
+Evidência em `work/resource-budget-phase-6/`. Recursos WMI compartilhados fora da
+árvore e o auxiliar lançado via UAC precisam de ensaio adicional em VM; o gate
+somente leitura não representa o custo de aplicar/reverter uma sessão elevada.
+
+Nenhuma flag experimental é configurada, seguindo a
+[orientação da Microsoft](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/webview-features-flags).
+`additional_browser_args("")` envia a propriedade suportada vazia para substituir
+os switches experimentais padrão do wry. Não desativa GPU, SmartScreen, sandbox
+ou isolamento. O perfil de navegador `webview-standard` isola dados das antigas
+flags; as preferências visuais podem reiniciar, sem tocar no WAL ou medições.
+O monitor não tem navegador. Os resultados da Fase 5 continuam históricos,
+medidos com orçamento/configuração anteriores; veja os resultados atuais em
+`phase-6.md` e `test-count-phase-6.json`.

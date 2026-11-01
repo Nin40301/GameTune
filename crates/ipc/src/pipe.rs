@@ -87,8 +87,15 @@ pub async fn serve(token: String, parent: u32) -> Result<()> {
     let bytes = read_frame(&mut pipe).await?;
     let peer_pid = native::client_pid(&pipe)?;
     let peer_sid = native::client_sid(&pipe)?;
-    let command =
-        Gate::new(sid, parent, token)?.accept(&bytes, &peer_sid, peer_pid, session.catalog())?;
+    let command = Gate::new(sid, parent, token.clone())?.accept(
+        &bytes,
+        &peer_sid,
+        peer_pid,
+        session.catalog(),
+    )?;
+    if let Command::TemporarySession { ids, .. } = command {
+        return crate::game_pipe::serve(session, pipe, token, ids).await;
+    }
     let reply = execute(&mut session, &command);
     let bytes = serde_json::to_vec(&reply)?;
     if bytes.len() > MAX_REPLY {

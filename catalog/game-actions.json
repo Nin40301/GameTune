@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "actions": [
+    {
+      "id": "reg.game_mode",
+      "pauseService": false,
+      "name": {
+        "pt-BR": "Ative o Modo de Jogo",
+        "en": "Enable Game Mode"
+      },
+      "description": {
+        "pt-BR": "Aplique durante o jogo e restaure o valor original ao terminar",
+        "en": "Apply during the game and restore the original value when finished"
+      }
+    },
+    {
+      "id": "power.high_performance",
+      "pauseService": false,
+      "name": {
+        "pt-BR": "Use Alto Desempenho",
+        "en": "Use High Performance"
+      },
+      "description": {
+        "pt-BR": "Aplique durante o jogo e restaure o valor original ao terminar",
+        "en": "Apply during the game and restore the original value when finished"
+      }
+    },
+    {
+      "id": "svc.diagtrack",
+      "pauseService": true,
+      "name": {
+        "pt-BR": "Pause o Diagnóstico conectado",
+        "en": "Pause Connected User Experiences"
+      },
+      "description": {
+        "pt-BR": "Pare o serviço durante o jogo, sem alterar sua inicialização. Restaure o estado original ao terminar",
+        "en": "Stop the service during the game without changing its startup mode. Restore the original state when finished"
+      }
+    },
+    {
+      "id": "svc.fax",
+      "pauseService": true,
+      "name": {
+        "pt-BR": "Pause o Fax",
+        "en": "Pause Fax"
+      },
+      "description": {
+        "pt-BR": "Pare o serviço durante o jogo, sem alterar sua inicialização. Restaure o estado original ao terminar",
+        "en": "Stop the service during the game without changing its startup mode. Restore the original state when finished"
+      }
+    },
+    {
+      "id": "svc.retaildemo",
+      "pauseService": true,
+      "name": {
+        "pt-BR": "Pause a demonstração de loja",
+        "en": "Pause Retail Demo"
+      },
+      "description": {
+        "pt-BR": "Pare o serviço durante o jogo, sem alterar sua inicialização. Restaure o estado original ao terminar",
+        "en": "Stop the service during the game without changing its startup mode. Restore the original state when finished"
+      }
+    }
+  ]
+}

@@ -76,6 +76,8 @@ jobs:
           path: |
             target/release/gametune.exe
             target/release/gametune-helper.exe
+            target/release/gametune-monitor.exe
+            docs/games.md
             docs/desktop.md
             docs/desktop-security.md
             LICENSE

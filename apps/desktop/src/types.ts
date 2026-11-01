@@ -1,7 +1,8 @@
 export type Language = 'pt-BR' | 'en'
 export type Theme = 'dark' | 'light'
 export type Kind = 'registry' | 'service' | 'scheduled_task' | 'appx' | 'startup' | 'power'
-export type Page = 'home' | 'items' | 'apps' | 'review' | 'history' | 'settings' | 'benchmark'
+export type Page =
+  'home' | 'items' | 'apps' | 'review' | 'history' | 'settings' | 'benchmark' | 'games'
 export type ReviewKind = 'apply' | 'remove_apps' | 'undo' | 'undo_all' | 'history' | 'reinstall'
 export interface Localized {
   'pt-BR': string
@@ -100,6 +101,7 @@ export interface Reply {
   error: string | null
 }
 export interface Backend {
+  games(action: GamesAction): Promise<GamesView>
   lab(action: LabAction): Promise<LabStatus>
   labFile(action: LabFile): Promise<LabStatus>
   bootstrap(): Promise<Bootstrap>
@@ -109,6 +111,48 @@ export interface Backend {
   review(selection: Selection): Promise<Review>
   execute(approval: Approval): Promise<Reply>
 }
+export interface Game {
+  id: string
+  name: string
+  exe: string
+  actionIds: string[]
+  consent: boolean
+  enabled: boolean
+}
+export interface GameCandidate {
+  launcher: string
+  name: string
+  installDir: string
+  exe: string | null
+}
+export interface GameAction {
+  id: string
+  pauseService: boolean
+  name: Localized
+  description: Localized
+}
+export interface GameMonitor {
+  running: boolean
+  pid: number
+  instance: string
+  helperPid: number | null
+  activeGames: string[]
+  recoveryPending: boolean
+  error: string | null
+  readonly: boolean
+}
+export interface GamesView {
+  library: { version: number; games: Game[]; language: string }
+  candidates: GameCandidate[]
+  actions: GameAction[]
+  monitor: GameMonitor
+}
+export type GamesAction =
+  | { kind: 'status' | 'discover' | 'add_manual' | 'stop' }
+  | { kind: 'add_candidate'; index: number }
+  | { kind: 'save'; game: Game; language: string }
+  | { kind: 'remove'; id: string; confirm: boolean }
+  | { kind: 'start'; confirm: boolean; readonly: boolean; language: string }
 export interface MetricSample {
   uptimeMs: number
   timestampMs: number

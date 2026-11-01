@@ -993,7 +993,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-acceptance"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-catalog",
  "gametune-core",
@@ -1011,7 +1011,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-benchmark"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "csv",
  "gametune-metrics",
@@ -1024,7 +1024,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-catalog"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-core",
  "gametune-exec-mock",
@@ -1037,7 +1037,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-cli"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-catalog",
  "gametune-core",
@@ -1049,7 +1049,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-core"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "serde",
  "serde_json",
@@ -1061,11 +1061,14 @@ dependencies = [
 
 [[package]]
 name = "gametune-desktop"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-benchmark",
+ "gametune-catalog",
+ "gametune-core",
  "gametune-desktop-backend",
  "gametune-ipc",
+ "gametune-watcher",
  "rfd",
  "serde",
  "tauri",
@@ -1074,7 +1077,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-desktop-backend"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-catalog",
  "gametune-core",
@@ -1087,7 +1090,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-exec-appx"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-core",
  "gametune-exec-mock",
@@ -1096,14 +1099,14 @@ dependencies = [
 
 [[package]]
 name = "gametune-exec-mock"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-core",
 ]
 
 [[package]]
 name = "gametune-exec-power"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-core",
  "gametune-exec-mock",
@@ -1112,7 +1115,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-exec-registry"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-core",
  "gametune-exec-mock",
@@ -1121,7 +1124,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-exec-scheduled-task"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-core",
  "gametune-exec-mock",
@@ -1130,7 +1133,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-exec-service"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-core",
  "gametune-exec-mock",
@@ -1139,7 +1142,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-exec-startup"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-core",
  "gametune-exec-mock",
@@ -1148,7 +1151,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-helper"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "embed-resource",
  "gametune-ipc",
@@ -1157,7 +1160,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-ipc"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "gametune-catalog",
  "gametune-core",
@@ -1172,7 +1175,7 @@ dependencies = [
 
 [[package]]
 name = "gametune-metrics"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "serde",
  "serde_json",
@@ -1181,8 +1184,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "gametune-monitor"
+version = "0.6.0"
+dependencies = [
+ "embed-resource",
+ "gametune-catalog",
+ "gametune-core",
+ "gametune-ipc",
+ "gametune-watcher",
+ "serde",
+ "serde_json",
+ "tokio",
+ "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "gametune-watcher"
+version = "0.6.0"
+dependencies = [
+ "gametune-catalog",
+ "gametune-core",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.21",
+ "windows",
+]
+
+[[package]]
 name = "gametune-windows-runtime"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "base64 0.22.1",
  "gametune-catalog",

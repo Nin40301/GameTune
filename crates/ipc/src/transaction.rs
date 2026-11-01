@@ -62,6 +62,7 @@ pub fn execute(session: &mut WindowsSession, command: &Command) -> Reply {
             .ensure_elevated()
             .map_err(|_| Error::Identity)?;
         let result = match command {
+            Command::TemporarySession { .. } => return Err(Error::InvalidPayload), // Only the authenticated session protocol may hold a game WAL.
             Command::Apply {
                 ids,
                 high_risk_ids,

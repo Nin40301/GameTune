@@ -105,6 +105,21 @@ impl Engine<'_> {
 
     /// Caller explicitly chooses real application and supplies a durable writer.
     pub fn apply(&mut self, request: &Request, journal: &mut Journal) -> Result<Report> {
+        self.apply_inner(request, journal, false)
+    }
+    pub(crate) fn apply_temporary(
+        &mut self,
+        request: &Request,
+        journal: &mut Journal,
+    ) -> Result<Report> {
+        self.apply_inner(request, journal, true)
+    }
+    fn apply_inner(
+        &mut self,
+        request: &Request,
+        journal: &mut Journal,
+        temporary: bool,
+    ) -> Result<Report> {
         // Validate the entire request before the first mutation, even if a later ID is invalid.
         let ids: Vec<_> = self
             .resolve(request)?
@@ -138,9 +153,12 @@ impl Engine<'_> {
                     .get(item.action_type)
                     .and_then(|executor| executor.capture(item))
                     .and_then(|snapshot| {
-                        if crate::observe(item, Ok(snapshot), crate::ReadScope::Machine)
-                            .already_applied
-                            == Some(true)
+                        if (temporary
+                            && item.action_type == crate::ActionType::Service
+                            && matches!(snapshot, crate::Snapshot::Service { running: false, .. }))
+                            || crate::observe(item, Ok(snapshot), crate::ReadScope::Machine)
+                                .already_applied
+                                == Some(true)
                         {
                             Ok(())
                         } else {
@@ -185,10 +203,13 @@ impl Engine<'_> {
                 }
             };
             journal.prepare(item, original)?; // sync_all completes before apply can run
-            let result = self
-                .executors
-                .get_mut(item.action_type)
-                .and_then(|e| e.apply(item));
+            let result = self.executors.get_mut(item.action_type).and_then(|e| {
+                if temporary {
+                    e.apply_temporary(item)
+                } else {
+                    e.apply(item)
+                }
+            });
             let status = if result.is_ok() {
                 Status::Applied
             } else {

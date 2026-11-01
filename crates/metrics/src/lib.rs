@@ -166,11 +166,13 @@ impl Collector {
                     .processes
                     .iter()
                     .filter(|p| pids.contains(&p.pid))
-                    .filter_map(|p| {
+                    .map(|p| {
                         old.processes
                             .iter()
                             .find(|o| (o.pid, o.created) == (p.pid, p.created))
-                            .map(|o| p.cpu_ticks.saturating_sub(o.cpu_ticks))
+                            // A child born since the previous complete snapshot
+                            // has no previous counter: count its lifetime CPU.
+                            .map_or(p.cpu_ticks, |o| p.cpu_ticks.saturating_sub(o.cpu_ticks))
                     })
                     .sum();
                 app_cpu = Some((100.0 * ticks as f64 / total as f64).clamp(0.0, 100.0));
@@ -205,7 +207,25 @@ pub struct Budget {
     pub peak_cpu_percent: f64,
     pub passed: bool,
 }
+#[derive(Clone, Copy, Debug, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum BudgetProfile {
+    Interface,
+    GameMonitor,
+}
+impl BudgetProfile {
+    pub fn limits(self) -> (u64, f64) {
+        match self {
+            Self::Interface => (150 * 1024 * 1024, 1.0),
+            Self::GameMonitor => (15 * 1024 * 1024, 0.5),
+        }
+    }
+}
 pub fn budget(samples: &[Sample]) -> Budget {
+    budget_for(samples, BudgetProfile::Interface)
+}
+pub fn budget_for(samples: &[Sample], profile: BudgetProfile) -> Budget {
+    let (ram_limit, cpu_limit) = profile.limits();
     let peak_private_bytes = samples
         .iter()
         .map(|s| s.app_private_bytes)
@@ -231,8 +251,8 @@ pub fn budget(samples: &[Sample]) -> Budget {
                 s.app_cpu_percent
                     .is_some_and(|v| v.is_finite() && (0.0..100.0).contains(&v))
             })
-            && peak_private_bytes < 80 * 1024 * 1024
-            && peak_cpu_percent < 1.0,
+            && peak_private_bytes <= ram_limit
+            && peak_cpu_percent < cpu_limit,
     }
 }
 #[cfg(test)]
@@ -301,6 +321,23 @@ mod tests {
         Ok(())
     }
     #[test]
+    fn newborn_child_cpu_is_counted_in_its_first_interval() -> Result<(), Error> {
+        let mut c = Collector::default();
+        c.ingest(raw(1), 1)?;
+        let mut next = raw(2);
+        next.processes.push(Process {
+            pid: 4,
+            parent: 1,
+            created: 4,
+            name: "child.exe".into(),
+            working_set: 1,
+            private_working_set: 1,
+            cpu_ticks: 2,
+        });
+        assert_eq!(c.ingest(next, 1)?.app_cpu_percent, Some(40.0));
+        Ok(())
+    }
+    #[test]
     fn budget_fails_memory_cpu_and_insufficient_samples() -> Result<(), Error> {
         let mut c = Collector::default();
         c.ingest(raw(1), 1)?;
@@ -314,12 +351,42 @@ mod tests {
             })
             .collect();
         assert!(budget(&samples).passed);
-        samples[4].app_private_bytes = 80 * 1024 * 1024;
+        samples[4].app_private_bytes = 150 * 1024 * 1024 + 1;
         assert!(!budget(&samples).passed);
         samples[4].app_private_bytes = 50;
         samples[5].app_cpu_percent = Some(1.1);
         assert!(!budget(&samples).passed);
         assert!(!budget(&[]).passed);
+        Ok(())
+    }
+    #[test]
+    fn independent_resource_profiles_have_closed_inclusive_ram_and_strict_cpu_limits()
+    -> Result<(), Error> {
+        let mut c = Collector::default();
+        c.ingest(raw(1), 1)?;
+        let mut sample = c.ingest(raw(2), 1)?;
+        sample.app_cpu_percent = Some(0.49);
+        sample.app_private_bytes = 15 * 1024 * 1024;
+        let mut samples: Vec<_> = (0..60)
+            .map(|i| {
+                let mut s = sample.clone();
+                s.timestamp_ms = i * 1000;
+                s
+            })
+            .collect();
+        assert!(budget_for(&samples, BudgetProfile::GameMonitor).passed);
+        samples[0].app_cpu_percent = Some(0.5);
+        assert!(!budget_for(&samples, BudgetProfile::GameMonitor).passed);
+        samples[0].app_cpu_percent = Some(0.49);
+        samples[0].app_private_bytes += 1;
+        assert!(!budget_for(&samples, BudgetProfile::GameMonitor).passed);
+        for s in &mut samples {
+            s.app_private_bytes = 150 * 1024 * 1024;
+            s.app_cpu_percent = Some(0.99);
+        }
+        assert!(budget_for(&samples, BudgetProfile::Interface).passed);
+        samples[0].app_private_bytes += 1;
+        assert!(!budget_for(&samples, BudgetProfile::Interface).passed);
         Ok(())
     }
 }

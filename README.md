@@ -1,14 +1,16 @@
 # GameTune
 
-Aplicativo offline de ajustes do Windows para jogos. **Fase 5: métricas reais,
-benchmark persistente e exportação offline**, sobre o mesmo backend da CLI/UI.
+Aplicativo offline de ajustes do Windows para jogos. **Fase 6: monitor Rust
+independente e perfis temporários por jogo**, sobre o mesmo backend da CLI/UI.
 Aceite UAC/escritas/reinícios na matriz de VM ainda pendente. Licença Apache-2.0.
-O orçamento de RAM/CPU ainda não passou de forma consistente; o gate inclui
-WebView2 e reprova os excessos. Veja a evidência no relatório da Fase 5.
+Os orçamentos agora são separados: interface aberta <=150 MiB de RAM privada
+somada; monitor sem WebView <=15 MiB e CPU <0,5%. Nenhuma flag experimental do
+WebView é configurada. O gate não eleva limites por host ocupado.
 
 Leia [como compilar e usar a interface](docs/desktop.md),
 [limite de privilégios e IPC](docs/desktop-security.md) e
-[protocolo de benchmark](docs/benchmark.md) e [relatório da Fase 5](docs/phase-5.md).
+[protocolo de benchmark](docs/benchmark.md), [jogos e monitor](docs/games.md) e
+[relatório da Fase 6](docs/phase-6.md).
 
 ## O que está implementado
 
@@ -36,6 +38,10 @@ Leia [como compilar e usar a interface](docs/desktop.md),
   reinícios, plano de energia constante, mediana/p5/p95/MAD e conclusão inconclusiva
 - Importação opcional de CSV PresentMon v1, sem executar ferramenta nem abrir jogos
 - Exportação JSON/HTML offline, anonimização padrão e gate real de RAM/CPU
+- Monitor Rust asInvoker separado, bandeja, início sob demanda e eventos WMI
+- Descoberta por configurações locais dos launchers e adição manual de `.exe`
+- Perfis temporários fechados, serviços apenas pausados, união entre jogos,
+  journal próprio, rollback no fim/EOF e recuperação após crash/reboot
 
 ## Executar a CLI
 

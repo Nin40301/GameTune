@@ -10,6 +10,7 @@ fn main() {
                 "execute_review",
                 "lab_action",
                 "lab_file",
+                "games_action",
             ]))
             .windows_attributes(
                 tauri_build::WindowsAttributes::new().app_manifest(include_str!("app.manifest")),

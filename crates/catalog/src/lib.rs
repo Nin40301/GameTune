@@ -9,8 +9,41 @@ pub const EMBEDDED_ITEMS: &str = include_str!("../../../catalog/items.json");
 pub const CATALOG_SCHEMA: &str = include_str!("../../../catalog/schema.json");
 pub const PROFILE_SCHEMA: &str = include_str!("../../../catalog/profile.schema.json");
 const HASHES: &str = include_str!("../../../catalog/sha256.json");
+const GAME_ACTIONS: &str = include_str!("../../../catalog/game-actions.json");
+const GAME_SCHEMA: &str = include_str!("../../../catalog/game-actions.schema.json");
 pub fn embedded_hash() -> String {
-    format!("{:x}", Sha256::digest(EMBEDDED_ITEMS.as_bytes()))
+    let mut hash = Sha256::new();
+    hash.update(EMBEDDED_ITEMS);
+    hash.update(GAME_ACTIONS);
+    format!("{hash:x}", hash = hash.finalize())
+}
+pub fn game_actions(catalog: &Catalog) -> Result<Vec<gametune_core::temporary::GameAction>> {
+    #[derive(Deserialize)]
+    #[serde(deny_unknown_fields)]
+    struct Actions {
+        version: u8,
+        actions: Vec<gametune_core::temporary::GameAction>,
+    }
+    let hashes: BTreeMap<String, String> = serde_json::from_str(HASHES)?;
+    verify_hash(
+        GAME_SCHEMA.as_bytes(),
+        hashes
+            .get("game-actions.schema.json")
+            .ok_or_else(|| Error::InvalidCatalog("missing game schema hash".into()))?,
+    )?;
+    validate(GAME_SCHEMA, GAME_ACTIONS)?;
+    verify_hash(
+        GAME_ACTIONS.as_bytes(),
+        hashes
+            .get("game-actions.json")
+            .ok_or_else(|| Error::InvalidCatalog("missing game action hash".into()))?,
+    )?;
+    let document: Actions = serde_json::from_str(GAME_ACTIONS)?;
+    if document.version != 1 {
+        return Err(Error::InvalidCatalog("game action version".into()));
+    }
+    gametune_core::temporary::validate_actions(catalog, &document.actions)?;
+    Ok(document.actions)
 }
 
 #[derive(Deserialize)]
@@ -64,5 +97,7 @@ pub fn load_embedded() -> Result<Catalog> {
     if document.version != 1 {
         return Err(Error::InvalidCatalog("unsupported version".into()));
     }
-    Catalog::try_new(document.items)
+    let catalog = Catalog::try_new(document.items)?;
+    game_actions(&catalog)?;
+    Ok(catalog)
 }

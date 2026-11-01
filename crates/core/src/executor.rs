@@ -93,6 +93,14 @@ pub trait Executor {
     fn action_type(&self) -> ActionType;
     fn capture(&self, item: &Item) -> ExecResult<Snapshot>;
     fn apply(&mut self, item: &Item) -> ExecResult<()>;
+    /// Service pauses must be implemented explicitly, never fall back to Disabled.
+    fn apply_temporary(&mut self, item: &Item) -> ExecResult<()> {
+        if item.action_type == ActionType::Service {
+            Err(ExecError::Unavailable)
+        } else {
+            self.apply(item)
+        }
+    }
     fn restore(&mut self, item: &Item, original: &Snapshot) -> ExecResult<()>;
 }
 

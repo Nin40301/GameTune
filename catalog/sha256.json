@@ -1,5 +1,7 @@
 {
   "items.json": "21c6e9510ed0a68279485c03e0baa8467889e481576ee8ec3c649b49ea660e68",
   "schema.json": "2f58b7c9c9f7d43ffab891dd4fdb7ad292d6cc8cd8583df67b4bab41783b36d5",
-  "profile.schema.json": "cdb4569a09b51e8c2216669a8f804a9b7838538f0f102de2d42ec8d814fcb7ea"
+  "profile.schema.json": "cdb4569a09b51e8c2216669a8f804a9b7838538f0f102de2d42ec8d814fcb7ea",
+  "game-actions.json": "d051453518d3408d55240ccb3e2c21dedc9cc9904da7669181fb090b562fa2de",
+  "game-actions.schema.json": "071930bbeef99d2baa9a0810019f7dd8b422e83c6e5f31d200f0943cc57c5219"
 }

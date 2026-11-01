@@ -2,8 +2,12 @@
 //! One-use protocol. Only the native module contains documented Win32 FFI.
 mod protocol;
 pub use protocol::*;
+mod game_protocol;
+pub use game_protocol::*;
 mod transaction;
 pub use transaction::*;
+#[cfg(windows)]
+pub mod game_pipe;
 #[cfg(windows)]
 #[allow(unsafe_code)]
 pub mod native;

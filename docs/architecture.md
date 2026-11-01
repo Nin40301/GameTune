@@ -1,4 +1,4 @@
-# Arquitetura — atualizada na Fase 5
+# Arquitetura — atualizada na Fase 6
 
 **Produto:** Tauri 2 + React + TypeScript strict + Tailwind no Windows. Assets,
 catálogo e pt-BR/en locais; tema escuro/claro; sem rede no WebView. Não há engine
@@ -18,13 +18,13 @@ cancelada. A análise não cria journal, checkpoint ou ProgramData. A janela é
 asInvoker e recusa operação normal quando iniciada elevada. Bootstrap/presets e
 revisões são calculados em Rust; preferências/search/tema são apenas de UI.
 
-**Revisão e privilégio:** oito comandos Tauri tipados, limitados à janela local main,
+**Revisão e privilégio:** nove comandos Tauri tipados, limitados à janela local main,
 preparam ticket aleatório vinculado a operação/IDs e prazo de 120 s. Após revisão
 e consentimentos, o ticket é consumido. ipc lança o helper irmão com manifesto
 requireAdministrator via UAC. Pipe local de uso único com DACL por SID interativo,
 PID/SID reais, nonce, hash do catálogo, limites de tamanho/prazos e rejeição de
 replay. O helper revalida tudo e chama WindowsSession; encerra após responder.
-Só módulos native.rs de IPC/métricas admitem FFI unsafe comentada. Não há serviço elevado
+Só módulos FFI isolados de IPC/métricas/WMI/bandeja admitem unsafe comentado. Não há serviço elevado
 persistente. Ler o histórico protegido pode exigir UAC explícito, sem abrir o WAL.
 
 **Transação:** WindowsSession recaptura o estado elevado, usa o hive do SID do
@@ -48,9 +48,16 @@ constante. Medianas por rodada, p5/p95/MAD e faixa conservadora de ruído; sem
 promessa de ganho. PresentMon é somente importação CSV externa. Exportadores
 offline/anonimizados usam seletores nativos, sem expor caminhos livres à UI.
 
+**Jogos:** watcher lê configurações de launchers e perfis locais com IDs fechados;
+detector puro usa caminho exato + PID/CreationDate. Monitor Rust asInvoker sem
+WebView, sob demanda, bandeja Win32 e eventos WMI. União de ações temporárias
+compartilhadas; serviços apenas parados. Helper UAC de sessão, heartbeat/EOF,
+WAL próprio protegido e lease de máquina reutilizam o motor/undo existentes.
+Recuperação anterior obrigatória antes de nova sessão; sem autostart instalado.
+
 **Verificação/entrega:** Rust estável, formato/Clippy, TS/ESLint, componentes,
 Playwright com mock isolado, axe, testes reais não elevados de pipe e harnesses
 mutáveis exclusivamente opt-in de VM. Código-fonte, binários portáteis e evidência
-por fase. Gates reais somam RAM privada e CPU de toda a árvore WebView2. UAC,
-reinícios e matriz Home/Pro ainda precisam de aceite em VM. Fases 6–7 acrescentam
-sessões por jogo e instalador/assinatura/acabamento.
+por fase. Gates separados somam árvore da UI (150 MiB) e monitor (15 MiB/0,5%
+CPU), sem flags experimentais da WebView. UAC, reinícios, helper em sessão e
+matriz Home/Pro precisam de aceite em VM. Fase 7: instalador/assinatura/acabamento.

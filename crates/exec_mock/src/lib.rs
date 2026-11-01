@@ -76,6 +76,26 @@ impl MockExecutor {
 }
 
 impl Executor for MockExecutor {
+    fn apply_temporary(&mut self, item: &Item) -> ExecResult<()> {
+        if self.kind != ActionType::Service {
+            return self.apply(item);
+        }
+        self.check(item)?;
+        let mut state = self.host.lock()?;
+        if let Some(error) = state.failures.get(&(item.target.key(), Stage::Apply)) {
+            return Err(error.clone());
+        }
+        let snapshot = state
+            .resources
+            .get_mut(&item.target.key())
+            .ok_or(ExecError::NotFound)?;
+        let Snapshot::Service { running, .. } = snapshot else {
+            return Err(ExecError::TypeMismatch);
+        };
+        *running = false;
+        state.writes += 1;
+        Ok(())
+    }
     fn action_type(&self) -> ActionType {
         self.kind
     }

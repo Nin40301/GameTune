@@ -15,6 +15,10 @@ pub struct AppConsent {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Command {
+    TemporarySession {
+        ids: Vec<String>,
+        confirm: bool,
+    },
     Apply {
         ids: Vec<String>,
         confirm: bool,
@@ -57,7 +61,9 @@ pub struct Reply {
 impl Command {
     pub fn ids(&self) -> Vec<String> {
         match self {
-            Self::Apply { ids, .. } | Self::Undo { ids, .. } => ids.clone(),
+            Self::Apply { ids, .. }
+            | Self::Undo { ids, .. }
+            | Self::TemporarySession { ids, .. } => ids.clone(),
             Self::RemoveApps { apps, .. } => apps.iter().map(|a| a.item_id.clone()).collect(),
             Self::Reinstall { item_id, .. } => vec![item_id.clone()],
             _ => vec![],
@@ -75,10 +81,24 @@ impl Command {
         {
             return Err(crate::Error::InvalidItem);
         }
-        if !matches!(self, Self::UndoAll { .. } | Self::History) && ids.is_empty() {
+        if !matches!(
+            self,
+            Self::UndoAll { .. } | Self::History | Self::TemporarySession { .. }
+        ) && ids.is_empty()
+        {
             return Err(crate::Error::InvalidPayload);
         }
         match self {
+            Self::TemporarySession { confirm, .. } => {
+                if !confirm {
+                    return Err(crate::Error::Confirmation);
+                }
+                let actions = gametune_catalog::game_actions(catalog)
+                    .map_err(|_| crate::Error::InvalidItem)?;
+                if ids.iter().any(|id| !actions.iter().any(|a| &a.id == id)) {
+                    return Err(crate::Error::InvalidItem);
+                }
+            }
             Self::Apply {
                 confirm,
                 high_risk_ids,

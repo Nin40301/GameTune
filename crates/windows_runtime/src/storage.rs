@@ -18,6 +18,9 @@ struct Owner {
 }
 
 fn lease(root: &Path, scope: &str, sid: &str) -> ExecResult<File> {
+    lease_mode(root, scope, sid, false)
+}
+fn lease_mode(root: &Path, scope: &str, sid: &str, temporary: bool) -> ExecResult<File> {
     let lock = OpenOptions::new()
         .read(true)
         .write(true)
@@ -34,7 +37,7 @@ fn lease(root: &Path, scope: &str, sid: &str) -> ExecResult<File> {
         let Some(other_sid) = name.to_str() else {
             continue;
         };
-        if other_sid == sid || !crate::valid_sid(other_sid) {
+        if !crate::valid_sid(other_sid) {
             continue;
         }
         let kind = child.file_type().map_err(crate::io_error)?;
@@ -42,6 +45,20 @@ fn lease(root: &Path, scope: &str, sid: &str) -> ExecResult<File> {
             return Err(ExecError::Protected);
         }
         if !kind.is_dir() {
+            continue;
+        }
+        let game_wal = child.path().join("game-session.wal");
+        if game_wal.exists() && !(other_sid == sid && temporary) {
+            let game_journal = Journal::open_scoped(game_wal, &format!("{machine}:{other_sid}"))
+                .map_err(crate::failed)?;
+            if game_journal
+                .entries()
+                .any(|e| e.status != gametune_core::Status::Reverted)
+            {
+                return Err(ExecError::Conflict);
+            }
+        }
+        if other_sid == sid {
             continue;
         }
         let wal = child.path().join("journal.wal");
@@ -106,6 +123,12 @@ pub struct ProtectedStore {
 }
 impl WindowsContext {
     pub fn protected_store(&self) -> ExecResult<ProtectedStore> {
+        self.protected_store_mode(false)
+    }
+    pub fn protected_game_store(&self) -> ExecResult<ProtectedStore> {
+        self.protected_store_mode(true)
+    }
+    fn protected_store_mode(&self, temporary: bool) -> ExecResult<ProtectedStore> {
         self.ensure_elevated()?;
         let directory: String = transport::run(
             Script::Storage,
@@ -113,13 +136,19 @@ impl WindowsContext {
         )?;
         let directory = PathBuf::from(directory);
         let root = directory.parent().ok_or(ExecError::Protected)?;
-        let machine_lock = lease(root, self.scope(), self.interactive_sid())?;
+        let machine_lock = if temporary {
+            lease_mode(root, self.scope(), self.interactive_sid(), true)?
+        } else {
+            lease(root, self.scope(), self.interactive_sid())?
+        };
         // Even an Appx-only session leaves an empty reversible WAL slot. A missing
         // previous owner's WAL then fails closed instead of silently losing originals.
-        drop(
-            Journal::open_scoped(directory.join("journal.wal"), self.scope())
-                .map_err(crate::failed)?,
-        );
+        let permanent = Journal::open_scoped(directory.join("journal.wal"), self.scope())
+            .map_err(crate::failed)?;
+        if temporary && permanent.needs_recovery() {
+            return Err(ExecError::Conflict);
+        }
+        drop(permanent);
         Ok(ProtectedStore {
             context: self.clone(),
             directory,
@@ -129,6 +158,14 @@ impl WindowsContext {
 }
 
 impl ProtectedStore {
+    pub fn game_journal(&self) -> gametune_core::Result<Journal> {
+        self.verify()
+            .map_err(|e| gametune_core::Error::CorruptJournal(e.to_string()))?;
+        Journal::open_scoped(
+            self.directory.join("game-session.wal"),
+            self.context.scope(),
+        )
+    }
     pub fn directory(&self) -> &Path {
         &self.directory
     }
@@ -174,6 +211,44 @@ mod tests {
     use gametune_core::*;
     type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
     struct Noop;
+    #[test]
+    fn game_debt_blocks_permanent_and_other_user_leases_until_reverted() -> TestResult {
+        let dir = tempfile::tempdir()?;
+        let sid = "S-1-5-21-1";
+        let scope = format!("machine:{sid}");
+        std::fs::create_dir(dir.path().join(sid))?;
+        drop(lease_mode(dir.path(), &scope, sid, true)?);
+        let catalog = gametune_catalog::load_embedded()?;
+        let mut executors = Executors::default();
+        executors.insert(Noop);
+        let mut engine = Engine {
+            catalog: &catalog,
+            machine: Machine {
+                build: 26200,
+                edition: Edition::Pro,
+                disk: DiskKind::Unknown,
+            },
+            executors: &mut executors,
+        };
+        let path = dir.path().join(sid).join("game-session.wal");
+        let mut journal = Journal::open_scoped(&path, &scope)?;
+        engine.apply(
+            &Request {
+                item_ids: vec!["reg.game_mode".into()],
+                ..Request::default()
+            },
+            &mut journal,
+        )?;
+        drop(journal);
+        assert!(lease(dir.path(), &scope, sid).is_err());
+        assert!(lease_mode(dir.path(), "machine:S-1-5-21-2", "S-1-5-21-2", true).is_err());
+        drop(lease_mode(dir.path(), &scope, sid, true)?);
+        let mut journal = Journal::open_scoped(&path, &scope)?;
+        engine.undo(&[], &mut journal)?;
+        drop(journal);
+        assert!(lease(dir.path(), &scope, sid).is_ok());
+        Ok(())
+    }
     impl Executor for Noop {
         fn action_type(&self) -> ActionType {
             ActionType::Registry

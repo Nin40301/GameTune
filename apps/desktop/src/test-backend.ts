@@ -1,5 +1,6 @@
 // Imported only by the compile-time test branch. Never shipped in release assets.
 import catalog from '../../../catalog/items.json'
+import gameActions from '../../../catalog/game-actions.json'
 import type {
   Analysis,
   Approval,
@@ -10,6 +11,7 @@ import type {
   Review,
   Selection,
   LabStatus,
+  GamesView,
 } from './types'
 declare global {
   interface Window {
@@ -151,7 +153,52 @@ export function createMockBackend(): Backend {
       },
     ]
   }
+  const games: GamesView = {
+    library: { version: 1, language: 'pt-BR', games: [] },
+    candidates: [],
+    actions: gameActions.actions,
+    monitor: {
+      running: false,
+      pid: 0,
+      instance: 'fixture',
+      helperPid: null,
+      activeGames: [],
+      recoveryPending: false,
+      error: null,
+      readonly: false,
+    },
+  }
   return {
+    games: async (action) => {
+      if (action.kind === 'add_manual')
+        games.library.games.push({
+          id: 'fixture-game',
+          name: 'Sample.exe',
+          exe: 'C:\\Games\\Sample.exe',
+          actionIds: [],
+          consent: false,
+          enabled: false,
+        })
+      if (action.kind === 'discover')
+        games.candidates = [
+          { launcher: 'steam', name: 'Sample Steam Game', installDir: 'C:\\Games', exe: null },
+        ]
+      if (action.kind === 'save') {
+        if (action.game.enabled && !action.game.consent) throw 'games_invalid'
+        games.library.games = games.library.games.map((g) =>
+          g.id === action.game.id ? action.game : g,
+        )
+      }
+      if (action.kind === 'remove' && action.confirm)
+        games.library.games = games.library.games.filter((g) => g.id !== action.id)
+      if (action.kind === 'start') {
+        if (!action.confirm) throw 'games_invalid'
+        games.monitor.running = true
+        games.monitor.readonly = action.readonly
+      }
+      if (action.kind === 'stop') games.monitor.running = false
+      return structuredClone(games)
+    },
     lab: async (action) => {
       if (action.kind === 'monitor') lab.monitor = action.enabled
       if (action.kind === 'start') {

@@ -258,6 +258,42 @@ impl WindowsExecutor {
     }
 }
 impl Executor for WindowsExecutor {
+    fn apply_temporary(&mut self, item: &Item) -> ExecResult<()> {
+        if self.kind != ActionType::Service {
+            return self.apply(item);
+        }
+        self.authorize(item)?;
+        let catalog = gametune_catalog::load_embedded().map_err(crate::failed)?;
+        if !gametune_catalog::game_actions(&catalog)
+            .map_err(crate::failed)?
+            .iter()
+            .any(|a| a.id == item.id && a.pause_service)
+        {
+            return Err(ExecError::Protected);
+        }
+        self.ensure_write_ready()?;
+        let Target::Service { name, .. } = &item.target else {
+            return Err(ExecError::TypeMismatch);
+        };
+        let original = self
+            .captured
+            .borrow()
+            .get(&item.target.key())
+            .cloned()
+            .ok_or(ExecError::Conflict)?;
+        Self::script_write(
+            Script::Service,
+            &json!({"operation":"pause","name":name,"expected":original}),
+        )?;
+        let mut desired = original;
+        if let Snapshot::Service { running, .. } = &mut desired {
+            *running = false;
+        }
+        if self.read(item)? != desired {
+            return Err(ExecError::Conflict);
+        }
+        Ok(())
+    }
     fn action_type(&self) -> ActionType {
         self.kind
     }
@@ -411,6 +447,10 @@ pub struct AppRemovalPreview {
     pub error: Option<ExecError>,
 }
 impl WindowsSession {
+    pub fn reconcile_games(&mut self, journal: &mut Journal, ids: &[String]) -> Result<Report> {
+        let actions = gametune_catalog::game_actions(&self.catalog)?;
+        gametune_core::temporary::reconcile(&mut self.engine(), journal, &actions, ids)
+    }
     pub fn validate_request(&mut self, request: &Request) -> Result<()> {
         self.engine().validate_request(request)
     }

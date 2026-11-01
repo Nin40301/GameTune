@@ -1,0 +1,11 @@
+{
+  "title": "GameTune · Game monitor",
+  "open": "Open GameTune",
+  "stop": "Stop and restore",
+  "idle": "GameTune · Waiting for a game",
+  "active": "GameTune · Temporary profile active",
+  "recovering": "GameTune · Restoring original settings",
+  "consent": "GameTune · Waiting for Windows consent",
+  "readonly": "GameTune · Observation only",
+  "error": "GameTune · Observation or recovery failed"
+}

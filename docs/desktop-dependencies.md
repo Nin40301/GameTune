@@ -10,7 +10,7 @@ analytics, shell plugin ou framework de estado adicional.
 | TypeScript strict / tipos React, DOM e Node | Verificação de contratos e ferramentas; tipos não entram no runtime |
 | Tailwind / plugin Vite | Preflight, tokens locais e pipeline CSS; layout usa classes semânticas e variáveis de tema |
 | Vite / plugin React | Compilar assets locais, eliminar backend de testes e servidor de desenvolvimento |
-| @tauri-apps/api | Somente invoke dos oito comandos tipados; sem APIs shell/fs/http |
+| @tauri-apps/api | Somente invoke dos nove comandos tipados; sem APIs shell/fs/http |
 | @tauri-apps/cli | Desenvolvimento/build; não é incluído no aplicativo |
 | Tokio | Named pipes overlapped seguros, limites e timeouts; não são usados sockets de rede |
 | windows-sys | FFI mínima para DACL, SID/PID de pipe, token próprio/thread, helper e snapshots globais de métricas, sem abrir jogos |
@@ -22,6 +22,11 @@ analytics, shell plugin ou framework de estado adicional.
 | Prettier | Formatação reprodutível da interface e testes |
 | csv 1.4 | Parsing de CSV PresentMon com aspas/escapes e validação própria de limites, identidade e métricas; não executa a ferramenta |
 | rfd 0.17 (somente Windows, sem features padrão) | Seletor nativo de importação/exportação; sem conceder fs/shell geral à UI |
+| windows 0.62 (somente Windows) | Interfaces COM/WMI geradas pelo windows-rs para eventos locais; FFI isolada/comentada, sem OpenProcess |
+
+O monitor usa Win32 `Shell_NotifyIconW`, em vez de framework de bandeja/WebView;
+reutiliza windows-sys, Tokio, serde, catálogo e WAL já existentes. Não acrescenta
+launchers SDKs, cliente HTTP ou runtime PowerShell para observar jogos.
 
 `tempfile`, serde/serde_json e SHA-256 também são reutilizados para persistência
 atômica, checksum e lock do experimento. A coleta deliberadamente não usa

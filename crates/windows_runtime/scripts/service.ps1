@@ -19,12 +19,14 @@ try {
         Require-Admin
         $expected=$p.expected
         if($expected -and (($start -ne $expected.start_mode) -or ($snapshot.running -ne $expected.running) -or ($snapshot.delayed_auto_start -cne $expected.delayed_auto_start))){Fail 'conflict'}
-        if($p.operation -eq 'apply'){
+        if($p.operation -in @('apply','pause')){
             # Never cascade a stop to dependent services.
             if(@($service.DependentServices | Where-Object {$_.Status -ne 'Stopped'}).Count -gt 0){Fail 'conflict'}
             if($service.Status -eq 'Running'){$service.Stop();$service.WaitForStatus([ServiceProcess.ServiceControllerStatus]::Stopped,[TimeSpan]::FromSeconds(20))}
-            $mode=if($p.mode -eq 'manual'){'Manual'}elseif($p.mode -eq 'disabled'){'Disabled'}else{Fail 'protected'}
-            Set-Service -Name $name -StartupType $mode
+            if($p.operation -eq 'apply'){
+                $mode=if($p.mode -eq 'manual'){'Manual'}elseif($p.mode -eq 'disabled'){'Disabled'}else{Fail 'protected'}
+                Set-Service -Name $name -StartupType $mode
+            }
         }elseif($p.operation -eq 'restore'){
             $original=$p.original
             $mode=switch([uint32]$original.start_mode){2{'Automatic'}3{'Manual'}4{'Disabled'}default{Fail 'protected'}}

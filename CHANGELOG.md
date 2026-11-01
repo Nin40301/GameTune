@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.6.0 — Fase 6 — 2026-11-01
+
+- Removidas flags experimentais, inclusive defaults do wry substituídos por vazio
+- Orçamentos separados: UI <=150 MiB; monitor <=15 MiB e CPU <0,5%
+- Monitor Rust/Win32 asInvoker sem WebView, sob demanda e com ícone na bandeja
+- Eventos WMI locais com caminho/PID/CreationDate, sem handles de jogos ou hooks
+- Descoberta de configurações Steam/Epic/Battle.net/Riot/Minecraft e `.exe` manual
+- Catálogo temporário com hash/schema: Modo de Jogo, energia e três serviços pausáveis
+- Serviços pausados sem mudar StartMode; sessões sobrepostas compartilham ações
+- WAL separado protegido, lock global, heartbeat/EOF com rollback e recuperação
+- Tela Jogos, consentimentos, Configurações, i18n, teclado e testes axe
+- Testes de PID reusado, múltiplas instâncias, payloads abusivos e crash real de
+  executor simulado; ensaio WMI real somente com nosso processo sintético
+- Aceite UAC/escritas/queda/reboot e custo do auxiliar elevado pendentes da VM
+
 ## 0.5.0 — Fase 5 — 2026-11-01
 
 - RAM/CPU/processos reais por snapshot global, top 12 agrupado, sem handles de jogos
