@@ -1,9 +1,9 @@
 [workspace]
 resolver = "2"
-members = ["crates/core", "crates/catalog", "crates/exec_mock", "crates/exec_registry", "crates/exec_service", "crates/exec_scheduled_task", "crates/exec_appx", "crates/exec_startup", "crates/exec_power", "crates/acceptance", "crates/windows_runtime", "crates/cli"]
+members = ["crates/core", "crates/catalog", "crates/exec_mock", "crates/exec_registry", "crates/exec_service", "crates/exec_scheduled_task", "crates/exec_appx", "crates/exec_startup", "crates/exec_power", "crates/acceptance", "crates/windows_runtime", "crates/cli", "crates/ipc", "crates/helper", "crates/desktop_backend", "apps/desktop/src-tauri"]
 
 [workspace.package]
-version = "0.3.0"
+version = "0.4.0"
 license = "Apache-2.0"
 edition = "2024"
 rust-version = "1.98"
@@ -22,6 +22,10 @@ gametune-catalog = { path = "crates/catalog" }
 gametune-exec-mock = { path = "crates/exec_mock" }
 gametune-windows-runtime = { path = "crates/windows_runtime" }
 base64 = "0.22"
+getrandom = "0.3"
+tokio = { version = "1.53", features = ["rt-multi-thread", "net", "io-util", "time", "macros"] }
+gametune-ipc = { path = "crates/ipc" }
+gametune-desktop-backend = { path = "crates/desktop_backend" }
 
 [workspace.lints.rust]
 unsafe_code = "forbid"

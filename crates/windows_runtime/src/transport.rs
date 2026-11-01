@@ -1,15 +1,19 @@
 use gametune_core::{ExecError, ExecResult};
 use serde::{Serialize, de::DeserializeOwned};
+use std::sync::atomic::{AtomicBool, Ordering};
 
 #[derive(Clone, Copy)]
 pub(crate) enum Script {
     #[cfg(all(test, windows))]
     Parse,
+    #[cfg(all(test, windows))]
+    CancelProbe,
     Identity,
     Service,
     Task,
     Power,
     Appx,
+    AppxInventory,
     Storage,
     RestorePoint,
     Store,
@@ -23,11 +27,14 @@ impl Script {
         match self {
             #[cfg(all(test, windows))]
             Self::Parse => include_str!("../scripts/parse.ps1"),
+            #[cfg(all(test, windows))]
+            Self::CancelProbe => "Start-Sleep -Seconds 30; Emit $true",
             Self::Identity => include_str!("../scripts/identity.ps1"),
             Self::Service => include_str!("../scripts/service.ps1"),
             Self::Task => include_str!("../scripts/task.ps1"),
             Self::Power => include_str!("../scripts/power.ps1"),
             Self::Appx => include_str!("../scripts/appx.ps1"),
+            Self::AppxInventory => include_str!("../scripts/appx_inventory.ps1"),
             Self::Storage => include_str!("../scripts/storage.ps1"),
             Self::RestorePoint => include_str!("../scripts/restore_point.ps1"),
             Self::Store => include_str!("../scripts/store.ps1"),
@@ -39,7 +46,7 @@ impl Script {
     }
     fn timeout(self) -> std::time::Duration {
         std::time::Duration::from_secs(match self {
-            Self::Appx | Self::RestorePoint => 180,
+            Self::Appx | Self::AppxInventory | Self::RestorePoint => 180,
             #[cfg(feature = "real-profile-tests")]
             Self::RealProfiles => 1800,
             _ => 45,
@@ -55,7 +62,21 @@ struct Envelope<T> {
 }
 
 pub(crate) fn run<T: DeserializeOwned>(script: Script, params: &impl Serialize) -> ExecResult<T> {
-    let bytes = run_bytes(script, &serde_json::to_vec(params).map_err(crate::failed)?)?;
+    run_controlled(script, params, None)
+}
+pub(crate) fn run_controlled<T: DeserializeOwned>(
+    script: Script,
+    params: &impl Serialize,
+    cancel: Option<&AtomicBool>,
+) -> ExecResult<T> {
+    if cancel.is_some_and(|flag| flag.load(Ordering::Acquire)) {
+        return Err(ExecError::Conflict);
+    }
+    let bytes = run_bytes(
+        script,
+        &serde_json::to_vec(params).map_err(crate::failed)?,
+        cancel,
+    )?;
     let envelope: Envelope<T> = serde_json::from_slice(&bytes)
         .map_err(|_| ExecError::Failed("invalid fixed-script response".into()))?;
     if envelope.ok {
@@ -70,13 +91,13 @@ pub(crate) fn run<T: DeserializeOwned>(script: Script, params: &impl Serialize) 
 }
 
 #[cfg(not(windows))]
-fn run_bytes(script: Script, _: &[u8]) -> ExecResult<Vec<u8>> {
+fn run_bytes(script: Script, _: &[u8], _: Option<&AtomicBool>) -> ExecResult<Vec<u8>> {
     let _ = (script.text(), script.timeout());
     Err(ExecError::Unavailable)
 }
 
 #[cfg(windows)]
-fn run_bytes(script: Script, params: &[u8]) -> ExecResult<Vec<u8>> {
+fn run_bytes(script: Script, params: &[u8], cancel: Option<&AtomicBool>) -> ExecResult<Vec<u8>> {
     use base64::{Engine as _, engine::general_purpose::STANDARD};
     use std::{
         io::{Read, Write},
@@ -154,6 +175,14 @@ fn run_bytes(script: Script, params: &[u8]) -> ExecResult<Vec<u8>> {
     drop(input);
     let start = Instant::now();
     let status = loop {
+        if cancel.is_some_and(|flag| flag.load(Ordering::Acquire)) {
+            // Only our own read-only PowerShell child is terminated. No process lookup.
+            let _ = child.kill();
+            let _ = child.wait();
+            let _ = out.join();
+            let _ = err.join();
+            return Err(ExecError::Conflict);
+        }
         if let Some(status) = child.try_wait().map_err(crate::io_error)? {
             break status;
         }
@@ -183,6 +212,23 @@ fn run_bytes(script: Script, params: &[u8]) -> ExecResult<Vec<u8>> {
 mod tests {
     use super::*;
     #[test]
+    fn cancellation_stops_our_read_only_child_before_its_deadline()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let cancel = AtomicBool::new(false);
+        let started = std::time::Instant::now();
+        std::thread::scope(|scope| {
+            scope.spawn(|| {
+                std::thread::sleep(std::time::Duration::from_millis(300));
+                cancel.store(true, Ordering::Release);
+            });
+            let result: ExecResult<bool> =
+                run_controlled(Script::CancelProbe, &serde_json::json!({}), Some(&cancel));
+            assert!(matches!(result, Err(ExecError::Conflict)));
+        });
+        assert!(started.elapsed() < std::time::Duration::from_secs(5));
+        Ok(())
+    }
+    #[test]
     fn embedded_powershell_sources_parse() -> std::result::Result<(), Box<dyn std::error::Error>> {
         let sources = [
             include_str!("../scripts/prelude.ps1"),
@@ -193,6 +239,7 @@ mod tests {
             Script::Task.text(),
             Script::Power.text(),
             Script::Appx.text(),
+            Script::AppxInventory.text(),
             Script::Storage.text(),
             Script::RestorePoint.text(),
             Script::Store.text(),

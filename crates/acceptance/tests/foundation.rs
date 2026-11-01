@@ -72,6 +72,44 @@ fn executors(host: &MockHost) -> Executors {
 }
 
 #[test]
+fn second_apply_detects_external_drift_without_overwriting_original() -> TestResult {
+    let catalog = load_embedded()?;
+    let item = catalog.get("reg.cortana")?;
+    let host = MockHost::default();
+    let baseline = original(item);
+    host.seed(item, baseline.clone())?;
+    let mut executors = executors(&host);
+    let dir = tempfile::tempdir()?;
+    let mut journal = Journal::open(dir.path().join("journal.wal"))?;
+    let mut engine = Engine {
+        catalog: &catalog,
+        machine: machine(),
+        executors: &mut executors,
+    };
+    let request = manual(&[&item.id]);
+    engine.apply(&request, &mut journal)?;
+    let writes = host.writes()?;
+    let foreign = Snapshot::Registry {
+        value: Some(RegistryValue {
+            kind: 4,
+            bytes: 42u32.to_le_bytes().to_vec(),
+        }),
+        created_keys: vec![],
+    };
+    host.seed(item, foreign.clone())?;
+    let result = engine.apply(&request, &mut journal)?;
+    assert_eq!(result.items[0].error, Some(ExecError::Conflict));
+    assert_eq!(result.items[0].outcome, Outcome::Failed);
+    assert_eq!(host.writes()?, writes);
+    assert_eq!(host.snapshot()?.get(&item.target.key()), Some(&foreign));
+    assert_eq!(
+        journal.entry(&item.target.key()).ok_or("journal")?.original,
+        baseline
+    );
+    Ok(())
+}
+
+#[test]
 fn embedded_catalog_is_complete_and_schema_valid() -> TestResult {
     let catalog = load_embedded()?;
     assert_eq!(catalog.items().count(), 86);

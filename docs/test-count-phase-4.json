@@ -1,0 +1,18 @@
+{
+  "phase":4,
+  "date":"2026-11-01",
+  "platform":"Windows x64, non-administrator",
+  "rustCommand":"cargo test --workspace --locked --offline",
+  "rustSuites":{"foundation":27,"manual_apps":6,"safety_boundaries":7,"scopes_and_sources":2,"cli":9,"core_unit":5,"core_read_only":4,"desktop_backend":5,"ipc_protocol":6,"ipc_windows_pipe":3,"windows_runtime_read_only":5},
+  "rustPassed":79,
+  "rustIgnored":2,
+  "componentsPassed":6,
+  "playwrightPassed":10,
+  "axeAuditsWithoutViolations":25,
+  "uacOrMutatingVmHarnessExecuted":false,
+  "initialLegacyHkcuTestException":{"occurred":true,"routines":2,"namespace":"HKCU/Software/GameTuneTest","fixturesCleaned":true,"nowRequireVmOptIn":true},
+  "readOnlyAnalysis":{"rows":88,"failures":0,"elapsedSecondsOneSample":5.4133263,"programDataGameTuneCreated":false},
+  "manifests":{"gametune":"asInvoker","gametune-helper":"requireAdministrator"},
+  "productionMockBackendPresent":false,
+  "linuxExecutedLocally":false
+}

@@ -28,7 +28,7 @@ impl WindowsExecutor {
         }
         self.authorize_read(item)
     }
-    fn authorize_read(&self, item: &Item) -> ExecResult<()> {
+    pub(crate) fn authorize_read(&self, item: &Item) -> ExecResult<()> {
         if item.action_type != self.kind {
             return Err(ExecError::TypeMismatch);
         }
@@ -48,7 +48,14 @@ impl WindowsExecutor {
         }
         Ok(())
     }
-    fn read(&self, item: &Item) -> ExecResult<Snapshot> {
+    pub(crate) fn read(&self, item: &Item) -> ExecResult<Snapshot> {
+        self.read_controlled(item, None)
+    }
+    pub(crate) fn read_controlled(
+        &self,
+        item: &Item,
+        cancel: Option<&std::sync::atomic::AtomicBool>,
+    ) -> ExecResult<Snapshot> {
         match &item.target {
             Target::Registry {
                 hive, path, name, ..
@@ -68,17 +75,24 @@ impl WindowsExecutor {
                     created_keys,
                 })
             }
-            Target::Service { name, .. } => {
-                transport::run(Script::Service, &json!({"operation":"capture","name":name}))
-            }
-            Target::ScheduledTask { path, name } => transport::run(
+            Target::Service { name, .. } => transport::run_controlled(
+                Script::Service,
+                &json!({"operation":"capture","name":name}),
+                cancel,
+            ),
+            Target::ScheduledTask { path, name } => transport::run_controlled(
                 Script::Task,
                 &json!({"operation":"capture","path":path,"name":name}),
+                cancel,
             ),
-            Target::Power { .. } => transport::run(Script::Power, &json!({"operation":"capture"})),
-            Target::Appx { name } => {
-                transport::run(Script::Appx, &json!({"operation":"capture","name":name}))
+            Target::Power { .. } => {
+                transport::run_controlled(Script::Power, &json!({"operation":"capture"}), cancel)
             }
+            Target::Appx { name } => transport::run_controlled(
+                Script::Appx,
+                &json!({"operation":"capture","name":name}),
+                cancel,
+            ),
         }
     }
     fn desired(item: &Item, original: &Snapshot) -> ExecResult<Snapshot> {
@@ -397,6 +411,19 @@ pub struct AppRemovalPreview {
     pub error: Option<ExecError>,
 }
 impl WindowsSession {
+    pub fn validate_request(&mut self, request: &Request) -> Result<()> {
+        self.engine().validate_request(request)
+    }
+    pub fn removed_apps_readonly(&self) -> Result<Vec<RemovedApp>> {
+        match RemovedApps::read_entries(
+            self.context.state_directory().join("removed-apps.json"),
+            self.context.scope(),
+            &self.catalog,
+        ) {
+            Err(Error::Io(e)) if e.kind() == std::io::ErrorKind::NotFound => Ok(vec![]),
+            other => other,
+        }
+    }
     pub fn history_readonly(&self) -> Result<JournalReadView> {
         match Journal::read_only(
             self.context.state_directory().join("journal.wal"),
@@ -454,50 +481,18 @@ impl WindowsSession {
     }
     /// Inspect every catalog target without creating a store, journal or checkpoint.
     pub fn inspect(&self) -> Vec<Observation> {
-        self.catalog
-            .items()
-            .map(|item| {
-                let reader = WindowsExecutor::new(item.action_type, self.context.clone());
-                let scope = match &item.target {
-                    Target::Appx { .. } => {
-                        if self.context.elevated() {
-                            ReadScope::AllUsers
-                        } else {
-                            ReadScope::CurrentUserOnly
-                        }
-                    }
-                    Target::Registry {
-                        hive: Hive::HKCU, ..
-                    }
-                    | Target::Startup {
-                        hive: Hive::HKCU, ..
-                    } => ReadScope::InteractiveUser,
-                    _ => ReadScope::Machine,
-                };
-                if let Target::Startup { hive, entry: None } = &item.target {
-                    let state = registry::capture(&self.context, *hive, registry::RUN, "");
-                    return Observation {
-                        item_id: item.id.clone(),
-                        presence: Presence::Discovery,
-                        exists: state.as_ref().ok().map(|(_, keys)| keys.is_empty()),
-                        key_exists: None,
-                        already_applied: None,
-                        current: None,
-                        current_dword: None,
-                        error: state.err(),
-                        scope: ReadScope::Discovery,
-                    };
-                }
-                let result = reader.authorize_read(item).and_then(|()| {
-                    if let Target::Appx { name } = &item.target {
-                        transport::run(Script::Appx, &json!({"operation":"inspect","name":name}))
-                    } else {
-                        reader.read(item)
-                    }
-                });
-                observe(item, result, scope)
-            })
-            .collect()
+        crate::scan(
+            &self.context,
+            &self.catalog,
+            &std::sync::atomic::AtomicBool::new(false),
+            |_| {},
+        )
+        .unwrap_or_else(|error| {
+            self.catalog
+                .items()
+                .map(|item| observe(item, Err(error.clone()), ReadScope::Machine))
+                .collect()
+        })
     }
     fn engine(&mut self) -> Engine<'_> {
         Engine {

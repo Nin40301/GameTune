@@ -47,6 +47,15 @@ pub struct Engine<'a> {
 }
 
 impl Engine<'_> {
+    /// Shared write authorization, with no captures, journal or side effects.
+    pub fn validate_request(&self, request: &Request) -> Result<()> {
+        for item in self.resolve(request)? {
+            if crate::protection::is_protected(item) || item.revert == Revert::Manual {
+                return Err(Error::ConfirmationRequired(item.id.clone()));
+            }
+        }
+        Ok(())
+    }
     fn resolve<'a>(&'a self, request: &Request) -> Result<Vec<&'a Item>> {
         let mut seen = BTreeSet::new();
         let mut items = Vec::new();
@@ -124,9 +133,23 @@ impl Engine<'_> {
                 .entry(&item.target.key())
                 .is_some_and(|e| e.status == Status::Applied)
             {
+                let unchanged = self
+                    .executors
+                    .get(item.action_type)
+                    .and_then(|executor| executor.capture(item))
+                    .and_then(|snapshot| {
+                        if crate::observe(item, Ok(snapshot), crate::ReadScope::Machine)
+                            .already_applied
+                            == Some(true)
+                        {
+                            Ok(())
+                        } else {
+                            Err(ExecError::Conflict)
+                        }
+                    });
                 report
                     .items
-                    .push(item_report(item, Ok(()), Outcome::AlreadyApplied));
+                    .push(item_report(item, unchanged, Outcome::AlreadyApplied));
                 continue;
             }
             if item.revert == Revert::Manual {

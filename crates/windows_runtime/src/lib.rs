@@ -8,6 +8,8 @@ mod platform;
 #[cfg(feature = "real-profile-tests")]
 pub mod real_profiles;
 mod registry;
+mod scan;
+pub use scan::*;
 mod startup;
 mod storage;
 mod transport;

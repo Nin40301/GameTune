@@ -1,8 +1,12 @@
 # GameTune
 
-Backend offline de ajustes do Windows para jogos. **Fase 3: CLI implementada**;
-aceite administrativo/reinícios em VM ainda pendente. Não há UI Tauri ou
-instalador nesta etapa. Licença Apache-2.0.
+Aplicativo offline de ajustes do Windows para jogos. **Fase 4: UI Tauri 2,
+React/TypeScript strict e Tailwind implementada**, sobre o mesmo backend da CLI.
+Aceite UAC/escritas/reinícios na matriz de VM ainda pendente. Licença Apache-2.0.
+
+Leia [como compilar e usar a interface](docs/desktop.md),
+[limite de privilégios e IPC](docs/desktop-security.md) e
+[relatório da Fase 4](docs/phase-4.md).
 
 ## O que está implementado
 
@@ -19,6 +23,12 @@ instalador nesta etapa. Licença Apache-2.0.
   inventário AllUsers/provisionado, registro prévio de nome/PFN e reinstalação Store
 - `gametune-cli`: análise real sem admin, simulação padrão, JSON/pt-BR/en,
   aplicação confirmada, histórico/desfazer e comandos Appx separados
+- Interface com Início, Itens, Revisão, Limpeza de apps, Histórico e Configurações;
+  pt-BR/en, claro/escuro, teclado, detalhes, consentimentos e testes axe
+- Auxiliar requireAdministrator de uso único; UI asInvoker e pipe local com
+  DACL por SID, autenticação de PID/SID, nonce e rejeição de replay/payloads livres
+- Análise em background, progresso/cancelamento, quatro workers e inventário
+  Appx compartilhado apenas na análise; toda escrita recaptura o estado
 
 ## Executar a CLI
 
@@ -53,8 +63,9 @@ cargo run -p gametune-catalog --example removed_apps --locked --offline -- outpu
 
 Os exemplos usam mocks, não removem apps e não aplicam o catálogo. O segundo gera
 um HTML offline com o aviso e botões de reinstalação. Só clicar no link abre a
-Microsoft Store. Os testes normais fazem duas integrações reais de registro,
-**apenas em HKCU\Software\GameTuneTest**, removendo seus próprios recursos.
+Microsoft Store. Os dois testes de integração reais de HKCU agora são ignorados
+por padrão e exigem opt-in de VM. Os testes normais não escrevem configurações
+do Windows; testes IPC criam apenas pipes efêmeros sem lançar o helper/UAC.
 
 Para compilar, sem executar, a suíte administrativa:
 
@@ -79,6 +90,10 @@ crates/windows_runtime/    identidade, armazenamento, APIs e scripts fixos
   tests/windows_vm.rs      roundtrip de fixtures, ignorado por padrão
   tests/real_profiles_vm.rs aceite real após dois reinícios, opt-in adicional
 crates/cli/                binário de produção, parser fechado e testes
+crates/ipc/                protocolo tipado, pipe Windows, FFI e validação do helper
+crates/helper/             auxiliar de uma transação com manifesto elevado
+crates/desktop_backend/    análise em background e tickets de revisão
+apps/desktop/              React/TS/Tailwind, componentes/e2e/axe e host Tauri
 locales/                   pt-BR e en para CLI, avisos e botões Appx
 tools/                     manutenção de hashes (parser PowerShell nos testes Rust)
 docs/                      arquitetura, fontes, segurança, fases e VM
@@ -94,9 +109,10 @@ configurações reversíveis. `remove_app` aceita AppRemovalConsent separado;
 `reconcile_app_removal` resolve tentativas interrompidas pelo inventário atual.
 Nenhum desses métodos recebe código, serviço, comando ou caminho livre da UI.
 
-Na Fase 3, a CLI usa essa API e `inspect` para leitura sem escrita. Na Fase 4, a UI permanecerá asInvoker e chamará
-um auxiliar elevado só para aplicar/desfazer. A solicitação UAC e o protocolo IPC
-ainda não existem. O frontend não acessará executores diretamente.
+CLI e UI usam essa API. A UI permanece asInvoker e chama um auxiliar elevado
+de uso único após revisão. O IPC aceita somente comandos tipados e IDs. O frontend
+não acessa executores diretamente. Ler histórico protegido também pode exigir
+autorização explícita, sem abrir a ACL do WAL ao usuário comum.
 
 `preview_app_removal` informa explicitamente `allUsers: false` quando o inventário
 é apenas do usuário corrente. O Windows exige elevação para AllUsers/provisionado;
@@ -132,7 +148,9 @@ entradas reversíveis ativas. Desfazer não apaga registros de auditoria.
 - Modern Standby e algumas GPUs/builds podem rejeitar ajustes. O programa registra
   erro e preserva o original; não restaura todos os planos nem força compatibilidade.
 - Ainda faltam testes administrativos na matriz Home/Pro, teste UAC com outra conta,
-  Appx real dedicado, corte de energia, UI, métricas, watcher e empacotamento.
+  Appx real, corte de energia, revisão manual com leitor de tela, métricas,
+  watcher, assinatura e instalador. O fluxo de elevação/identidade existe, mas
+  seu roundtrip com escrita e outra conta ainda precisa de VM.
 - Sem promessas de FPS, limpeza de registro, esvaziamento de working sets ou handles
   em jogos. A identificação lê apenas metadados da sessão e do shell canônico.
 

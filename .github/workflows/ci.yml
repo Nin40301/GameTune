@@ -25,6 +25,17 @@ jobs:
         run: rustup toolchain install stable --profile minimal --component rustfmt --component clippy
       - name: Select stable Rust
         run: rustup default stable
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        if: runner.os == 'Windows'
+        with:
+          node-version: '26'
+          package-manager-cache: false
+      - name: Prepare frontend for the Windows native build
+        if: runner.os == 'Windows'
+        working-directory: apps/desktop
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
       - name: Fetch locked dependencies (build only)
         run: cargo fetch --locked
       - name: Check formatting
@@ -54,6 +65,22 @@ jobs:
             LICENSE
             NOTICE
           retention-days: 14
+      - name: Verify desktop manifests and closed frontend
+        if: runner.os == 'Windows'
+        run: ./tools/verify-desktop.ps1
+      - name: Publish Windows desktop and helper
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: gametune-desktop-windows-x64
+          path: |
+            target/release/gametune.exe
+            target/release/gametune-helper.exe
+            docs/desktop.md
+            docs/desktop-security.md
+            LICENSE
+            NOTICE
+          retention-days: 14
       - name: Publish validated catalog
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -63,3 +90,32 @@ jobs:
             Cargo.lock
             docs/catalog-sources.md
           retention-days: 14
+  frontend:
+    name: Components, browser flows and axe
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '26'
+          package-manager-cache: false
+      - run: npm ci --no-audit --no-fund
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - name: Preserve browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: desktop-browser-evidence
+          path: apps/desktop/test-results/
+          retention-days: 7

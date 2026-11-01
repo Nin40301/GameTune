@@ -24,6 +24,8 @@ jobs:
         run: cargo fetch --locked
       - name: Dedicated apply/undo and protected-store tests
         run: cargo test -p gametune-windows-runtime --features vm-tests --test windows_vm --locked --offline -- --ignored --test-threads=1
+      - name: Dedicated HKCU raw type and recovery tests
+        run: cargo test -p gametune-windows-runtime --features vm-tests --lib dedicated_hkcu --locked --offline -- --ignored --test-threads=1
       - name: Preserve complete snapshots even on failures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

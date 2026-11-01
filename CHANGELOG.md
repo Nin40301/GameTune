@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.4.0 — Fase 4 — 2026-11-01
+
+- UI Tauri 2/React/TypeScript strict/Tailwind em pt-BR/en, dark/light e seis telas
+- Revisão com resumo por tipo, consentimentos individuais Appx e risco reforçado
+- UI asInvoker e auxiliar requireAdministrator de uso único com protocolo tipado
+- Named pipe com DACL por SID, PID/SID reais, nonce, prazo, limites e anti-replay
+- Análise em worker, progresso/cancelamento, quatro leitores e um inventário Appx
+- Cancelamento encerra somente os próprios filhos PowerShell de leitura
+- Histórico protegido e reinstalação Store pelo backend existente; sem rede no WebView
+- Componentes, Playwright/mock, axe em dois idiomas/temas e testes reais de pipe
+- Binários com assets locais, CSP/allowlist mínimas e verificação dos manifestos
+- Dois testes legados HKCU agora ignorados por padrão e exclusivos do opt-in de VM
+- Reaplicação detecta estado externo divergente sem sobrescrever nem perder o original
+- UAC/escritas/Store, outra conta e matriz Windows permanecem sem aceite em VM
+
 ## 0.3.0 — Fase 3 — 2026-10-31
 
 - Contagem histórica corrigida: 51 testes na Fase 2, incluindo os 2 nativos

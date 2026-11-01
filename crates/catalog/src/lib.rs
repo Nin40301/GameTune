@@ -9,6 +9,9 @@ pub const EMBEDDED_ITEMS: &str = include_str!("../../../catalog/items.json");
 pub const CATALOG_SCHEMA: &str = include_str!("../../../catalog/schema.json");
 pub const PROFILE_SCHEMA: &str = include_str!("../../../catalog/profile.schema.json");
 const HASHES: &str = include_str!("../../../catalog/sha256.json");
+pub fn embedded_hash() -> String {
+    format!("{:x}", Sha256::digest(EMBEDDED_ITEMS.as_bytes()))
+}
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]

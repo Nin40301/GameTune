@@ -24,6 +24,8 @@ pub struct Observation {
     pub current_dword: Option<u32>,
     pub error: Option<ExecError>,
     pub scope: ReadScope,
+    #[serde(default)]
+    pub removable: Option<bool>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -47,6 +49,7 @@ pub fn observe(item: &Item, result: ExecResult<Snapshot>, scope: ReadScope) -> O
         current_dword: None,
         error: None,
         scope,
+        removable: None,
     };
     match result {
         Err(ExecError::NotFound) => {

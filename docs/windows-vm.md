@@ -8,6 +8,16 @@ O ensaio novo de perfis **reais** é outra suíte, outra feature e outro opt-in:
 veja [dois reinícios e smoke tests](windows-real-profiles.md). As restrições de
 alvos dedicados deste documento continuam valendo para `windows_vm.rs`.
 
+Desde a Fase 4, os dois testes nativos HKCU também são ignorados por padrão e
+exigem `vm-tests` + opt-in. Na VM:
+
+```powershell
+$env:GAMETUNE_DISPOSABLE_VM = 'I_HAVE_A_SNAPSHOT'
+cargo test -p gametune-windows-runtime --features vm-tests --lib dedicated_hkcu --locked --offline -- --ignored --test-threads=1
+```
+
+O ensaio da janela/UAC está em [desktop-vm.md](desktop-vm.md).
+
 ## Preparar
 
 1. Crie uma VM descartável x64 com Windows e um usuário de teste. Instale Rust

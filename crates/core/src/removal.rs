@@ -52,6 +52,28 @@ pub struct RemovedApps {
 }
 
 impl RemovedApps {
+    pub fn read_entries(
+        path: impl AsRef<Path>,
+        scope: &str,
+        catalog: &crate::Catalog,
+    ) -> Result<Vec<RemovedApp>> {
+        use std::io::Read;
+        let mut bytes = Vec::new();
+        File::open(path)?
+            .take(16 * 1024 * 1024 + 1)
+            .read_to_end(&mut bytes)?;
+        if bytes.len() > 16 * 1024 * 1024 {
+            return Err(Error::CorruptJournal("history size limit".into()));
+        }
+        let doc: Document = serde_json::from_slice(&bytes)?;
+        if doc.version != 1 || doc.scope.as_deref() != Some(scope) {
+            return Err(Error::CorruptJournal("history scope".into()));
+        }
+        for entry in &doc.entries {
+            Self::actions(&doc, catalog, &entry.item_id)?;
+        }
+        Ok(doc.entries)
+    }
     /// Read existing history without creating a directory, lock or replacement file.
     pub fn read_reinstall_actions(
         path: impl AsRef<Path>,

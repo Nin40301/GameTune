@@ -1,4 +1,4 @@
-# Segurança — implementação até a Fase 3
+# Segurança — implementação até a Fase 4
 
 Entradas externas: IDs conhecidos e consentimentos, nunca código ou alvos livres.
 Perfis têm limite de 64 KiB e campos fechados; não importam confirmações. O lote
@@ -7,10 +7,13 @@ catálogo embutido também no adaptador Windows; fixtures só com feature explí
 
 `WindowsSession` é a API de produção para CLI/UI: armazenamento protegido,
 escopo, preflight e checkpoint. Os executores de baixo nível são componentes
-internos para composição/testes; nenhum comando Tauri deverá expô-los diretamente.
-Ainda não há IPC, auxiliar UAC, assinatura, frontend ou instalador.
+internos para composição/testes; nenhum comando Tauri os expõe diretamente.
+UI, auxiliar UAC e IPC estão implementados; assinatura e instalador ainda pendentes.
+Veja [limite de privilégios da interface](desktop-security.md) para protocolo,
+DACL, nonce, hash de catálogo, autenticação de peer e prazo dos tickets.
 
-Todos os crates proíbem unsafe em Rust. winreg encapsula a FFI de registro. Há
+Os crates proíbem unsafe em Rust, exceto o módulo FFI explícito ipc/native.rs,
+isolado por deny unsafe no restante desse crate. winreg encapsula registro. Há
 FFI C# fixa e comentada para WTS/desktop, sem manipulação de jogos. Os demais scripts
 usam cmdlets/.NET/COM oficiais. O transporte aceita enum interno, gera
 EncodedCommand constante de inicialização e envia um envelope JSON por stdin.

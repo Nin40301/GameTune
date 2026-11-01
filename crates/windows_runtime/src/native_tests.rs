@@ -1,4 +1,4 @@
-//! Real HKCU integration, exclusively below Software\GameTuneTest. No elevation.
+//! VM-only HKCU integration, exclusively below Software\GameTuneTest.
 #![cfg(windows)]
 use crate::{WindowsContext, registry};
 use gametune_core::{ExecError, Hive, RegistryValue};
@@ -6,6 +6,14 @@ use std::collections::BTreeMap;
 use winreg::{RegKey, enums::*};
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
 static TEST_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+fn require_vm() -> TestResult {
+    if !cfg!(feature = "vm-tests")
+        || std::env::var("GAMETUNE_DISPOSABLE_VM").as_deref() != Ok("I_HAVE_A_SNAPSHOT")
+    {
+        return Err("dedicated HKCU tests require vm-tests and the disposable VM opt-in".into());
+    }
+    Ok(())
+}
 
 #[derive(Debug, PartialEq, Eq)]
 struct Tree {
@@ -37,7 +45,9 @@ fn unique() -> String {
 }
 
 #[test]
+#[ignore = "writes dedicated HKCU targets; disposable VM opt-in only"]
 fn dedicated_hkcu_raw_types_and_missing_keys_roundtrip() -> TestResult {
+    require_vm()?;
     let _guard = TEST_LOCK.lock().map_err(|_| "native test lock poisoned")?;
     let context = WindowsContext::current_test_user()?;
     let name = unique();
@@ -153,7 +163,9 @@ fn dedicated_hkcu_raw_types_and_missing_keys_roundtrip() -> TestResult {
 }
 
 #[test]
+#[ignore = "writes dedicated HKCU targets; disposable VM opt-in only"]
 fn dedicated_hkcu_recovery_keeps_foreign_values_in_created_keys() -> TestResult {
+    require_vm()?;
     let _guard = TEST_LOCK.lock().map_err(|_| "native test lock poisoned")?;
     let context = WindowsContext::current_test_user()?;
     let name = unique();

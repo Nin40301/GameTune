@@ -1,44 +1,47 @@
-# Plano de arquitetura — uma página
+# Arquitetura — uma página, atualizada na Fase 4
 
-GameTune será um aplicativo offline Windows 10/11 com UI Tauri 2, React,
-TypeScript strict e Tailwind. O primeiro incremento entrega somente a fundação
-Rust, sem alterações reais no computador. A UI futura terá pt-BR/en, teclado,
-leitores de tela e tema escuro/claro.
+**Produto:** Tauri 2 + React + TypeScript strict + Tailwind no Windows. Assets,
+catálogo e pt-BR/en locais; tema escuro/claro; sem rede no WebView. Não há engine
+de ajustes em JavaScript. CLI e UI compartilham core/catalog/WindowsSession.
 
-**Dependências:** `core` não depende dos adaptadores. `catalog` depende de `core`;
-os seis `exec_*` dependem do contrato `Executor` do núcleo. `exec_mock` fornece
-um Windows fictício compartilhado. `acceptance` verifica o conjunto. CLI, UI,
-métricas e watcher serão consumidores desse núcleo nas fases seguintes.
+**Domínio:** core contém modelos, presets, proteção por alvo exato, validação de
+pedidos/consentimentos, perfis fechados e journal. catalog verifica schema, hash
+e compatibilidade. Seis exec_* adaptam Executor; windows_runtime implementa as
+operações Windows, identidade interativa, armazenamento protegido e scripts fixos.
+exec_mock serve apenas a testes/exemplos. Nenhum pedido externo escolhe comandos,
+scripts ou alvos livres; todos referenciam IDs embutidos e validados novamente.
 
-**Domínio e autorização:** catálogo fechado, embutido e validado por schema,
-SHA-256, duplicatas e uma allowlist independente de alvos exatos. O motor recebe
-IDs, nunca comandos ou caminhos livres. Perfis automáticos filtram build,
-edição, nível, SSD, verificação, proteção e risco. Confirmações manuais não são
-serializadas em perfis. Recursos essenciais ficam bloqueados centralmente.
+**Leitura:** desktop_backend inicia workers fora da thread da janela. Um scan
+tem no máximo quatro leitores e um inventário Appx em memória. Progresso por item,
+cancelamento dos próprios filhos PowerShell de leitura e descarte de evidência
+cancelada. A análise não cria journal, checkpoint ou ProgramData. A janela é
+asInvoker e recusa operação normal quando iniciada elevada. Bootstrap/presets e
+revisões são calculados em Rust; preferências/search/tema são apenas de UI.
 
-**Execução:** cada adaptador captura o estado sem modificar o sistema, aplica
-um alvo autorizado e restaura seu snapshot. Registro preserva tipo e bytes;
-serviços preservam início e execução; tarefas preservam habilitação; energia
-preserva plano ativo e inventário. Estado ausente é diferente de valor zero.
-Appx não admite promessa de reversão exata e fica fora da aplicação automática.
+**Revisão e privilégio:** seis comandos Tauri, limitados à janela local main,
+preparam ticket aleatório vinculado a operação/IDs e prazo de 120 s. Após revisão
+e consentimentos, o ticket é consumido. ipc lança o helper irmão com manifesto
+requireAdministrator via UAC. Pipe local de uso único com DACL por SID interativo,
+PID/SID reais, nonce, hash do catálogo, limites de tamanho/prazos e rejeição de
+replay. O helper revalida tudo e chama WindowsSession; encerra após responder.
+Só o módulo native.rs admite FFI unsafe comentada. Não há serviço elevado
+persistente. Ler o histórico protegido pode exigir UAC explícito, sem abrir o WAL.
 
-**Transação e recuperação:** `journal.wal` append-only é a fonte durável.
-`Prepared` é sincronizado antes de aplicar; `Reverting`, antes de desfazer.
-Estados terminais são registrados após a operação. O primeiro original é
-imutável até sua reversão. Lock exclusivo impede dois escritores. Sequência e
-hash encadeado detectam corrupção. Recuperação privilegia rollback; undo usa a
-ordem inversa de aplicação. `journal.json` será uma projeção de leitura/exportação,
-não o único arquivo de recuperação. Não há escrita real em ProgramData nesta fase.
+**Transação:** WindowsSession recaptura o estado elevado, usa o hive do SID do
+desktop e protege ProgramData com DACL Administradores/SYSTEM. Prepared é
+sincronizado antes de aplicar e Reverting antes de undo. Original imutável por
+alvo ativo; lock, cadeia de hashes e escopo máquina/SID detectam concorrência,
+corrupção e troca de usuário. Recuperação privilegia rollback, em ordem inversa.
+Registro preserva tipo/bytes/ausência; serviços, tarefas, inicialização e energia
+guardam snapshots. Estado externo divergente falha fechado, sem sobrescrever.
 
-**Privilégio mínimo:** a UI futura usa `asInvoker`; apenas um auxiliar de
-aplicar/desfazer usa `requireAdministrator`. O auxiliar revalida IDs e confirmações,
-protege ProgramData com DACL Administradores/SYSTEM e vincula cada transação ao
-SID interativo antes de resolver HKCU em HKEY_USERS. Isto resolve a divergência
-entre elevar só na ação e elevar todo o aplicativo. Nada disso é simulado como
-implementação de segurança Windows nesta fase.
+**Appx:** remoção manual separada, nunca automática. Seleção múltipla exige
+consentimento individual de ausência de undo e risco reforçado. Nome/PFN e
+inventário são persistidos antes da ação. Reinstalar abre somente Store URI
+validada no desktop interativo, após ação explícita; não recupera dados/versão.
 
-**Entrega e qualidade:** Rust estável, sem `unsafe`, erros tipados, lockfile e
-justificativas das dependências. CI Linux/Windows: formato, Clippy, testes e
-build. Fase 2 exige integração real aplicar/desfazer em VM descartável; fases
-3–7 acrescentam CLI, UI, métricas, sessões por jogo e empacotamento. Segurança,
-reversão e medições precedem qualquer alegação de desempenho.
+**Verificação/entrega:** Rust estável, formato/Clippy, TS/ESLint, componentes,
+Playwright com mock isolado, axe, testes reais não elevados de pipe e harnesses
+mutáveis exclusivamente opt-in de VM. Código-fonte, binários portáteis e evidência
+por fase. UAC/escritas/matriz Home/Pro ainda precisam de aceite em VM. Fases 5–7
+acrescentam métricas/benchmark, sessões por jogo e instalador/assinatura/acabamento.
