@@ -7,6 +7,10 @@ pub fn trusted_installer_sid(sid: &str) -> bool {
             | "S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464"
     )
 }
+pub fn local_install_path(path: &str) -> bool {
+    let path = path.strip_prefix(r"\\?\").unwrap_or(path).as_bytes();
+    path.len() >= 3 && path[0].is_ascii_alphabetic() && path[1] == b':' && path[2] == b'\\'
+}
 pub fn unsafe_allow(mask: u32, sid: &str, ancestor: bool) -> bool {
     // GENERIC_ALL/WRITE, WRITE_DAC/OWNER, DELETE, DELETE_CHILD. Installation
     // directory/file additionally disallows writing/creating content and attributes.
@@ -46,5 +50,21 @@ mod tests {
         let hash = format!("{:x}", Sha256::digest(b"helper"));
         assert!(helper_hash_matches(Some(&hash), b"helper"));
         assert!(!helper_hash_matches(Some(&hash), b"replacement"));
+    }
+    #[test]
+    fn device_remote_and_relative_install_paths_are_rejected() {
+        for path in [
+            r"\\server\share\helper.exe",
+            r"\\?\UNC\server\share\helper.exe",
+            r"\\?\GLOBALROOT\Device\helper.exe",
+            "helper.exe",
+            r"C:helper.exe",
+        ] {
+            assert!(!local_install_path(path));
+        }
+        assert!(local_install_path(r"C:\Program Files\Ametista\helper.exe"));
+        assert!(local_install_path(
+            r"\\?\C:\Program Files\Ametista\helper.exe"
+        ));
     }
 }

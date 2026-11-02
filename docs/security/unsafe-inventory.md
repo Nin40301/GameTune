@@ -2,7 +2,7 @@
 
 Gerado por `node tools/audit-unsafe.mjs --write`. Cada linha com bloco unsafe/extern é listada; várias chamadas no mesmo bloco compartilham a justificativa. Revisão de código não substitui ensaio em VM, Miri ou auditoria independente. Fora destas fronteiras, unsafe continua proibido/negado; unwrap/expect são rejeitados pelo lint e pelo inventário.
 
-91 linhas de fronteira, sem handles em processos de jogos. As justificativas abaixo delimitam o propósito; os comentários SAFETY no código descrevem a validade dos ponteiros e a propriedade dos recursos.
+92 linhas de fronteira, sem handles em processos de jogos. As justificativas abaixo delimitam o propósito; os comentários SAFETY no código descrevem a validade dos ponteiros e a propriedade dos recursos.
 
 | Local | Função | Justificativa |
 | --- | --- | --- |
@@ -30,21 +30,22 @@ Gerado por `node tools/audit-unsafe.mjs --write`. Cada linha com bloco unsafe/ex
 | [crates/ipc/src/native.rs:240](../../crates/ipc/src/native.rs#L240) | `launch` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
 | [crates/ipc/src/native.rs:251](../../crates/ipc/src/native.rs#L251) | `launch` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
 | [crates/ipc/src/native.rs:252](../../crates/ipc/src/native.rs#L252) | `launch` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:294](../../crates/ipc/src/native.rs#L294) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:299](../../crates/ipc/src/native.rs#L299) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:303](../../crates/ipc/src/native.rs#L303) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:308](../../crates/ipc/src/native.rs#L308) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:309](../../crates/ipc/src/native.rs#L309) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:320](../../crates/ipc/src/native.rs#L320) | `check_install_acl` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:338](../../crates/ipc/src/native.rs#L338) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:348](../../crates/ipc/src/native.rs#L348) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:350](../../crates/ipc/src/native.rs#L350) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:353](../../crates/ipc/src/native.rs#L353) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:365](../../crates/ipc/src/native.rs#L365) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:377](../../crates/ipc/src/native.rs#L377) | `verify_signature` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:381](../../crates/ipc/src/native.rs#L381) | `verify_signature` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:390](../../crates/ipc/src/native.rs#L390) | `verify_signature` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
-| [crates/ipc/src/native.rs:398](../../crates/ipc/src/native.rs#L398) | `verify_signature` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:278](../../crates/ipc/src/native.rs#L278) | `verify_installation` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:305](../../crates/ipc/src/native.rs#L305) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:310](../../crates/ipc/src/native.rs#L310) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:314](../../crates/ipc/src/native.rs#L314) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:319](../../crates/ipc/src/native.rs#L319) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:320](../../crates/ipc/src/native.rs#L320) | `sid_text` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:331](../../crates/ipc/src/native.rs#L331) | `check_install_acl` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:349](../../crates/ipc/src/native.rs#L349) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:359](../../crates/ipc/src/native.rs#L359) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:361](../../crates/ipc/src/native.rs#L361) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:364](../../crates/ipc/src/native.rs#L364) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:376](../../crates/ipc/src/native.rs#L376) | `drop` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:388](../../crates/ipc/src/native.rs#L388) | `verify_signature` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:392](../../crates/ipc/src/native.rs#L392) | `verify_signature` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:401](../../crates/ipc/src/native.rs#L401) | `verify_signature` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
+| [crates/ipc/src/native.rs:409](../../crates/ipc/src/native.rs#L409) | `verify_signature` | ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos. |
 | [crates/metrics/src/native.rs:29](../../crates/metrics/src/native.rs#L29) | `query` | Contadores de sistema e snapshot de processos do sistema; buffers/alinhamento e tamanhos verificados. Nenhum OpenProcess de terceiros. |
 | [crates/metrics/src/native.rs:59](../../crates/metrics/src/native.rs#L59) | `read` | Contadores de sistema e snapshot de processos do sistema; buffers/alinhamento e tamanhos verificados. Nenhum OpenProcess de terceiros. |
 | [crates/metrics/src/native.rs:65](../../crates/metrics/src/native.rs#L65) | `read` | Contadores de sistema e snapshot de processos do sistema; buffers/alinhamento e tamanhos verificados. Nenhum OpenProcess de terceiros. |
@@ -100,7 +101,7 @@ Gerado por `node tools/audit-unsafe.mjs --write`. Cada linha com bloco unsafe/ex
 
 ## Hashes do código revisado (UTF-8/LF)
 
-- `crates/ipc/src/native.rs`: `51aad682501fdc95973b5321f26a5fe4351a08384dd9faa741bc3679ac6399c7`
+- `crates/ipc/src/native.rs`: `c5ba85e68f88cee80c31173be8b35d821094108bc00f0ee631be3174c38529d4`
 - `crates/metrics/src/native.rs`: `4b6ac9d17794cde05c1d47a2678121dd418ea16642416d7144c4dffea8366578`
 - `crates/monitor/src/tray.rs`: `8e9f8d12dbc76a2857beca80fb1e9250d68e8d07c20587d18b8cbc02a717c2a1`
 - `crates/watcher/src/fs_native.rs`: `af0671813596ec12fb06fec2f02a61004050d7cc48612fc8b24becd13c634d1b`
