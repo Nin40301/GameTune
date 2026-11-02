@@ -267,6 +267,17 @@ pub fn verify_installation(own: &Path, helper: &Path) -> Result<std::fs::File> {
         io::AsRawHandle,
     };
     for (leaf, file) in [(own, true), (helper, true)] {
+        let text = leaf.to_str().ok_or(Error::UnsafeInstallation)?;
+        if !crate::local_install_path(text) {
+            return Err(Error::UnsafeInstallation);
+        }
+        let drive = text.strip_prefix(r"\\?\").unwrap_or(text);
+        let drive = wide(&drive[..3]);
+        // SAFETY: validated ASCII local drive root. Reject mapped/network/removable
+        // installations before any ACL/hash read, preserving the offline boundary.
+        if unsafe { GetDriveTypeW(drive.as_ptr()) } != 3 {
+            return Err(Error::UnsafeInstallation);
+        }
         for (index, path) in leaf.ancestors().enumerate() {
             let metadata = std::fs::symlink_metadata(path)?;
             if metadata.file_attributes() & FILE_ATTRIBUTE_REPARSE_POINT != 0 {
