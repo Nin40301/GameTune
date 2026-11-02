@@ -12,6 +12,12 @@ assert.equal(read('Cargo.toml').match(/\[workspace\.package\][\s\S]*?^version = 
 const lock = json('apps/desktop/package-lock.json');
 assert.equal(lock.version, version);
 assert.equal(lock.packages[''].version, version);
+assert.deepEqual(lock.packages[''].engines, manifest.engines);
+assert.equal(read('.nvmrc').trim(), manifest.engines.node);
+assert.equal(read('apps/desktop/.nvmrc').trim(), manifest.engines.node);
+assert.equal(manifest.engines.npm, '11.20.0');
+assert.match(read('apps/desktop/.npmrc'), /^engine-strict=true/m);
+assert.match(read('rust-toolchain.toml'), /^channel = "1\.98\.1"/m);
 const config = json('apps/desktop/src-tauri/tauri.conf.json');
 assert.equal(config.version, version);
 assert.equal(config.productName, 'Ametista');

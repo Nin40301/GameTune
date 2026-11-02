@@ -1,14 +1,48 @@
-name: Ametista Rust
-
+name: Ametista CI
 on:
   push:
   pull_request:
   workflow_dispatch:
-
-permissions:
-  contents: read
-
+  workflow_call:
+permissions: {}
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
+  frontend:
+    name: Frontend (Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: apps/desktop/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - run: node tools/verify-version.mjs && node tools/check-doc-links.mjs
+        working-directory: .
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - name: Preserve browser evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: desktop-browser-evidence
+          path: apps/desktop/test-results/
+          retention-days: 7
   rust:
     name: Rust (${{ matrix.os }})
     strategy:
@@ -16,108 +50,114 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 20
+    timeout-minutes: 30
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Install stable Rust
-        run: rustup toolchain install stable --profile minimal --component rustfmt --component clippy
-      - name: Select stable Rust
-        run: rustup default stable
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+      - name: Install pinned Rust
+        run: rustup toolchain install 1.98.1 --profile minimal --component rustfmt --component clippy
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: rust-${{ runner.os }}-1.98.1-${{ hashFiles('Cargo.lock') }}-v1
+          restore-keys: rust-${{ runner.os }}-1.98.1-
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         if: runner.os == 'Windows'
         with:
-          node-version: '26'
-          package-manager-cache: false
-      - name: Prepare frontend for the Windows native build
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: apps/desktop/package-lock.json
+      - name: Prepare frontend for native Windows build
         if: runner.os == 'Windows'
         working-directory: apps/desktop
         run: |
           npm ci --no-audit --no-fund
           npm run build
-      - name: Fetch locked dependencies (build only)
-        run: cargo fetch --locked
-      - name: Check formatting
-        run: cargo fmt --all --check
-      - name: Clippy
-        run: cargo clippy --workspace --all-targets --locked --offline -- -D warnings
-      - name: Test without network
-        run: cargo test --workspace --locked --offline
-      - name: Compile VM harness without running administrative tests
-        run: cargo test -p ametista-windows-runtime --features vm-tests,real-profile-tests --locked --offline --no-run
-      - name: Lint all harnesses without running them
-        run: cargo clippy --workspace --all-targets --all-features --locked --offline -- -D warnings
-      - name: Build default-feature release (no fixture authorization)
+      - run: cargo fetch --locked
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets --all-features --locked --offline -- -D warnings
+      - run: cargo test --workspace --all-features --locked --offline
+      - name: Production release without VM fixture features
+        if: runner.os == 'Windows'
+        run: ./tools/build-release.ps1 -SkipFrontend
+      - if: runner.os != 'Windows'
         run: cargo build --workspace --release --locked --offline
-      - name: Run mock simulation
-        run: cargo run -p ametista-catalog --example simulate --locked --offline
-      - name: CLI closed catalog without Windows access
-        run: cargo run -p ametista-cli --locked --offline -- --list --json
-      - name: Publish default-feature CLI
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - run: cargo run -p ametista-catalog --example simulate --locked --offline
+      - run: cargo run -p ametista-cli --locked --offline -- --list --json
+      - name: Verify native manifests and closed frontend
+        if: runner.os == 'Windows'
+        run: ./tools/verify-desktop.ps1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ametista-cli-${{ matrix.os }}
           path: |
             target/release/ametista-cli
             target/release/ametista-cli.exe
-            docs/user/cli.md
             LICENSE
             NOTICE
           retention-days: 14
-      - name: Verify desktop manifests and closed frontend
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: runner.os == 'Windows'
-        run: ./tools/verify-desktop.ps1
-      - name: Publish Windows desktop and helper
-        if: runner.os == 'Windows'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: ametista-desktop-windows-x64
           path: |
             target/release/ametista.exe
             target/release/ametista-helper.exe
             target/release/ametista-monitor.exe
-            docs/user/games.md
-            docs/user/desktop.md
-            docs/security/desktop.md
             LICENSE
             NOTICE
           retention-days: 14
-      - name: Publish validated catalog
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: validated-catalog-${{ matrix.os }}
-          path: |
-            catalog/*.json
-            Cargo.lock
-            docs/dev/catalog-sources.md
-          retention-days: 14
-  frontend:
-    name: Components, browser flows and axe
+  dependencies:
+    name: Dependency audits
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    defaults:
-      run:
-        working-directory: apps/desktop
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+      - run: rustup toolchain install 1.98.1 --profile minimal
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          node-version: '26'
-          package-manager-cache: false
-      - run: npm ci --no-audit --no-fund
-      - run: npm run format:check
-      - run: npm run lint
-      - run: npm run build
-      - run: npm test
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
-      - name: Preserve browser evidence
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ~/.cargo/bin/cargo-audit
+          key: audit-${{ runner.os }}-1.98.1-0.22.2
+      - run: cargo audit --version || cargo install cargo-audit --version 0.22.2 --locked
+      - run: cargo audit --json > cargo-audit.json
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: apps/desktop/package-lock.json
+      - run: npm ci --prefix apps/desktop --no-audit --no-fund
+      - run: npm audit --prefix apps/desktop --omit=dev --audit-level=high --json > npm-audit.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: desktop-browser-evidence
-          path: apps/desktop/test-results/
-          retention-days: 7
+          name: dependency-audits
+          path: '*-audit.json'
+          retention-days: 14
+  dependency-review:
+    name: PR dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: high
+          comment-summary-in-pr: never
