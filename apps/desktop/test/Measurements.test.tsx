@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Measurements } from '../src/Measurements'
 import { createMockBackend } from '../src/test-backend'
@@ -40,4 +40,36 @@ test('production sampling errors never become fictitious values', async () => {
   render(<Measurements backend={backend} language="en" dashboard />)
   expect(await screen.findByRole('alert')).toHaveTextContent('No values were estimated')
   expect(screen.queryByText('6 GiB')).not.toBeInTheDocument()
+})
+
+test('visual polling pauses on blur and resumes without stopping the Rust monitor or benchmark', async () => {
+  const backend = createMockBackend()
+  const lab = vi.spyOn(backend, 'lab')
+  render(<Measurements backend={backend} language="pt-BR" dashboard />)
+  await screen.findByText('6 GiB')
+  await act(async () => window.dispatchEvent(new Event('blur')))
+  const calls = lab.mock.calls.length
+  vi.useFakeTimers()
+  try {
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(6000)
+    })
+    expect(lab).toHaveBeenCalledTimes(calls)
+    await act(async () => window.dispatchEvent(new Event('focus')))
+    expect(lab).toHaveBeenCalledTimes(calls + 1)
+    expect(lab.mock.calls.every(([action]) => action.kind === 'status')).toBe(true)
+  } finally {
+    vi.useRealTimers()
+  }
+})
+
+test('top-process table is mounted only when expanded and remains accessible', async () => {
+  const user = userEvent.setup()
+  render(<Measurements backend={createMockBackend()} language="pt-BR" dashboard />)
+  await screen.findByText('6 GiB')
+  expect(screen.queryByRole('table', { hidden: true })).not.toBeInTheDocument()
+  await user.click(screen.getByText(pt.topMemory))
+  expect(await screen.findByRole('table')).toHaveAccessibleName(pt.groupedMemory)
+  await user.click(screen.getByText(pt.topMemory))
+  expect(screen.queryByRole('table', { hidden: true })).not.toBeInTheDocument()
 })

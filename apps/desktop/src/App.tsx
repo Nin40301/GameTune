@@ -1,3 +1,4 @@
+import { useWindowActivity } from './hooks/useWindowActivity'
 import { Checkbox } from './components/Checkbox'
 import { useEffect, useRef, useState } from 'react'
 import type {
@@ -66,6 +67,10 @@ function errorKey(error: unknown) {
       : 'operation_failed'
 }
 export function App({ backend }: { backend: Backend }) {
+  const active = useWindowActivity()
+  useEffect(() => {
+    document.documentElement.dataset.windowActive = String(active)
+  }, [active])
   const [language, setLanguage] = useState<Language>(() =>
     preference('language', 'pt-BR') === 'en' ? 'en' : 'pt-BR',
   )

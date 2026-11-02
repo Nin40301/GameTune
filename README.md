@@ -177,3 +177,5 @@ Assinatura/instaladores entram na Fase 7. Certificado e senha serão segredos
 ## Fase 6.5 — Ametista e interface
 
 A marca e os binários usam `Ametista`/`ametista`. Tema claro e efeitos reduzidos são o padrão para novas preferências. A interface oferece pt-BR/en, StatusOrb com RAM medida e vidro opcional. [Relatório da Fase 6.5](docs/phase-6.5.md) e [plano](docs/phase-6.5-plan.md). Os gates inicialmente pendentes foram executados após o [polimento visual](docs/phase-6.5-polish.md): Completo e Reduzido reprovaram nos limites existentes. A interface ainda não atende ao orçamento de consumo; não há alegação de melhora.
+
+A [investigação pareada](docs/performance-investigation.md) localiza o salto de RAM em `1067244`, registra os perfis da WebView e conserva os resultados das alternativas rejeitadas. As otimizações visuais mantêm a identidade aprovada, mas não resolvem o gate. Backend, segurança, harness e limites permanecem inalterados.

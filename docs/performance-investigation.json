@@ -1,0 +1,496 @@
+{
+  "environment": "environment.json",
+  "condition": "visible native Home, light theme, configured 1100x740, full effects where available; original release code and per-commit unmodified harness; 30s warmup + 60s; no tests/builds/DevTools/UI Automation in measured intervals",
+  "excludedTrial": {
+    "file": "v0.6.0/run-1.json",
+    "reason": "UI Automation inspection inside measurement interval; preserved separately"
+  },
+  "builds": [
+    {
+      "ref": "v0.6.0",
+      "commit": "de75a7531faa45600d78818a3391451811f723de",
+      "executableSha256": "81f83acf5de72473592dbb843cf10028ca95f52ead5684554983b12b513c1e22",
+      "probeSha256": "67cfe0de29c47bbfd67f077f8f627c90f229c9fed5d940ee5f994c81d3860ecc",
+      "harnessSha256": "069bf4ad88d22fcb0a058519fe02c0085c469c1c836374853b03f5d9db1bb200",
+      "trials": [
+        {
+          "exitCode": 0,
+          "startedUtc": "2026-11-01T22:51:24.0697146Z",
+          "budget": {
+            "passed": true,
+            "peakCpuPercent": 0.78125,
+            "peakPrivateBytes": 143925248,
+            "samples": 60,
+            "peakMiB": 137.2578125
+          },
+          "endedUtc": "2026-11-01T22:52:54.5497323Z",
+          "run": 2
+        },
+        {
+          "exitCode": 1,
+          "startedUtc": "2026-11-01T22:57:27.8220195Z",
+          "endedUtc": "2026-11-01T22:58:58.5468050Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 2.34375,
+            "peakPrivateBytes": 156602368,
+            "samples": 60,
+            "peakMiB": 149.34765625
+          },
+          "run": 3
+        }
+      ]
+    },
+    {
+      "ref": "db9faa2",
+      "commit": "db9faa26cc55367fa23f468e936d299b08a8ef14",
+      "executableSha256": "996b40e327bc6405852570e8e45f32e5192d2aa0c6db5c4c3fb720f7805deeeb",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "trials": [
+        {
+          "exitCode": 1,
+          "startedUtc": "2026-11-01T22:59:00.9130241Z",
+          "endedUtc": "2026-11-01T23:00:31.9448794Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 3.2552083333333335,
+            "peakPrivateBytes": 157720576,
+            "samples": 60,
+            "peakMiB": 150.4140625
+          },
+          "run": 1
+        },
+        {
+          "exitCode": 1,
+          "startedUtc": "2026-11-01T23:00:33.9687467Z",
+          "endedUtc": "2026-11-01T23:02:04.6148900Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 1.5727391874180865,
+            "peakPrivateBytes": 156966912,
+            "samples": 60,
+            "peakMiB": 149.6953125
+          },
+          "run": 2
+        }
+      ]
+    },
+    {
+      "ref": "c6007fd",
+      "commit": "c6007fd49e5b59bcd44a45f082dc0efb99631628",
+      "executableSha256": "06612c51a858c66c42d8db4f640d45bb9b388517ffcf71aa5cd2e35125017500",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "trials": [
+        {
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:03:38.0113471Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 2.7166882276843465,
+            "peakPrivateBytes": 156397568,
+            "samples": 60,
+            "peakMiB": 149.15234375
+          },
+          "startedUtc": "2026-11-01T23:02:06.9715020Z",
+          "run": 1
+        },
+        {
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:05:10.7501356Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 3.133159268929504,
+            "peakPrivateBytes": 172011520,
+            "samples": 60,
+            "peakMiB": 164.04296875
+          },
+          "startedUtc": "2026-11-01T23:03:40.0491935Z",
+          "run": 2
+        }
+      ]
+    },
+    {
+      "ref": "1067244",
+      "commit": "106724489a1f7d76be6a6a61aad897183029f63e",
+      "executableSha256": "795f6fdffbb3a92ab5bf11c29414376c3089cbf1dc99275e7121f6d167a65d97",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "trials": [
+        {
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:06:44.0829602Z",
+          "startedUtc": "2026-11-01T23:05:13.0789539Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.6510416666666666,
+            "peakPrivateBytes": 241565696,
+            "samples": 60,
+            "peakMiB": 230.375
+          },
+          "run": 1
+        },
+        {
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:08:16.7392962Z",
+          "startedUtc": "2026-11-01T23:06:46.1134732Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.5208333333333334,
+            "peakPrivateBytes": 241778688,
+            "samples": 60,
+            "peakMiB": 230.578125
+          },
+          "run": 2
+        }
+      ]
+    },
+    {
+      "ref": "c6e168e",
+      "commit": "c6e168eca718617ef1b4d0f03aa668c56e38475f",
+      "executableSha256": "0365a74b68ee0e8aeb6bb2950669aae684872acd12c6d4691759d4033f756469",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "trials": [
+        {
+          "startedUtc": "2026-11-01T23:08:19.0744218Z",
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:09:49.8185340Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.648508430609598,
+            "peakPrivateBytes": 243744768,
+            "samples": 60,
+            "peakMiB": 232.453125
+          },
+          "run": 1
+        },
+        {
+          "startedUtc": "2026-11-01T23:09:51.8469071Z",
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:11:22.4712882Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.9114583333333334,
+            "peakPrivateBytes": 239456256,
+            "samples": 60,
+            "peakMiB": 228.36328125
+          },
+          "run": 2
+        }
+      ]
+    }
+  ],
+  "thresholds": {
+    "privateWorkingSetMiB": 150,
+    "peakCpuPercent": 1,
+    "changed": false
+  },
+  "variants": [
+    {
+      "variant": "optimized",
+      "executableSha256": "c397d66053b6199b5d8965dcb8eebbd2a7723d4ec03c9c21778fe5c04e1619a5",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "effects": "full",
+      "retained": false,
+      "trials": [
+        {
+          "endedUtc": "2026-11-01T23:33:17.7038694Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.9102730819245773,
+            "peakPrivateBytes": 299995136,
+            "samples": 60,
+            "peakMiB": 286.09765625
+          },
+          "startedUtc": "2026-11-01T23:31:46.9811205Z",
+          "exitCode": 1,
+          "run": 1
+        },
+        {
+          "endedUtc": "2026-11-01T23:34:50.3649107Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 1.1673151750972763,
+            "peakPrivateBytes": 304906240,
+            "samples": 60,
+            "peakMiB": 290.78125
+          },
+          "startedUtc": "2026-11-01T23:33:19.7271801Z",
+          "exitCode": 1,
+          "run": 2
+        }
+      ]
+    },
+    {
+      "variant": "raster",
+      "executableSha256": "b4f7e335fe81b3370940a1f8f50e522414b99dabad558ef12c27272d8bedf0d2",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "effects": "full",
+      "retained": false,
+      "trials": [
+        {
+          "startedUtc": "2026-11-01T23:38:52.7914032Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.7843137254901961,
+            "peakPrivateBytes": 304803840,
+            "samples": 60,
+            "peakMiB": 290.68359375
+          },
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:40:23.8349326Z",
+          "run": 1
+        },
+        {
+          "startedUtc": "2026-11-01T23:40:25.8671662Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.7874015748031497,
+            "peakPrivateBytes": 321245184,
+            "samples": 60,
+            "peakMiB": 306.36328125
+          },
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:41:56.4872608Z",
+          "run": 2
+        }
+      ]
+    },
+    {
+      "variant": "bounded",
+      "executableSha256": "6f49b1716e9bc337387cc0c01cf21c66d97d9a81eb32d58606537e622cd9824d",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "effects": "full",
+      "retained": false,
+      "trials": [
+        {
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 1.6774193548387097,
+            "peakPrivateBytes": 237588480,
+            "samples": 60,
+            "peakMiB": 226.58203125
+          },
+          "startedUtc": "2026-11-01T23:48:53.6840525Z",
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:50:24.7586623Z",
+          "run": 1
+        },
+        {
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 1.6993464052287581,
+            "peakPrivateBytes": 229646336,
+            "samples": 60,
+            "peakMiB": 219.0078125
+          },
+          "startedUtc": "2026-11-01T23:50:26.7780080Z",
+          "exitCode": 1,
+          "endedUtc": "2026-11-01T23:51:57.4268530Z",
+          "run": 2
+        }
+      ]
+    },
+    {
+      "variant": "stock-reduced",
+      "executableSha256": "0365a74b68ee0e8aeb6bb2950669aae684872acd12c6d4691759d4033f756469",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "effects": "unconfirmed",
+      "retained": false,
+      "trials": [
+        {
+          "startedUtc": "2026-11-01T23:54:49.2086836Z",
+          "endedUtc": "2026-11-01T23:56:20.3100936Z",
+          "exitCode": 1,
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 1.7015706806282722,
+            "peakPrivateBytes": 263393280,
+            "samples": 60,
+            "peakMiB": 251.19140625
+          },
+          "run": 1
+        },
+        {
+          "startedUtc": "2026-11-01T23:56:22.3333557Z",
+          "endedUtc": "2026-11-01T23:57:53.0386768Z",
+          "exitCode": 1,
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 4.3984476067270375,
+            "peakPrivateBytes": 241692672,
+            "samples": 60,
+            "peakMiB": 230.49609375
+          },
+          "run": 2
+        }
+      ]
+    },
+    {
+      "variant": "bounded-reduced",
+      "executableSha256": "6f49b1716e9bc337387cc0c01cf21c66d97d9a81eb32d58606537e622cd9824d",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "effects": "unconfirmed",
+      "retained": false,
+      "trials": [
+        {
+          "endedUtc": "2026-11-01T23:59:26.4493312Z",
+          "startedUtc": "2026-11-01T23:57:55.3986304Z",
+          "exitCode": 1,
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 3.2425421530479897,
+            "peakPrivateBytes": 253775872,
+            "samples": 60,
+            "peakMiB": 242.01953125
+          },
+          "run": 1
+        },
+        {
+          "endedUtc": "2026-11-02T01:16:15.1265446Z",
+          "exitCode": 1,
+          "startedUtc": "2026-11-02T01:14:44.4586341Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.651890482398957,
+            "peakPrivateBytes": 195022848,
+            "samples": 60,
+            "peakMiB": 185.98828125
+          },
+          "run": 3
+        }
+      ]
+    },
+    {
+      "variant": "stock-reduced-confirmed",
+      "executableSha256": "0365a74b68ee0e8aeb6bb2950669aae684872acd12c6d4691759d4033f756469",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "effects": "reduced",
+      "retained": false,
+      "trials": [
+        {
+          "exitCode": 1,
+          "endedUtc": "2026-11-02T01:31:42.9622021Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.6510416666666666,
+            "peakPrivateBytes": 218968064,
+            "samples": 60,
+            "peakMiB": 208.82421875
+          },
+          "startedUtc": "2026-11-02T01:30:12.2451043Z",
+          "run": 1
+        },
+        {
+          "exitCode": 1,
+          "endedUtc": "2026-11-02T01:33:15.6192141Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 1.4322916666666667,
+            "peakPrivateBytes": 228782080,
+            "samples": 60,
+            "peakMiB": 218.18359375
+          },
+          "startedUtc": "2026-11-02T01:31:44.9832744Z",
+          "run": 2
+        }
+      ]
+    },
+    {
+      "variant": "final-reduced",
+      "executableSha256": "73f62e24b8ac6bfcba2d501bed24e62b2c9d757f6067ff175c477dd6871ab7e5",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "effects": "reduced",
+      "retained": true,
+      "trials": [
+        {
+          "exitCode": 1,
+          "startedUtc": "2026-11-02T01:36:01.4486390Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.9114583333333334,
+            "peakPrivateBytes": 249806848,
+            "samples": 60,
+            "peakMiB": 238.234375
+          },
+          "endedUtc": "2026-11-02T01:37:32.1127803Z",
+          "run": 1
+        },
+        {
+          "exitCode": 1,
+          "startedUtc": "2026-11-02T01:37:34.1445313Z",
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 1.0416666666666667,
+            "peakPrivateBytes": 225009664,
+            "samples": 60,
+            "peakMiB": 214.5859375
+          },
+          "endedUtc": "2026-11-02T01:39:04.6987160Z",
+          "run": 2
+        }
+      ]
+    },
+    {
+      "variant": "final-full",
+      "executableSha256": "73f62e24b8ac6bfcba2d501bed24e62b2c9d757f6067ff175c477dd6871ab7e5",
+      "probeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+      "harnessSha256": "8f7894a932943f1d02fd3966c0d7e5ef898f3a7482b8ed9ed9fb2a1e64bb35d7",
+      "effects": "full",
+      "retained": true,
+      "trials": [
+        {
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.5208333333333334,
+            "peakPrivateBytes": 178929664,
+            "samples": 60,
+            "peakMiB": 170.640625
+          },
+          "startedUtc": "2026-11-02T01:39:16.1333576Z",
+          "exitCode": 1,
+          "endedUtc": "2026-11-02T01:40:46.7936936Z",
+          "run": 1
+        },
+        {
+          "budget": {
+            "passed": false,
+            "peakCpuPercent": 0.6510416666666666,
+            "peakPrivateBytes": 190865408,
+            "samples": 60,
+            "peakMiB": 182.0234375
+          },
+          "startedUtc": "2026-11-02T01:40:48.8292682Z",
+          "exitCode": 1,
+          "endedUtc": "2026-11-02T01:42:19.5378433Z",
+          "run": 2
+        }
+      ]
+    }
+  ],
+  "excludedAdditionalTrials": [
+    {
+      "file": "bounded-reduced/run-2-meta.json",
+      "endedUtc": "2026-11-02T00:00:49.9917486Z",
+      "startedUtc": "2026-11-01T23:59:28.4827635Z",
+      "exitCode": 1,
+      "includedInComparison": false,
+      "reason": "Probe reported metrics_unavailable and did not write a fresh report. Copied report is stale from run 1; not a second measurement.",
+      "staleBudget": {
+        "passed": false,
+        "peakCpuPercent": 3.2425421530479897,
+        "peakPrivateBytes": 253775872,
+        "samples": 60
+      }
+    }
+  ]
+}

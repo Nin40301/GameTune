@@ -1,3 +1,13 @@
+# Investigação de consumo da interface — 2026-11-01
+
+- Bisect com duas coletas nativas por versão, hashes e traces de 10 s da WebView
+- Fundo limitado à viewport, sombras menores e composição sem animação retida, preservando o redesign
+- Orb com limiar acumulado de 1%, tabela fechada montada sob demanda e memoização de sparklines
+- Consultas/animações visuais suspensas fora de foco; coletor e benchmark Rust preservados
+- Corrigido blur que continuava ativo no Reduzido minificado; regressão testada com CSS de produção, incluindo forced-colors
+- Alternativas que aumentaram RAM descartadas e documentadas; gates continuam reprovados
+- Veja docs/performance-investigation.md para os resultados brutos, limitações e próximos passos
+
 # Polimento da Fase 6.5 — 2026-11-01
 
 - Tracking dos títulos suavizado, hierarquia simplificada e status de análise contextual
