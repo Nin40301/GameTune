@@ -1,0 +1,4 @@
+self-hosted-runner:
+  labels:
+    - ametista-desktop-standard-user
+    - ametista-disposable

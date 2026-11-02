@@ -1,32 +1,44 @@
 name: Read-only desktop resource budget
 on:
   workflow_dispatch:
-permissions:
-  contents: read
+    inputs:
+      effects:
+        description: Choose this mode in Settings before the visible five-run gate
+        type: choice
+        options: [full, reduced]
+        default: full
+permissions: {}
+concurrency:
+  group: manual-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   budget:
+    permissions:
+      contents: read
     runs-on: [self-hosted, Windows, X64, ametista-desktop-standard-user]
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
-          node-version: '26'
-          package-manager-cache: false
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: apps/desktop/package-lock.json
+      - run: rustup toolchain install 1.98.1 --profile minimal
       - run: npm ci --no-audit --no-fund
         working-directory: apps/desktop
       - run: npm run build
         working-directory: apps/desktop
-      - run: cargo build -p ametista-desktop -p ametista-helper -p ametista-monitor --release --locked
+      - run: ./tools/build-release.ps1 -SkipFrontend
       - run: cargo build -p ametista-metrics --example budget --release --locked
-      - name: Open interface, including WebView children, 150 MiB
-        run: ./tools/test-resource-budget.ps1 -Mode interface
+      - name: "Open interface: five runs, baseline +15%, median RAM cap 200 MiB"
+        run: ./tools/test-resource-budget.ps1 -Mode interface -Effects ${{ inputs.effects }}
       - name: Independent Rust game monitor, 15 MiB and 0.5 percent
         if: ${{ !cancelled() }}
         run: ./tools/test-resource-budget.ps1 -Mode game_monitor
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
           name: desktop-resource-budget

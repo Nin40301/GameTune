@@ -6,6 +6,8 @@ Os relatos preservam decisões, medições e pendências da data de cada fase. C
 
 - [block-a](block-a.md)
 - [block-b](block-b.md)
+- [block-c](block-c.md)
+- [block-d](block-d.md)
 - [performance-investigation](performance-investigation.md)
 - [phase-1](phase-1.md)
 - [phase-2-plan](phase-2-plan.md)
