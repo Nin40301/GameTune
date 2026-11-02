@@ -4,7 +4,7 @@ Data: 31/10/2026 (America/Sao_Paulo). Repositório Git inicializado neste diret�
 Escopo: fundação completa; não inclui executores reais, UI ou instalador.
 
 O plano de arquitetura de uma página foi entregue antes do código e está em
-`docs/architecture.md`. A árvore do repositório está em `README.md`.
+`docs/dev/architecture.md`. A árvore do repositório está em `README.md`.
 
 ## Resultado
 
@@ -72,7 +72,7 @@ vinculação ao SID interativo, tratamento de HKCU sob outra conta, durabilidade
 da criação do WAL no sistema de arquivos Windows, conflitos com alterações
 externas, ponto de restauração, migração/compactação do journal, descoberta de
 inicialização com IDs opacos, reinstalação Appx, UI e testes em VMs. Consulte
-`docs/security.md` e `docs/journal.md` para os limites do contrato atual.
+`docs/security/model.md` e `docs/dev/journal.md` para os limites do contrato atual.
 
 Nenhum ganho de desempenho foi medido. O build release contém bibliotecas;
 não é um instalador nem um aplicativo pronto para uso final.
@@ -140,11 +140,11 @@ crates/exec_service/Cargo.toml
 crates/exec_service/src/lib.rs
 crates/exec_startup/Cargo.toml
 crates/exec_startup/src/lib.rs
-docs/architecture.md
-docs/catalog.md
-docs/journal.md
-docs/phase-1.md
-docs/security.md
+docs/dev/architecture.md
+docs/dev/catalog.md
+docs/dev/journal.md
+docs/history/phase-1.md
+docs/security/model.md
 rust-toolchain.toml
 tools/update-catalog-hashes.py
 ```

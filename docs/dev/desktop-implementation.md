@@ -1,4 +1,4 @@
-# Ametista Desktop — Fases 4 a 6.5
+# Implementação da interface — Ametista 0.6.5
 
 Interface Windows em Tauri 2, React, TypeScript strict e Tailwind. Usa o mesmo
 catálogo, presets, proteção, WindowsSession e journal da CLI. Disponível em
@@ -6,9 +6,9 @@ pt-BR/en, claro/escuro, com navegação por teclado, diálogo de detalhes com fo
 contido/restaurado, regiões de status e testes axe AA. Não exibe métricas fictícias.
 
 Na Fase 5, Início inclui medições reais e Benchmark conduz as rodadas Antes/
-Depois. Leia [protocolo e limites](benchmark.md), [aceite de VM](benchmark-vm.md)
-e [resultados e consumo](phase-5.md). PresentMon é importação offline de CSV,
-sem execução da ferramenta pelo app. Na Fase 6, [Jogos](games.md) cadastra perfis
+Depois. Leia [protocolo e limites](../user/benchmark.md), [aceite de VM](benchmark-vm.md)
+e [resultados e consumo](../history/phase-5.md). PresentMon é importação offline de CSV,
+sem execução da ferramenta pelo app. Na Fase 6, [Jogos](../user/games.md) cadastra perfis
 temporários e Configurações inicia o monitor sem WebView, que sobrevive à janela.
 
 ## Compilar
@@ -127,4 +127,4 @@ rede de build; o produto em execução não depende dela.
 
 ## Camada visual da Fase 6.5
 
-Tema claro e efeitos Reduzidos por padrão para novas preferências. O modo Completo usa vidro em poucas superfícies, com fonte local e nenhuma alteração na CSP. Suporte mínimo de 390 px, navegação inferior e controles por teclado. [Relatório e pendências de consumo](phase-6.5.md).
+Tema claro e efeitos Reduzidos por padrão para novas preferências. O modo Completo usa vidro em poucas superfícies, com fonte local e nenhuma alteração na CSP. Suporte mínimo de 390 px, navegação inferior e controles por teclado. [Relatório e pendências de consumo](../history/phase-6.5.md).

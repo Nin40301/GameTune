@@ -61,7 +61,7 @@ jobs:
           path: |
             target/release/ametista-cli
             target/release/ametista-cli.exe
-            docs/cli.md
+            docs/user/cli.md
             LICENSE
             NOTICE
           retention-days: 14
@@ -77,9 +77,9 @@ jobs:
             target/release/ametista.exe
             target/release/ametista-helper.exe
             target/release/ametista-monitor.exe
-            docs/games.md
-            docs/desktop.md
-            docs/desktop-security.md
+            docs/user/games.md
+            docs/user/desktop.md
+            docs/security/desktop.md
             LICENSE
             NOTICE
           retention-days: 14
@@ -90,7 +90,7 @@ jobs:
           path: |
             catalog/*.json
             Cargo.lock
-            docs/catalog-sources.md
+            docs/dev/catalog-sources.md
           retention-days: 14
   frontend:
     name: Components, browser flows and axe

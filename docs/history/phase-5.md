@@ -38,7 +38,7 @@ testes funcionais verdes como prova de que o limite de consumo foi atingido.
 - `crates/desktop_backend/src/lib.rs`: extrai apenas resultados reais aplicados
 - `tools/test-resource-budget.ps1`, verificação de 8 permissões e workflow
   manual `resource-budget.yml` para desktop interativo sem administrador
-- `docs/benchmark.md`, `benchmark-vm.md`, plano, arquitetura e dependências
+- `docs/user/benchmark.md`, `benchmark-vm.md`, plano, arquitetura e dependências
 
 ## Verificar
 

@@ -1,0 +1,32 @@
+name: Peça ajuda
+description: Dúvida de uso ou recuperação com informações mínimas
+title: "[Ajuda] "
+body:
+  - type: markdown
+    attributes:
+      value: "Se algo mudou, pare de aplicar e consulte docs/user/recovery.md. Nunca publique chaves de recuperação, tokens ou journal bruto"
+  - type: input
+    id: version
+    attributes:
+      label: Versão do app e edição/build do Windows
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: O que tentou fazer e onde ficou a dúvida
+      description: Diga se foi simulação, aplicação, remoção de app ou desfazer
+    validations:
+      required: true
+  - type: textarea
+    id: recovery
+    attributes:
+      label: Resultado do Desfazer ou da recuperação, se necessário
+      description: Não faça novas alterações só para preencher este campo
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacidade
+      options:
+        - label: Revisei o texto e removi informações pessoais, caminhos e segredos
+          required: true

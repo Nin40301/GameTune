@@ -1,4 +1,4 @@
-# Aceite da Fase 6 em VM descartável
+# Aceite de perfis de jogos em VM descartável
 
 **Não execute no host.** Use snapshot do hipervisor, desktop interativo de usuário
 comum, WebView2 instalado, rede desligada, sem dados pessoais. Restaure o snapshot

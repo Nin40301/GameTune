@@ -40,7 +40,7 @@ Frames sequenciados não aceitam caminhos, serviços ou scripts livres. Serviço
 são parados sem alterar StartMode, sem cascata e sem terminar processo à força.
 O WAL temporário protegido e lease de máquina ficam retidos; queda do monitor
 provoca tentativa de rollback, queda do helper/PC exige recuperação na próxima
-execução. Não há serviço elevado instalado. Veja [contrato e limites](games.md).
+execução. Não há serviço elevado instalado. Veja [contrato e limites](../user/games.md).
 
 ## Named pipe de uso único
 

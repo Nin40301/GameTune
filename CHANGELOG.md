@@ -17,7 +17,7 @@
 - Consultas/animações visuais suspensas fora de foco; coletor e benchmark Rust preservados
 - Corrigido blur que continuava ativo no Reduzido minificado; regressão testada com CSS de produção, incluindo forced-colors
 - Alternativas que aumentaram RAM descartadas e documentadas; gates continuam reprovados
-- Veja docs/performance-investigation.md para os resultados brutos, limitações e próximos passos
+- Veja docs/history/performance-investigation.md para os resultados brutos, limitações e próximos passos
 
 # Polimento da Fase 6.5 — 2026-11-01
 
@@ -26,7 +26,7 @@
 - Busca/categoria refinadas, espaço reservado para ações e navegação móvel com quatro itens e Mais
 - Novas capturas e testes; backend e segurança preservados
 - Gates nativos executados sem jogos: Completo 238,29 MiB/3,1209%; Reduzido 240,62 MiB/1,5748%; ambos reprovados, limites inalterados
-- Veja docs/phase-6.5-polish.md para evidências e pendências
+- Veja docs/history/phase-6.5-polish.md para evidências e pendências
 
 # Fase 6.5 — Renomeação
 

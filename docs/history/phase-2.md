@@ -164,10 +164,10 @@ crates/windows_runtime/src/startup.rs
 crates/windows_runtime/src/storage.rs
 crates/windows_runtime/src/transport.rs
 crates/windows_runtime/tests/windows_vm.rs
-docs/catalog-sources.md
-docs/phase-2-plan.md
-docs/phase-2.md
-docs/windows-vm.md
+docs/dev/catalog-sources.md
+docs/history/phase-2-plan.md
+docs/history/phase-2.md
+docs/dev/windows-vm.md
 locales/en.json
 locales/pt-BR.json
 ```
@@ -213,7 +213,7 @@ crates/exec_service/Cargo.toml
 crates/exec_service/src/lib.rs
 crates/exec_startup/Cargo.toml
 crates/exec_startup/src/lib.rs
-docs/catalog.md
-docs/journal.md
-docs/security.md
+docs/dev/catalog.md
+docs/dev/journal.md
+docs/security/model.md
 ```

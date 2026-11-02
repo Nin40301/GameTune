@@ -9,7 +9,7 @@ catálogo embutido também no adaptador Windows; fixtures só com feature explí
 escopo, preflight e checkpoint. Os executores de baixo nível são componentes
 internos para composição/testes; nenhum comando Tauri os expõe diretamente.
 UI, auxiliar UAC e IPC estão implementados; assinatura e instalador ainda pendentes.
-Veja [limite de privilégios da interface](desktop-security.md) para protocolo,
+Veja [limite de privilégios da interface](desktop.md) para protocolo,
 DACL, nonce, hash de catálogo, autenticação de peer e prazo dos tickets.
 
 Os crates proíbem unsafe em Rust, exceto o módulo FFI explícito ipc/native.rs,

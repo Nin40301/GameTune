@@ -34,7 +34,7 @@
 - `catalog/game-actions.json`, schema e hashes: allowlist temporária embutida
 - `apps/desktop/src/Games.tsx`, bridge/backend/tipos/i18n/navegação/testes
 - `tools/test-resource-budget.ps1`, `test-game-events.ps1`, `verify-desktop.ps1`
-- `docs/games.md`, `games-vm.md`, arquitetura, dependências, plano e evidência JSON
+- `docs/user/games.md`, `games-vm.md`, arquitetura, dependências, plano e evidência JSON
 
 ## Comandos para validar
 

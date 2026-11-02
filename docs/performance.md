@@ -14,7 +14,7 @@ O titular confirmou explicitamente o bloqueio por regressão das medianas de RAM
 
 ## Linha de base medida
 
-Fonte versionada: [perf-baseline.json](perf-baseline.json). Dados de cada execução, com identificadores de boot/plano e horários absolutos de amostra removidos: [evidências](history/perf-baseline-0.6.5/). O JSON conserva hashes dos originais e das cópias públicas, horários UTC de cada execução e o estado conferido antes das coletas. Nenhuma execução foi descartada. Os códigos do probe antigo nos metadados se referem ao critério de pico substituído, não ao resultado do gate novo.
+Fonte versionada: [perf-baseline.json](perf-baseline.json). Dados de cada execução, com identificadores de boot/plano e horários absolutos de amostra removidos: [evidências](history/perf-baseline-0.6.5). O JSON conserva hashes dos originais e das cópias públicas, horários UTC de cada execução e o estado conferido antes das coletas. Nenhuma execução foi descartada. Os códigos do probe antigo nos metadados se referem ao critério de pico substituído, não ao resultado do gate novo.
 
 Host: Windows 11 Pro 25H2, build 26200.9711; AMD Radeon 760M, driver 32.0.21030.2001; WebView2 156.0.4314.58; DPI 96/DPR 1; janela 1100×740, tema claro e pt-BR. Coletor real. Executável de referência do commit `720582e`, versão interna 0.6.0, SHA-256 `73f62e24b8ac6bfcba2d501bed24e62b2c9d757f6067ff175c477dd6871ab7e5`. A referência antecede a atualização de versão/identifier; ela não é apresentada como uma coleta de um binário 0.6.5 ainda não construído.
 
