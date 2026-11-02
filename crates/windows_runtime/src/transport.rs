@@ -15,6 +15,7 @@ pub(crate) enum Script {
     Storage,
     RestorePoint,
     Store,
+    #[cfg(windows)]
     RestartDialog,
     #[cfg(feature = "vm-tests")]
     Fixture,
@@ -35,6 +36,7 @@ impl Script {
             Self::Storage => include_str!("../scripts/storage.ps1"),
             Self::RestorePoint => include_str!("../scripts/restore_point.ps1"),
             Self::Store => include_str!("../scripts/store.ps1"),
+            #[cfg(windows)]
             Self::RestartDialog => {
                 "$desktop=Get-AmetistaDesktop ([string]$p.expectedSid);$desktop.ShutdownWindows();Emit $true"
             }
