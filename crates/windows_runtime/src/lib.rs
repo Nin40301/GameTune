@@ -120,6 +120,7 @@ pub enum RestorePointStatus {
     Recent,
 }
 
+#[cfg(windows)]
 pub(crate) fn valid_guid(s: &str) -> bool {
     s.len() == 36
         && s.bytes().enumerate().all(|(i, b)| {
