@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Ametista",
-  "version": "0.6.0",
-  "identifier": "local.ametista.desktop",
+  "version": "0.6.5",
+  "identifier": "io.github.nin40301.ametista",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://127.0.0.1:1420",
@@ -23,13 +23,12 @@
     ],
     "security": {
       "csp": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src ipc: http://ipc.localhost; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'",
-      "capabilities": [
-        "main"
-      ]
+      "capabilities": ["main"]
     }
   },
   "bundle": {
     "active": false,
-    "publisher": "Ametista"
+    "publisher": "Ametista",
+    "icon": ["icons/icon.ico"]
   }
 }

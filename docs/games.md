@@ -147,7 +147,7 @@ abrir o jogo por outra API.
 
 ## Dados e execução
 
-Biblioteca em `%LOCALAPPDATA%\local.ametista.desktop\games\games.json`, formato
+Biblioteca em `%LOCALAPPDATA%\io.github.nin40301.ametista\games\games.json`, formato
 fechado/validado, escrita atômica e lock. Não aceita comandos, alvos Windows ou
 IDs fora do catálogo temporário. Caminhos ficam locais; biblioteca/status não
 são exportados no benchmark anonimizado. `monitor-status.json` é uma projeção,

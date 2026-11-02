@@ -40,7 +40,7 @@ pub fn data_directory() -> std::io::Result<std::path::PathBuf> {
         CoTaskMemFree(path.cast());
     }
     Ok(std::path::PathBuf::from(value)
-        .join("local.ametista.desktop")
+        .join("io.github.nin40301.ametista")
         .join("games"))
 }
 pub fn stopped() -> bool {

@@ -54,7 +54,7 @@ checksum = "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923"
 
 [[package]]
 name = "ametista-acceptance"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-catalog",
  "ametista-core",
@@ -72,7 +72,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-benchmark"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-metrics",
  "csv",
@@ -85,7 +85,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-catalog"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-core",
  "ametista-exec-mock",
@@ -98,7 +98,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-cli"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-catalog",
  "ametista-core",
@@ -110,7 +110,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-core"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "serde",
  "serde_json",
@@ -122,7 +122,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-desktop"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-benchmark",
  "ametista-catalog",
@@ -138,7 +138,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-desktop-backend"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-catalog",
  "ametista-core",
@@ -151,7 +151,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-exec-appx"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-core",
  "ametista-exec-mock",
@@ -160,14 +160,14 @@ dependencies = [
 
 [[package]]
 name = "ametista-exec-mock"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-core",
 ]
 
 [[package]]
 name = "ametista-exec-power"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-core",
  "ametista-exec-mock",
@@ -176,7 +176,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-exec-registry"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-core",
  "ametista-exec-mock",
@@ -185,7 +185,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-exec-scheduled-task"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-core",
  "ametista-exec-mock",
@@ -194,7 +194,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-exec-service"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-core",
  "ametista-exec-mock",
@@ -203,7 +203,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-exec-startup"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-core",
  "ametista-exec-mock",
@@ -212,7 +212,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-helper"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-ipc",
  "embed-resource",
@@ -221,7 +221,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-ipc"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-catalog",
  "ametista-core",
@@ -236,7 +236,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-metrics"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "serde",
  "serde_json",
@@ -246,7 +246,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-monitor"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-catalog",
  "ametista-core",
@@ -261,7 +261,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-watcher"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-catalog",
  "ametista-core",
@@ -275,7 +275,7 @@ dependencies = [
 
 [[package]]
 name = "ametista-windows-runtime"
-version = "0.6.0"
+version = "0.6.5"
 dependencies = [
  "ametista-catalog",
  "ametista-core",
