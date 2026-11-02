@@ -1,5 +1,6 @@
 # Fase 6.5 — Ametista
 
+> Histórico: orçamento de pico e padrão de efeitos desta fase foram substituídos. Consulte [a política vigente](performance.md); não use este relato como estado atual.
 ## Resumo
 
 Branch `design/liquid-glass`. Produto e identificadores renomeados para Ametista/ametista. O backend conserva catálogo, perfis, confirmações, IPC autenticado, WAL e recuperação. A única extensão funcional é o bloqueio de escrita exigido quando há dados no diretório anterior de ProgramData: não migra, não move e não apaga. O teste usa somente uma pasta temporária.

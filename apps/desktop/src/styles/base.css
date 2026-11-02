@@ -133,6 +133,16 @@ input {
 :root[data-effects='reduced'] .glass::before {
   display: none;
 }
+@media (prefers-reduced-transparency: reduce) {
+  :root .glass {
+    background: var(--solid-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  :root .glass::before {
+    display: none;
+  }
+}
 :root[data-effects='reduced'] *,
 :root[data-effects='reduced'] *::before,
 :root[data-effects='reduced'] *::after {

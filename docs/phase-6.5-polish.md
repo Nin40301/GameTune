@@ -1,5 +1,6 @@
 # Polimento da Fase 6.5
 
+> Histórico: orçamento de pico e padrão de efeitos desta fase foram substituídos. Consulte [a política vigente](performance.md); não use este relato como estado atual.
 ## Resumo
 
 Alterações restritas à UI, traduções, testes e documentação. Nenhum crate, comando Tauri, manifesto, executor, confirmação do backend ou política de segurança foi alterado. Nenhum ajuste do Windows foi aplicado no host.

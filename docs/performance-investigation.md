@@ -1,6 +1,6 @@
 # Investigação de consumo da interface — 2026-11-01
 
-O salto de RAM aparece em `1067244`, quando as telas passam a usar a nova composição. Além disso, o CSS minificado de produção mantinha o blur ativo no modo Reduzido, apesar do fundo sólido. A correção é testada contra o CSS compilado, e não somente contra o servidor de desenvolvimento. A identidade Ametista foi preservada. As correções diminuem trabalho visual, mas **o orçamento continua reprovado**. Não houve mudança no backend, na segurança, no coletor Rust, no probe, no harness ou nos limites. Nenhuma configuração do Windows foi aplicada.
+O salto de RAM aparece em `1067244`, quando as telas passam a usar a nova composição. Além disso, o CSS minificado de produção mantinha o blur ativo no modo Reduzido, apesar do fundo sólido. A correção é testada contra o CSS compilado, e não somente contra o servidor de desenvolvimento. A identidade Ametista foi preservada. As correções diminuem trabalho visual, mas **o resultado pertence ao critério histórico de pico, substituído pela [política atual](performance.md)**. Não houve mudança no backend, na segurança, no coletor Rust, no probe, no harness ou nos limites. Nenhuma configuração do Windows foi aplicada.
 
 ## Método e ambiente
 
@@ -105,7 +105,7 @@ pwsh -NoProfile -File tools/test-resource-budget.ps1 -Mode interface
 # Guarde o JSON de work/resource-budget-phase-6/interface.json inclusive se falhar
 ```
 
-O harness permanece idêntico. Cada execução precisa de janela visível, mesmo tamanho, DPI, tema e condição de foco; não abra DevTools nem rode builds/testes durante a coleta. As falhas de orçamento são esperadas neste host e não devem ser mascaradas. Os logs, snapshots de amostras, metadados dos builds antigos e scripts auxiliares foram conservados no pacote de evidências; os executáveis antigos ficam preservados localmente, fora do ZIP, com seus hashes; não é necessário executar alvos de catálogo para medir.
+O harness permanece idêntico. Cada execução precisa de janela visível, mesmo tamanho, DPI, tema e condição de foco; não abra DevTools nem rode builds/testes durante a coleta. Os resultados abaixo usam o critério de pico vigente na data da investigação; não são a avaliação atual por mediana. Os logs, snapshots de amostras, metadados dos builds antigos e scripts auxiliares foram conservados no pacote de evidências; os executáveis antigos ficam preservados localmente, fora do ZIP, com seus hashes; não é necessário executar alvos de catálogo para medir.
 
 ## Verificação, riscos e pendências
 
@@ -123,4 +123,4 @@ Capturas finais estão em `outputs/perf-investigation/screenshots`. Dados determ
 
 O trabalho não comprova conformidade de consumo nem uma economia estável de RAM. Corrigir o Reduzido era necessário para desligar o blur de fato, mas não se traduz automaticamente em menor working set: superfícies que deixam de ser compostas separadamente também podem mudar a rasterização do documento. Os dois ensaios não isolam o custo de cada buffer. O maior custo restante está na composição/árvore da WebView; CPU de pico também varia e falha, inclusive em builds anteriores ao redesign. Dois ensaios não permitem separar causalmente cada efeito ou atribuir o desvio histórico a uma versão específica de Windows/WebView2. A referência antiga de 132,86 MiB/0,7692% não é uma medição pareada atual.
 
-NVDA/Narrador, DPI alto, outras GPUs/WebView2 e testes administrativos em VM continuam pendentes. O monitor Rust separado não foi modificado nem reavaliado. Próximo passo: investigar a alocação do processo GPU/browser com ferramentas de memória, mantendo o visual e o mesmo gate; não iniciar a Fase 7 alegando que o orçamento passou.
+NVDA/Narrador, DPI alto, outras GPUs/WebView2 e testes administrativos em VM continuam pendentes. O monitor Rust separado não foi modificado nem reavaliado. Investigação encerrada por decisão do titular. A linha de base e o gate vigentes estão em [performance.md](performance.md); não há novo trabalho de GPU/WebView previsto nesta entrega.

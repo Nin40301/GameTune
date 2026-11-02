@@ -1,0 +1,29 @@
+{
+  "summary": {
+    "executions": 5,
+    "runMedianRamBytes": {
+      "minimum": 170983424.0,
+      "median": 173232128.0,
+      "maximum": 184813568.0
+    },
+    "runMedianCpuPercent": {
+      "minimum": 0.0,
+      "median": 0.0,
+      "maximum": 0.0
+    },
+    "runCpuP95Percent": {
+      "minimum": 0.3844480233674776,
+      "median": 0.390625,
+      "maximum": 0.3971015523407018
+    },
+    "observedMinimumRamBytes": 135385088.0,
+    "observedMaximumRamBytes": 212127744.0,
+    "observedMinimumCpuPercent": 0.0,
+    "observedMaximumCpuPercent": 1.4322916666666667
+  },
+  "ramRegression": false,
+  "cpuMedianRegression": false,
+  "ramCapExceeded": false,
+  "cpuP95Alert": false,
+  "passed": true
+}

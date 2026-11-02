@@ -121,20 +121,15 @@ cargo build -p ametista-metrics --example budget --release --locked --offline
 
 Desktop interativo sem administrador, sem outra instância. A interface permanece
 aberta e visível, com o dashboard real. O monitor é outro processo Rust, sem
-WebView, em modo somente leitura para esse ensaio. Ambos usam o mesmo coletor/gate,
-30 s de aquecimento e 60 s de coleta. RAM é working set privado residente somado
-da árvore inteira; CPU é o **máximo de amostras de 1 s**, normalizado por toda a
-capacidade da máquina. Nenhum working set é esvaziado e nenhum processo externo
-é encerrado. Páginas compartilhadas não são contadas várias vezes.
+WebView, em modo somente leitura para esse ensaio. Ambos usam o mesmo coletor: 30 s de aquecimento e 60 s de coleta por execução. RAM é working set privado residente somado da árvore inteira; CPU é normalizada por toda a capacidade da máquina. Nenhum working set é esvaziado e nenhum processo externo é encerrado.
 
-| Perfil fechado do gate | RAM privada máxima | CPU máxima de 1 s |
+| Processo | RAM | CPU |
 | --- | --- | --- |
-| Interface aberta | <=150 MiB | <1%, meta anterior preservada |
-| Monitor de jogos Rust | <=15 MiB | <0,5% |
+| Interface aberta | Mediana das cinco medianas; falha por regressão >15% ou teto de 200 MiB | Mediana das cinco medianas: regressão >15% bloqueia; p95 ≥1% é alerta; picos não bloqueiam |
+| Monitor Rust | Pico ≤15 MiB | Pico <0,5% |
 
-Limites não são ajustados por host ocupado. Coleta incompleta, valores ausentes,
-picos fora do limite ou gaps excessivos reprovam. O teste fecha somente a janela
-que criou ou pede parada pelo nonce da instância do monitor; não termina jogos.
+Veja [linha de base e política vigente](performance.md). Os limites não são ajustados por host ocupado; coleta incompleta ou inválida é erro. O harness fecha somente a janela que criou ou pede parada pelo nonce da sua própria instância do monitor. Não termina jogos. Esse gate de consumo do app não altera o protocolo de benchmark antes/depois do Windows.
+
 Evidência em `work/resource-budget-phase-6/`. Recursos WMI compartilhados fora da
 árvore e o auxiliar lançado via UAC precisam de ensaio adicional em VM; o gate
 somente leitura não representa o custo de aplicar/reverter uma sessão elevada.

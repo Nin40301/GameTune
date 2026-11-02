@@ -1,0 +1,415 @@
+{
+  "application": {
+    "commit": "720582e6d88ffb408e28c231af7fc851dd2dc662",
+    "executableSha256": "73f62e24b8ac6bfcba2d501bed24e62b2c9d757f6067ff175c477dd6871ab7e5",
+    "identifier": "local.ametista.desktop",
+    "measurementProbeSha256": "400d696b92daea466b8f65b8a08170fff56f8b4ac4cca6e96b20e2c7d25eb454",
+    "product": "Ametista",
+    "version": "0.6.0"
+  },
+  "capturedUtc": "2026-11-02T03:00:08.8408458Z",
+  "conditions": {
+    "debuggingDuringMeasurement": false,
+    "discardedRuns": 0,
+    "effectsVerifiedOnFreshProcess": true,
+    "gamesClosed": true,
+    "language": "pt-BR",
+    "periodMilliseconds": 1000,
+    "realBackend": true,
+    "runsPerMode": 5,
+    "samplesPerRun": 60,
+    "screen": "Home",
+    "theme": "light",
+    "warmupSeconds": 30,
+    "windowHeight": 740,
+    "windowWidth": 1100
+  },
+  "host": {
+    "build": "26200",
+    "cpu": {
+      "Name": "AMD Ryzen 5 8600G w/ Radeon 760M Graphics      ",
+      "NumberOfLogicalProcessors": 12
+    },
+    "devicePixelRatio": 1,
+    "dpi": 96,
+    "edition": "Professional",
+    "gpu": {
+      "DriverVersion": "32.0.21030.2001",
+      "Name": "AMD Radeon 760M Graphics"
+    },
+    "totalPhysicalBytes": 16234831872,
+    "ubr": 9711,
+    "version": "10.0.26200",
+    "webView2": "156.0.4314.58",
+    "windows": "Microsoft Windows 11 Pro"
+  },
+  "modes": {
+    "full": {
+      "runs": [
+        {
+          "cpuP95Percent": 0.3844480233674776,
+          "cpuPercent": {
+            "maximum": 0.6510416666666666,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 199700480.0,
+            "median": 184813568.0,
+            "minimum": 170549248.0
+          },
+          "samples": 60,
+          "spanMs": 59000
+        },
+        {
+          "cpuP95Percent": 0.390625,
+          "cpuPercent": {
+            "maximum": 1.1627906976744187,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 188022784.0,
+            "median": 171898880.0,
+            "minimum": 159981568.0
+          },
+          "samples": 60,
+          "spanMs": 59003
+        },
+        {
+          "cpuP95Percent": 0.38870223445595853,
+          "cpuPercent": {
+            "maximum": 1.4322916666666667,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 191565824.0,
+            "median": 170983424.0,
+            "minimum": 135385088.0
+          },
+          "samples": 60,
+          "spanMs": 59001
+        },
+        {
+          "cpuP95Percent": 0.3906504644719687,
+          "cpuPercent": {
+            "maximum": 1.1780104712041886,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 212127744.0,
+            "median": 173520896.0,
+            "minimum": 154324992.0
+          },
+          "samples": 60,
+          "spanMs": 58997
+        },
+        {
+          "cpuP95Percent": 0.3971015523407018,
+          "cpuPercent": {
+            "maximum": 1.0403120936280885,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 197472256.0,
+            "median": 173232128.0,
+            "minimum": 150241280.0
+          },
+          "samples": 60,
+          "spanMs": 59000
+        }
+      ],
+      "summary": {
+        "executions": 5,
+        "observedMaximumCpuPercent": 1.4322916666666667,
+        "observedMaximumRamBytes": 212127744.0,
+        "observedMinimumCpuPercent": 0.0,
+        "observedMinimumRamBytes": 135385088.0,
+        "runCpuP95Percent": {
+          "maximum": 0.3971015523407018,
+          "median": 0.390625,
+          "minimum": 0.3844480233674776
+        },
+        "runMedianCpuPercent": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0
+        },
+        "runMedianRamBytes": {
+          "maximum": 184813568.0,
+          "median": 173232128.0,
+          "minimum": 170983424.0
+        }
+      }
+    },
+    "reduced": {
+      "runs": [
+        {
+          "cpuP95Percent": 0.2604166666666667,
+          "cpuPercent": {
+            "maximum": 0.390625,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 234569728.0,
+            "median": 216469504.0,
+            "minimum": 182489088.0
+          },
+          "samples": 60,
+          "spanMs": 59003
+        },
+        {
+          "cpuP95Percent": 0.26749702837520667,
+          "cpuPercent": {
+            "maximum": 0.39113428943937417,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 224526336.0,
+            "median": 198658048.0,
+            "minimum": 169943040.0
+          },
+          "samples": 60,
+          "spanMs": 59000
+        },
+        {
+          "cpuP95Percent": 0.266927083333333,
+          "cpuPercent": {
+            "maximum": 0.5208333333333334,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 251117568.0,
+            "median": 216811520.0,
+            "minimum": 172691456.0
+          },
+          "samples": 60,
+          "spanMs": 59002
+        },
+        {
+          "cpuP95Percent": 0.3877483042635659,
+          "cpuPercent": {
+            "maximum": 0.7761966364812419,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 242298880.0,
+            "median": 187727872.0,
+            "minimum": 162492416.0
+          },
+          "samples": 60,
+          "spanMs": 59000
+        },
+        {
+          "cpuP95Percent": 0.26837187671754076,
+          "cpuPercent": {
+            "maximum": 0.39113428943937417,
+            "median": 0.0,
+            "minimum": 0.0
+          },
+          "ramBytes": {
+            "maximum": 234582016.0,
+            "median": 215486464.0,
+            "minimum": 178786304.0
+          },
+          "samples": 60,
+          "spanMs": 58999
+        }
+      ],
+      "summary": {
+        "executions": 5,
+        "observedMaximumCpuPercent": 0.7761966364812419,
+        "observedMaximumRamBytes": 251117568.0,
+        "observedMinimumCpuPercent": 0.0,
+        "observedMinimumRamBytes": 162492416.0,
+        "runCpuP95Percent": {
+          "maximum": 0.3877483042635659,
+          "median": 0.26749702837520667,
+          "minimum": 0.2604166666666667
+        },
+        "runMedianCpuPercent": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0
+        },
+        "runMedianRamBytes": {
+          "maximum": 216811520.0,
+          "median": 215486464.0,
+          "minimum": 187727872.0
+        }
+      }
+    }
+  },
+  "monitor": {
+    "collectedUtc": "2026-11-02T02:58:38.8083910Z",
+    "executableSha256": "58883408D4F2BB75D9CE13A35BE0CBC5E9228F20B0B0973C5EFF2A47D54960EF",
+    "exitCode": 0,
+    "measurement": {
+      "passed": true,
+      "peakCpuPercent": 0.12987012987012986,
+      "peakPrivateBytes": 2588672,
+      "samples": 60
+    },
+    "probeSha256": "400D696B92DAEA466B8F65B8A08170FFF56F8B4AC4CCA6E96B20E2C7D25EB454",
+    "report": "docs/history/perf-baseline-0.6.5/monitor.json",
+    "reportSha256": "158454f66b306b5040d33e07f6b3e30657c0f6a7410499b179b65544e94c3ac8"
+  },
+  "policy": {
+    "aggregation": "median of the five per-run medians; min/max and p95 preserved",
+    "baselineUpdate": "Explicit reviewed candidate only; no automatic replacement and no host-busy exclusions",
+    "cpuPeakBlocksInterface": false,
+    "cpuPolicyInterpretation": "Owner explicitly selected blocking regression for both RAM and CPU medians; p95 remains warning-only",
+    "interfaceCpuP95WarningPercent": 1,
+    "interfaceMedianRamCapMiB": 200,
+    "maxMedianRegressionPercent": 15,
+    "medianRegressionMetrics": [
+      "ram",
+      "cpu"
+    ],
+    "monitorPeakCpuStrictlyBelowPercent": 0.5,
+    "monitorPeakRamCapMiB": 15,
+    "zeroCpuBaseline": "zero baseline accepts zero only; any positive CPU median is a regression; no artificial floor"
+  },
+  "schemaVersion": 1,
+  "sources": {
+    "full": [
+      {
+        "endedUtc": "2026-11-02T02:43:01.7717152Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "f3d2e4c55c1bbe14a2319309735beef36d580f6f72d31d1cd83e72a7c07b92f8",
+        "path": "docs/history/perf-baseline-0.6.5/full-1.json",
+        "sha256": "27500294a1579ef60914bc3f9a434baf774d17bd606cb2cfb22f1923f3de9ad6",
+        "startedUtc": "2026-11-02T02:41:31.0575711Z",
+        "timestampsNormalized": true
+      },
+      {
+        "endedUtc": "2026-11-02T02:44:34.3703326Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "13fd0af6113116df4753b30bf9cf759f0a9131bf55977ddfe27e4b97e0e5a522",
+        "path": "docs/history/perf-baseline-0.6.5/full-2.json",
+        "sha256": "c2f11c90183473b27633168620a761d102d504d6abd300a5fa99d09d7cbab334",
+        "startedUtc": "2026-11-02T02:43:03.8013764Z",
+        "timestampsNormalized": true
+      },
+      {
+        "endedUtc": "2026-11-02T02:46:06.9355216Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "0d25df7785af2f773ee9f3d247bfb7cc414c76b1c2ac12610999eced2736d474",
+        "path": "docs/history/perf-baseline-0.6.5/full-3.json",
+        "sha256": "151915d84c11fde5a37a813e8191d80124bdd62f9d91d905644e3351a0fcb4e3",
+        "startedUtc": "2026-11-02T02:44:36.3755345Z",
+        "timestampsNormalized": true
+      },
+      {
+        "endedUtc": "2026-11-02T02:47:39.5084657Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "1d9e4b70f4555642b8a544dab04ef740be2e07e844b65818f75199bec72408c7",
+        "path": "docs/history/perf-baseline-0.6.5/full-4.json",
+        "sha256": "76c11bbb78958fe76a5ddf6b861779aee40905cc55759774584e0c4129cadc02",
+        "startedUtc": "2026-11-02T02:46:08.9409265Z",
+        "timestampsNormalized": true
+      },
+      {
+        "endedUtc": "2026-11-02T02:49:12.0680026Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "b9f53e0ebf986d031b8148304911d904ef89cdf14e32e93551be83c464a5549c",
+        "path": "docs/history/perf-baseline-0.6.5/full-5.json",
+        "sha256": "e108fc066298c1a80c6e2472df73fecb7d6af15c98ef9feaf7ffd849d6e5d593",
+        "startedUtc": "2026-11-02T02:47:41.5211997Z",
+        "timestampsNormalized": true
+      }
+    ],
+    "fullPreflight": {
+      "state": {
+        "blur": 3,
+        "dpr": 1,
+        "effects": "full",
+        "focused": true,
+        "height": 740,
+        "stored": "full",
+        "theme": "light",
+        "visible": "visible",
+        "width": 1100
+      },
+      "timestamp": "2026-11-02T02:41:30.097Z"
+    },
+    "reduced": [
+      {
+        "endedUtc": "2026-11-02T02:50:54.7302416Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "1690c6a68dd27e9b48ab9af13f5ae082e1eed01b11938ad462a7ffab765a5bab",
+        "path": "docs/history/perf-baseline-0.6.5/reduced-1.json",
+        "sha256": "8995594949b5f12eb52bb97dd2930c1323f716afb77038cfd8ab2bd213d5445e",
+        "startedUtc": "2026-11-02T02:49:24.0470536Z",
+        "timestampsNormalized": true
+      },
+      {
+        "endedUtc": "2026-11-02T02:52:27.3080608Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "13fb5dc7ae0e34ca4ff8668792643ac669a4a9ceca07c0290d7e5c416231c923",
+        "path": "docs/history/perf-baseline-0.6.5/reduced-2.json",
+        "sha256": "b4e06de3f5b68acf9f72f2c2eefaefe7f5ec1c0e3075929d0a195ba4cd846cba",
+        "startedUtc": "2026-11-02T02:50:56.7518905Z",
+        "timestampsNormalized": true
+      },
+      {
+        "endedUtc": "2026-11-02T02:53:59.8889528Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "3cb715cc42d6cec8ea6ac4026cea5b3fbdd27389d087905f46d2e90450bfb4ce",
+        "path": "docs/history/perf-baseline-0.6.5/reduced-3.json",
+        "sha256": "f06e829774b490b59df6aeeeb45b6455799d2d33d19bdd6dcd94516471f21a11",
+        "startedUtc": "2026-11-02T02:52:29.3180791Z",
+        "timestampsNormalized": true
+      },
+      {
+        "endedUtc": "2026-11-02T02:55:32.4572339Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "291f0b19876efa2cf2b9a8a622ba660c8866a3076791a8e1dc608083004f5973",
+        "path": "docs/history/perf-baseline-0.6.5/reduced-4.json",
+        "sha256": "578824421e0200e51e4488b9bb16418703523ec6bdd24d3e3d30651d9dbfd4ab",
+        "startedUtc": "2026-11-02T02:54:01.8957355Z",
+        "timestampsNormalized": true
+      },
+      {
+        "endedUtc": "2026-11-02T02:57:05.0474223Z",
+        "legacyCollectionExitCode": 1,
+        "legacyProbeUsesSupersededPeakLimits": true,
+        "originalSha256": "759a6b61477375ef235c1bf1118cf47c9a5b6d0b6f9bbe26e91ba70221fba27d",
+        "path": "docs/history/perf-baseline-0.6.5/reduced-5.json",
+        "sha256": "a2329ccbafc4c88171c76f272d054b945c71eff8899d110f4c954b18c78b97ae",
+        "startedUtc": "2026-11-02T02:55:34.4749734Z",
+        "timestampsNormalized": true
+      }
+    ],
+    "reducedPreflight": {
+      "state": {
+        "blur": 0,
+        "dpr": 1,
+        "effects": "reduced",
+        "focused": true,
+        "height": 740,
+        "stored": "reduced",
+        "theme": "light",
+        "visible": "visible",
+        "width": 1100
+      },
+      "timestamp": "2026-11-02T02:49:22.937Z"
+    }
+  }
+}

@@ -35,6 +35,13 @@ test('compiled production CSS actually disables blur in reduced effects and forc
   await page.locator('html').evaluate((html) => {
     html.dataset.effects = 'full'
   })
+  const session = await page.context().newCDPSession(page)
+  await session.send('Emulation.setEmulatedMedia', {
+    features: [{ name: 'prefers-reduced-transparency', value: 'reduce' }],
+  })
+  expect(await blur()).toEqual(['none', 'none', 'none'])
+  await session.send('Emulation.setEmulatedMedia', { features: [] })
+  await session.detach()
   await page.emulateMedia({ forcedColors: 'active' })
   expect(await blur()).toEqual(['none', 'none', 'none'])
 })

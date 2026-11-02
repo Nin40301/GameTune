@@ -77,9 +77,14 @@ export function App({ backend }: { backend: Backend }) {
   const [theme, setTheme] = useState<Theme>(() =>
     preference('theme', 'light') === 'dark' ? 'dark' : 'light',
   )
-  const [effects, setEffects] = useState<'full' | 'reduced'>(() =>
-    preference('effects', 'reduced') === 'full' ? 'full' : 'reduced',
-  )
+  const [effects, setEffects] = useState<'full' | 'reduced'>(() => {
+    const stored = preference('effects', '')
+    if (stored === 'full' || stored === 'reduced') return stored
+    return typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-transparency: reduce)').matches
+      ? 'reduced'
+      : 'full'
+  })
   const [advanced, setAdvanced] = useState(() => preference('advanced', 'false') === 'true')
   const [compactNavigation, setCompactNavigation] = useState(
     () =>
