@@ -40,7 +40,7 @@ Fontes: [NtQuerySystemInformation](https://learn.microsoft.com/en-us/windows/win
    o fluxo de reversão ou faça um experimento separado. Nunca há troca automática.
 5. Compare RAM disponível, CPU e processos. Não existe escore ou ganho de FPS.
 
-Dados ficam em `%LOCALAPPDATA%\local.ametista.desktop\measurements\benchmark.json`.
+Dados ficam em `%LOCALAPPDATA%\io.github.nin40301.ametista\measurements\benchmark.json`.
 Estado versionado, checksum, limite de tamanho, lock exclusivo e substituição
 atômica com sync protegem contra corrupção/instâncias simultâneas. Esse arquivo
 não concede autorização ao motor e não contém comandos. Uma rodada em andamento

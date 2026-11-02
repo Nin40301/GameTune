@@ -1,7 +1,7 @@
 # Ametista
 
-Aplicativo offline de ajustes do Windows para jogos. **Fase 6: monitor Rust
-independente e perfis temporários por jogo**, sobre o mesmo backend da CLI/UI.
+Aplicativo offline de ajustes do Windows para jogos. **Ametista 0.6.5 alfa**,
+com interface, monitor Rust independente e perfis temporários por jogo.
 Aceite UAC/escritas/reinícios na matriz de VM ainda pendente. Licença Apache-2.0.
 Orçamentos separados: interface com linha de base de cinco execuções, regressão
 das medianas de RAM/CPU >15% e teto mediano de RAM de 200 MiB; p95 como alerta. O monitor mantém
@@ -10,7 +10,7 @@ picos de RAM <=15 MiB e CPU <0,5%. Veja [política e medições](docs/performanc
 Leia [como compilar e usar a interface](docs/desktop.md),
 [limite de privilégios e IPC](docs/desktop-security.md) e
 [protocolo de benchmark](docs/benchmark.md), [jogos e monitor](docs/games.md) e
-[relatório da Fase 6](docs/phase-6.md).
+[histórico técnico](docs/phase-6.md).
 
 ## O que está implementado
 
@@ -174,6 +174,6 @@ Assinatura/instaladores entram na Fase 7. Certificado e senha serão segredos
 `WINDOWS_CERTIFICATE_BASE64` e `WINDOWS_CERTIFICATE_PASSWORD`; nenhum certificado
 é usado pelo pipeline atual. Veja [LICENSE](LICENSE) e [NOTICE](NOTICE).
 
-## Fase 6.5 — Ametista e interface
+## Interface
 
 A marca e os binários usam `Ametista`/`ametista`. Tema claro e efeitos completos são o padrão para novas preferências, com respeito à transparência reduzida. O titular aceitou a diferença de memória para fechar a 6.5. A [política atual](docs/performance.md) usa cinco execuções por modo: Completo passa; Reduzido excede o teto mediano de 200 MiB em 5,50 MiB neste host. O monitor continua estrito e passou. A investigação de GPU/WebView foi encerrada; os resultados antigos de pico permanecem como histórico, sem representar o gate vigente.

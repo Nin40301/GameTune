@@ -202,6 +202,6 @@ pub fn monitor_running() -> std::result::Result<bool, String> {
     let directory = std::env::var_os("LOCALAPPDATA")
         .map(PathBuf::from)
         .ok_or("games_storage")?
-        .join("local.ametista.desktop/games");
+        .join("io.github.nin40301.ametista/games");
     Ok(status(&directory).running)
 }

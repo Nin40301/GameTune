@@ -35,7 +35,7 @@ try{
         }finally{
             if(-not $taskApp.HasExited){
                 if($Mode -eq 'game_monitor'){
-                    $taskStateDir=Join-Path $env:LOCALAPPDATA 'local.ametista.desktop/games'
+                    $taskStateDir=Join-Path $env:LOCALAPPDATA 'io.github.nin40301.ametista/games'
                     $taskState=Get-Content -LiteralPath (Join-Path $taskStateDir 'monitor-status.json') -Raw | ConvertFrom-Json
                     if($taskState.pid -ne $taskApp.Id){throw 'Refuse to stop a monitor not created by this harness'}
                     ConvertTo-Json -InputObject $taskState.instance -Compress | Set-Content -LiteralPath (Join-Path $taskStateDir 'monitor-stop.json') -Encoding utf8

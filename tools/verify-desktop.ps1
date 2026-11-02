@@ -1,5 +1,7 @@
 $ErrorActionPreference='Stop'
 $root=Split-Path -Parent $PSScriptRoot
+& node (Join-Path $root 'tools/verify-version.mjs')
+if($LASTEXITCODE -ne 0){throw 'Release version/identity verification failed'}
 $evidence=Join-Path $root 'work/desktop-verification'
 $null=New-Item -ItemType Directory -Path $evidence -Force
 $kits=Join-Path ${env:ProgramFiles(x86)} 'Windows Kits/10/bin'
@@ -13,6 +15,9 @@ foreach($spec in @(@('ametista','asInvoker'),@('ametista-helper','requireAdminis
     [xml]$xml=Get-Content -LiteralPath $manifest -Raw
     $node=$xml.SelectSingleNode('//*[local-name()="requestedExecutionLevel"]')
     if($node.level -cne $spec[1] -or $node.uiAccess -cne 'false'){throw ('Invalid execution level for '+$spec[0])}
+    $releaseVersion=(Get-Content -LiteralPath (Join-Path $root 'apps/desktop/package.json') -Raw|ConvertFrom-Json).version
+    $versionInfo=(Get-Item -LiteralPath $exe).VersionInfo
+    if($versionInfo.ProductName -cne 'Ametista' -or $versionInfo.ProductVersion -cne $releaseVersion){throw ('Invalid native product/version for '+$spec[0])}
 }
 $assets=Join-Path $root 'apps/desktop/dist/assets'
 foreach($asset in Get-ChildItem -LiteralPath $assets -Filter '*.js' -File){

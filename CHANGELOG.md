@@ -1,3 +1,14 @@
+# 0.6.5 — Ametista — 2026-11-02
+
+- Identidade Ametista, interface lilás com vidro, pt-BR/en e temas claro/escuro
+- Versões Cargo/npm/Tauri/recursos Win32 alinhadas em 0.6.5
+- Identificador estável `io.github.nin40301.ametista`; dados anteriores não são apagados nem migrados automaticamente
+- Linha de base de cinco execuções por modo; regressão de medianas RAM/CPU >15% e teto mediano de RAM de 200 MiB; p95 de CPU como alerta
+- Completo passa e é o padrão para novas preferências; Reduzido permanece opção, mas excede o teto neste host em 5,50 MiB
+- Monitor mantém os limites estritos de 15 MiB e CPU <0,5% e passou
+- Alfa para testes em VM; sem assinatura ou instalador final nesta etapa
+- Tag v0.6.0 preservada como referência; não houve merge automático
+
 # Investigação de consumo da interface — 2026-11-01
 
 - Bisect com duas coletas nativas por versão, hashes e traces de 10 s da WebView
