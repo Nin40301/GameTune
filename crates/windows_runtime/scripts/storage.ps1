@@ -46,4 +46,5 @@ foreach($file in Get-ChildItem -LiteralPath $directory -Force){
     if($acl.GetOwner([Security.Principal.SecurityIdentifier]).Value -notin @('S-1-5-32-544','S-1-5-18')){Fail 'protected'}
     foreach($rule in $acl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier])){if($rule.IdentityReference.Value -notin @('S-1-5-32-544','S-1-5-18') -or $rule.AccessControlType -ne 'Allow'){Fail 'protected'}}
 }
+if(-not $p.testRoot){Secure-Directory (Join-Path $root 'logs')}
 Emit $directory

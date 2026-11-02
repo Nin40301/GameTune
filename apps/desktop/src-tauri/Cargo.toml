@@ -20,6 +20,7 @@ ametista-ipc.workspace = true
 ametista-watcher.workspace = true
 ametista-catalog.workspace = true
 ametista-core.workspace = true
+ametista-windows-runtime.workspace = true
 serde.workspace = true
 [target.'cfg(windows)'.dependencies]
 tauri = { version = "2.12.3", default-features = false, features = ["wry", "compression", "common-controls-v6"] }

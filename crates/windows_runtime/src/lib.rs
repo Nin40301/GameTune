@@ -1,4 +1,4 @@
-#![forbid(unsafe_code)]
+#![deny(unsafe_code)]
 //! Fixed Windows operations. This crate never accepts command or script text from callers.
 #[cfg(feature = "vm-tests")]
 pub mod fixture;
@@ -10,6 +10,13 @@ pub mod real_profiles;
 mod registry;
 mod scan;
 pub use scan::*;
+pub mod logging;
+#[cfg(windows)]
+#[allow(unsafe_code)]
+mod native;
+mod service;
+mod support;
+pub use support::*;
 mod startup;
 mod storage;
 mod transport;
@@ -44,16 +51,13 @@ impl WindowsContext {
     }
     #[cfg(all(windows, test))]
     fn current_test_user() -> ExecResult<Self> {
-        let identity: Identity = transport::run(
-            transport::Script::Identity,
-            &serde_json::json!({"testCurrentUser":true}),
-        )?;
+        let identity = native::identity(true)?;
         let scope = format!("test:{}:{}", identity.machine_guid, identity.sid);
         Ok(Self { identity, scope })
     }
+    #[cfg(windows)]
     pub fn detect() -> ExecResult<Self> {
-        let identity: Identity =
-            transport::run(transport::Script::Identity, &serde_json::json!({}))?;
+        let identity = native::identity(false)?;
         if !valid_sid(&identity.sid)
             || identity.session_id == 0
             || !valid_guid(&identity.machine_guid)
@@ -68,6 +72,10 @@ impl WindowsContext {
             identity.sid
         );
         Ok(Self { identity, scope })
+    }
+    #[cfg(not(windows))]
+    pub fn detect() -> ExecResult<Self> {
+        Err(ExecError::Unavailable)
     }
     pub fn scope(&self) -> &str {
         &self.scope

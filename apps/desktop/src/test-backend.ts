@@ -61,6 +61,7 @@ export function createMockBackend(): Backend {
     ],
   }
   const bootstrap: Bootstrap = {
+    system: { windowsBuild: 26200, edition: 'pro', protection: 'unknown', legacyData: false },
     items,
     presets: {
       safe,
@@ -169,6 +170,14 @@ export function createMockBackend(): Backend {
     },
   }
   return {
+    support: async (action) =>
+      action.kind === 'preview'
+        ? {
+            token: 'mock-preview',
+            files: [{ name: 'diagnostic.json', bytes: 2, content: '{}' }],
+            unavailable: ['logs'],
+          }
+        : null,
     games: async (action) => {
       if (action.kind === 'add_manual')
         games.library.games.push({

@@ -5,6 +5,7 @@ use std::collections::{BTreeMap, BTreeSet};
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Bootstrap {
+    pub system: ametista_windows_runtime::SystemInfo,
     pub items: Vec<Item>,
     pub presets: BTreeMap<String, Vec<String>>,
     pub compatible: BTreeMap<String, bool>,

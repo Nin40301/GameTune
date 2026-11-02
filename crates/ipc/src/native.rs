@@ -216,6 +216,8 @@ pub fn launch_helper(nonce: &str) -> Result<Helper> {
     {
         return Err(Error::Identity);
     }
+    // Keep the verified file open without write/delete sharing until ShellExecute returns.
+    let _verified = verify_installation(&own, &helper)?;
     launch(&helper, nonce)
 }
 fn launch(exe: &Path, nonce: &str) -> Result<Helper> {
@@ -255,4 +257,155 @@ fn launch(exe: &Path, nonce: &str) -> Result<Helper> {
         pid,
         _handle: handle,
     })
+}
+
+/// Audited read-only ACL and Authenticode boundary. Unknown ACE layouts fail closed.
+/// Local admins/SYSTEM/TrustedInstaller remain trusted; same-user writable installs do not.
+pub fn verify_installation(own: &Path, helper: &Path) -> Result<std::fs::File> {
+    use std::os::windows::{
+        fs::{MetadataExt, OpenOptionsExt},
+        io::AsRawHandle,
+    };
+    for (leaf, file) in [(own, true), (helper, true)] {
+        for (index, path) in leaf.ancestors().enumerate() {
+            let metadata = std::fs::symlink_metadata(path)?;
+            if metadata.file_attributes() & FILE_ATTRIBUTE_REPARSE_POINT != 0 {
+                return Err(Error::UnsafeInstallation);
+            }
+            check_install_acl(path, index > 1 || (!file && index > 0))?;
+        }
+    }
+    let file = std::fs::OpenOptions::new()
+        .read(true)
+        .share_mode(FILE_SHARE_READ)
+        .open(helper)?;
+    let mut bytes = Vec::new();
+    use std::io::Read;
+    (&file).take(64 * 1024 * 1024 + 1).read_to_end(&mut bytes)?;
+    if bytes.len() > 64 * 1024 * 1024
+        || !crate::helper_hash_matches(option_env!("AMETISTA_HELPER_SHA256"), &bytes)
+    {
+        return Err(Error::HelperIntegrity);
+    }
+    verify_signature(helper, file.as_raw_handle().cast())?;
+    Ok(file)
+}
+fn sid_text(sid: PSID) -> Result<String> {
+    if sid.is_null() || unsafe { IsValidSid(sid) } == 0 {
+        return Err(Error::UnsafeInstallation);
+    }
+    let mut text = ptr::null_mut();
+    // SAFETY: OS SID validated above; output is copied before LocalFree.
+    unsafe {
+        check(ConvertSidToStringSidW(sid, &mut text))?;
+    }
+    let mut len = 0;
+    unsafe {
+        while *text.add(len) != 0 && len < 184 {
+            len += 1;
+        }
+    }
+    let result = unsafe { String::from_utf16_lossy(std::slice::from_raw_parts(text, len)) };
+    unsafe {
+        LocalFree(text.cast());
+    }
+    Ok(result)
+}
+fn check_install_acl(path: &Path, ancestor: bool) -> Result<()> {
+    let path = wide(path.to_str().ok_or(Error::UnsafeInstallation)?);
+    let mut owner = ptr::null_mut();
+    let mut acl: *mut ACL = ptr::null_mut();
+    let mut descriptor = ptr::null_mut();
+    // SAFETY: valid local NUL path; returned pointers live within descriptor.
+    let code = unsafe {
+        GetNamedSecurityInfoW(
+            path.as_ptr(),
+            SE_FILE_OBJECT,
+            OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION,
+            &mut owner,
+            ptr::null_mut(),
+            &mut acl,
+            ptr::null_mut(),
+            &mut descriptor,
+        )
+    };
+    if code != 0 {
+        return Err(Error::UnsafeInstallation);
+    }
+    struct Descriptor(PSECURITY_DESCRIPTOR);
+    impl Drop for Descriptor {
+        fn drop(&mut self) {
+            unsafe {
+                LocalFree(self.0);
+            }
+        }
+    }
+    let _descriptor = Descriptor(descriptor);
+    if acl.is_null() || !crate::trusted_installer_sid(&sid_text(owner)?) {
+        return Err(Error::UnsafeInstallation);
+    }
+    // SAFETY: ACL supplied by Windows, enumerate bounded AceCount using GetAce.
+    for i in 0..unsafe { (*acl).AceCount } {
+        let mut raw = ptr::null_mut();
+        unsafe {
+            check(GetAce(acl, i.into(), &mut raw))?;
+        }
+        let header = unsafe { &*raw.cast::<ACE_HEADER>() };
+        if u32::from(header.AceFlags) & INHERIT_ONLY_ACE != 0 {
+            continue;
+        }
+        if header.AceType == 1 {
+            continue;
+        } // deny ACE; policy deliberately conservative
+        if header.AceType != 0
+            || usize::from(header.AceSize) < std::mem::size_of::<ACCESS_ALLOWED_ACE>()
+        {
+            return Err(Error::UnsafeInstallation);
+        }
+        let ace = unsafe { &*raw.cast::<ACCESS_ALLOWED_ACE>() };
+        let sid = ptr::addr_of!(ace.SidStart).cast_mut().cast();
+        if crate::unsafe_allow(ace.Mask, &sid_text(sid)?, ancestor) {
+            return Err(Error::UnsafeInstallation);
+        }
+    }
+    Ok(())
+}
+fn verify_signature(path: &Path, handle: HANDLE) -> Result<()> {
+    use windows_sys::Win32::Security::WinTrust::*;
+    let path = wide(path.to_str().ok_or(Error::HelperIntegrity)?);
+    // SAFETY: initialized structs, borrowed file handle/path stay valid through verify+close.
+    let mut info: WINTRUST_FILE_INFO = unsafe { std::mem::zeroed() };
+    info.cbStruct = std::mem::size_of::<WINTRUST_FILE_INFO>() as u32;
+    info.pcwszFilePath = path.as_ptr();
+    info.hFile = handle;
+    let mut data: WINTRUST_DATA = unsafe { std::mem::zeroed() };
+    data.cbStruct = std::mem::size_of::<WINTRUST_DATA>() as u32;
+    data.dwUIChoice = WTD_UI_NONE;
+    data.fdwRevocationChecks = WTD_REVOKE_NONE;
+    data.dwUnionChoice = WTD_CHOICE_FILE;
+    data.Anonymous.pFile = &mut info;
+    data.dwStateAction = WTD_STATEACTION_VERIFY;
+    data.dwProvFlags = WTD_CACHE_ONLY_URL_RETRIEVAL | WTD_REVOCATION_CHECK_NONE;
+    let mut action = WINTRUST_ACTION_GENERIC_VERIFY_V2;
+    let status = unsafe {
+        WinVerifyTrust(
+            INVALID_HANDLE_VALUE,
+            &mut action,
+            (&mut data as *mut WINTRUST_DATA).cast(),
+        )
+    };
+    data.dwStateAction = WTD_STATEACTION_CLOSE;
+    unsafe {
+        WinVerifyTrust(
+            INVALID_HANDLE_VALUE,
+            &mut action,
+            (&mut data as *mut WINTRUST_DATA).cast(),
+        );
+    }
+    // Unsigned alfa allowed only with protected ACL + exact embedded hash. A present
+    // untrusted/broken signature is rejected. Offline mode never fetches revocation data.
+    if status != 0 && status as u32 != 0x800b0100 {
+        return Err(Error::HelperIntegrity);
+    }
+    Ok(())
 }

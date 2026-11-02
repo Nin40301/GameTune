@@ -50,6 +50,7 @@ pub async fn serve(
         .context
         .protected_game_store()
         .map_err(|_| Error::Operation)?;
+    let _ = store.log(ametista_windows_runtime::logging::Event::GameSession, true);
     let mut journal = store.game_journal().map_err(|_| Error::Operation)?;
     let recovered = session
         .reconcile_games(&mut journal, &[])

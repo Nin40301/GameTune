@@ -1,0 +1,13 @@
+# Integridade antes do UAC
+
+O build oficial é `tools/build-release.ps1`: compila o auxiliar sem hash autorreferente, calcula SHA-256 e embute esse valor ao compilar interface **e monitor**. Builds diretos sem esse valor podem analisar, mas recusam elevar. Assinar o auxiliar no futuro exige fazê-lo **antes** de calcular o hash e compilar os clientes.
+
+Antes de ShellExecute `runas`, o IPC recusa caminhos remotos, reparse points, donos diferentes de SYSTEM/Administradores/TrustedInstaller e ACLs que permitam a outros SIDs substituir arquivos, mudar permissões/dono ou excluir o caminho. Na pasta de instalação, também recusa criar/escrever conteúdo; em ancestrais, verifica substituição sem confundir permissão de criar uma pasta independente na raiz com permissão de trocar um filho protegido. ACEs desconhecidas falham de forma conservadora; permissões allow perigosas são recusadas mesmo se houver deny que pudesse restringi-las. Isso pode recusar instalações válidas incomuns e nunca concede acesso.
+
+O auxiliar fica aberto sem compartilhamento de escrita/exclusão durante hash e lançamento. SHA-256 deve corresponder ao build; WinVerifyTrust valida Authenticode presente, sem UI/rede e com cache local apenas. Nesta alfa sem assinatura, ausência de assinatura só é admitida com ACL protegida e hash exato. Assinatura presente inválida/não confiável é recusada. Não há revogação online, pin de editor ou promessa de proteção contra administrador/Windows comprometido.
+
+**Portátil em Downloads/Documentos/pasta gravável só permite leitura.** Não há botão de ignorar, elevação para consertar permissões nem cópia automática para Program Files. O instalador protegido fica para a Fase 7. Na VM, um administrador pode preparar uma instalação de teste protegida conforme o roteiro, sem contornar verificações. Nunca aplicar ajustes no host para testar esta barreira.
+
+O auxiliar continua revalidando IDs, consentimentos, catálogo, SID/PID do pipe e sequência de uso único. Hash do cliente não prova que uma pessoa leu consentimentos: um cliente da própria conta comprometida continua no modelo de ameaça. A proteção da pasta é necessária porque hash de um cliente substituível sozinho não basta.
+
+Fontes: [GetNamedSecurityInfoW](https://learn.microsoft.com/en-us/windows/win32/api/aclapi/nf-aclapi-getnamedsecurityinfow), [File Security and Access Rights](https://learn.microsoft.com/en-us/windows/win32/fileio/file-security-and-access-rights), [WinVerifyTrust](https://learn.microsoft.com/en-us/windows/win32/api/wintrust/nf-wintrust-winverifytrust).

@@ -58,6 +58,12 @@ export interface History {
   apps: RemovedApp[]
 }
 export interface Bootstrap {
+  system: {
+    windowsBuild: number
+    edition: string
+    protection: 'unknown' | 'disabled_by_policy'
+    legacyData: boolean
+  }
   items: Item[]
   presets: Record<string, string[]>
   compatible: Record<string, boolean>
@@ -101,6 +107,7 @@ export interface Reply {
   error: string | null
 }
 export interface Backend {
+  support(action: SupportAction): Promise<DiagnosticPreview | null>
   games(action: GamesAction): Promise<GamesView>
   lab(action: LabAction): Promise<LabStatus>
   labFile(action: LabFile): Promise<LabStatus>
@@ -227,4 +234,15 @@ export interface LabStatus {
   error: string | null
   comparisons: Comparison[]
   presentmonAvailable: boolean
+}
+
+export type SupportTool = 'protection' | 'logs' | 'restart_dialog'
+export type SupportAction =
+  | { kind: 'preview' }
+  | { kind: 'save'; token: string; confirm: boolean }
+  | { kind: 'open'; tool: SupportTool }
+export interface DiagnosticPreview {
+  token: string
+  files: { name: string; bytes: number; content: string }[]
+  unavailable: string[]
 }

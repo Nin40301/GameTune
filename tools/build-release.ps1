@@ -10,10 +10,11 @@ try {
         & npm run build --prefix apps/desktop
         if ($LASTEXITCODE -ne 0) { throw 'Frontend build failed' }
     }
-    & cargo build --release --locked -p ametista-helper -p ametista-monitor -p ametista-cli
+    Remove-Item Env:AMETISTA_HELPER_SHA256 -ErrorAction SilentlyContinue
+    & cargo build --release --locked -p ametista-helper
     if ($LASTEXITCODE -ne 0) { throw 'Native auxiliary build failed' }
     $env:AMETISTA_HELPER_SHA256 = (Get-FileHash -Algorithm SHA256 -LiteralPath 'target/release/ametista-helper.exe').Hash.ToLowerInvariant()
-    & cargo build --release --locked -p ametista-desktop
+    & cargo build --release --locked -p ametista-monitor -p ametista-cli -p ametista-desktop
     if ($LASTEXITCODE -ne 0) { throw 'Desktop build failed' }
 } finally {
     if ($null -eq $taskPreviousHelperHash) { Remove-Item Env:AMETISTA_HELPER_SHA256 -ErrorAction SilentlyContinue }

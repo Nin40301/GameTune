@@ -13,5 +13,8 @@ ametista-ipc.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 tokio.workspace = true
+zip = { version = "=9.2.2", default-features = false }
+[dev-dependencies]
+tempfile.workspace = true
 [lints]
 workspace = true

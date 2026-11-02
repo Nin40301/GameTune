@@ -795,6 +795,8 @@ fn real_windows_boundaries_require_an_interactive_context() -> TestResult {
                 }
             }
             Err(ExecError::Failed(message)) if message.contains("interactive") => (),
+            // Hosted Windows runners use Server editions, outside the supported desktop matrix.
+            Err(ExecError::Unavailable) => (),
             Err(e) => return Err(e.into()),
         }
     }

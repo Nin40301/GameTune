@@ -2,13 +2,14 @@
 
 ## Superfície do WebView
 
-Somente a janela local `main` recebe nove permissões: bootstrap, iniciar/consultar/
+Somente a janela local `main` recebe dez permissões: bootstrap, iniciar/consultar/
 cancelar análise, preparar revisão, executar revisão e os comandos tipados
 `lab_action`/`lab_file`. Estes últimos controlam somente coleta/estado e seletores
 nativos de importação/exportação; não aceitam caminhos fornecidos pela UI,
 comandos livres ou operações elevadas. Payloads desconhecidos são rejeitados.
 `games_action` lê/salva biblioteca com IDs temporários validados, usa seletor
 nativo para `.exe` e inicia apenas o monitor irmão fixo. Não executa o jogo.
+`support_action` aceita apenas abrir ferramentas fixas, gerar prévia e salvar diagnóstico com token de uso único; não aceita caminhos ou texto de comando.
 AppManifest enumera esses
 comandos para o controle de acesso do Tauri 2; não se depende da permissão implícita
 de comandos customizados. Não há plugins de execução, arquivos ou rede.
@@ -73,8 +74,7 @@ execução. Não há serviço elevado instalado. Veja [contrato e limites](../us
    aguarda até 20 min por transação sem repeti-la. Se a janela fechar ou perder a
    resposta, o helper pode terminar a transação; originais continuam no WAL.
 
-FFI Rust se concentra em `ipc/src/native.rs`, com deny unsafe no restante do crate
-e forbid unsafe nos demais. As únicas aberturas de token/handle são do próprio
+FFI Rust está delimitado no [inventário auditável](unsafe-inventory.md), com deny/forbid unsafe fora dessas fronteiras. As únicas aberturas de token/handle são do próprio
 processo, thread de impersonação e helper recém-lançado. Não há OpenProcess em PID
 de terceiros, leitura de memória, injeção, drivers ou handles em jogos.
 
@@ -102,3 +102,5 @@ Fontes primárias:
 [named pipe security](https://learn.microsoft.com/en-us/windows/win32/ipc/named-pipe-security-and-access-rights),
 [impersonação de cliente](https://learn.microsoft.com/en-us/windows/win32/ipc/impersonating-a-named-pipe-client),
 [Tokio ServerOptions](https://docs.rs/tokio/1.53.3/tokio/net/windows/named_pipe/struct.ServerOptions.html).
+
+O [endurecimento pré-UAC](helper-integrity.md) recusa instalações graváveis e auxiliares diferentes do hash embutido. Logs protegidos usam eventos tipados, rotação 256 KiB/14 dias e cinco arquivos; diagnósticos projetam campos permitidos e nunca abrem ACLs para facilitar leitura.
