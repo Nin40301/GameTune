@@ -1,5 +1,6 @@
 #![forbid(unsafe_code)]
 mod models;
+pub mod support;
 use ametista_core::*;
 use ametista_ipc::Command;
 pub use ametista_ipc::Reply as IpcReply;
@@ -82,6 +83,7 @@ pub fn bootstrap() -> UiResult<Bootstrap> {
     let apps = session.removed_apps_readonly();
     let available = journal.is_ok() && apps.is_ok();
     Ok(Bootstrap {
+        system: session.context.system_info().map_err(error)?,
         items: catalog.items().cloned().collect(),
         presets,
         compatible: catalog

@@ -1,6 +1,19 @@
 {
-  "identifier":"main",
-  "description":"Only typed Ametista commands in the local main window, no general filesystem or shell API",
-  "windows":["main"],
-  "permissions":["allow-bootstrap","allow-analysis-start","allow-analysis-state","allow-analysis-cancel","allow-prepare-review","allow-execute-review","allow-lab-action","allow-lab-file","allow-games-action"]
+  "identifier": "main",
+  "description": "Only typed Ametista commands in the local main window, no general filesystem or shell API",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "allow-bootstrap",
+    "allow-analysis-start",
+    "allow-analysis-state",
+    "allow-analysis-cancel",
+    "allow-prepare-review",
+    "allow-execute-review",
+    "allow-lab-action",
+    "allow-lab-file",
+    "allow-games-action",
+    "allow-support-action"
+  ]
 }

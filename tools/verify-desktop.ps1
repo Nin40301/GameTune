@@ -19,12 +19,17 @@ foreach($spec in @(@('ametista','asInvoker'),@('ametista-helper','requireAdminis
     $versionInfo=(Get-Item -LiteralPath $exe).VersionInfo
     if($versionInfo.ProductName -cne 'Ametista' -or $versionInfo.ProductVersion -cne $releaseVersion){throw ('Invalid native product/version for '+$spec[0])}
 }
+$taskHelperHash=(Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $root 'target/release/ametista-helper.exe')).Hash.ToLowerInvariant()
+foreach($taskClient in @('ametista.exe','ametista-monitor.exe')){
+    $taskBytes=[IO.File]::ReadAllBytes((Join-Path $root ('target/release/'+$taskClient)))
+    if(-not [Text.Encoding]::ASCII.GetString($taskBytes).Contains($taskHelperHash)){throw ('Helper hash missing/stale in '+$taskClient+'; use tools/build-release.ps1')}
+}
 $assets=Join-Path $root 'apps/desktop/dist/assets'
 foreach($asset in Get-ChildItem -LiteralPath $assets -Filter '*.js' -File){
     if((Get-Content -LiteralPath $asset.FullName -Raw) -match '__ametistaTest|createMockBackend|test-backend'){throw 'Mock backend leaked into production assets'}
 }
 $cap=Get-Content -LiteralPath (Join-Path $root 'apps/desktop/src-tauri/capabilities/main.json') -Raw | ConvertFrom-Json
-$expected=@('allow-bootstrap','allow-analysis-start','allow-analysis-state','allow-analysis-cancel','allow-prepare-review','allow-execute-review','allow-lab-action','allow-lab-file','allow-games-action')
+$expected=@('allow-bootstrap','allow-analysis-start','allow-analysis-state','allow-analysis-cancel','allow-prepare-review','allow-execute-review','allow-lab-action','allow-lab-file','allow-games-action','allow-support-action')
 if(@(Compare-Object ($cap.permissions|Sort-Object) ($expected|Sort-Object)).Count -ne 0){throw 'Unexpected Tauri permission'}
 if($cap.windows.Count -ne 1 -or $cap.windows[0] -cne 'main'){throw 'Unexpected window capability'}
 $config=Get-Content -LiteralPath (Join-Path $root 'apps/desktop/src-tauri/tauri.conf.json') -Raw | ConvertFrom-Json
@@ -32,4 +37,4 @@ if($config.app.security.csp -match 'unsafe-eval|unsafe-inline|https:|\*'){throw 
 $nativeSource=Get-Content -LiteralPath (Join-Path $root 'apps/desktop/src-tauri/src/main.rs') -Raw
 if($nativeSource -match '--disable-|--enable-|--no-sandbox'){throw 'Custom experimental WebView flags present'}
 if($nativeSource -notmatch '\.additional_browser_args\(""\)'){throw 'Must override experimental wry defaults with empty browser arguments'}
-Write-Output 'Verified: UI/monitor asInvoker, helper requireAdministrator, nine typed permissions, restrictive CSP, no mock assets or custom WebView flags'
+Write-Output 'Verified: UI/monitor asInvoker, helper requireAdministrator, ten typed permissions, restrictive CSP, no mock assets or custom WebView flags'

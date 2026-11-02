@@ -8,8 +8,6 @@ pub(crate) enum Script {
     Parse,
     #[cfg(all(test, windows))]
     CancelProbe,
-    Identity,
-    Service,
     Task,
     Power,
     Appx,
@@ -17,6 +15,7 @@ pub(crate) enum Script {
     Storage,
     RestorePoint,
     Store,
+    RestartDialog,
     #[cfg(feature = "vm-tests")]
     Fixture,
     #[cfg(feature = "real-profile-tests")]
@@ -29,8 +28,6 @@ impl Script {
             Self::Parse => include_str!("../scripts/parse.ps1"),
             #[cfg(all(test, windows))]
             Self::CancelProbe => "Start-Sleep -Seconds 30; Emit $true",
-            Self::Identity => include_str!("../scripts/identity.ps1"),
-            Self::Service => include_str!("../scripts/service.ps1"),
             Self::Task => include_str!("../scripts/task.ps1"),
             Self::Power => include_str!("../scripts/power.ps1"),
             Self::Appx => include_str!("../scripts/appx.ps1"),
@@ -38,6 +35,9 @@ impl Script {
             Self::Storage => include_str!("../scripts/storage.ps1"),
             Self::RestorePoint => include_str!("../scripts/restore_point.ps1"),
             Self::Store => include_str!("../scripts/store.ps1"),
+            Self::RestartDialog => {
+                "$desktop=Get-AmetistaDesktop ([string]$p.expectedSid);$desktop.ShutdownWindows();Emit $true"
+            }
             #[cfg(feature = "vm-tests")]
             Self::Fixture => include_str!("../scripts/fixture.ps1"),
             #[cfg(feature = "real-profile-tests")]
@@ -234,8 +234,6 @@ mod tests {
             include_str!("../scripts/prelude.ps1"),
             include_str!("../scripts/catch.ps1"),
             include_str!("../scripts/desktop.ps1"),
-            Script::Identity.text(),
-            Script::Service.text(),
             Script::Task.text(),
             Script::Power.text(),
             Script::Appx.text(),

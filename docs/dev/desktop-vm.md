@@ -1,5 +1,15 @@
 # Harness manual da interface em VM descartável
 
+## Barreira pré-UAC e suporte (0.6.5)
+
+Depois de snapshot, dentro da VM, use `tools/build-release.ps1` para gerar auxiliar primeiro e embutir o hash na UI e no monitor. Uma extração em pasta gravável deve analisar, mas recusar aplicar **antes** de mostrar UAC. Para ensaiar a aplicação, prepare como administrador da VM uma pasta de instalação com dono/ACL somente Administradores e SYSTEM para escrita, usuários apenas leitura/execução, sem reparse points. Não altere ACLs no host. O instalador protegido definitivo ainda não foi entregue.
+
+Confira: auxiliar substituído por outro build, assinatura inválida, hash ausente, arquivo gravável, diretório/ancestral substituível e execução por outra conta são recusados. Registre o caso e o texto exibido; não adicione bypass ao teste. O auxiliar deve continuar aceitando somente IDs, consentimentos e pipe autenticado, rejeitando replay/payload inválido.
+
+Rode novamente os roundtrips dedicados depois da migração SCM: StartMode, DelayedAutoStart ausente/0/1, Running/Stopped, dependência ativa (recusar sem cascata), acesso negado, serviço inexistente e restauração após falha. Compare snapshots completos. A energia continua no executor anterior; não aplicar catálogo real fora do roteiro de perfis com opt-in próprio.
+
+No suporte, confira orientação para dados antigos sem mover/apagar, abertura fixa da Proteção do Sistema, criação/verificação do ponto, rotação por tamanho/idade de logs protegidos e ZIP que corresponde exatamente à prévia. Sem privilégio, logs/journal podem aparecer indisponíveis; nenhuma ACL deve ser ampliada. Abrir o diálogo de reinício só mostra a escolha nativa; cancele durante o ensaio de leitura. CLM, outra conta, SmartScreen/Authenticode, Windows Home/Pro e reinícios reais permanecem pendentes até preencher evidências da VM.
+
 Este roteiro é exclusivo da VM. Crie snapshot do hipervisor, instale WebView2,
 prepare proteção do sistema/checkpoint, desligue rede e use usuário sem dados
 pessoais. Não faça o ensaio no host. Restaure o snapshot ao terminar, com sucesso

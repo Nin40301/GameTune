@@ -11,6 +11,7 @@ fn main() {
                 "lab_action",
                 "lab_file",
                 "games_action",
+                "support_action",
             ]))
             .windows_attributes(
                 tauri_build::WindowsAttributes::new().app_manifest(include_str!("app.manifest")),

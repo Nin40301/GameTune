@@ -1,5 +1,5 @@
 use crate::{
-    WindowsContext, registry, startup,
+    WindowsContext, registry, service, startup,
     transport::{self, Script},
 };
 use ametista_core::*;
@@ -75,11 +75,9 @@ impl WindowsExecutor {
                     created_keys,
                 })
             }
-            Target::Service { name, .. } => transport::run_controlled(
-                Script::Service,
-                &json!({"operation":"capture","name":name}),
-                cancel,
-            ),
+            Target::Service { name, .. } => {
+                service::run(&json!({"operation":"capture","name":name}))
+            }
             Target::ScheduledTask { path, name } => transport::run_controlled(
                 Script::Task,
                 &json!({"operation":"capture","path":path,"name":name}),
@@ -218,8 +216,7 @@ impl WindowsExecutor {
             }
             (Target::Service { name, mode }, _) => {
                 let expected = if restore { None } else { Some(original) };
-                Self::script_write(
-                    Script::Service,
+                service::write(
                     &json!({"operation":operation,"name":name,"mode":mode,"original":original,"expected":expected}),
                 )
             }
@@ -281,10 +278,7 @@ impl Executor for WindowsExecutor {
             .get(&item.target.key())
             .cloned()
             .ok_or(ExecError::Conflict)?;
-        Self::script_write(
-            Script::Service,
-            &json!({"operation":"pause","name":name,"expected":original}),
-        )?;
+        service::write(&json!({"operation":"pause","name":name,"expected":original}))?;
         let mut desired = original;
         if let Snapshot::Service { running, .. } = &mut desired {
             *running = false;
@@ -581,6 +575,7 @@ impl WindowsSession {
             .map_err(|e| Error::Preflight(e.to_string()))?;
         let report = self.engine().apply(request, &mut journal)?;
         store.export_journal(&journal)?;
+        let _ = store.log(crate::logging::Event::Apply, true);
         Ok(AppliedBatch {
             restore_point,
             report,
@@ -594,6 +589,7 @@ impl WindowsSession {
         let mut journal = store.journal()?;
         let report = self.engine().undo(ids, &mut journal)?;
         store.export_journal(&journal)?;
+        let _ = store.log(crate::logging::Event::Undo, true);
         Ok(report)
     }
     pub fn remove_app(
@@ -619,7 +615,12 @@ impl WindowsSession {
         self.context
             .create_restore_point()
             .map_err(|e| Error::Preflight(e.to_string()))?;
-        self.engine().remove_app(consent, &mut apps)
+        let result = self.engine().remove_app(consent, &mut apps);
+        let _ = store.log(
+            crate::logging::Event::RemoveApp,
+            matches!(result, Ok(Ok(()))),
+        );
+        result
     }
     pub fn reconcile_app_removal(&mut self, id: &str) -> Result<()> {
         let store = self

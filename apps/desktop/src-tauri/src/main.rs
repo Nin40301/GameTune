@@ -16,6 +16,39 @@ fn run() {
     use std::sync::Arc;
     use tauri::Manager;
     #[tauri::command]
+    async fn support_action(
+        support: tauri::State<'_, Arc<support::Support>>,
+        desktop: tauri::State<'_, Arc<Desktop>>,
+        action: support::Action,
+    ) -> Result<Option<support::Preview>, String> {
+        let support = support.inner().clone();
+        let desktop = desktop.inner().clone();
+        tauri::async_runtime::spawn_blocking(move || {
+            match action {
+                support::Action::Preview {} => return support.preview(&desktop).map(Some),
+                support::Action::Save { token, confirm } => {
+                    let files = support.consume(&token, confirm)?;
+                    if let Some(path) = rfd::FileDialog::new()
+                        .add_filter("ZIP", &["zip"])
+                        .set_file_name("Ametista-diagnostic.zip")
+                        .save_file()
+                    {
+                        support::save_zip(&path, files)?;
+                    }
+                }
+                support::Action::Open { tool } => {
+                    ametista_windows_runtime::WindowsContext::detect()
+                        .map_err(|_| "operation_failed".to_string())?
+                        .open_support_tool(tool)
+                        .map_err(|_| "operation_failed".to_string())?;
+                }
+            }
+            Ok(None)
+        })
+        .await
+        .map_err(|_| "operation_failed".to_string())?
+    }
+    #[tauri::command]
     async fn lab_action(lab: tauri::State<'_, Arc<Lab>>, action: Action) -> Result<Status, String> {
         if matches!(action, Action::Start { .. }) && games::monitor_running()? {
             return Err("monitor_benchmark_conflict".into());
@@ -110,8 +143,13 @@ fn run() {
         state.analysis_start()
     }
     #[tauri::command]
-    fn analysis_state(state: tauri::State<'_, Arc<Desktop>>) -> Result<Analysis, String> {
-        state.analysis_state()
+    fn analysis_state(
+        state: tauri::State<'_, Arc<Desktop>>,
+        support: tauri::State<'_, Arc<support::Support>>,
+    ) -> Result<Analysis, String> {
+        let result = state.analysis_state()?;
+        let _ = support.remember(&result);
+        Ok(result)
     }
     #[tauri::command]
     fn analysis_cancel(state: tauri::State<'_, Arc<Desktop>>) -> Result<(), String> {
@@ -159,9 +197,13 @@ fn run() {
             execute_review,
             lab_action,
             lab_file,
-            games_action
+            games_action,
+            support_action
         ])
         .setup(|app| {
+            app.manage(Arc::new(support::Support::new(
+                app.path().app_local_data_dir()?.join("support"),
+            )));
             let directory = app.path().app_local_data_dir()?.join("measurements");
             let monitor = std::env::var("AMETISTA_RESOURCE_MODE").as_deref() != Ok("idle");
             app.manage(Arc::new(Lab::open(&directory, monitor)?));

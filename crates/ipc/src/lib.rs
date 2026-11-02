@@ -4,7 +4,9 @@ mod protocol;
 pub use protocol::*;
 mod game_protocol;
 pub use game_protocol::*;
+mod install_policy;
 mod transaction;
+pub use install_policy::*;
 pub use transaction::*;
 #[cfg(windows)]
 pub mod game_pipe;
@@ -36,6 +38,10 @@ pub enum Error {
     Windows,
     #[error("uac_cancelled")]
     UacCancelled,
+    #[error("unsafe_installation")]
+    UnsafeInstallation,
+    #[error("helper_integrity")]
+    HelperIntegrity,
     #[error("operation_failed")]
     Operation,
     #[error("io")]

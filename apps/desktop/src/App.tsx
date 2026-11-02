@@ -1,4 +1,5 @@
 import { useWindowActivity } from './hooks/useWindowActivity'
+import { SupportPanel, LegacyGuidance } from './components/SupportPanel'
 import { Checkbox } from './components/Checkbox'
 import { useEffect, useRef, useState } from 'react'
 import type {
@@ -806,8 +807,10 @@ export function App({ backend }: { backend: Backend }) {
                 compatible={data?.compatible ?? {}}
               />
             )}
+            {data?.system.legacyData && <LegacyGuidance language={language} />}
             {page === 'settings' && (
               <section className="surface settings-panel glass">
+                <SupportPanel backend={backend} language={language} system={data?.system} />
                 <GamesPanel backend={backend} language={language} settings />
                 <div className="setting-row">
                   <label htmlFor="language">{t('language')}</label>
