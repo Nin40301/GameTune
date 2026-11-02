@@ -3,9 +3,9 @@
 Aplicativo offline de ajustes do Windows para jogos. **Fase 6: monitor Rust
 independente e perfis temporários por jogo**, sobre o mesmo backend da CLI/UI.
 Aceite UAC/escritas/reinícios na matriz de VM ainda pendente. Licença Apache-2.0.
-Os orçamentos agora são separados: interface aberta <=150 MiB de RAM privada
-somada; monitor sem WebView <=15 MiB e CPU <0,5%. Nenhuma flag experimental do
-WebView é configurada. O gate não eleva limites por host ocupado.
+Orçamentos separados: interface com linha de base de cinco execuções, regressão
+das medianas de RAM/CPU >15% e teto mediano de RAM de 200 MiB; p95 como alerta. O monitor mantém
+picos de RAM <=15 MiB e CPU <0,5%. Veja [política e medições](docs/performance.md).
 
 Leia [como compilar e usar a interface](docs/desktop.md),
 [limite de privilégios e IPC](docs/desktop-security.md) e
@@ -176,6 +176,4 @@ Assinatura/instaladores entram na Fase 7. Certificado e senha serão segredos
 
 ## Fase 6.5 — Ametista e interface
 
-A marca e os binários usam `Ametista`/`ametista`. Tema claro e efeitos reduzidos são o padrão para novas preferências. A interface oferece pt-BR/en, StatusOrb com RAM medida e vidro opcional. [Relatório da Fase 6.5](docs/phase-6.5.md) e [plano](docs/phase-6.5-plan.md). Os gates inicialmente pendentes foram executados após o [polimento visual](docs/phase-6.5-polish.md): Completo e Reduzido reprovaram nos limites existentes. A interface ainda não atende ao orçamento de consumo; não há alegação de melhora.
-
-A [investigação pareada](docs/performance-investigation.md) localiza o salto de RAM em `1067244`, registra os perfis da WebView e conserva os resultados das alternativas rejeitadas. As otimizações visuais mantêm a identidade aprovada, mas não resolvem o gate. Backend, segurança, harness e limites permanecem inalterados.
+A marca e os binários usam `Ametista`/`ametista`. Tema claro e efeitos completos são o padrão para novas preferências, com respeito à transparência reduzida. O titular aceitou a diferença de memória para fechar a 6.5. A [política atual](docs/performance.md) usa cinco execuções por modo: Completo passa; Reduzido excede o teto mediano de 200 MiB em 5,50 MiB neste host. O monitor continua estrito e passou. A investigação de GPU/WebView foi encerrada; os resultados antigos de pico permanecem como histórico, sem representar o gate vigente.

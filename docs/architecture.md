@@ -58,6 +58,7 @@ Recuperação anterior obrigatória antes de nova sessão; sem autostart instala
 **Verificação/entrega:** Rust estável, formato/Clippy, TS/ESLint, componentes,
 Playwright com mock isolado, axe, testes reais não elevados de pipe e harnesses
 mutáveis exclusivamente opt-in de VM. Código-fonte, binários portáteis e evidência
-por fase. Gates separados somam árvore da UI (150 MiB) e monitor (15 MiB/0,5%
+por fase. Gates separados somam árvore da UI (mediana de cinco execuções, regressão das
+medianas de RAM/CPU >15% ou teto de RAM de 200 MiB; p95 como alerta) e monitor (picos de 15 MiB/0,5%
 CPU), sem flags experimentais da WebView. UAC, reinícios, helper em sessão e
 matriz Home/Pro precisam de aceite em VM. Fase 7: instalador/assinatura/acabamento.

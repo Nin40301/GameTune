@@ -199,62 +199,7 @@ impl Collector {
         Ok(result)
     }
 }
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Budget {
-    pub samples: usize,
-    pub peak_private_bytes: u64,
-    pub peak_cpu_percent: f64,
-    pub passed: bool,
-}
-#[derive(Clone, Copy, Debug, Serialize)]
-#[serde(rename_all = "snake_case")]
-pub enum BudgetProfile {
-    Interface,
-    GameMonitor,
-}
-impl BudgetProfile {
-    pub fn limits(self) -> (u64, f64) {
-        match self {
-            Self::Interface => (150 * 1024 * 1024, 1.0),
-            Self::GameMonitor => (15 * 1024 * 1024, 0.5),
-        }
-    }
-}
-pub fn budget(samples: &[Sample]) -> Budget {
-    budget_for(samples, BudgetProfile::Interface)
-}
-pub fn budget_for(samples: &[Sample], profile: BudgetProfile) -> Budget {
-    let (ram_limit, cpu_limit) = profile.limits();
-    let peak_private_bytes = samples
-        .iter()
-        .map(|s| s.app_private_bytes)
-        .max()
-        .unwrap_or(u64::MAX);
-    let peak_cpu_percent = samples
-        .iter()
-        .filter_map(|s| s.app_cpu_percent)
-        .fold(0.0, f64::max);
-    Budget {
-        samples: samples.len(),
-        peak_private_bytes,
-        peak_cpu_percent,
-        passed: samples.len() >= 60
-            && samples.windows(2).all(|p| {
-                (500..=2000).contains(&p[1].timestamp_ms.saturating_sub(p[0].timestamp_ms))
-            })
-            && samples
-                .first()
-                .zip(samples.last())
-                .is_some_and(|(a, b)| b.timestamp_ms.saturating_sub(a.timestamp_ms) >= 58500)
-            && samples.iter().all(|s| {
-                s.app_cpu_percent
-                    .is_some_and(|v| v.is_finite() && (0.0..100.0).contains(&v))
-            })
-            && peak_private_bytes <= ram_limit
-            && peak_cpu_percent < cpu_limit,
-    }
-}
+pub mod resource_budget;
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -335,58 +280,6 @@ mod tests {
             cpu_ticks: 2,
         });
         assert_eq!(c.ingest(next, 1)?.app_cpu_percent, Some(40.0));
-        Ok(())
-    }
-    #[test]
-    fn budget_fails_memory_cpu_and_insufficient_samples() -> Result<(), Error> {
-        let mut c = Collector::default();
-        c.ingest(raw(1), 1)?;
-        let mut s = c.ingest(raw(2), 1)?;
-        s.app_cpu_percent = Some(0.2);
-        let mut samples: Vec<_> = (0..60)
-            .map(|i| {
-                let mut sample = s.clone();
-                sample.timestamp_ms = i * 1000;
-                sample
-            })
-            .collect();
-        assert!(budget(&samples).passed);
-        samples[4].app_private_bytes = 150 * 1024 * 1024 + 1;
-        assert!(!budget(&samples).passed);
-        samples[4].app_private_bytes = 50;
-        samples[5].app_cpu_percent = Some(1.1);
-        assert!(!budget(&samples).passed);
-        assert!(!budget(&[]).passed);
-        Ok(())
-    }
-    #[test]
-    fn independent_resource_profiles_have_closed_inclusive_ram_and_strict_cpu_limits()
-    -> Result<(), Error> {
-        let mut c = Collector::default();
-        c.ingest(raw(1), 1)?;
-        let mut sample = c.ingest(raw(2), 1)?;
-        sample.app_cpu_percent = Some(0.49);
-        sample.app_private_bytes = 15 * 1024 * 1024;
-        let mut samples: Vec<_> = (0..60)
-            .map(|i| {
-                let mut s = sample.clone();
-                s.timestamp_ms = i * 1000;
-                s
-            })
-            .collect();
-        assert!(budget_for(&samples, BudgetProfile::GameMonitor).passed);
-        samples[0].app_cpu_percent = Some(0.5);
-        assert!(!budget_for(&samples, BudgetProfile::GameMonitor).passed);
-        samples[0].app_cpu_percent = Some(0.49);
-        samples[0].app_private_bytes += 1;
-        assert!(!budget_for(&samples, BudgetProfile::GameMonitor).passed);
-        for s in &mut samples {
-            s.app_private_bytes = 150 * 1024 * 1024;
-            s.app_cpu_percent = Some(0.99);
-        }
-        assert!(budget_for(&samples, BudgetProfile::Interface).passed);
-        samples[0].app_private_bytes += 1;
-        assert!(!budget_for(&samples, BudgetProfile::Interface).passed);
         Ok(())
     }
 }

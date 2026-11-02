@@ -17,11 +17,33 @@ test('starts read-only with Safe and cannot apply before analysis and review', a
   await screen.findByRole('radio', { name: /Seguro/ })
   expect(screen.getByRole('radio', { name: /Seguro/ })).toBeChecked()
   expect(document.documentElement.dataset.theme).toBe('light')
-  expect(document.documentElement.dataset.effects).toBe('reduced')
+  expect(document.documentElement.dataset.effects).toBe('full')
   expect(screen.queryByRole('button', { name: 'Aplique os ajustes' })).not.toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Revise os ajustes' })).toBeDisabled()
   await user.click(screen.getByRole('button', { name: 'Itens' }))
   expect(window.__ametistaTest?.executions).toHaveLength(0)
+})
+
+test('keeps an existing reduced preference', async () => {
+  localStorage.setItem('ametista.effects', 'reduced')
+  render(<App backend={createMockBackend()} />)
+  await screen.findByRole('radio', { name: /Seguro/ })
+  expect(document.documentElement.dataset.effects).toBe('reduced')
+})
+
+test('new preferences respect reduced transparency when supported', async () => {
+  vi.stubGlobal('matchMedia', (query: string) => ({
+    matches: query === '(prefers-reduced-transparency: reduce)',
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+  }))
+  try {
+    render(<App backend={createMockBackend()} />)
+    await screen.findByRole('radio', { name: /Seguro/ })
+    expect(document.documentElement.dataset.effects).toBe('reduced')
+  } finally {
+    vi.unstubAllGlobals()
+  }
 })
 test('analysis is cancellable and cancellation never executes changes', async () => {
   const user = userEvent.setup()
