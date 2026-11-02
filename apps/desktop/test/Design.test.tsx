@@ -108,3 +108,17 @@ test('styled checkbox retains label, Space, description and disabled consent sem
   await user.click(screen.getByText('Disabled consent'))
   expect(screen.getByRole('checkbox', { name: 'Disabled consent' })).not.toBeChecked()
 })
+
+test('orb holds changes up to 1%, accumulates them, and refreshes language immediately', () => {
+  const { rerender } = render(
+    <StatusOrb value={0.5} measurement={1000} title="10 GiB" caption="RAM" />,
+  )
+  rerender(<StatusOrb value={0.5025} measurement={1005} title="10.05 GiB" caption="RAM" />)
+  expect(screen.getByRole('img', { name: 'RAM: 10 GiB' })).toBeVisible()
+  rerender(<StatusOrb value={0.505} measurement={1010} title="10.1 GiB" caption="RAM" />)
+  expect(screen.getByRole('img', { name: 'RAM: 10 GiB' })).toBeVisible()
+  rerender(<StatusOrb value={0.5055} measurement={1011} title="10.11 GiB" caption="RAM" />)
+  expect(screen.getByRole('img', { name: 'RAM: 10.11 GiB' })).toBeVisible()
+  rerender(<StatusOrb value={0.506} measurement={1012} title="10.12 GiB" caption="Free RAM" />)
+  expect(screen.getByRole('img', { name: 'Free RAM: 10.12 GiB' })).toBeVisible()
+})

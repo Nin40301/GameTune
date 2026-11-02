@@ -1,3 +1,4 @@
+import { useWindowActivity } from './hooks/useWindowActivity'
 import { Checkbox } from './components/Checkbox'
 import { useEffect, useState, type ReactNode } from 'react'
 import { StatusOrb } from './components/StatusOrb'
@@ -25,6 +26,8 @@ export function Measurements({
   profileControls?: ReactNode
   selectedCount?: number
 }) {
+  const active = useWindowActivity()
+  const [processesOpen, setProcessesOpen] = useState(false)
   const [cpuSamples, setCpuSamples] = useState<{ time: number; value: number }[]>([])
   const [status, setStatus] = useState<LabStatus | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -41,6 +44,7 @@ export function Measurements({
   const gib = (value: number | undefined) =>
     value == null ? '—' : `${number(value / 1073741824)} GiB`
   useEffect(() => {
+    if (!active) return
     let alive = true,
       pending = false
     const poll = () => {
@@ -75,7 +79,7 @@ export function Measurements({
       alive = false
       clearInterval(timer)
     }
-  }, [backend, dashboard])
+  }, [backend, dashboard, active])
   async function act(action: LabAction) {
     setBusy(true)
     setError(null)
@@ -136,6 +140,7 @@ export function Measurements({
                   value={
                     sample && sample.totalBytes > 0 ? sample.availableBytes / sample.totalBytes : 0
                   }
+                  measurement={sample?.availableBytes}
                   title={gib(sample?.availableBytes)}
                   caption={t('availableRam')}
                 />
@@ -184,38 +189,42 @@ export function Measurements({
             </aside>
           </div>
           <p className="muted">{t('metricNote')}</p>
-          <details className="surface process-list">
+          <details
+            className="surface process-list"
+            onToggle={(event) => setProcessesOpen(event.currentTarget.open)}
+          >
             <summary>{t('topMemory')}</summary>
-            {sample ? (
-              <div
-                className="table-scroll"
-                role="region"
-                tabIndex={0}
-                aria-label={t('tableNavigation')}
-              >
-                <table>
-                  <caption>{t('groupedMemory')}</caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">{t('processName')}</th>
-                      <th scope="col">{t('instances')}</th>
-                      <th scope="col">MiB</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sample.top.map((row) => (
-                      <tr key={row.name}>
-                        <th scope="row">{row.name}</th>
-                        <td>{row.count}</td>
-                        <td>{number(row.memoryBytes / 1048576)}</td>
+            {processesOpen &&
+              (sample ? (
+                <div
+                  className="table-scroll"
+                  role="region"
+                  tabIndex={0}
+                  aria-label={t('tableNavigation')}
+                >
+                  <table>
+                    <caption>{t('groupedMemory')}</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">{t('processName')}</th>
+                        <th scope="col">{t('instances')}</th>
+                        <th scope="col">MiB</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p>{t('metricsWaiting')}</p>
-            )}
+                    </thead>
+                    <tbody>
+                      {sample.top.map((row) => (
+                        <tr key={row.name}>
+                          <th scope="row">{row.name}</th>
+                          <td>{row.count}</td>
+                          <td>{number(row.memoryBytes / 1048576)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p>{t('metricsWaiting')}</p>
+              ))}
           </details>
           {sample && (
             <p className="sample-stamp">
@@ -234,6 +243,7 @@ export function Measurements({
               value={
                 sample && sample.totalBytes > 0 ? sample.availableBytes / sample.totalBytes : 0
               }
+              measurement={sample?.availableBytes}
               title={gib(sample?.availableBytes)}
               caption={t('availableRam')}
             />

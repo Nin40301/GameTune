@@ -20,7 +20,7 @@
   --glass-fill-strong: linear-gradient(145deg, rgb(255 255 255 / 90%), rgb(255 255 255 / 58%));
   --glass-border: rgb(255 255 255 / 80%);
   --glass-edge-shade: rgb(124 58 237 / 10%);
-  --glass-shadow: 0 1px 2px rgb(59 26 122 / 6%), 0 14px 34px -10px rgb(76 29 149 / 18%);
+  --glass-shadow: 0 1px 2px rgb(59 26 122 / 6%), 0 10px 20px -8px rgb(76 29 149 / 18%);
   --blur: 18px;
   --ok: #0f766e;
   --warn: #b45309;
@@ -60,7 +60,7 @@
   --glass-fill-strong: linear-gradient(145deg, rgb(255 255 255 / 14%), rgb(255 255 255 / 7%));
   --glass-border: rgb(255 255 255 / 14%);
   --glass-edge-shade: rgb(0 0 0 / 25%);
-  --glass-shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 16px 36px -10px rgb(0 0 0 / 45%);
+  --glass-shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 12px 22px -8px rgb(0 0 0 / 45%);
   --ok: #5eead4;
   --warn: #fbbf24;
   --danger: #fb7185;
