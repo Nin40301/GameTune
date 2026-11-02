@@ -1,0 +1,33 @@
+name: Proponha um ajuste de catálogo
+description: Proposta com fonte oficial, risco, compatibilidade e reversão
+title: "[Catálogo] "
+body:
+  - type: markdown
+    attributes:
+      value: "Não proponha alterações em proteções do Windows, TCP, limpeza de registro ou esvaziamento de RAM. Propostas não autorizam aplicação no host"
+  - type: input
+    id: target
+    attributes:
+      label: Alvo e comportamento proposto
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Fontes oficiais e suporte por build/edição
+      description: Inclua URLs primárias; se não confirmado, proponha verified false e seleção somente manual
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Risco, o que pode quebrar e como restaurar o estado exato
+      description: Appx não é automaticamente reversível; dependências de jogos são alto risco
+    validations:
+      required: true
+  - type: textarea
+    id: test
+    attributes:
+      label: Plano de teste em VM e comparação antes/depois
+    validations:
+      required: true

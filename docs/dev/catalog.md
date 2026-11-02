@@ -30,7 +30,7 @@ Para adicionar/revisar:
    Disabled. Verificação não elimina esses bloqueios.
 6. Home só recebe política comprovadamente aplicável. As preferências HKCU de
    Modo de Jogo/recomendações, documentadas para leitura, permanecem manuais.
-7. Atualize o schema de perfis e `docs/catalog-sources.md`. Rode
+7. Atualize o schema de perfis e `docs/dev/catalog-sources.md`. Rode
    `python tools/update-catalog-hashes.py` e revise o diff antes de testar/commitar.
 
 Os descritores startup.hkcu/hklm não autorizam gravação. O backend descobre apenas

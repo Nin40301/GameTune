@@ -1,0 +1,42 @@
+name: Erro no aplicativo
+description: Relate uma falha com dados mínimos e sem informações pessoais
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "Alfa: teste em VM com snapshot. Vulnerabilidade? Use Security → Report a vulnerability, não este formulário público"
+  - type: input
+    id: version
+    attributes:
+      label: Versão ou commit do Ametista
+      placeholder: 0.6.5 ou hash do commit
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Edição e build do Windows
+      placeholder: Windows 11 Pro 24H2, build 26100
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Passos, resultado esperado e resultado observado
+      description: Inclua o ID do item e o modo simular/aplicar/desfazer, se pertinente
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidência revisada e anonimizada
+      description: Não envie journal bruto, nomes, caminhos pessoais, credenciais ou chaves de recuperação
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Antes de enviar
+      options:
+        - label: Não apliquei ajustes no host; qualquer teste com escrita ocorreu em VM descartável
+          required: true
+        - label: Revisei a evidência e removi dados pessoais e segredos
+          required: true

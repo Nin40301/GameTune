@@ -128,7 +128,7 @@ WebView, em modo somente leitura para esse ensaio. Ambos usam o mesmo coletor: 3
 | Interface aberta | Mediana das cinco medianas; falha por regressão >15% ou teto de 200 MiB | Mediana das cinco medianas: regressão >15% bloqueia; p95 ≥1% é alerta; picos não bloqueiam |
 | Monitor Rust | Pico ≤15 MiB | Pico <0,5% |
 
-Veja [linha de base e política vigente](performance.md). Os limites não são ajustados por host ocupado; coleta incompleta ou inválida é erro. O harness fecha somente a janela que criou ou pede parada pelo nonce da sua própria instância do monitor. Não termina jogos. Esse gate de consumo do app não altera o protocolo de benchmark antes/depois do Windows.
+Veja [linha de base e política vigente](../performance.md). Os limites não são ajustados por host ocupado; coleta incompleta ou inválida é erro. O harness fecha somente a janela que criou ou pede parada pelo nonce da sua própria instância do monitor. Não termina jogos. Esse gate de consumo do app não altera o protocolo de benchmark antes/depois do Windows.
 
 Evidência em `work/resource-budget-phase-6/`. Recursos WMI compartilhados fora da
 árvore e o auxiliar lançado via UAC precisam de ensaio adicional em VM; o gate

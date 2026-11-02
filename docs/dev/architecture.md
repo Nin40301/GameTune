@@ -1,4 +1,4 @@
-# Arquitetura — atualizada na Fase 6
+# Arquitetura — Ametista 0.6.5
 
 **Produto:** Tauri 2 + React + TypeScript strict + Tailwind no Windows. Assets,
 catálogo e pt-BR/en locais; tema escuro/claro; sem rede no WebView. Não há engine

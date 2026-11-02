@@ -1,6 +1,6 @@
 # Fase 6.5 — Ametista
 
-> Histórico: orçamento de pico e padrão de efeitos desta fase foram substituídos. Consulte [a política vigente](performance.md); não use este relato como estado atual.
+> Histórico: orçamento de pico e padrão de efeitos desta fase foram substituídos. Consulte [a política vigente](../performance.md); não use este relato como estado atual.
 ## Resumo
 
 Branch `design/liquid-glass`. Produto e identificadores renomeados para Ametista/ametista. O backend conserva catálogo, perfis, confirmações, IPC autenticado, WAL e recuperação. A única extensão funcional é o bloqueio de escrita exigido quando há dados no diretório anterior de ProgramData: não migra, não move e não apaga. O teste usa somente uma pasta temporária.
@@ -64,13 +64,13 @@ O modo `--offline` requer dependências já presentes no cache. No primeiro chec
 node tools/verify-glass-contrast.mjs
 ```
 
-Resultado complementar: **144 casos, 5.818 faixas de texto, nenhum ponto amostrado abaixo do limiar aplicável**. As limitações do método (amostragem, viewport e fundos renderizados) ficam registradas em `work/glass-contrast/report.json`. A faixa de demonstração foi ajustada para texto secundário com contraste suficiente; o brilho transitório dos botões foi limitado a 8% de branco. O resumo versionado está em `docs/contrast-phase-6.5.json`, e as contagens finais em `docs/test-count-phase-6.5.json`.
+Resultado complementar: **144 casos, 5.818 faixas de texto, nenhum ponto amostrado abaixo do limiar aplicável**. As limitações do método (amostragem, viewport e fundos renderizados) ficam registradas em `work/glass-contrast/report.json`. A faixa de demonstração foi ajustada para texto secundário com contraste suficiente; o brilho transitório dos botões foi limitado a 8% de branco. O resumo versionado está em `docs/history/contrast-phase-6.5.json`, e as contagens finais em `docs/history/test-count-phase-6.5.json`.
 
 ## Evidências visuais
 
 Matriz: oito telas × dois temas × quatro larguras (1440, 1100, 768 e 390), altura 1000 px. As 64 imagens foram abertas e inspecionadas. Os números dessas capturas são fixtures do backend de teste e **não** medições deste computador.
 
-Pasta: `outputs/phase-6.5/screenshots/`. Convenção: `<tela>-<light|dark>-<largura>.png`. Exemplo: `home-light-1440.png`, `items-dark-390.png`. Galeria offline: `outputs/phase-6.5/screenshots/index.html`. Manifesto com SHA-256: `docs/screenshots-phase-6.5.json`. Arquivos binários/evidências completas permanecem em `outputs/` (ignorado pelo Git), disponíveis no pacote da entrega.
+Pasta: `outputs/phase-6.5/screenshots/`. Convenção: `<tela>-<light|dark>-<largura>.png`. Exemplo: `home-light-1440.png`, `items-dark-390.png`. Galeria offline: `outputs/phase-6.5/screenshots/index.html`. Manifesto com SHA-256: `docs/history/screenshots-phase-6.5.json`. Arquivos binários/evidências completas permanecem em `outputs/` (ignorado pelo Git), disponíveis no pacote da entrega.
 
 Primeira inspeção: correção do rótulo estreito de Personalizado, rolagem de tabela pelo teclado e hover escuro da navegação. Removido o fade do texto para manter contraste durante a entrada. Segunda revisão: marcador sólido para a seleção da navegação e contorno do seletor, sem depender da transparência para comunicar estado. Sem blur aninhado no DOM e sem animação contínua ou de filtro.
 
@@ -102,7 +102,7 @@ O harness usa a interface real e bloqueia mutações. O relatório fica em `work
 
 - Gates pós-redesign Completo/Reduzido pendentes por instrução expressa do usuário; sem estimativas ou alegação de melhora de consumo
 - NVDA/Narrador, DPI alto, GPUs/versões diferentes do WebView2 e matriz Windows Home/Pro ainda exigem avaliação manual/VM
-- Aplicar/desfazer, Appx, ACLs e recuperação com o novo nome precisam de regressão em VM descartável com snapshot, conforme `docs/windows-vm.md` e `docs/desktop-vm.md`; não executados no host
+- Aplicar/desfazer, Appx, ACLs e recuperação com o novo nome precisam de regressão em VM descartável com snapshot, conforme `docs/dev/windows-vm.md` e `docs/dev/desktop-vm.md`; não executados no host
 - axe contém verificações de contraste inconclusivas sobre pseudo-elementos; a amostragem adicional e a revisão visual não substituem avaliação completa com leitores de tela/tecnologias assistivas e contraste em todos os estados
 - Diretório legado bloqueia ações de escrita e não é migrado; requer decisão humana sobre os dados antigos, sem limpeza automática
 - Recursos completos precisam de uma máquina com a janela visível para validar o custo do blur

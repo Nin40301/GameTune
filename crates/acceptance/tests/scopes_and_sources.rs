@@ -58,7 +58,7 @@ fn scoped_journal_rejects_other_machine_sid_and_unscoped_open() -> TestResult {
 #[test]
 fn source_review_prevents_home_policy_overclaims_and_recall_data_loss() -> TestResult {
     let catalog = load_embedded()?;
-    let documentation = include_str!("../../../docs/catalog-sources.md");
+    let documentation = include_str!("../../../docs/dev/catalog-sources.md");
     for item in catalog.items() {
         assert!(documentation.contains(&format!("`{}`", item.id)));
         if item.verified {

@@ -1,6 +1,6 @@
 # Polimento da Fase 6.5
 
-> Histórico: orçamento de pico e padrão de efeitos desta fase foram substituídos. Consulte [a política vigente](performance.md); não use este relato como estado atual.
+> Histórico: orçamento de pico e padrão de efeitos desta fase foram substituídos. Consulte [a política vigente](../performance.md); não use este relato como estado atual.
 ## Resumo
 
 Alterações restritas à UI, traduções, testes e documentação. Nenhum crate, comando Tauri, manifesto, executor, confirmação do backend ou política de segurança foi alterado. Nenhum ajuste do Windows foi aplicado no host.
@@ -33,7 +33,7 @@ cargo build --release -p ametista-desktop --locked --offline
 pwsh -NoProfile -File tools/verify-desktop.ps1
 ```
 
-As contagens exatas e os resultados finais estão em `docs/test-count-phase-6.5-polish.json`. Testes de VM continuam ignorados; não houve execução destrutiva no host. Os testes e2e usam o backend mockado. Verificação nativa conserva asInvoker/requireAdministrator, CSP restritiva, nove comandos e ausência de mocks e flags experimentais.
+As contagens exatas e os resultados finais estão em `docs/history/test-count-phase-6.5-polish.json`. Testes de VM continuam ignorados; não houve execução destrutiva no host. Os testes e2e usam o backend mockado. Verificação nativa conserva asInvoker/requireAdministrator, CSP restritiva, nove comandos e ausência de mocks e flags experimentais.
 
 Rust: **122 passaram, 0 falharam, 2 ignorados de VM**. Componentes: **19 passaram**. Suíte e2e completa: **45 passaram, 0 falharam, 0 ignorados, 0 instáveis**. Após as correções finais de CSS, 20 casos de design e 12 casos da matriz foram repetidos e passaram; são repetições, não testes distintos adicionais. fmt, clippy, ESLint, Prettier, TypeScript strict, build release e verificação nativa passaram.
 
@@ -45,7 +45,7 @@ O axe mantém seus resultados inconclusivos de contraste sobre pseudo-elementos,
 
 Galeria offline: `outputs/phase-6.5-polish/screenshots/index.html`. São 64 capturas de viewport (oito telas × dois temas × quatro larguras), mais 20 de página inteira: Início, Jogos, Medições, Histórico e Apps, nos dois temas, em 1440 e 390 px. `benchmark` nos nomes dos arquivos corresponde à tela Medições. Sufixo `-full` identifica página inteira.
 
-Os dados visuais são fixtures e não representam este computador. Manifesto de dimensões e SHA-256: `docs/screenshots-phase-6.5-polish.json`. Imagens/evidências completas ficam em `outputs/`, fora do Git, e no ZIP da entrega. Inspeção visual em imagens originais e folhas de contato; leitores de tela e DPI alto ainda pendentes.
+Os dados visuais são fixtures e não representam este computador. Manifesto de dimensões e SHA-256: `docs/history/screenshots-phase-6.5-polish.json`. Imagens/evidências completas ficam em `outputs/`, fora do Git, e no ZIP da entrega. Inspeção visual em imagens originais e folhas de contato; leitores de tela e DPI alto ainda pendentes.
 
 ## Gate de consumo — reprovado nos dois modos
 

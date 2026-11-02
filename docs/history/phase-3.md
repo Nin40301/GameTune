@@ -46,8 +46,8 @@ não ganho de desempenho nem aceite da matriz Windows.
   `src/real_profiles.rs`, exemplo `examples/real_profile_e2e.rs`, teste
   `tests/real_profiles_vm.rs`; inspeção/identidade/transporte/Store/task atualizados
 - `locales/cli.pt-BR.json`, `locales/cli.en.json`
-- `docs/cli.md`, `docs/windows-real-profiles.md`, `docs/phase-3-plan.md`, este
-  relatório e `docs/test-count-phase-3.json`
+- `docs/user/cli.md`, `docs/dev/windows-real-profiles.md`, `docs/history/phase-3-plan.md`, este
+  relatório e `docs/history/test-count-phase-3.json`
 - README, CHANGELOG, segurança, VM e CI atualizados; workspace/lockfile em 0.3.0
 
 ## Comandos de verificação
