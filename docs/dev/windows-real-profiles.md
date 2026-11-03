@@ -1,5 +1,7 @@
 # Ensaio de VM: perfis reais, reinício e desfazer
 
+Para uma VM sem Rust/Git/Visual Studio, use o [pacote interno de aceite](vm-acceptance-kit.md). Ele inclui runner, teste final e CLI de produção como arquivos irmãos; o caminho é fixo pelo executável, nunca parâmetro livre. O roteiro abaixo continua disponível para desenvolvimento.
+
 Este ensaio **altera alvos reais do catálogo Seguro e Equilibrado**. É separado
 dos testes de fixtures de `windows-vm.md` e exige um segundo opt-in. Nunca rode
 no host nem em Windows pessoal. Um filtro de fabricante/modelo recusa máquinas

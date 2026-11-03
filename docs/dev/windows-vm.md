@@ -1,5 +1,7 @@
 # Integração em Windows descartável
 
+Sem ferramentas de desenvolvimento na VM: use o [pacote interno pré-compilado](vm-acceptance-kit.md), que separa fixtures e perfis reais e guia dois reinícios. O restante desta página é o roteiro de desenvolvimento com Rust.
+
 Os testes normais nunca aplicam o catálogo real. Os testes administrativos são
 ignorados por padrão e só existem com a feature `vm-tests`. Essa feature não deve
 ser usada em releases. O runner comum do GitHub apenas compila essa suíte.

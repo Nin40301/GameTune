@@ -2,7 +2,7 @@
 
 ## Checks obrigatórios sugeridos
 
-Em `main`, exigir `Frontend (Linux)`, `Rust (ubuntu-latest)`, `Rust (windows-latest)`, `Dependency audits` e `PR dependency review`. PR obrigatório, uma aprovação, conversas resolvidas, branch atualizada, histórico linear, CODEOWNERS e bloqueio de force-push/deleção. O titular configura a proteção no GitHub; esta tarefa não a aplica.
+Em `main`, exigir `Frontend (Linux)`, `Rust (ubuntu-24.04)`, `Rust (windows-2025)`, `Dependency audits` e `PR dependency review`. PR obrigatório, uma aprovação, conversas resolvidas, branch atualizada, histórico linear, CODEOWNERS e bloqueio de force-push/deleção. O titular configura a proteção no GitHub; esta tarefa não a aplica.
 
 CI separa frontend Linux (formato, ESLint, TS strict/build, componentes, Playwright/axe), Rust Linux/Windows (fmt, clippy com todos os harnesses, testes, release sem fixtures) e auditorias. Testes administrativos ignorados só rodam manualmente no runner de VM com opt-in e snapshot. O gate de consumo exige desktop dedicado interativo e é manual, separado de runners hospedados ocupados.
 
@@ -40,3 +40,7 @@ pwsh -NoProfile -File tools/package-portable.ps1 -Destination outputs/portable-l
 O script compila o auxiliar primeiro e fornece seu SHA-256 ao build da interface, preparando a validação antes do UAC. O empacotamento usa allowlist de arquivos e recusa sobrescrever evidências. Não execute os auxiliares ou testes de escrita no host.
 
 O workflow de release só roda em tag `v*`, repete CI, exige tag igual à versão, gera dois ZIPs, 20 SBOMs Rust, um SBOM frontend, hashes e atestados, e cria **rascunho pré-release**. Nenhuma tag ou publicação real é feita para testar este workflow. O ensaio completo de atestado/rascunho exige uma tag futura do titular; ver [processo de release](../release-process.md).
+
+## Imagens fixadas — 02/11/2026
+
+CI/release usam ubuntu-24.04 e windows-2025 para evitar mudanca automatica de familia do SO sob *-latest e facilitar comparacao de falhas. Nao sao imagens imutaveis: atualizacoes do runner hospedado continuam chegando. Ferramentas e Actions permanecem fixadas; atualizar a familia exige PR e verificacao. Matriz de VM Windows cliente permanece independente: runner Server nao valida Home/Pro.
