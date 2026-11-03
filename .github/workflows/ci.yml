@@ -32,7 +32,7 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
-      - run: node tools/verify-version.mjs && node tools/check-doc-links.mjs && node tools/audit-unsafe.mjs
+      - run: node tools/verify-version.mjs && node tools/check-doc-links.mjs && node tools/audit-unsafe.mjs && node tools/check-i18n.mjs
         working-directory: .
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
@@ -41,7 +41,9 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: desktop-browser-evidence
-          path: apps/desktop/test-results/
+          path: |
+            apps/desktop/test-results/
+            outputs/release-0.6.5/screenshots/
           retention-days: 7
   rust:
     name: Rust (${{ matrix.os }})

@@ -9,6 +9,7 @@ Os relatos preservam decisões, medições e pendências da data de cada fase. C
 - [block-c](block-c.md)
 - [block-d](block-d.md)
 - [block-e](block-e.md)
+- [block-f](block-f.md)
 - [performance-investigation](performance-investigation.md)
 - [phase-1](phase-1.md)
 - [phase-2-plan](phase-2-plan.md)
@@ -43,3 +44,4 @@ Os relatos preservam decisões, medições e pendências da data de cada fase. C
 - [test-count-phase-6.json](test-count-phase-6.json)
 
 - [Linha de base: cinco execuções por modo e monitor](perf-baseline-0.6.5/)
+- [Candidata: cinco execuções por modo e monitor, sem substituir a referência](perf-final-0.6.5/manifest.json)

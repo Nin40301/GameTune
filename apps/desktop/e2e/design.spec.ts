@@ -1,10 +1,10 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures'
 import AxeBuilder from '@axe-core/playwright'
 import { mkdirSync, readFileSync } from 'node:fs'
 import pt from '../src/locales/pt-BR.json' with { type: 'json' }
 import en from '../src/locales/en.json' with { type: 'json' }
 
-const shots = '../../outputs/perf-investigation/screenshots'
+const shots = '../../outputs/release-0.6.5/screenshots'
 for (const language of ['pt-BR', 'en'] as const)
   for (const theme of ['light', 'dark'] as const)
     for (const width of [1440, 1100, 768, 390]) {
@@ -72,11 +72,7 @@ for (const language of ['pt-BR', 'en'] as const)
               path: `${shots}/${name}-${theme}-${width}.png`,
               animations: 'disabled',
             })
-          if (
-            language === 'pt-BR' &&
-            [1440, 390].includes(width) &&
-            ['home', 'games', 'benchmark', 'history', 'apps'].includes(name)
-          )
+          if (language === 'pt-BR' && [1440, 390].includes(width))
             await page.screenshot({
               path: `${shots}/${name}-${theme}-${width}-full.png`,
               fullPage: true,

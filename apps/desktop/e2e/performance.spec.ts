@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures'
 import { readFileSync, readdirSync } from 'node:fs'
 import pt from '../src/locales/pt-BR.json' with { type: 'json' }
 

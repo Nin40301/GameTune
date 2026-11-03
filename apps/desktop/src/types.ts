@@ -2,7 +2,7 @@ export type Language = 'pt-BR' | 'en'
 export type Theme = 'dark' | 'light'
 export type Kind = 'registry' | 'service' | 'scheduled_task' | 'appx' | 'startup' | 'power'
 export type Page =
-  'home' | 'items' | 'apps' | 'review' | 'history' | 'settings' | 'benchmark' | 'games'
+  'results' | 'home' | 'items' | 'apps' | 'review' | 'history' | 'settings' | 'benchmark' | 'games'
 export type ReviewKind = 'apply' | 'remove_apps' | 'undo' | 'undo_all' | 'history' | 'reinstall'
 export interface Localized {
   'pt-BR': string

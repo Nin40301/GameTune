@@ -9,7 +9,7 @@ use std::{
 use windows_sys::Win32::{
     Foundation::*,
     System::{Com::CoTaskMemFree, LibraryLoader::GetModuleHandleW},
-    UI::{Shell::*, WindowsAndMessaging::*},
+    UI::{HiDpi::GetDpiForWindow, Shell::*, WindowsAndMessaging::*},
 };
 static STOP: AtomicBool = AtomicBool::new(false);
 static ENGLISH: AtomicBool = AtomicBool::new(false);
@@ -104,6 +104,26 @@ unsafe extern "system" fn callback(
                 }
                 0
             }
+            WM_DPICHANGED => {
+                let dpi = (wparam as u32 & 0xffff).max(96);
+                let size = ((16 * dpi + 48) / 96) as i32;
+                let image = LoadImageW(
+                    GetModuleHandleW(ptr::null()),
+                    std::ptr::without_provenance::<u16>(1),
+                    IMAGE_ICON,
+                    size,
+                    size,
+                    0,
+                ) as HICON;
+                if !image.is_null() {
+                    let old = SetWindowLongPtrW(window, GWLP_USERDATA, image as isize) as HICON;
+                    SendMessageW(window, WM_TIMER, 1, 0);
+                    if !old.is_null() {
+                        DestroyIcon(old);
+                    }
+                }
+                0
+            }
             WM_CLOSE => {
                 STOP.store(true, Ordering::Relaxed);
                 0
@@ -115,7 +135,7 @@ unsafe extern "system" fn callback(
                 icon.uID = 1;
                 icon.uFlags = NIF_TIP | NIF_SHOWTIP | NIF_MESSAGE | NIF_ICON;
                 icon.uCallbackMessage = WM_APP + 1;
-                icon.hIcon = LoadIconW(GetModuleHandleW(ptr::null()), std::ptr::dangling::<u16>());
+                icon.hIcon = GetWindowLongPtrW(window, GWLP_USERDATA) as HICON;
                 if let Ok(value) = TOOLTIP.lock() {
                     for (out, c) in icon.szTip.iter_mut().take(127).zip(value.encode_utf16()) {
                         *out = c;
@@ -174,12 +194,29 @@ pub fn run(done: Arc<AtomicBool>, title: &str, english: bool) -> std::io::Result
         icon.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP | NIF_SHOWTIP;
         icon.uCallbackMessage = WM_APP + 1;
         // MAKEINTRESOURCE(1) is a resource identifier, never a dereferenceable pointer.
-        icon.hIcon = LoadIconW(instance, std::ptr::dangling::<u16>());
+        let dpi = GetDpiForWindow(window).max(96);
+        let size = ((16 * dpi + 48) / 96) as i32;
+        icon.hIcon = LoadImageW(
+            instance,
+            std::ptr::without_provenance::<u16>(1),
+            IMAGE_ICON,
+            size,
+            size,
+            0,
+        ) as HICON;
+        if icon.hIcon.is_null() {
+            DestroyWindow(window);
+            UnregisterClassW(class.as_ptr(), instance);
+            return Err(std::io::Error::last_os_error());
+        }
+        SetWindowLongPtrW(window, GWLP_USERDATA, icon.hIcon as isize);
         for (out, c) in icon.szTip.iter_mut().take(127).zip(title.encode_utf16()) {
             *out = c;
         }
         if Shell_NotifyIconW(NIM_ADD, &icon) == 0 {
+            DestroyIcon(icon.hIcon);
             DestroyWindow(window);
+            UnregisterClassW(class.as_ptr(), instance);
             return Err(std::io::Error::last_os_error());
         }
         icon.Anonymous.uVersion = NOTIFYICON_VERSION_4;
@@ -193,6 +230,7 @@ pub fn run(done: Arc<AtomicBool>, title: &str, english: bool) -> std::io::Result
         }
         Shell_NotifyIconW(NIM_DELETE, &icon);
         KillTimer(window, 1);
+        DestroyIcon(GetWindowLongPtrW(window, GWLP_USERDATA) as HICON);
         DestroyWindow(window);
         UnregisterClassW(class.as_ptr(), instance);
         Ok(())

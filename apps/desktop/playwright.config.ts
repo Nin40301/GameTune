@@ -4,7 +4,7 @@ export default defineConfig({
   timeout: 30000,
   fullyParallel: false,
   workers: 1,
-  use: { baseURL: 'http://127.0.0.1:1420', trace: 'retain-on-failure' },
+  use: { locale: 'pt-BR', baseURL: 'http://127.0.0.1:1420', trace: 'retain-on-failure' },
   webServer: {
     command: 'npm run preview:test',
     url: 'http://127.0.0.1:1420',

@@ -62,7 +62,7 @@ Gerado por `node tools/audit-unsafe.mjs --write`. Cada linha com bloco unsafe/ex
 | [crates/monitor/src/tray.rs:39](../../crates/monitor/src/tray.rs#L39) | `data_directory` | Somente janela, ícone e fila de mensagens da própria bandeja, pasta conhecida local. Recursos liberados no encerramento. |
 | [crates/monitor/src/tray.rs:49](../../crates/monitor/src/tray.rs#L49) | `callback` | Somente janela, ícone e fila de mensagens da própria bandeja, pasta conhecida local. Recursos liberados no encerramento. |
 | [crates/monitor/src/tray.rs:56](../../crates/monitor/src/tray.rs#L56) | `callback` | Somente janela, ícone e fila de mensagens da própria bandeja, pasta conhecida local. Recursos liberados no encerramento. |
-| [crates/monitor/src/tray.rs:141](../../crates/monitor/src/tray.rs#L141) | `run` | Somente janela, ícone e fila de mensagens da própria bandeja, pasta conhecida local. Recursos liberados no encerramento. |
+| [crates/monitor/src/tray.rs:161](../../crates/monitor/src/tray.rs#L161) | `run` | Somente janela, ícone e fila de mensagens da própria bandeja, pasta conhecida local. Recursos liberados no encerramento. |
 | [crates/watcher/src/fs_native.rs:17](../../crates/watcher/src/fs_native.rs#L17) | `local_drive` | GetDriveTypeW com raiz local validada; recusa unidades de rede antes de ler launchers. Não acessa processos. |
 | [crates/watcher/src/wmi.rs:21](../../crates/watcher/src/wmi.rs#L21) | `drop` | COM/WMI local em worker MTA próprio; interfaces e VARIANTs RAII, só eventos/snapshot de nome/caminho/PID da sessão, sem handles de jogos. |
 | [crates/watcher/src/wmi.rs:39](../../crates/watcher/src/wmi.rs#L39) | `listen_health` | COM/WMI local em worker MTA próprio; interfaces e VARIANTs RAII, só eventos/snapshot de nome/caminho/PID da sessão, sem handles de jogos. |
@@ -103,7 +103,7 @@ Gerado por `node tools/audit-unsafe.mjs --write`. Cada linha com bloco unsafe/ex
 
 - `crates/ipc/src/native.rs`: `c5ba85e68f88cee80c31173be8b35d821094108bc00f0ee631be3174c38529d4`
 - `crates/metrics/src/native.rs`: `4b6ac9d17794cde05c1d47a2678121dd418ea16642416d7144c4dffea8366578`
-- `crates/monitor/src/tray.rs`: `8e9f8d12dbc76a2857beca80fb1e9250d68e8d07c20587d18b8cbc02a717c2a1`
+- `crates/monitor/src/tray.rs`: `74e3ff5a4218bd689d2bb28a61158618dbd3174a34c6da1453572d2f60850b83`
 - `crates/watcher/src/fs_native.rs`: `af0671813596ec12fb06fec2f02a61004050d7cc48612fc8b24becd13c634d1b`
 - `crates/watcher/src/wmi.rs`: `5684eda873167e19f18d1fd1d0de6077b5b2cd6064ba2a307c18fb04c2509352`
 - `crates/windows_runtime/src/native.rs`: `5dbaabb36a3c14d1b030f5413e8658b5e510fb4c737f60190fba32aa0c700841`

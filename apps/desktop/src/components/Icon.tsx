@@ -32,6 +32,7 @@ import {
 } from 'lucide-react'
 const icons = {
   home: House,
+  results: Check,
   more: MoreHorizontal,
   chevronDown: ChevronDown,
   task: CalendarClock,

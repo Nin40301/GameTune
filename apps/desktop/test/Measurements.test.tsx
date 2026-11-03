@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Measurements } from '../src/Measurements'
+import { Measurements } from '../src/pages/Measurements'
 import { createMockBackend } from '../src/test-backend'
 import pt from '../src/locales/pt-BR.json'
 

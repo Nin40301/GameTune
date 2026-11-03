@@ -1,11 +1,12 @@
-import { useWindowActivity } from './hooks/useWindowActivity'
-import { Checkbox } from './components/Checkbox'
+import { InlineStatus } from '../components/InlineStatus'
+import { useWindowActivity } from '../hooks/useWindowActivity'
+import { Checkbox } from '../components/Checkbox'
 import { useEffect, useState, type ReactNode } from 'react'
-import { StatusOrb } from './components/StatusOrb'
-import { Icon } from './components/Icon'
-import { Sparkline } from './components/Sparkline'
-import type { Backend, Conditions, LabAction, LabFile, LabStatus, Language } from './types'
-import { translator } from './i18n'
+import { StatusOrb } from '../components/StatusOrb'
+import { Icon } from '../components/Icon'
+import { Sparkline } from '../components/Sparkline'
+import type { Backend, Conditions, LabAction, LabFile, LabStatus, Language } from '../types'
+import { translator } from '../i18n'
 
 const unchecked: Conditions = {
   appsClosed: false,
@@ -42,7 +43,7 @@ export function Measurements({
       ? '—'
       : new Intl.NumberFormat(language, { maximumFractionDigits: digits }).format(value)
   const gib = (value: number | undefined) =>
-    value == null ? '—' : `${number(value / 1073741824)} GiB`
+    value == null ? '—' : `${number(value / 1073741824)} ${t('gibUnit')}`
   useEffect(() => {
     if (!active) return
     let alive = true,
@@ -114,9 +115,9 @@ export function Measurements({
   return (
     <section className="measurements" aria-label={t(dashboard ? 'measuredDashboard' : 'benchmark')}>
       {(error || status?.error) && (
-        <p className="notice danger" role="alert">
+        <InlineStatus error next={t('retry')} onNext={() => void act({ kind: 'status' })}>
           {t(error ?? status?.error ?? 'metrics_unavailable')}
-        </p>
+        </InlineStatus>
       )}
       {dashboard ? (
         <>
@@ -182,8 +183,9 @@ export function Measurements({
               </article>
               <p className="footprint">
                 <Icon name="memory" />
-                {t('appFootprint')}: {sample ? number(sample.appPrivateBytes / 1048576) : '—'} MiB ·{' '}
-                {number(sample?.appCpuPercent, 2)} % CPU · {number(sample?.appProcesses, 0)}{' '}
+                {t('appFootprint')}: {sample ? number(sample.appPrivateBytes / 1048576) : '—'}{' '}
+                {t('mibUnit')} · {number(sample?.appCpuPercent, 2)} {t('percentUnit')}{' '}
+                {t('cpuUnit')} · {number(sample?.appProcesses, 0)}{' '}
                 {t('processCount').toLocaleLowerCase()}
               </p>
             </aside>
@@ -208,7 +210,7 @@ export function Measurements({
                       <tr>
                         <th scope="col">{t('processName')}</th>
                         <th scope="col">{t('instances')}</th>
-                        <th scope="col">MiB</th>
+                        <th scope="col">{t('mibUnit')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -230,7 +232,9 @@ export function Measurements({
             <p className="sample-stamp">
               {t('sampleTime')}{' '}
               <time dateTime={new Date(sample.timestampMs).toISOString()}>
-                {new Date(sample.timestampMs).toLocaleTimeString(language)}
+                {new Intl.DateTimeFormat(language, { timeStyle: 'medium' }).format(
+                  new Date(sample.timestampMs),
+                )}
               </time>
             </p>
           )}
@@ -284,7 +288,8 @@ export function Measurements({
               {running ? (
                 <div className="run-progress">
                   <p role="status">
-                    {t('runInProgress')} {completed + 1} / 5 · {status?.elapsedSeconds ?? 0} / 60 s
+                    {t('runInProgress')} {completed + 1} / 5 · {status?.elapsedSeconds ?? 0} /{' '}
+                    {number(60, 0)} {t('secondsUnit')}
                   </p>
                   <progress
                     max={60}
@@ -407,10 +412,11 @@ export function Measurements({
                               label={`${t('before')} · ${t(`metric_${c.metric}`)}`}
                             />
                             <small>
-                              p5 {number(c.before.p5)} · p95 {number(c.before.p95)}
+                              {t('p5Label')} {number(c.before.p5)} · {t('p95Label')}{' '}
+                              {number(c.before.p95)}
                             </small>
                             <small>
-                              MAD {number(c.before.mad)} ·{' '}
+                              {t('runVariation')} {number(c.before.mad)} ·{' '}
                               {c.before.runMedians.map((v) => number(v)).join(' / ')}
                             </small>
                           </td>
@@ -421,10 +427,11 @@ export function Measurements({
                               label={`${t('after')} · ${t(`metric_${c.metric}`)}`}
                             />
                             <small>
-                              p5 {number(c.after.p5)} · p95 {number(c.after.p95)}
+                              {t('p5Label')} {number(c.after.p5)} · {t('p95Label')}{' '}
+                              {number(c.after.p95)}
                             </small>
                             <small>
-                              MAD {number(c.after.mad)} ·{' '}
+                              {t('runVariation')} {number(c.after.mad)} ·{' '}
                               {c.after.runMedians.map((v) => number(v)).join(' / ')}
                             </small>
                           </td>
@@ -475,8 +482,9 @@ export function Measurements({
                     <dd>{number(capture.onePercentLowFps)}</dd>
                     <dt>{t('frameTime')}</dt>
                     <dd>
-                      {number(capture.frameTime.median)} ms · p95 {number(capture.frameTime.p95)} ms
-                      · p99 {number(capture.frameTimeP99)} ms
+                      {number(capture.frameTime.median)} {t('millisecondsUnit')} · {t('p95Label')}{' '}
+                      {number(capture.frameTime.p95)} {t('millisecondsUnit')}· {t('p99Label')}{' '}
+                      {number(capture.frameTimeP99)} {t('millisecondsUnit')}
                     </dd>
                   </dl>
                   <p>
@@ -496,7 +504,7 @@ export function Measurements({
               {(['json', 'html'] as const).map((format) => (
                 <button
                   key={format}
-                  className="button secondary"
+                  className={`button ${format === 'json' && p?.phase === 'complete' ? 'primary' : 'secondary'}`}
                   disabled={busy || !p}
                   onClick={() => {
                     void file({ kind: 'export', format, anonymize, english: language === 'en' })
@@ -506,7 +514,11 @@ export function Measurements({
                 </button>
               ))}
             </div>
-            {saved && <p role="status">{t('exportDialogDone')}</p>}
+            {saved && (
+              <InlineStatus next={t('dismiss')} onNext={() => setSaved(false)}>
+                {t('exportDialogDone')}
+              </InlineStatus>
+            )}
           </section>
         </>
       )}

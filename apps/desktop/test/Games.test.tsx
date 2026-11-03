@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { GamesPanel } from '../src/Games'
+import { GamesPanel } from '../src/pages/GamesPanel'
 import { createMockBackend } from '../src/test-backend'
 import pt from '../src/locales/pt-BR.json'
 import { App } from '../src/App'
