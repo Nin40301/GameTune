@@ -21,7 +21,7 @@ ametista-core = { path = "crates/core" }
 ametista-catalog = { path = "crates/catalog" }
 ametista-exec-mock = { path = "crates/exec_mock" }
 ametista-windows-runtime = { path = "crates/windows_runtime" }
-base64 = "0.22"
+base64 = "0.23"
 getrandom = "0.3"
 tokio = { version = "1.53", features = ["rt-multi-thread", "net", "io-util", "time", "macros", "sync"] }
 ametista-ipc = { path = "crates/ipc" }
