@@ -18,7 +18,7 @@ CI separa frontend Linux e Rust Linux/Windows, fixa ferramentas e Actions, audit
 
 Rust: 134 passaram, cinco administrativos ignorados. Componentes: 30/30. Suíte Playwright: 66 casos, incluindo axe nos dois idiomas/temas e reflow geométrico. Fmt, clippy -D warnings, ESLint, TS strict, versão/CSP/manifestos, i18n e documentação gerada verificados. O CI final e seu commit são registrados no [relatório](../history/release-0.6.5-report.md).
 
-**O gate de consumo da interface ainda reprova.** Cinco execuções por modo: Completo 163,54 MiB/0,3932% CPU mediana; Reduzido 244,04 MiB/0,3886%. CPU de referência zero continua bloqueando qualquer mediana positiva; Reduzido excede o teto de RAM em 44,04 MiB. Monitor passa com picos 2,75 MiB/0,1305%. [Evidências e comparação](../performance.md). Não se alterou baseline, limiares ou harness para aprovar. CI funcional verde não substitui esse gate.
+**Decisão do titular em 2 de novembro de 2026 — política v2.** CPU mediana <1%, p95 >2% como alerta, RAM ≤200 MiB e regressão RAM ≤15%. Completo **aprovado** com 163,54 MiB/0,3932%; Reduzido informativo, 244,04 MiB/0,3886%, sem bloquear o PR. Monitor mantém picos estritos ≤15 MiB/<0,5% e passa com 2,75 MiB/0,1305%. Política v1, baseline e séries preservadas; [decisão e avaliações](../performance.md). Não são novas coletas ou aceite de VM.
 
 ## Checklist de revisão
 
@@ -28,7 +28,7 @@ Rust: 134 passaram, cinco administrativos ignorados. Componentes: 30/30. Suíte 
 - [x] README, recuperação, guias de ajustes, comunidade, pipeline de release e backlog
 - [x] Automação local funcional, screenshots e auditorias; inventário de 92 linhas unsafe/extern com justificativa
 - [ ] CI obrigatório verde no commit final do PR (conferir link no relatório)
-- [ ] Gate da interface aprovado contra a referência ou decisão explícita do titular; não presumir waiver
+- [x] Gate v2 Completo aprovado pelo titular em 02/11/2026; Reduzido informativo; monitor estrito preservado
 - [ ] Aceite em VM descartável: UAC/outra conta/ACL/assinatura, apply/reboot/undo/snapshot e apps protegidos/jogos
 - [ ] Proteção do Sistema por volume confirmada; estado desconhecido não pode ser apresentado como ativo
 - [ ] NVDA/Narrador, zoom real, DPI físico 125/150/200%, alto contraste e bandeja: preencher roteiro manual

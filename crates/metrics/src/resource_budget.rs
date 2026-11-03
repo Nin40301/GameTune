@@ -161,7 +161,7 @@ fn regressed(current: f64, baseline: f64) -> bool {
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct InterfaceEvaluation {
+pub struct InterfaceEvaluationV1 {
     pub summary: CohortSummary,
     pub ram_regression: bool,
     pub cpu_median_regression: bool,
@@ -171,10 +171,10 @@ pub struct InterfaceEvaluation {
     pub passed: bool,
 }
 
-pub fn evaluate_interface(
+pub fn evaluate_interface_v1(
     runs: &[RunSummary],
     baseline: &ModeBaseline,
-) -> Result<InterfaceEvaluation, BudgetError> {
+) -> Result<InterfaceEvaluationV1, BudgetError> {
     let original = summarize_cohort(&baseline.runs).map_err(|_| BudgetError::InvalidBaseline)?;
     if original != baseline.summary {
         return Err(BudgetError::InvalidBaseline);
@@ -189,13 +189,67 @@ pub fn evaluate_interface(
         original.run_median_cpu_percent.median,
     );
     let ram_cap_exceeded = summary.run_median_ram_bytes.median > INTERFACE_RAM_CAP_BYTES;
-    Ok(InterfaceEvaluation {
+    Ok(InterfaceEvaluationV1 {
         cpu_p95_alert: summary.run_cpu_p95_percent.maximum >= 1.0,
         passed: !ram_regression && !cpu_median_regression && !ram_cap_exceeded,
         summary,
         ram_regression,
         cpu_median_regression,
         ram_cap_exceeded,
+    })
+}
+
+/// Policy v2, owner decision 2026-11-02. V1 and measurements remain immutable.
+#[derive(Clone, Copy, Debug, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum InterfaceMode {
+    Full,
+    Reduced,
+}
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct InterfaceEvaluation {
+    pub policy_version: u32,
+    pub mode: InterfaceMode,
+    pub informational: bool,
+    pub summary: CohortSummary,
+    pub ram_regression: bool,
+    pub ram_cap_exceeded: bool,
+    pub cpu_median_exceeded: bool,
+    pub cpu_p95_alert: bool,
+    /// Numerical result, even for the optional reduced mode.
+    pub passed: bool,
+    pub blocking_passed: bool,
+}
+pub fn evaluate_interface(
+    runs: &[RunSummary],
+    baseline: &ModeBaseline,
+    mode: InterfaceMode,
+) -> Result<InterfaceEvaluation, BudgetError> {
+    let original = summarize_cohort(&baseline.runs).map_err(|_| BudgetError::InvalidBaseline)?;
+    if original != baseline.summary {
+        return Err(BudgetError::InvalidBaseline);
+    }
+    let summary = summarize_cohort(runs)?;
+    let ram_regression = regressed(
+        summary.run_median_ram_bytes.median,
+        original.run_median_ram_bytes.median,
+    );
+    let ram_cap_exceeded = summary.run_median_ram_bytes.median > INTERFACE_RAM_CAP_BYTES;
+    let cpu_median_exceeded = summary.run_median_cpu_percent.median >= 1.0;
+    let passed = !ram_regression && !ram_cap_exceeded && !cpu_median_exceeded;
+    let informational = matches!(mode, InterfaceMode::Reduced);
+    Ok(InterfaceEvaluation {
+        policy_version: 2,
+        mode,
+        informational,
+        cpu_p95_alert: summary.run_cpu_p95_percent.maximum > 2.0,
+        summary,
+        ram_regression,
+        ram_cap_exceeded,
+        cpu_median_exceeded,
+        passed,
+        blocking_passed: passed || informational,
     })
 }
 
