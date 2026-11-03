@@ -574,5 +574,22 @@
   "failedTitle": "Review what did not finish",
   "allRisk": "All risks",
   "allRevert": "All reversibility types",
-  "noHistoryDay": "Date unavailable"
+  "noHistoryDay": "Date unavailable",
+  "serviceMode_0": "Boot",
+  "serviceMode_1": "System",
+  "serviceMode_2": "Automatic",
+  "serviceMode_3": "Manual",
+  "serviceMode_4": "Disabled",
+  "serviceRunning": "Running",
+  "serviceStopped": "Stopped",
+  "groupToggle": "Select group",
+  "selectionType": "{count} {type}",
+  "filterSelected": "Selected only",
+  "clearFilters": "Clear filters",
+  "nowUnknown": "Analyze to see the current value",
+  "viewChange": "View change",
+  "historyDate": "Date",
+  "safeGroupOnly": "Selects only verified, reversible items without high risk",
+  "selectionEmpty": "No adjustments match these filters",
+  "filters": "Filters"
 }

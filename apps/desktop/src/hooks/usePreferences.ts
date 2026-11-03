@@ -22,8 +22,10 @@ export function usePreferences() {
       ? 'reduced'
       : 'full'
   })
-  const [textSize, setTextSize] = useState(() =>
-    Math.min(130, Math.max(90, Number(preference('textSize', '100')) || 100)),
+  const [textSize, setTextSize] = useState(
+    () =>
+      Math.round(Math.min(130, Math.max(90, Number(preference('textSize', '100')) || 100)) / 10) *
+      10,
   )
   const [motion, setMotion] = useState<'system' | 'reduced'>(() =>
     preference('motion', 'system') === 'reduced' ? 'reduced' : 'system',

@@ -1,3 +1,4 @@
+import { SecurityCard } from './SecurityCard'
 import { StatusStrip } from './StatusStrip'
 import { number } from '../i18n-format'
 import { Onboarding } from '../pages/Onboarding'
@@ -110,11 +111,23 @@ export function AppShell() {
           </div>
         </div>
         <nav className="nav" data-index={navigation.indexOf(navPage)} aria-label={t('nav')}>
-          <span className="nav__pill" aria-hidden="true" />
           <ul>
-            {(compactNavigation ? primaryNavigation : navigation).map((item) => (
-              <li key={item}>{navigationButton(item)}</li>
-            ))}
+            {compactNavigation
+              ? primaryNavigation.map((item) => <li key={item}>{navigationButton(item)}</li>)
+              : [
+                  { label: 'navMain', items: ['home', 'items', 'apps', 'review'] as Page[] },
+                  { label: 'navTrack', items: ['history', 'benchmark', 'games'] as Page[] },
+                  { label: 'navSystem', items: ['settings'] as Page[] },
+                ].map((group) => (
+                  <li className="nav-group" key={group.label}>
+                    <span className="nav-group__label">{t(group.label)}</span>
+                    <ul>
+                      {group.items.map((item) => (
+                        <li key={item}>{navigationButton(item)}</li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
             {compactNavigation && (
               <li className="more-navigation">
                 <details
@@ -145,6 +158,7 @@ export function AppShell() {
             )}
           </ul>
         </nav>
+        <SecurityCard compact />
         <div className="sidebar-footer">
           <span className="version">
             {t('versionPrefix')}

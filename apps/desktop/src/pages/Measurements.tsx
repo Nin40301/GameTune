@@ -21,17 +21,18 @@ export function Measurements({
   language,
   dashboard = false,
   profileControls,
-  selectedCount = 0,
+  safetyCard,
 }: {
   backend: Backend
   language: Language
   dashboard?: boolean
   profileControls?: ReactNode
-  selectedCount?: number
+  safetyCard?: ReactNode
 }) {
   const active = useWindowActivity()
   const [processesOpen, setProcessesOpen] = useState(false)
   const [cpuSamples, setCpuSamples] = useState<{ time: number; value: number }[]>([])
+  const [ramSamples, setRamSamples] = useState<{ time: number; value: number }[]>([])
   const [status, setStatus] = useState<LabStatus | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -61,6 +62,13 @@ export function Measurements({
           if (alive) {
             setStatus(s)
             const latest = s.latest
+            if (latest && Number.isFinite(latest.availableBytes))
+              setRamSamples((old) =>
+                appendCpuSample(old, {
+                  time: latest.timestampMs,
+                  value: latest.availableBytes / 1073741824,
+                }),
+              )
             if (latest?.cpuPercent != null && Number.isFinite(latest.cpuPercent)) {
               const value = latest.cpuPercent
               setCpuSamples((old) => appendCpuSample(old, { time: latest.timestampMs, value }))
@@ -175,14 +183,33 @@ export function Measurements({
                 <Sparkline values={cpuSamples.map((s) => s.value)} label={t('cpuHistory')} />
                 <p>{t('cpuNote')}</p>
               </article>
-              <article className="surface metric metric--selection">
+              <article className="surface metric metric--memory">
                 <h3>
-                  <Icon name="items" />
-                  {t('selected')}
+                  <Icon name="memory" />
+                  {t('memoryHistory')}
                 </h3>
-                <strong className="num">{number(selectedCount, 0)}</strong>
-                <p>{t('safeDefaultNote')}</p>
+                <strong className="num">{gib(sample?.availableBytes)}</strong>
+                <Sparkline values={ramSamples.map((s) => s.value)} label={t('memoryHistory')} />
+                <p>{t('sampleShortHistory')}</p>
               </article>
+              <section className="surface top-three">
+                <h3>{t('topThree')}</h3>
+                {sample ? (
+                  <ol>
+                    {sample.top.slice(0, 3).map((process) => (
+                      <li key={process.name}>
+                        <span>{process.name}</span>
+                        <strong className="num">
+                          {number(process.memoryBytes / 1048576)} {t('mibUnit')}
+                        </strong>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p>{t('metricsWaiting')}</p>
+                )}
+              </section>
+              {safetyCard}
               <p className="footprint">
                 <Icon name="memory" />
                 {t('appFootprint')}: {sample ? number(sample.appPrivateBytes / 1048576) : '—'}{' '}

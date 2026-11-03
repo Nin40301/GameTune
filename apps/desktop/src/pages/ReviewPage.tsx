@@ -1,7 +1,7 @@
 import { useApp } from '../state/AppContext'
 import { ReviewScreen } from '../components/ReviewScreen'
 export function ReviewPage() {
-  const { page, t, review, language, busy, execute, setReview, setPage } = useApp()
+  const { page, t, review, language, busy, execute, rows, setReview, setPage } = useApp()
   return (
     <>
       {page === 'review' &&
@@ -9,6 +9,7 @@ export function ReviewPage() {
           <ReviewScreen
             key={review.ticket}
             review={review}
+            observations={rows}
             language={language}
             busy={busy}
             onSubmit={(approval) => void execute(approval)}

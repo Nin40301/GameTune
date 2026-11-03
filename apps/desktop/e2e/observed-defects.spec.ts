@@ -18,7 +18,7 @@ for (const language of ['pt-BR', 'en'] as const)
         await page.goto('/')
         // 2 useful navigation targets, 6 simulation rather than search, 7 precision.
         await expect(page.getByRole('list', { name: t.statusStrip })).toBeVisible()
-        await expect(page.locator('.status-strip .status-chip')).toHaveCount(2)
+        await expect(page.locator('.status-strip .status-chip')).toHaveCount(3)
         await expect(
           page.getByRole('button', { name: t.simulate, exact: true }).locator('.lucide-scan-eye'),
         ).toBeVisible()

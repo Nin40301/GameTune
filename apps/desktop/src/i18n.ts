@@ -21,7 +21,10 @@ export function itemName(
   language: Language,
 ) {
   const messages: Record<string, string> = language === 'en' ? en : pt
-  return messages[`itemName_${item.id}`] ?? item.name[language]
+  const text = messages[`itemName_${item.id}`] ?? item.name[language]
+  return __TEST_BACKEND__ && localStorage.getItem('__ametistaPseudo') === 'true'
+    ? pseudo(text)
+    : text
 }
 
 export function pseudo(text: string) {
@@ -39,5 +42,11 @@ export function pseudo(text: string) {
           ),
     )
     .join('')
-  return '[ ' + expanded + ' ' + 'á'.repeat(Math.ceil(text.length * 0.4)) + ' ]'
+  return (
+    '[ ' +
+    expanded +
+    ' ' +
+    Array.from({ length: Math.ceil((text.length * 0.4) / 4) }, () => 'áááá').join(' ') +
+    ' ]'
+  )
 }

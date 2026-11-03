@@ -574,5 +574,22 @@
   "failedTitle": "Confira o que não terminou",
   "allRisk": "Todos os riscos",
   "allRevert": "Todos os tipos de reversão",
-  "noHistoryDay": "Data indisponível"
+  "noHistoryDay": "Data indisponível",
+  "serviceMode_0": "Inicialização",
+  "serviceMode_1": "Sistema",
+  "serviceMode_2": "Automático",
+  "serviceMode_3": "Manual",
+  "serviceMode_4": "Desativado",
+  "serviceRunning": "Em execução",
+  "serviceStopped": "Parado",
+  "groupToggle": "Selecionar grupo",
+  "selectionType": "{count} de {type}",
+  "filterSelected": "Somente selecionados",
+  "clearFilters": "Limpar filtros",
+  "nowUnknown": "O valor atual só aparece depois da análise",
+  "viewChange": "Ver mudança",
+  "historyDate": "Data",
+  "safeGroupOnly": "Seleciona apenas itens verificados, reversíveis e sem risco alto",
+  "selectionEmpty": "Nenhum ajuste corresponde aos filtros",
+  "filters": "Filtros"
 }

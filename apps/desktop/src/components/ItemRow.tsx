@@ -7,7 +7,6 @@ import { Switch } from './Switch'
 export function ItemRow({
   item,
   language,
-  observation,
   checked,
   disabled,
   blocked,
@@ -43,23 +42,19 @@ export function ItemRow({
         </span>
       </div>
       <div className="item-badges">
-        <span className="level-badge">
-          {t('level')} {item.level}
+        <span className={`badge ${item.revert === 'auto' ? 'badge--ok' : 'badge--danger'}`}>
+          <Icon name={item.revert === 'auto' ? 'history' : 'warning'} />
+          {t(item.revert === 'auto' ? 'reversible' : 'notReversible')}
         </span>
-        <span className={`risk-badge ${item.risk}`}>
-          <Icon name={item.risk === 'high' ? 'high' : item.risk === 'low' ? 'warning' : 'safe'} />
-          {t(item.risk === 'high' ? 'riskHigh' : item.risk === 'low' ? 'riskLow' : 'riskNone')}
-        </span>
-        {item.type === 'appx' && (
-          <span className="badge badge--warn">
-            <Icon name="apps" />
-            {t('noUndo')}
+        {item.risk === 'high' && (
+          <span className="risk-badge high">
+            <Icon name="high" />
+            {t('riskHigh')}
           </span>
         )}
         {!item.verified && <span className="pill">{t('unverified')}</span>}
         {blocked && <span className="pill">{t('blocked')}</span>}
         {incompatible && <span className="pill">{t('incompatible')}</span>}
-        <span className="state-label">{observation ? t(observation.presence) : '—'}</span>
         <button
           className="detail-button"
           aria-label={`${t('details')}: ${name}`}

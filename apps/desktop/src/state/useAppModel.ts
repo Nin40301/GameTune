@@ -10,8 +10,9 @@ import type {
   Reply,
   Review,
   ReviewKind,
+  GameMonitor,
 } from '../types'
-import { categoryKey, translator } from '../i18n'
+import { categoryKey, translator, itemName } from '../i18n'
 import { useWindowActivity } from '../hooks/useWindowActivity'
 import { usePreferences } from '../hooks/usePreferences'
 import { errorKey } from './errors'
@@ -57,6 +58,10 @@ export function useAppModel(backend: Backend) {
     media.addEventListener('change', update)
     return () => media.removeEventListener('change', update)
   }, [])
+  const [monitor, setMonitor] = useState<GameMonitor | null>(null)
+  const [riskFilter, setRiskFilter] = useState('all'),
+    [revertFilter, setRevertFilter] = useState('all'),
+    [selectedOnly, setSelectedOnly] = useState(false)
   const [gameRecovery, setGameRecovery] = useState(false)
   const [page, setPage] = useState<Page>('home'),
     [data, setData] = useState<Bootstrap | null>(null)
@@ -81,7 +86,10 @@ export function useAppModel(backend: Backend) {
     void backend
       .games({ kind: 'status' })
       .then((view) => {
-        if (alive) setGameRecovery(view.monitor.recoveryPending && !view.monitor.running)
+        if (alive) {
+          setMonitor(view.monitor)
+          setGameRecovery(view.monitor.recoveryPending && !view.monitor.running)
+        }
       })
       .catch(() => {})
     void backend
@@ -100,6 +108,30 @@ export function useAppModel(backend: Backend) {
       alive = false
     }
   }, [backend])
+  useEffect(() => {
+    if (!active) return
+    let alive = true,
+      pending = false
+    const timer = setInterval(() => {
+      if (pending) return
+      pending = true
+      void backend
+        .games({ kind: 'status' })
+        .then((view) => {
+          if (alive) setMonitor(view.monitor)
+        })
+        .catch(() => {
+          if (alive) setMonitor(null)
+        })
+        .finally(() => {
+          pending = false
+        })
+    }, 5000)
+    return () => {
+      alive = false
+      clearInterval(timer)
+    }
+  }, [active, backend])
   const previousPage = useRef(page),
     previousOnboarding = useRef(onboarded)
   useEffect(() => {
@@ -139,7 +171,7 @@ export function useAppModel(backend: Backend) {
     () => new Map(analysis.observations.map((row) => [row.itemId, row])),
     [analysis.observations],
   )
-  const name = (item: Item) => item.name[language]
+  const name = (item: Item) => itemName(item, language)
   const categoryLabel = (value: string) => t(categoryKey(value))
   function chooseProfile(value: string) {
     setProfile(value)
@@ -213,7 +245,10 @@ export function useAppModel(backend: Backend) {
         `${name(item)} ${item.description[language]}`
           .toLocaleLowerCase()
           .includes(search.toLocaleLowerCase())) &&
-      (category === 'all' || item.category === category),
+      (category === 'all' || item.category === category) &&
+      (riskFilter === 'all' || item.risk === riskFilter) &&
+      (revertFilter === 'all' || item.revert === revertFilter) &&
+      (!selectedOnly || selected.includes(item.id)),
   )
   const apps = (data?.items ?? []).filter(
     (item) =>
@@ -238,6 +273,18 @@ export function useAppModel(backend: Backend) {
     !(item.type === 'startup' && !item.target.entry)
   const activeHistory =
     history.journal?.entries.filter((entry) => entry.status !== 'reverted') ?? []
+  function selectGroup(ids: string[]) {
+    const eligible = ids.filter((id) => {
+      const item = data?.items.find((i) => i.id === id)
+      return item && item.risk !== 'high' && item.verified && canSelect(item)
+    })
+    const all = eligible.every((id) => selected.includes(id))
+    setSelected((old) =>
+      all ? old.filter((id) => !eligible.includes(id)) : [...new Set([...old, ...eligible])],
+    )
+    setProfile('custom')
+    setReview(null)
+  }
   function navigate(item: Page) {
     setPage(item)
     setSearch('')
@@ -245,6 +292,14 @@ export function useAppModel(backend: Backend) {
     if (moreMenu.current) moreMenu.current.open = false
   }
   return {
+    monitor,
+    riskFilter,
+    setRiskFilter,
+    revertFilter,
+    setRevertFilter,
+    selectedOnly,
+    setSelectedOnly,
+    selectGroup,
     active,
     language,
     setLanguage,
