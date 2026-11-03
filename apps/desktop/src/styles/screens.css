@@ -3027,3 +3027,21 @@ main {
   margin: 0;
   min-width: 0;
 }
+
+/* Native 1100x740 verification: content determines equal track heights. */
+.vitals {
+  grid-template-rows: repeat(3, minmax(220px, 1fr)) auto auto auto;
+}
+.vitals .metric {
+  height: auto;
+  min-height: 220px;
+}
+.vitals .metric--cpu,
+.vitals .metric--memory {
+  grid-template-rows: auto auto 52px auto;
+}
+.orb__center span {
+  max-width: 85%;
+  justify-self: center;
+  overflow-wrap: normal;
+}

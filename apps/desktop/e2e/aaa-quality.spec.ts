@@ -77,6 +77,24 @@ for (const width of [640, 320])
     }
   })
 
+test('native-size Home keeps the orb caption and all metric content inside their cards', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1100, height: 740 })
+  await page.goto('/')
+  await expect(page.locator('.metric--cpu .sparkline')).toBeVisible()
+  const orb = await page.locator('.orb').boundingBox(),
+    caption = await page.locator('.orb__center span').boundingBox()
+  expect(
+    orb && caption && caption.x >= orb.x && caption.x + caption.width <= orb.x + orb.width,
+  ).toBe(true)
+  expect(
+    await page
+      .locator('.vitals .metric')
+      .evaluateAll((nodes) => nodes.every((node) => node.scrollHeight <= node.clientHeight + 1)),
+  ).toBe(true)
+})
+
 test('entire simulate review apply MOCK result undo flow works with the keyboard alone', async ({
   page,
 }) => {

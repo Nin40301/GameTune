@@ -19,3 +19,10 @@ Extensão nativa limitada à leitura de ícone de arquivo cadastrado, por varian
 Pseudo-localização inclui também descrições do catálogo, sem mudar catálogo. Foram vistos catálogos visuais das oito telas e galeria (dois temas, 1440/390) e dos nove estados aplicáveis por combinação, ampliando pontos críticos. Correções: camada de ações abaixo do menu Mais, botões de simulação perto do Orb, cartões Appx compactos, palavras de resultado sem divisão artificial, remoção de status repetido do monitor e nomes amigáveis com identidade de pacote nos detalhes. Continuam fracos: Itens e Configurações são longos em 390 px; os grupos recolhíveis ajudam, mas não eliminam a rolagem. Ícones nativos e alto DPI exigem conferência manual; iniciais de Appx são fallback do inventário atual. Não foi declarada conformidade AAA.
 
 As bases Linux e a nova coorte nativa pertencem aos próximos registros deste mesmo bloco de aceite. Nenhuma captura ou métrica de teste é mostrada na produção; o build exclui galeria/pseudo/mock e mantém dez comandos tipados.
+
+
+## Conferência nativa — complemento da segunda rodada
+
+A janela real em 1100×740 revelou legenda longa no Orb e conteúdo da métrica que excedia a altura fixa de 172 px. Mantivemos o anel e os cartões; legenda agora quebra dentro do anel, e três tracks iguais usam altura definida pelo conteúdo. A inspeção foi somente leitura. Acrescentado gate de geometria interna e ensaio 1100×740; 12 cenários de capturas/defeitos passaram após a correção. A fonte continua local, sem flags novas, alteração de limites ou do harness.
+
+O probe de ícone leu o recurso do próprio ametista.exe, gerou PNG válido 32×32 e a gema foi conferida. Isso não valida todo formato de ícone de terceiros ou DPI alto.

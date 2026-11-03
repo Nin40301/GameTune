@@ -31,6 +31,13 @@ for (const language of ['pt-BR', 'en'] as const)
           }),
         ).toBeVisible()
         await expect(page.locator('.metric--cpu .sparkline')).toBeVisible()
+        expect(
+          await page
+            .locator('.vitals .metric')
+            .evaluateAll((nodes) =>
+              nodes.every((node) => node.scrollHeight <= node.clientHeight + 1),
+            ),
+        ).toBe(true)
         // 8 equal metric heights, 9 balanced short slogan, 11 real ghost control.
         const heights = await page
           .locator('.vitals .metric')
