@@ -2,6 +2,8 @@
 
 Automação não comprova conformidade WCAG. Preencher os resultados abaixo na build candidata, **na VM** para fluxos com escrita. Registrar commit/hash, Windows/edição, WebView2, navegador, tamanho da janela, idioma, tema, efeitos, DPI e tecnologias assistivas. Nesta entrega, **NVDA, Narrador e DPI físico ainda não foram validados**.
 
+Fase 6.7 / Entrega 1: repetir manualmente os atalhos da StatusStrip, switches de Jogos e navegação entre a barra fixa de Itens e a barra móvel. O novo texto secundário tem mínimo de 13,5 px. Os testes de geometria e axe não preenchem os resultados manuais abaixo; o objetivo “AAA” de acabamento não é uma declaração de conformidade WCAG AAA.
+
 | Ensaio | Roteiro e resultado esperado | Resultado do titular |
 | --- | --- | --- |
 | Somente teclado | Tab/Shift+Tab, Pular para o conteúdo, navegação + Mais no celular, setas/Home/End em Segmented, Espaço em Checkbox/Switch, Escape em detalhes, foco de retorno | Pendente |

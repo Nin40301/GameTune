@@ -27,9 +27,9 @@ export function ScanStatus() {
       <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {announcement}
       </span>
-      <div>
-        <strong>{text}</strong>
-        <span className="num">
+      <div className="status-banner">
+        <strong className="status-banner__text">{text}</strong>
+        <span className="status-banner__meta num">
           {new Intl.NumberFormat(language).format(analysis.completed)} /{' '}
           {analysis.total
             ? new Intl.NumberFormat(language).format(analysis.total)

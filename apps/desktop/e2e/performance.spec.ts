@@ -51,9 +51,7 @@ test('idle glass keeps identity with three bounded blurred surfaces and no retai
 }) => {
   await page.addInitScript(() => localStorage.setItem('ametista.effects', 'full'))
   await page.goto('/')
-  await expect(
-    page.getByRole('img', { name: `${pt.availableRam}: 6 GiB`, exact: true }),
-  ).toBeVisible()
+  await expect(page.getByRole('img', { name: /6,0 GiB/ })).toBeVisible()
   await page.waitForTimeout(450)
   const styles = await page.evaluate(() => ({
     font: getComputedStyle(document.documentElement).fontFamily,

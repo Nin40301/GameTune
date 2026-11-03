@@ -2,18 +2,18 @@ import { test, expect } from './fixtures'
 import AxeBuilder from '@axe-core/playwright'
 test('simulate, review, acknowledge and undo through a mock backend', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('button', { name: /^Simule/ }).click()
+  await page.getByRole('button', { name: /^Simular/ }).click()
   await expect(
     page.getByText('Análise concluída. Nenhuma alteração foi feita', { exact: true }),
   ).toBeVisible()
-  await page.getByRole('button', { name: 'Revise os ajustes' }).click()
-  await expect(page.getByRole('button', { name: 'Aplique os ajustes' })).toBeDisabled()
+  await page.getByRole('button', { name: 'Revisar ajustes' }).click()
+  await expect(page.getByRole('button', { name: 'Aplicar ajustes' })).toBeDisabled()
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()
-  await page.getByRole('button', { name: 'Aplique os ajustes' }).click()
+  await page.getByRole('button', { name: 'Aplicar ajustes' }).click()
   await expect(page.getByText('Operação concluída. Confira o resultado por item')).toBeVisible()
-  await page.getByRole('button', { name: 'Desfaça tudo', exact: true }).click()
+  await page.getByRole('button', { name: 'Desfazer tudo', exact: true }).click()
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()
-  await page.getByRole('button', { name: 'Desfaça', exact: true }).click()
+  await page.getByRole('button', { name: 'Desfazer', exact: true }).click()
   await expect(page.getByText('Operação concluída. Confira o resultado por item')).toBeVisible()
   expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(2)
 })
@@ -21,17 +21,15 @@ test('multi-app removal needs every consent and reinforced high-risk approval', 
   page,
 }) => {
   await page.goto('/')
-  await page.getByRole('button', { name: /^Simule/ }).click()
+  await page.getByRole('button', { name: /^Simular/ }).click()
   await expect(
     page.getByText('Análise concluída. Nenhuma alteração foi feita', { exact: true }),
   ).toBeVisible()
   await page.getByRole('button', { name: 'Limpeza de apps' }).click()
-  await page.getByRole('checkbox', { name: 'Remover Microsoft.Copilot', exact: true }).check()
-  await page
-    .getByRole('checkbox', { name: 'Remover Microsoft.GamingServices', exact: true })
-    .check()
-  await page.getByRole('button', { name: /Revise a remoção/ }).click()
-  const remove = page.getByRole('button', { name: 'Remova os apps' })
+  await page.getByRole('checkbox', { name: 'Microsoft.Copilot', exact: true }).check()
+  await page.getByRole('checkbox', { name: 'Microsoft.GamingServices', exact: true }).check()
+  await page.getByRole('button', { name: /Revisar remoção/ }).click()
+  const remove = page.getByRole('button', { name: 'Remover apps' })
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()
   await page
     .getByLabel('Entendo que Desfazer não reinstala este app nem recupera seus dados')
@@ -53,19 +51,19 @@ test('cancel remains responsive and a new review is required after UAC cancellat
   page,
 }) => {
   await page.goto('/?uac-cancel=1')
-  await page.getByRole('button', { name: /^Simule/ }).click()
-  await page.getByRole('button', { name: 'Cancele' }).click()
+  await page.getByRole('button', { name: /^Simular/ }).click()
+  await page.getByRole('button', { name: 'Cancelar' }).click()
   await expect(
     page.getByText('Análise cancelada. Nenhuma alteração foi feita', { exact: true }),
   ).toBeVisible()
   expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(0)
-  await page.getByRole('button', { name: /^Simule/ }).click()
+  await page.getByRole('button', { name: /^Simular/ }).click()
   await expect(
     page.getByText('Análise concluída. Nenhuma alteração foi feita', { exact: true }),
   ).toBeVisible()
-  await page.getByRole('button', { name: 'Revise os ajustes' }).click()
+  await page.getByRole('button', { name: 'Revisar ajustes' }).click()
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()
-  await page.getByRole('button', { name: 'Aplique os ajustes' }).click()
+  await page.getByRole('button', { name: 'Aplicar ajustes' }).click()
   await expect(page.getByRole('alert')).toContainText('Autorização do Windows cancelada')
   await expect(page.getByRole('button', { name: 'Revisão', exact: true })).toBeDisabled()
 })
@@ -76,7 +74,7 @@ test('keyboard navigation, dialog focus and local settings', async ({ page }) =>
   await expect(page.getByRole('link', { name: 'Ir para o conteúdo' })).toBeFocused()
   await page.getByRole('button', { name: 'Itens', exact: true }).click()
   await page
-    .getByLabel('Veja os detalhes: Desativar Diagnóstico conectado', { exact: true })
+    .getByLabel('Ver detalhes: Desativação de Diagnóstico conectado', { exact: true })
     .click()
   await expect(page.getByRole('dialog')).toBeVisible()
   const modalAxe = await new AxeBuilder({ page })
@@ -86,7 +84,7 @@ test('keyboard navigation, dialog focus and local settings', async ({ page }) =>
   await page.keyboard.press('Escape')
   await expect(page.getByRole('dialog')).not.toBeVisible()
   await expect(
-    page.getByLabel('Veja os detalhes: Desativar Diagnóstico conectado', { exact: true }),
+    page.getByLabel('Ver detalhes: Desativação de Diagnóstico conectado', { exact: true }),
   ).toBeFocused()
   await page.getByRole('button', { name: 'Configurações', exact: true }).click()
   await page.getByLabel('Idioma', { exact: true }).selectOption('en')
@@ -99,7 +97,7 @@ for (const language of ['pt-BR', 'en'])
   for (const theme of ['dark', 'light'])
     test(`axe AA on all screens in ${language} ${theme}`, async ({ page }) => {
       await page.goto('/')
-      await page.getByRole('button', { name: /^Simule/ }).click()
+      await page.getByRole('button', { name: /^Simular/ }).click()
       await expect(
         page.getByText('Análise concluída. Nenhuma alteração foi feita', { exact: true }),
       ).toBeVisible()
@@ -126,7 +124,7 @@ for (const language of ['pt-BR', 'en'])
         await page.screenshot({ path: `test-results/home-${theme}.png`, fullPage: true })
       await page
         .getByRole('button', {
-          name: language === 'en' ? 'Review adjustments' : 'Revise os ajustes',
+          name: language === 'en' ? 'Review adjustments' : 'Revisar ajustes',
         })
         .click()
       const results = await new AxeBuilder({ page })
@@ -138,11 +136,11 @@ for (const language of ['pt-BR', 'en'])
 test('Store reinstall is a separately reviewed explicit action', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: 'Histórico', exact: true }).click()
-  await page.getByRole('button', { name: 'Abra na Loja' }).click()
-  await expect(page.getByRole('button', { name: 'Abra na Loja' })).toBeDisabled()
+  await page.getByRole('button', { name: 'Reinstalar pela Loja' }).click()
+  await expect(page.getByRole('button', { name: 'Reinstalar pela Loja' })).toBeDisabled()
   expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(0)
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()
-  await page.getByRole('button', { name: 'Abra na Loja' }).click()
+  await page.getByRole('button', { name: 'Reinstalar pela Loja' }).click()
   await expect(page.getByText('Operação concluída. Confira o resultado por item')).toBeVisible()
   expect(await page.evaluate(() => window.__ametistaTest?.reviews[0]?.kind)).toBe('reinstall')
 })

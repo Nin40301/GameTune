@@ -7,7 +7,7 @@
   align-items: flex-start;
   gap: 10px;
   padding: 10px 0;
-  font-size: 0.84rem;
+  font-size: 0.84375rem;
   line-height: 1.6;
 }
 .games-panel input {
@@ -54,7 +54,7 @@
 .game-choice span,
 .game-action small {
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
 }
 .game-action {
   display: flex;
@@ -113,7 +113,7 @@
 }
 .metric h3 {
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.84375rem;
   font-weight: 500;
   margin: 0 0 12px;
 }
@@ -125,7 +125,7 @@
 .metric p,
 .sample-stamp,
 .measurements .muted {
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
   color: var(--muted);
   line-height: 1.65;
 }
@@ -139,13 +139,13 @@
   border-collapse: collapse;
   width: 100%;
   text-align: left;
-  font-size: 0.8rem;
+  font-size: 0.84375rem;
 }
 .measurements caption {
   text-align: left;
   color: var(--muted);
   padding: 12px 0;
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
 }
 .measurements th,
 .measurements td {
@@ -198,7 +198,7 @@
   gap: 10px;
   align-items: flex-start;
   padding: 8px 0;
-  font-size: 0.82rem;
+  font-size: 0.84375rem;
   line-height: 1.6;
 }
 .measurements .check-line input {
@@ -279,7 +279,7 @@
 .brand small {
   display: block;
   color: var(--muted);
-  font-size: 0.64rem;
+  font-size: 0.84375rem;
   margin-top: 5px;
   max-width: 145px;
   line-height: 1.5;
@@ -333,7 +333,7 @@
 }
 .nav-count {
   margin-left: auto;
-  font: 0.7rem var(--font-mono);
+  font: 0.84375rem var(--font-mono);
   padding: 2px 5px;
   border: 1px solid var(--line);
   border-radius: 3px;
@@ -343,7 +343,7 @@
   align-items: center;
   gap: 7px;
   color: var(--muted);
-  font-size: 0.76rem;
+  font-size: 0.84375rem;
   margin-top: auto;
   padding: 24px 12px 0;
 }
@@ -371,7 +371,7 @@
   justify-content: space-between;
   padding: 0 38px;
   border-bottom: 1px solid var(--line);
-  font-size: 0.78rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 .topbar > div {
@@ -386,7 +386,7 @@
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 4px 7px;
-  font-size: 0.64rem;
+  font-size: 0.84375rem;
   line-height: 1.4;
   white-space: normal;
 }
@@ -394,7 +394,7 @@
   color: var(--accent);
 }
 .mode-label {
-  font-size: 0.7rem;
+  font-size: 0.84375rem;
 }
 main {
   max-width: 1320px;
@@ -409,7 +409,7 @@ main {
   margin: 8px 0 23px;
 }
 .eyebrow {
-  font: 0.64rem var(--font-mono);
+  font: 0.84375rem var(--font-mono);
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -477,7 +477,7 @@ main {
 }
 .profile-number {
   color: var(--muted);
-  font: 0.7rem var(--font-mono);
+  font: 0.84375rem var(--font-mono);
   align-self: flex-start;
   padding-top: 3px;
 }
@@ -492,7 +492,7 @@ main {
 .profile-option small {
   display: block;
   margin-top: 6px;
-  font-size: 0.72rem;
+  font-size: 0.84375rem;
   line-height: 1.55;
   color: var(--muted);
 }
@@ -506,7 +506,7 @@ main {
   border: 1px solid var(--line);
   background: var(--surface2);
   padding: 11px 14px;
-  font-size: 0.78rem;
+  font-size: 0.84375rem;
   border-radius: 4px;
   min-height: 41px;
   display: inline-flex;
@@ -548,7 +548,7 @@ main {
   letter-spacing: -0.025em;
 }
 .assurance p {
-  font-size: 0.79rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 .fact-list {
@@ -564,7 +564,7 @@ main {
   gap: 12px;
 }
 .fact-list span {
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 .fact-list strong {
@@ -575,7 +575,7 @@ main {
   color: var(--muted);
 }
 .small {
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
 }
 .mono {
   font-family: var(--font-mono);
@@ -595,7 +595,7 @@ main {
 }
 .next-step p {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 .next-step button {
@@ -610,7 +610,7 @@ main {
   justify-content: space-between;
   gap: 15px;
   color: var(--muted);
-  font-size: 0.62rem;
+  font-size: 0.84375rem;
   padding: 24px 0 22px;
   margin-top: 30px;
   border-top: 1px solid var(--line);
@@ -623,7 +623,7 @@ main {
   border-left: 3px solid var(--muted);
   padding: 14px 16px;
   margin: 15px 0;
-  font-size: 0.8rem;
+  font-size: 0.84375rem;
   line-height: 1.6;
   border-radius: 3px;
   overflow-wrap: anywhere;
@@ -656,10 +656,10 @@ main {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  font-size: 0.8rem;
+  font-size: 0.84375rem;
 }
 .scan-status .mono {
-  font-size: 0.68rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 progress {
@@ -690,7 +690,7 @@ progress {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 0.72rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 .search-label {
@@ -704,7 +704,7 @@ select {
   color: var(--text);
   min-height: 42px;
   padding: 9px 12px;
-  font-size: 0.8rem;
+  font-size: 0.84375rem;
   max-width: 100%;
   min-width: 0;
 }
@@ -715,13 +715,13 @@ select {
   padding: 16px 0 10px;
 }
 .group-heading h2 {
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 0;
 }
 .group-heading .mono {
-  font-size: 0.7rem;
+  font-size: 0.84375rem;
 }
 .item-list section {
   margin-bottom: 22px;
@@ -755,13 +755,13 @@ select {
   margin-top: 3px;
 }
 .item-select strong {
-  font-size: 0.8rem;
+  font-size: 0.84375rem;
   font-weight: 500;
 }
 .item-select small {
   display: block;
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: 0.84375rem;
   line-height: 1.6;
   margin-top: 4px;
   max-width: 560px;
@@ -775,12 +775,12 @@ select {
   justify-content: flex-end;
 }
 .level-badge {
-  font: 0.6rem var(--font-mono);
+  font: 0.84375rem var(--font-mono);
   color: var(--muted);
   white-space: nowrap;
 }
 .risk-badge {
-  font-size: 0.6rem;
+  font-size: 0.84375rem;
   padding: 3px 5px;
   border: 1px solid var(--line);
   color: var(--muted);
@@ -793,7 +793,7 @@ select {
   border-color: var(--danger);
 }
 .state-label {
-  font-size: 0.62rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 .detail-button {
@@ -819,10 +819,10 @@ select {
   padding: 15px 0;
   margin-top: 22px;
   z-index: 2;
-  font-size: 0.8rem;
+  font-size: 0.84375rem;
 }
 .counter {
-  font-size: 0.7rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 .empty-state {
@@ -853,7 +853,7 @@ select {
 }
 .review-summary dt {
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
 }
 .review-summary dd {
   font: 1.5rem var(--font-mono);
@@ -864,7 +864,7 @@ select {
   border-bottom: 1px solid var(--line);
 }
 .review-item p {
-  font-size: 0.78rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 .consent {
@@ -872,7 +872,7 @@ select {
   gap: 13px;
   align-items: flex-start;
   margin-top: 14px;
-  font-size: 0.78rem;
+  font-size: 0.84375rem;
   line-height: 1.6;
   cursor: pointer;
 }
@@ -883,7 +883,7 @@ select {
   padding: 26px 0;
 }
 .final-consent p {
-  font-size: 0.72rem;
+  font-size: 0.84375rem;
   color: var(--muted);
   margin: 12px 0 22px;
 }
@@ -903,11 +903,11 @@ select {
   overflow-wrap: anywhere;
 }
 .history-list strong {
-  font-size: 0.82rem;
+  font-size: 0.84375rem;
   font-weight: 500;
 }
 .history-list time {
-  font-size: 0.68rem;
+  font-size: 0.84375rem;
   color: var(--muted);
 }
 .space-top {
@@ -925,7 +925,7 @@ select {
   font-size: 0.86rem;
 }
 .setting-row p {
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
   color: var(--muted);
   max-width: 540px;
   margin: 7px 0 0;
@@ -945,7 +945,7 @@ select {
   display: flex;
   gap: 8px;
   align-items: center;
-  font-size: 0.77rem;
+  font-size: 0.84375rem;
 }
 .setting-row > input {
   flex-shrink: 0;
@@ -972,10 +972,10 @@ select {
   margin: 20px 0;
 }
 .detail-dialog p {
-  font-size: 0.83rem;
+  font-size: 0.84375rem;
 }
 .sources {
-  font: 0.65rem var(--font-mono);
+  font: 0.84375rem var(--font-mono);
   color: var(--muted);
   overflow-wrap: anywhere;
 }
@@ -986,7 +986,7 @@ pre {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   max-width: 100%;
-  font: 0.65rem/1.7 var(--font-mono);
+  font: 0.84375rem/1.7 var(--font-mono);
   background: var(--surface2);
   padding: 12px;
   border: 1px solid var(--line);
@@ -1005,7 +1005,7 @@ pre {
 }
 .test-mode {
   color: var(--warn);
-  font-size: 0.65rem;
+  font-size: 0.84375rem;
   margin-bottom: 15px;
 }
 .test-mode:empty {
@@ -1104,7 +1104,7 @@ pre {
     padding: 8px 10px;
     gap: 6px;
     white-space: nowrap;
-    font-size: 0.73rem;
+    font-size: 0.84375rem;
   }
   .nav-symbol {
     display: none;
@@ -1146,7 +1146,7 @@ pre {
     min-height: 83px;
   }
   .button {
-    font-size: 0.75rem;
+    font-size: 0.84375rem;
   }
   .toolbar {
     align-items: stretch;
@@ -1168,7 +1168,7 @@ pre {
     font-size: 0.85rem;
   }
   .item-select small {
-    font-size: 0.73rem;
+    font-size: 0.84375rem;
   }
   .item-badges {
     gap: 8px;
@@ -1176,7 +1176,7 @@ pre {
   .risk-badge,
   .level-badge,
   .state-label {
-    font-size: 0.65rem;
+    font-size: 0.84375rem;
   }
   .history-list li {
     flex-wrap: wrap;
@@ -1204,7 +1204,7 @@ pre {
     flex: 0 1 auto;
   }
   .content-footer {
-    font-size: 0.6rem;
+    font-size: 0.84375rem;
   }
   .next-step {
     gap: 10px;
@@ -1216,7 +1216,7 @@ pre {
     gap: 10px;
   }
   .sticky-actions span {
-    font-size: 0.7rem;
+    font-size: 0.84375rem;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -1236,7 +1236,7 @@ pre {
   gap: 14px;
   border-top: 1px solid var(--line);
   padding: 8px 0;
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
   overflow-wrap: anywhere;
 }
 @media (max-width: 700px) {
@@ -1310,7 +1310,7 @@ pre {
   padding: 10px 22px;
   border: 1px solid var(--line);
   border-radius: var(--r-pill);
-  font: 600 0.84rem/1.4 var(--font-sans);
+  font: 600 0.84375rem/1.4 var(--font-sans);
   cursor: pointer;
   user-select: none;
   background: var(--solid-surface);
@@ -1446,7 +1446,7 @@ pre {
   border: 0;
   background: none;
   border-radius: var(--r-pill);
-  font: 600 0.8rem/1.4 var(--font-sans);
+  font: 600 0.84375rem/1.4 var(--font-sans);
   color: var(--ink-soft);
   cursor: pointer;
   overflow-wrap: anywhere;
@@ -1544,7 +1544,7 @@ pre {
   letter-spacing: -0.06em;
 }
 .orb__center span {
-  font-size: 0.76rem;
+  font-size: 0.84375rem;
   color: var(--ink-soft);
 }
 .orb--compact {
@@ -1554,7 +1554,7 @@ pre {
   font-size: 1.25rem;
 }
 .orb--compact .orb__center span {
-  font-size: 0.65rem;
+  font-size: 0.84375rem;
 }
 .badge,
 .risk-badge {
@@ -1563,7 +1563,7 @@ pre {
   gap: 5px;
   padding: 5px 10px;
   border-radius: var(--r-pill);
-  font-size: 0.72rem;
+  font-size: 0.84375rem;
   font-weight: 650;
 }
 .badge svg,

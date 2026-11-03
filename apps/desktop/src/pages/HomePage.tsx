@@ -52,7 +52,7 @@ export function HomePage() {
                 <p className="profile-note">{t(`${profile}Note`)}</p>
                 <div className="actions">
                   <Button
-                    icon={<Icon name="search" />}
+                    icon={<Icon name="simulate" />}
                     disabled={!data || scanning || busy}
                     onClick={() => void analyze()}
                   >

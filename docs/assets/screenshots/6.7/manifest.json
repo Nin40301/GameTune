@@ -1,0 +1,111 @@
+{
+  "phase": "6.7 delivery 1",
+  "backend": "explicit test fixture; no host measurements or tweaks",
+  "language": "pt-BR",
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "widths": [
+    1440,
+    390
+  ],
+  "captures": [
+    {
+      "file": "home-light-1440-full.png",
+      "sha256": "8d67694f6ee99e827a4ea3bb59eb5af24d10379043e02f70c776040c81f82436"
+    },
+    {
+      "file": "home-light-390-full.png",
+      "sha256": "d068e56bc04998093fb813438a51b271dd0eb1031f4b9066fb3788019e09e72b"
+    },
+    {
+      "file": "home-dark-1440-full.png",
+      "sha256": "648918079d4df257b79344cffcf10972a224f4c349c640b06b6c5ceb0190b07d"
+    },
+    {
+      "file": "home-dark-390-full.png",
+      "sha256": "d4889b143d418e575aa4bd446ab1ec882e05dc22bfae37d5456a7415e94dc7eb"
+    },
+    {
+      "file": "items-light-1440-full.png",
+      "sha256": "dd12faf6bb412c29a30e7c1f71a31c9e89ef1aa3ce196da48d29148a42f55411"
+    },
+    {
+      "file": "items-light-390-full.png",
+      "sha256": "d8bad2dd953514ef34e65181f5e7878422213582f8dbba694c935c98ac9b6fc7"
+    },
+    {
+      "file": "items-dark-1440-full.png",
+      "sha256": "8bb8c91211c15e3800239cf5418ac3e94f30cf41cb4e1a05d315d5ee19d86fe8"
+    },
+    {
+      "file": "items-dark-390-full.png",
+      "sha256": "71c26aab5d12c9701b28a5d4eb6e04906cab6de9ac2a6959eb8be58c74e9eab7"
+    },
+    {
+      "file": "review-light-1440-full.png",
+      "sha256": "aadd6d6f915d23814abf93d3d787080e97f76a50c7dd82c60344a5531b6b9909"
+    },
+    {
+      "file": "review-light-390-full.png",
+      "sha256": "72a5f169278ce4e31acb01d6ad14c2e79c4da78efcae691eaa0721f435844640"
+    },
+    {
+      "file": "review-dark-1440-full.png",
+      "sha256": "2ef08a06c45e1d6e0a34b63dcfb1224898f1f946476841e416ab39bba95cc2c1"
+    },
+    {
+      "file": "review-dark-390-full.png",
+      "sha256": "7173ed9b3aa75af7ee272e380db11d6214615e6eb7d349eb6aef26e7b6146946"
+    },
+    {
+      "file": "games-light-1440-full.png",
+      "sha256": "8cb4c5bb1a380f0d28bda3a6a78a07336ade4a51addbd40fa3237b95e29c6952"
+    },
+    {
+      "file": "games-light-390-full.png",
+      "sha256": "c1153a5a98937a64a3a5499da1fd5796d803d6a20b54e6a25c34450b7e70e41a"
+    },
+    {
+      "file": "games-dark-1440-full.png",
+      "sha256": "39737b6da41e7a5983f4dc5acd65cdc671887a8642f80cd215aebed480e1997a"
+    },
+    {
+      "file": "games-dark-390-full.png",
+      "sha256": "39e90431e29de4095444021f8d9b548f55e5d1522e1712f6be21f015629586d7"
+    },
+    {
+      "file": "items-light-1440.png",
+      "sha256": "7c89ac93341b7e079a6b7434a6d8ca159b3db7599ccb9e1790406005b7cbe484"
+    },
+    {
+      "file": "items-light-390.png",
+      "sha256": "6a0e449d76e995fb9c0941f405b00deeb8142e492ed2421576483200756ef5e1"
+    },
+    {
+      "file": "items-dark-1440.png",
+      "sha256": "81cf62be3f588eaa6d8204f18a36e4748f3cfc3831b79106aa32b0390488e132"
+    },
+    {
+      "file": "items-dark-390.png",
+      "sha256": "5dde10bb0710fd4c8398dbf84858d9cf81615b19a8e5f3c0d2f78aba94594e32"
+    },
+    {
+      "file": "items-bottom-light-1440.png",
+      "sha256": "f5e45238ee238bd2a794da191387509892ffeac3a213e7bf5d31bb2008531aaa"
+    },
+    {
+      "file": "items-bottom-light-390.png",
+      "sha256": "db8603366a9c5b0004534fdd4ed5b139a0de656215155f9e5e0957977efe2928"
+    },
+    {
+      "file": "items-bottom-dark-1440.png",
+      "sha256": "eaf092f160a1cacea7c1b2068cceb49a07a626b405357dd891cddcfd3b2e6ac5"
+    },
+    {
+      "file": "items-bottom-dark-390.png",
+      "sha256": "3f789a9f2647a3bf5944ceabd00aaed0e9e339d464aa3ebb8a37e53a400ab43f"
+    }
+  ]
+}

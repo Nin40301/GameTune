@@ -1,3 +1,5 @@
+import { appendCpuSample } from '../state/visualHistory'
+import { Button } from '../components/Button'
 import { InlineStatus } from '../components/InlineStatus'
 import { useWindowActivity } from '../hooks/useWindowActivity'
 import { Checkbox } from '../components/Checkbox'
@@ -43,7 +45,9 @@ export function Measurements({
       ? '—'
       : new Intl.NumberFormat(language, { maximumFractionDigits: digits }).format(value)
   const gib = (value: number | undefined) =>
-    value == null ? '—' : `${number(value / 1073741824)} ${t('gibUnit')}`
+    value == null
+      ? '—'
+      : `${new Intl.NumberFormat(language, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value / 1073741824)} ${t('gibUnit')}`
   useEffect(() => {
     if (!active) return
     let alive = true,
@@ -59,11 +63,7 @@ export function Measurements({
             const latest = s.latest
             if (latest?.cpuPercent != null && Number.isFinite(latest.cpuPercent)) {
               const value = latest.cpuPercent
-              setCpuSamples((old) =>
-                old.at(-1)?.time === latest.timestampMs
-                  ? old
-                  : [...old.slice(-29), { time: latest.timestampMs, value }],
-              )
+              setCpuSamples((old) => appendCpuSample(old, { time: latest.timestampMs, value }))
             }
           }
         })
@@ -123,15 +123,16 @@ export function Measurements({
         <>
           <div className="section-top">
             <h2>{t('measuredDashboard')}</h2>
-            <button
-              className="button subtle"
+            <Button
+              variant="ghost"
+              icon={<Icon name={status?.monitor ? 'pause' : 'play'} />}
               disabled={busy || !status}
               onClick={() => {
                 void act({ kind: 'monitor', enabled: !status?.monitor })
               }}
             >
               {t(status?.monitor ? 'pauseMetrics' : 'resumeMetrics')}
-            </button>
+            </Button>
           </div>
           {!status?.monitor && <p className="notice">{t('metricsPaused')}</p>}
           <div className="overview">
@@ -143,11 +144,12 @@ export function Measurements({
                   }
                   measurement={sample?.availableBytes}
                   title={gib(sample?.availableBytes)}
-                  caption={t('availableRam')}
+                  caption={
+                    sample
+                      ? t('availableOf').replace('{total}', gib(sample.totalBytes))
+                      : t('availableRam')
+                  }
                 />
-                <p>
-                  {t('totalRam')} <strong className="num">{gib(sample?.totalBytes)}</strong>
-                </p>
               </div>
               {profileControls}
             </section>

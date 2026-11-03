@@ -1,3 +1,4 @@
+import { itemName } from '../i18n'
 import type { Item, Language, Observation } from '../types'
 import { translator } from '../i18n'
 import { Icon } from './Icon'
@@ -25,7 +26,7 @@ export function ItemRow({
   onDetail: () => void
 }) {
   const t = translator(language),
-    name = item.name[language]
+    name = itemName(item, language)
   return (
     <div className={`item-row ${checked ? 'selected-row' : ''}`}>
       <div className="item-select">

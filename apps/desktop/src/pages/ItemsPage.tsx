@@ -1,3 +1,4 @@
+import { ActionBar } from '../components/ActionBar'
 import { plural } from '../i18n-format'
 import { useApp } from '../state/AppContext'
 import { ItemRow } from '../components/ItemRow'
@@ -89,8 +90,7 @@ export function ItemsPage() {
               </section>
             ))}
           </div>
-          <div className="sticky-actions">
-            <span>{plural(language, 'selected', selected.length)}</span>
+          <ActionBar summary={plural(language, 'selected', selected.length)}>
             <button
               className="button primary"
               disabled={!ready || !selected.length || busy}
@@ -99,7 +99,7 @@ export function ItemsPage() {
               {t('reviewSelection')}
               <Icon name="arrowRight" />
             </button>
-          </div>
+          </ActionBar>
         </>
       )}
     </>
