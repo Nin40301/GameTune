@@ -1,0 +1,206 @@
+{
+  "source": "Playwright test backend; no host tweaks",
+  "language": "pt-BR",
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "widths": [
+    1440,
+    390
+  ],
+  "captures": [
+    {
+      "path": "apps-dark-1440-full.png",
+      "sha256": "a66dd31e6f38df5fec512e280ded4f07f74d1550c4b6f67e386ee179d753365f"
+    },
+    {
+      "path": "apps-dark-390-full.png",
+      "sha256": "2da797e758d9e671a40765d761efec82e1f4ceeb4d0a878ea319ea3d20d13e71"
+    },
+    {
+      "path": "apps-light-1440-full.png",
+      "sha256": "fa33b8f25e74c3fc9f33b87501049448810c9a3e9e7652105348b376cf55ad94"
+    },
+    {
+      "path": "apps-light-390-full.png",
+      "sha256": "1c20153d565f8e779a12d584b2a4892290d6f65b424494ce6d5f384b7b08a1a3"
+    },
+    {
+      "path": "benchmark-dark-1440-full.png",
+      "sha256": "ea6b81424eb3be8015ffcf025e0e1700bef57b078cbb077b09ef11a663c93de9"
+    },
+    {
+      "path": "benchmark-dark-390-full.png",
+      "sha256": "f77169033371c8477c75aedc4bbf177fd141445be0071d1167b9b58213440220"
+    },
+    {
+      "path": "benchmark-light-1440-full.png",
+      "sha256": "5b0e9c323d9985800f057d69d23b661e1f08cbd71649bac1d6df3ee6d7f9e514"
+    },
+    {
+      "path": "benchmark-light-390-full.png",
+      "sha256": "5958a313b2098dd2bacfbfa763f67cb21175175e47024bc95e31a0ca0d28ff28"
+    },
+    {
+      "path": "games-dark-1440-full.png",
+      "sha256": "66aceea667f36bd54976b19d1922b5544455d44c68edf854276d0547745f6d7f"
+    },
+    {
+      "path": "games-dark-390-full.png",
+      "sha256": "0ebaf1eb41d21d34d9b2aab8638b8a9b46359cd482e064ab0ecec166b4986920"
+    },
+    {
+      "path": "games-light-1440-full.png",
+      "sha256": "50453844cf53d839518ed6359fd5de4bd50392b41d81af39f7dfdf5863a1b98f"
+    },
+    {
+      "path": "games-light-390-full.png",
+      "sha256": "819ea561e9ec87375e1ee827d6bae3c87df80b1f8b9976879c848bb066e9e5ea"
+    },
+    {
+      "path": "history-dark-1440-full.png",
+      "sha256": "12d7b6db65a80ff482d4d7da22dad67c078b9cd94863587018107e8f6bd77637"
+    },
+    {
+      "path": "history-dark-390-full.png",
+      "sha256": "f947f319ef073cd1735a1621a75b1ac7baa52cff61f36b26977dfdfe83c7cf92"
+    },
+    {
+      "path": "history-light-1440-full.png",
+      "sha256": "a6d72a31f04e5543eb5b0745139f762c69f569d051f8f8c93a66d2f26aaf0c3f"
+    },
+    {
+      "path": "history-light-390-full.png",
+      "sha256": "c99026f1c7efd88dfe11f179a0350247153ffc357bd6bf88181080a59ebb98be"
+    },
+    {
+      "path": "home-dark-1440-full.png",
+      "sha256": "01b032293c46d9c57a6ab3a768e7fcfb57ff7b97e44e55ae58e163aaadf7c9ae"
+    },
+    {
+      "path": "home-dark-390-full.png",
+      "sha256": "a7bbd0d3932511ffbd8a8d7f2a9205418ca278e9b340045ae39984df64e0e816"
+    },
+    {
+      "path": "home-light-1440-full.png",
+      "sha256": "ae9086a41764fca1de6589e631b0c2a2026a2628aee1b2e110d302affa647455"
+    },
+    {
+      "path": "home-light-390-full.png",
+      "sha256": "3f5e32622c457a18ac93b581917c7b559661e61f3170ed485bde34c17587b0d3"
+    },
+    {
+      "path": "items-dark-1440-full.png",
+      "sha256": "89d7b8ebb09133e940fdd143cbb615c06c8b662e76f54affd9fffb49f2736bb3"
+    },
+    {
+      "path": "items-dark-390-full.png",
+      "sha256": "e31b699e51ab45949681aaab4d39c19a0146187d71ce9386e5aa8abdefca8d53"
+    },
+    {
+      "path": "items-light-1440-full.png",
+      "sha256": "8666562fda29b3cff609b09f8a284bceaa44114a1c8bf0ef878d8299de44fd95"
+    },
+    {
+      "path": "items-light-390-full.png",
+      "sha256": "f24fc7dc1ad2d41e0c2615cc3bcb7f6bd8f7c4b50d017b8cabd3d79e5ea35f51"
+    },
+    {
+      "path": "onboarding-0-dark-1440-full.png",
+      "sha256": "d68c5534957713e0944c61fdde6c12bf4150fa47b6040c3fc912ecafc0925d9e"
+    },
+    {
+      "path": "onboarding-0-dark-390-full.png",
+      "sha256": "d1b812476e7c7c721403e3f2dcf30a44c548159169e372c5cfd6d9ef2a05fe3f"
+    },
+    {
+      "path": "onboarding-0-light-1440-full.png",
+      "sha256": "972fe5218baf7b80c0d677070f61b84a4d6d5448a066f6bc20dfdfb944859644"
+    },
+    {
+      "path": "onboarding-0-light-390-full.png",
+      "sha256": "6d540687188d1aa75f540170a3259cd65e3e2c486f444d13937cd4b3ad21cda4"
+    },
+    {
+      "path": "onboarding-1-dark-1440-full.png",
+      "sha256": "ba1877a49ed595e911e2a7ebb22e4403ae4b294cfa382b1046ac78f98e70fad6"
+    },
+    {
+      "path": "onboarding-1-dark-390-full.png",
+      "sha256": "069621ed2ab42951118104a0a920662fee1bf40fbabc16230e6c74bae1b154d1"
+    },
+    {
+      "path": "onboarding-1-light-1440-full.png",
+      "sha256": "821fc471df79c84cb2f75bd3586f0e8cc3ece7b5bb78970b8a563ee193d5edb6"
+    },
+    {
+      "path": "onboarding-1-light-390-full.png",
+      "sha256": "f65a8d8dc9a110e8bb42db0454d2649096ca4fe8ef9ec539bd1573d828113223"
+    },
+    {
+      "path": "onboarding-2-dark-1440-full.png",
+      "sha256": "ca52f3bf96539998cb9332644478ebd136b08ed54a30a6cb9df3fc601c256ca9"
+    },
+    {
+      "path": "onboarding-2-dark-390-full.png",
+      "sha256": "9a3b3b666f644de35265a9ab80637580958122efe4e59e413c63b4c0bdabcd6a"
+    },
+    {
+      "path": "onboarding-2-light-1440-full.png",
+      "sha256": "79c53e1e171492f4df2e15b828a6f96823eaf6ecb325fef21f1adb2fda7a2ac4"
+    },
+    {
+      "path": "onboarding-2-light-390-full.png",
+      "sha256": "e73ddbcca3ff1ca6492269052abc58b16a8f9640eba268a17251efc1339eea16"
+    },
+    {
+      "path": "results-dark-1440-full.png",
+      "sha256": "c6b17fb1159b37619dc2fe4a846c3c33d222ad4763456a76a33d4473c347069a"
+    },
+    {
+      "path": "results-dark-390-full.png",
+      "sha256": "b074c6a69bf485557b94a197232c7a6e2a422a262f9193922d185a6a57a3f98f"
+    },
+    {
+      "path": "results-light-1440-full.png",
+      "sha256": "1d25c1063faabb42c79fe7f3584bef91f7503609e124bbcedbc83e8ecfe20fac"
+    },
+    {
+      "path": "results-light-390-full.png",
+      "sha256": "d2562cbdf1cc33067dd5d4bc92b82c2bf57cfb158a1e0c6e28380999d1605e5f"
+    },
+    {
+      "path": "review-dark-1440-full.png",
+      "sha256": "767c491f28f0dc57a6c7a9aa7055c84a194dc11de03aaf98f6534087cb7edd85"
+    },
+    {
+      "path": "review-dark-390-full.png",
+      "sha256": "aea2756684c179dc77ed1462a03f9f9494e7f76aecffb481e955d700a62801a1"
+    },
+    {
+      "path": "review-light-1440-full.png",
+      "sha256": "732af8a715fd5457a916ae2a07d519f9728f8e1d53fd4a164e90e0955283970a"
+    },
+    {
+      "path": "review-light-390-full.png",
+      "sha256": "54a0b33c5142f9923c25c1da589575356d871e8bfeedecb68a458c63f427a3e2"
+    },
+    {
+      "path": "settings-dark-1440-full.png",
+      "sha256": "6ccaa5e4ffd8c4be2004f7549fbf99a6a60d66a284a3e8b87fd5d4bf45dc81c0"
+    },
+    {
+      "path": "settings-dark-390-full.png",
+      "sha256": "ecea9f6e19c9d8d66a00119da12db65bcf2fd527e4a9119932a158fe91df9d79"
+    },
+    {
+      "path": "settings-light-1440-full.png",
+      "sha256": "a2e00ee772b17a15547381dd7328d0000df7ea09c7d3e1954b15966bd81e2ed4"
+    },
+    {
+      "path": "settings-light-390-full.png",
+      "sha256": "130a30127bf2b9cc8136e6f20b13c1aca00ac6de2b0eb395e2e1d828f328d18a"
+    }
+  ]
+}

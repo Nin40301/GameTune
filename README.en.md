@@ -34,6 +34,6 @@ Stop applying changes. Try Undo all from History. If needed, use an earlier Syst
 
 Targets: Windows 10 22H2 and Windows 11 23H2+. Home/Pro, elevation under another account and reboot acceptance still require VM validation. NVDA/Narrator and high-DPI checks are pending. Store reinstallation may require internet and does not restore removed-app data.
 
-Full effects are the default. The [baseline gate](docs/performance.md) passes for Full on the measured host; Reduced exceeds the median RAM ceiling by 5.50 MiB. The Rust monitor keeps strict limits. These are not FPS predictions.
+Full effects are the default. The [final measurement](docs/performance.md) found 163.54 MiB for Full and 244.04 MiB for Reduced. Both failed CPU-median regression against the zero reference; Reduced also exceeded the RAM ceiling. The monitor passed its strict limits. These are not FPS predictions.
 
 [Apache-2.0](LICENSE) · [NOTICE](NOTICE) · [Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md)

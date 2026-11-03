@@ -1,8 +1,7 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import tailwind from '@tailwindcss/vite'
 export default defineConfig(({ mode }) => ({
-  plugins: [react(), tailwind()],
+  plugins: [react()],
   clearScreen: false,
   define: { __TEST_BACKEND__: JSON.stringify(mode === 'test') },
   server: { host: '127.0.0.1', port: 1420, strictPort: true },

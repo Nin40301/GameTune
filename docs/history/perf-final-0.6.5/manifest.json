@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 1,
+  "candidateVersion": "0.6.5",
+  "sourceBaseCommit": "89831ee",
+  "sourceState": "Bloco F working tree; hashes identify measured binaries",
+  "host": {
+    "build": "26200",
+    "cpu": {
+      "Name": "AMD Ryzen 5 8600G w/ Radeon 760M Graphics      ",
+      "NumberOfLogicalProcessors": 12
+    },
+    "devicePixelRatio": 1,
+    "dpi": 96,
+    "edition": "Professional",
+    "gpu": {
+      "DriverVersion": "32.0.21030.2001",
+      "Name": "AMD Radeon 760M Graphics"
+    },
+    "totalPhysicalBytes": 16234831872,
+    "ubr": 9711,
+    "version": "10.0.26200",
+    "webView2": "156.0.4314.58",
+    "windows": "Microsoft Windows 11 Pro"
+  },
+  "conditions": {
+    "debuggingDuringMeasurement": false,
+    "discardedRuns": 0,
+    "effectsVerifiedOnFreshProcess": true,
+    "gamesClosed": true,
+    "language": "pt-BR",
+    "periodMilliseconds": 1000,
+    "realBackend": true,
+    "runsPerMode": 5,
+    "samplesPerRun": 60,
+    "screen": "Home",
+    "theme": "light",
+    "warmupSeconds": 30,
+    "windowHeight": 740,
+    "windowWidth": 1100
+  },
+  "baseline": "../../perf-baseline.json",
+  "binaries": {
+    "ametista.exe": "45016ae0c3ec2b94b05529117ea58aa20e15cfb7c2ad6657059852ff4898f2b3",
+    "ametista-monitor.exe": "0ca0fa512982f8141684a2dd2e6824204e7844a62428231e1428ca71188b62fd",
+    "ametista-helper.exe": "939a70d8ead274fa4fd6e31acddd67d5df1ef12ae1e977b23de698efc76eb317",
+    "budget.exe": "176e69544b60dd91a9de302349f5d3e2d64627dc422bcb47b3ee2bf9e42bffae"
+  },
+  "modes": {
+    "full": {
+      "runs": [
+        {
+          "file": "full-1.json",
+          "sha256": "f3908576924a4f1285449466662f180321729463ff8d18cb59ac7bb2b9210844",
+          "originalSha256": "57722c7a30efae639a336a12000ba1417d200097624d81e93a9ca2e053608c3b",
+          "summary": {
+            "cpuP95Percent": 1.3088745915032676,
+            "cpuPercent": {
+              "maximum": 1.5625,
+              "median": 0.390625,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 217767936.0,
+              "median": 190212096.0,
+              "minimum": 181678080.0
+            },
+            "samples": 60,
+            "spanMs": 59000
+          }
+        },
+        {
+          "file": "full-2.json",
+          "sha256": "0584aea1077329cc46d3925b77c97cfc63e5c4e6964260f85c9fd174e151809f",
+          "originalSha256": "ca4be6f2da98fc050dfeaa66e92c0a810f981a7cea87f4cb63bf489dfc8b849e",
+          "summary": {
+            "cpuP95Percent": 1.8391535189236687,
+            "cpuPercent": {
+              "maximum": 3.7662337662337664,
+              "median": 0.3931908753607256,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 202211328.0,
+              "median": 175523840.0,
+              "minimum": 164139008.0
+            },
+            "samples": 60,
+            "spanMs": 58999
+          }
+        },
+        {
+          "file": "full-3.json",
+          "sha256": "bc8867231a58414d35763752bc10e9d6958292c5f6aaff4ae4db685c30297dcd",
+          "originalSha256": "ca07b7e0ab8d703f9bb52b80a862e62e0a60c5f2291804dc3a9ddb591675cf05",
+          "summary": {
+            "cpuP95Percent": 1.3322693418452638,
+            "cpuPercent": {
+              "maximum": 2.6992287917737787,
+              "median": 0.4538869704371262,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 190406656.0,
+              "median": 170072064.0,
+              "minimum": 155705344.0
+            },
+            "samples": 60,
+            "spanMs": 58998
+          }
+        },
+        {
+          "file": "full-4.json",
+          "sha256": "93451d8b0bb2d344f84c4045cf4ae4c123d93a07ecbd779fd4b1312aec7ca40e",
+          "originalSha256": "d6e78e9fe23e86930fa255edf4b5de4a12870beb939dab83056b0b617be1e62e",
+          "summary": {
+            "cpuP95Percent": 1.2959294253107114,
+            "cpuPercent": {
+              "maximum": 3.7516170763260024,
+              "median": 0.3252668508885999,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 189923328.0,
+              "median": 171489280.0,
+              "minimum": 160112640.0
+            },
+            "samples": 60,
+            "spanMs": 59000
+          }
+        },
+        {
+          "file": "full-5.json",
+          "sha256": "480064baffb63ff011a8cb70ae45316b46d375f73135ccf52be0253ad5345984",
+          "originalSha256": "c964a7e343e0885c437eb5e366a5f92e79d9545a46ca0e1327b52c0f9012407c",
+          "summary": {
+            "cpuP95Percent": 1.4426669888235057,
+            "cpuPercent": {
+              "maximum": 3.0065359477124183,
+              "median": 0.5833368381208731,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 190238720.0,
+              "median": 164024320.0,
+              "minimum": 143597568.0
+            },
+            "samples": 60,
+            "spanMs": 59001
+          }
+        }
+      ],
+      "evaluation": {
+        "summary": {
+          "executions": 5,
+          "runMedianRamBytes": {
+            "minimum": 164024320.0,
+            "median": 171489280.0,
+            "maximum": 190212096.0
+          },
+          "runMedianCpuPercent": {
+            "minimum": 0.3252668508885999,
+            "median": 0.3931908753607256,
+            "maximum": 0.5833368381208731
+          },
+          "runCpuP95Percent": {
+            "minimum": 1.2959294253107114,
+            "median": 1.3322693418452638,
+            "maximum": 1.8391535189236687
+          },
+          "observedMinimumRamBytes": 143597568.0,
+          "observedMaximumRamBytes": 217767936.0,
+          "observedMinimumCpuPercent": 0.0,
+          "observedMaximumCpuPercent": 3.7662337662337664
+        },
+        "ramRegression": false,
+        "cpuMedianRegression": true,
+        "ramCapExceeded": false,
+        "cpuP95Alert": true,
+        "passed": false
+      },
+      "preflight": {
+        "timestamp": "2026-11-02T23:58:32.002Z",
+        "version": "Edg/156.0.4314.58",
+        "state": {
+          "effects": "full",
+          "stored": "full",
+          "theme": "light",
+          "language": "pt-BR",
+          "width": 1100,
+          "height": 740,
+          "dpr": 1,
+          "focused": true,
+          "visible": "visible",
+          "title": "Mais controle sobre o seu Windows",
+          "blur": 3
+        }
+      }
+    },
+    "reduced": {
+      "runs": [
+        {
+          "file": "reduced-1.json",
+          "sha256": "c54dbb68dbab0e3ed314fbfbba22243ed2b0c1bf2f578536e96d6905db98ecc1",
+          "originalSha256": "f690098f1e53edb153f07640ce69d7f1f68966ece59cedf5128a6d37936cebc1",
+          "summary": {
+            "cpuP95Percent": 1.4400743716933493,
+            "cpuPercent": {
+              "maximum": 2.8645833333333335,
+              "median": 0.6501961580086579,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 286838784.0,
+              "median": 259708928.0,
+              "minimum": 246214656.0
+            },
+            "samples": 60,
+            "spanMs": 59000
+          }
+        },
+        {
+          "file": "reduced-2.json",
+          "sha256": "e87f48a401c8c6db957db372555a228a0b975cdd7e873692ae0d2ac028ad3326",
+          "originalSha256": "6c0651567f9831ff639fa7f38963c2d7528169db5d5e6ba31a512f3fa23a494a",
+          "summary": {
+            "cpuP95Percent": 2.34375,
+            "cpuPercent": {
+              "maximum": 3.515625,
+              "median": 0.32552083333333337,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 274202624.0,
+              "median": 244387840.0,
+              "minimum": 214433792.0
+            },
+            "samples": 60,
+            "spanMs": 59001
+          }
+        },
+        {
+          "file": "reduced-3.json",
+          "sha256": "0dca5fc1bb9c0da0102fcca70b22304846a4ba8250b399d215e4f4bc9c7f5f2c",
+          "originalSha256": "027f4ff825d74a51e60a12ea5a8787499f4ad14a4bca75615cc926a9527bc428",
+          "summary": {
+            "cpuP95Percent": 1.45573303298691,
+            "cpuPercent": {
+              "maximum": 2.8795811518324608,
+              "median": 0.38860103626943004,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 279773184.0,
+              "median": 255893504.0,
+              "minimum": 237416448.0
+            },
+            "samples": 60,
+            "spanMs": 58999
+          }
+        },
+        {
+          "file": "reduced-4.json",
+          "sha256": "2aa14610f9262094b90be22e241dc7a8acfffc93b9010c22e0ec088620551e50",
+          "originalSha256": "b38bd560d99b0ece6ae587bebd13b0fb1134b6521fbfe5bc2bee7e5d424b2835",
+          "summary": {
+            "cpuP95Percent": 1.4396244517543857,
+            "cpuPercent": {
+              "maximum": 1.8229166666666667,
+              "median": 0.3263740989515072,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 276258816.0,
+              "median": 251285504.0,
+              "minimum": 228487168.0
+            },
+            "samples": 60,
+            "spanMs": 59000
+          }
+        },
+        {
+          "file": "reduced-5.json",
+          "sha256": "5e42704cef51ab890a92a2565fd6528789794789bcc03f31a8f43aa34d7cfcfd",
+          "originalSha256": "35111945ede0ff73ca2f7e8ce557b2e1ebd0caebd11522349be0ae41fa617eb8",
+          "summary": {
+            "cpuP95Percent": 1.4565811154339645,
+            "cpuPercent": {
+              "maximum": 3.6458333333333335,
+              "median": 0.5188102355674361,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 293486592.0,
+              "median": 268312576.0,
+              "minimum": 251875328.0
+            },
+            "samples": 60,
+            "spanMs": 59000
+          }
+        }
+      ],
+      "evaluation": {
+        "summary": {
+          "executions": 5,
+          "runMedianRamBytes": {
+            "minimum": 244387840.0,
+            "median": 255893504.0,
+            "maximum": 268312576.0
+          },
+          "runMedianCpuPercent": {
+            "minimum": 0.32552083333333337,
+            "median": 0.38860103626943004,
+            "maximum": 0.6501961580086579
+          },
+          "runCpuP95Percent": {
+            "minimum": 1.4396244517543857,
+            "median": 1.45573303298691,
+            "maximum": 2.34375
+          },
+          "observedMinimumRamBytes": 214433792.0,
+          "observedMaximumRamBytes": 293486592.0,
+          "observedMinimumCpuPercent": 0.0,
+          "observedMaximumCpuPercent": 3.6458333333333335
+        },
+        "ramRegression": true,
+        "cpuMedianRegression": true,
+        "ramCapExceeded": true,
+        "cpuP95Alert": true,
+        "passed": false
+      },
+      "preflight": {
+        "timestamp": "2026-11-03T00:11:14.066Z",
+        "version": "Edg/156.0.4314.58",
+        "state": {
+          "effects": "reduced",
+          "stored": "reduced",
+          "theme": "light",
+          "language": "pt-BR",
+          "width": 1100,
+          "height": 740,
+          "dpr": 1,
+          "focused": true,
+          "visible": "visible",
+          "title": "Mais controle sobre o seu Windows",
+          "blur": 0
+        }
+      }
+    },
+    "monitor": {
+      "runs": [
+        {
+          "file": "monitor-1.json",
+          "sha256": "cea16886679994b118463dc1771f44f7977ced04264bbee885086b9f75e36914",
+          "originalSha256": "6b81ce71a32c5d1adca36df8f6032bf18db8baafbbdaa3fcb036ac442ed4a9fd",
+          "summary": {
+            "cpuP95Percent": 0.0065104166666662975,
+            "cpuPercent": {
+              "maximum": 0.13054830287206268,
+              "median": 0.0,
+              "minimum": 0.0
+            },
+            "ramBytes": {
+              "maximum": 2879488.0,
+              "median": 2863104.0,
+              "minimum": 2797568.0
+            },
+            "samples": 60,
+            "spanMs": 59000
+          }
+        }
+      ],
+      "budget": {
+        "passed": true,
+        "peakCpuPercent": 0.13054830287206268,
+        "peakPrivateBytes": 2879488,
+        "samples": 60
+      }
+    }
+  },
+  "monitorStartupFailure": {
+    "status": "exited during warmup; no samples; not budget approval",
+    "executableSha256": "4efa290ce5be1110867931e0f8db8312d5d35c4b5367f8ccbbb728c17ad35240",
+    "cause": "u16 dangling pointer denotes resource 2, while icon resource is 1",
+    "fix": "MAKEINTRESOURCE(1) via without_provenance::<u16>(1); only icon reference changed"
+  }
+}

@@ -1,9 +1,11 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures'
 import AxeBuilder from '@axe-core/playwright'
 test('simulate, review, acknowledge and undo through a mock backend', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: /^Simule/ }).click()
-  await expect(page.getByText('Análise concluída. Nenhuma alteração foi feita')).toBeVisible()
+  await expect(
+    page.getByText('Análise concluída. Nenhuma alteração foi feita', { exact: true }),
+  ).toBeVisible()
   await page.getByRole('button', { name: 'Revise os ajustes' }).click()
   await expect(page.getByRole('button', { name: 'Aplique os ajustes' })).toBeDisabled()
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()
@@ -20,7 +22,9 @@ test('multi-app removal needs every consent and reinforced high-risk approval', 
 }) => {
   await page.goto('/')
   await page.getByRole('button', { name: /^Simule/ }).click()
-  await expect(page.getByText('Análise concluída. Nenhuma alteração foi feita')).toBeVisible()
+  await expect(
+    page.getByText('Análise concluída. Nenhuma alteração foi feita', { exact: true }),
+  ).toBeVisible()
   await page.getByRole('button', { name: 'Limpeza de apps' }).click()
   await page.getByRole('checkbox', { name: 'Remover Microsoft.Copilot', exact: true }).check()
   await page
@@ -51,10 +55,14 @@ test('cancel remains responsive and a new review is required after UAC cancellat
   await page.goto('/?uac-cancel=1')
   await page.getByRole('button', { name: /^Simule/ }).click()
   await page.getByRole('button', { name: 'Cancele' }).click()
-  await expect(page.getByText('Análise cancelada. Nenhuma alteração foi feita')).toBeVisible()
+  await expect(
+    page.getByText('Análise cancelada. Nenhuma alteração foi feita', { exact: true }),
+  ).toBeVisible()
   expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(0)
   await page.getByRole('button', { name: /^Simule/ }).click()
-  await expect(page.getByText('Análise concluída. Nenhuma alteração foi feita')).toBeVisible()
+  await expect(
+    page.getByText('Análise concluída. Nenhuma alteração foi feita', { exact: true }),
+  ).toBeVisible()
   await page.getByRole('button', { name: 'Revise os ajustes' }).click()
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()
   await page.getByRole('button', { name: 'Aplique os ajustes' }).click()
@@ -92,7 +100,9 @@ for (const language of ['pt-BR', 'en'])
     test(`axe AA on all screens in ${language} ${theme}`, async ({ page }) => {
       await page.goto('/')
       await page.getByRole('button', { name: /^Simule/ }).click()
-      await expect(page.getByText('Análise concluída. Nenhuma alteração foi feita')).toBeVisible()
+      await expect(
+        page.getByText('Análise concluída. Nenhuma alteração foi feita', { exact: true }),
+      ).toBeVisible()
       if (theme === 'dark' || language === 'en') {
         await page.getByRole('button', { name: 'Configurações', exact: true }).click()
         if (theme === 'dark') await page.getByRole('radio', { name: 'Escuro', exact: true }).click()

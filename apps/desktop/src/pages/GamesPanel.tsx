@@ -1,9 +1,10 @@
-import { Checkbox } from './components/Checkbox'
+import { InlineStatus } from '../components/InlineStatus'
+import { Checkbox } from '../components/Checkbox'
 import { useEffect, useState } from 'react'
-import type { Backend, Game, GamesAction, GamesView, Language } from './types'
-import { translator } from './i18n'
-import { Icon } from './components/Icon'
-import { Segmented } from './components/Segmented'
+import type { Backend, Game, GamesAction, GamesView, Language } from '../types'
+import { translator } from '../i18n'
+import { Icon } from '../components/Icon'
+import { Segmented } from '../components/Segmented'
 export function GamesPanel({
   backend,
   language,
@@ -70,9 +71,9 @@ export function GamesPanel({
   return (
     <section className="games-panel" aria-label={t(settings ? 'gameMonitor' : 'games')}>
       {(error || view?.monitor.error) && (
-        <p className="notice danger" role="alert">
+        <InlineStatus error next={t('retry')} onNext={() => void act({ kind: 'status' })}>
           {t(error ?? view?.monitor.error ?? 'games_storage')}
-        </p>
+        </InlineStatus>
       )}
       {settings ? (
         <>
@@ -120,7 +121,7 @@ export function GamesPanel({
               {t('discoverGames')}
             </button>
             <button
-              className="button primary"
+              className={`button ${editing ? 'secondary' : 'primary'}`}
               disabled={busy || live}
               onClick={() => {
                 void act({ kind: 'add_manual' })

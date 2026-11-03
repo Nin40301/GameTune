@@ -27,6 +27,9 @@ foreach ($taskKind in @('desktop', 'cli')) {
     foreach ($taskDoc in @('LICENSE', 'NOTICE', 'docs/user/recovery.md', 'docs/user/recovery.en.md')) {
         Copy-Item -LiteralPath (Join-Path $taskRoot $taskDoc) -Destination $taskDir
     }
+    $taskLicenseDir = Join-Path $taskDir 'LICENSES'
+    $null = New-Item -ItemType Directory -Path $taskLicenseDir
+    Copy-Item -LiteralPath (Join-Path $taskRoot 'LICENSES/PlusJakartaSans-OFL-1.1.txt') -Destination $taskLicenseDir
     $taskManifest = @{ product = 'Ametista'; version = $taskVersion; commit = $taskCommit; identifier = 'io.github.nin40301.ametista'; architecture = 'windows-x64'; signed = $false; vmFixtureFeatures = $false; files = $taskHashes; limitation = 'Alpha. Test only in a disposable VM. Portable writable folders cannot elevate; use the future protected installer.' }
     [IO.File]::WriteAllText((Join-Path $taskDir 'release-info.json'), ($taskManifest | ConvertTo-Json -Depth 5) + "`n", [Text.UTF8Encoding]::new($false))
     Compress-Archive -Path (Join-Path $taskDir '*') -DestinationPath (Join-Path $taskOutput "ametista-$taskVersion-windows-x64-$taskKind-portable.zip") -CompressionLevel Optimal
