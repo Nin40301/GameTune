@@ -237,3 +237,35 @@ input {
   white-space: nowrap;
   border: 0;
 }
+
+html[data-text-size='90'] {
+  font-size: 90%;
+}
+html[data-text-size='100'] {
+  font-size: 100%;
+}
+html[data-text-size='110'] {
+  font-size: 110%;
+}
+html[data-text-size='120'] {
+  font-size: 120%;
+}
+html[data-text-size='130'] {
+  font-size: 130%;
+}
+h1 {
+  font-size: var(--fs-3xl);
+}
+h2 {
+  font-size: var(--fs-xl);
+}
+body {
+  font-size: var(--fs-md);
+}
+:root[data-motion='reduced'] *,
+:root[data-motion='reduced'] *::before,
+:root[data-motion='reduced'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}

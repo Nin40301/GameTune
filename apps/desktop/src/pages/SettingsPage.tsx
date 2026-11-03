@@ -16,6 +16,10 @@ export function SettingsPage() {
     setTheme,
     effects,
     setEffects,
+    textSize,
+    setTextSize,
+    motion,
+    setMotion,
     advanced,
     setAdvanced,
   } = useApp()
@@ -39,7 +43,7 @@ export function SettingsPage() {
           <div className="setting-row">
             <span>{t('theme')}</span>
             <Segmented
-              options={(['light', 'dark'] as const).map((value) => ({
+              options={(['system', 'light', 'dark'] as const).map((value) => ({
                 value,
                 label: t(value),
               }))}
@@ -54,13 +58,42 @@ export function SettingsPage() {
               <p>{t('effectsNote')}</p>
             </div>
             <Segmented
-              options={(['full', 'reduced'] as const).map((value) => ({
+              options={(['full', 'reduced', 'auto'] as const).map((value) => ({
                 value,
                 label: t(`effects_${value}`),
               }))}
               value={effects}
               onChange={setEffects}
               label={t('effects')}
+            />
+          </div>
+          <div className="setting-row">
+            <label htmlFor="text-size">
+              {t('textSize')}{' '}
+              <output>
+                {new Intl.NumberFormat(language, { style: 'percent' }).format(textSize / 100)}
+              </output>
+            </label>
+            <input
+              id="text-size"
+              type="range"
+              min={90}
+              max={130}
+              step={10}
+              value={textSize}
+              onChange={(e) => setTextSize(Number(e.target.value))}
+            />
+          </div>
+          <div className="setting-row">
+            <span>{t('motion')}</span>
+            <Segmented
+              label={t('motion')}
+              value={motion}
+              onChange={setMotion}
+              options={(['system', 'reduced'] as const).map((value) => ({
+                value,
+                label: t(`motion_${value}`),
+              }))}
             />
           </div>
           <div className="setting-row">

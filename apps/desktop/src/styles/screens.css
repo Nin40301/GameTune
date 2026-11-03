@@ -62,9 +62,11 @@
   height: var(--item-h);
   border-radius: 16px;
   background: var(--thumb);
-  box-shadow: 0 4px 16px rgb(59 26 122 / 12%);
+  box-shadow: var(--elev-1);
   transform: translateY(calc(var(--i, 0) * (var(--item-h) + var(--gap))));
-  transition: transform 360ms var(--ease-spring);
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
 }
 .nav[data-index='1'] {
   --i: 1;
@@ -451,7 +453,7 @@ main {
   padding: 16px 20px;
   border: 1px solid var(--line);
   background: var(--solid-surface);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--elev-1);
   margin: 24px 0;
 }
 .sticky-actions > span {
@@ -1111,7 +1113,9 @@ main {
 
 /* Keep hover contrast stable while the navigation indicator moves. */
 .sidebar .nav button {
-  transition: none;
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
 }
 .sidebar .nav button[aria-current='page']:hover {
   background: transparent;
@@ -1485,7 +1489,7 @@ input::placeholder {
     border: 1px solid var(--line);
     border-radius: 18px;
     background: var(--solid-surface);
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--elev-1);
   }
   .sidebar .nav .more-panel button {
     flex-direction: row;
@@ -1594,7 +1598,9 @@ input::placeholder {
 :root[data-effects='reduced'] *::before,
 :root[data-effects='reduced'] *::after {
   animation: none !important;
-  transition: none !important;
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
 }
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
@@ -1648,10 +1654,14 @@ input::placeholder {
 :root[data-window-active='false'] *::before,
 :root[data-window-active='false'] *::after {
   animation-play-state: paused !important;
-  transition: none !important;
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
 }
 .orb circle {
-  transition: none;
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
 }
 
 /* Release flows share the established surfaces; no additional blur layers. */
@@ -2084,4 +2094,79 @@ select:disabled,
 .orb__center strong {
   letter-spacing: -0.025em;
   word-spacing: 0.08em;
+}
+
+.glass {
+  box-shadow: var(--elev-2);
+}
+.orb {
+  box-shadow: var(--elev-3);
+}
+.btn--ghost {
+  box-shadow: none;
+}
+.design-system {
+  max-width: 1180px;
+  margin: auto;
+  padding: 32px 24px;
+  display: grid;
+  gap: 24px;
+}
+.design-states,
+.token-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 24px;
+  margin-block: 24px;
+}
+.swatch {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+}
+.swatch::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--sample);
+}
+.state-hover {
+  transform: translateY(-1px);
+}
+.state-focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.state-active {
+  transform: scale(0.97);
+}
+@media (forced-colors: active) {
+  .glass,
+  .orb {
+    box-shadow: none;
+  }
+}
+.swatch--bg-base {
+  --sample: var(--bg-base);
+}
+.swatch--ink {
+  --sample: var(--ink);
+}
+.swatch--ink-soft {
+  --sample: var(--ink-soft);
+}
+.swatch--violet-700 {
+  --sample: var(--violet-700);
+}
+.swatch--ok {
+  --sample: var(--ok);
+}
+.swatch--warn {
+  --sample: var(--warn);
+}
+.swatch--danger {
+  --sample: var(--danger);
 }

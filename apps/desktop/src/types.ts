@@ -1,5 +1,5 @@
 export type Language = 'pt-BR' | 'en'
-export type Theme = 'dark' | 'light'
+export type Theme = 'system' | 'dark' | 'light'
 export type Kind = 'registry' | 'service' | 'scheduled_task' | 'appx' | 'startup' | 'power'
 export type Page =
   'results' | 'home' | 'items' | 'apps' | 'review' | 'history' | 'settings' | 'benchmark' | 'games'
