@@ -15,7 +15,7 @@ serde_json = { version = "1", features = ["float_roundtrip"] }
 thiserror = "2"
 sha2 = "0.10"
 time = { version = "0.3", features = ["formatting"] }
-jsonschema = { version = "0.46", default-features = false }
+jsonschema = { version = "0.60", default-features = false }
 tempfile = "3"
 ametista-core = { path = "crates/core" }
 ametista-catalog = { path = "crates/catalog" }
