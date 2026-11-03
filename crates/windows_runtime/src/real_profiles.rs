@@ -26,10 +26,20 @@ pub fn run(stage: Stage) -> ExecResult<Evidence> {
     }
     let context = WindowsContext::detect()?;
     context.ensure_elevated()?;
-    let exe = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../target/debug/ametista-cli.exe")
-        .canonicalize()
-        .map_err(crate::io_error)?;
+    // VM-only portable harness: sibling is the default-feature production CLI.
+    // Never accept a path/command from arguments, environment or profile JSON.
+    let current = std::env::current_exe().map_err(crate::io_error)?;
+    let sibling = current
+        .parent()
+        .ok_or(ExecError::Protected)?
+        .join("ametista-cli.exe");
+    let exe = if sibling.is_file() {
+        sibling
+    } else {
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../target/debug/ametista-cli.exe")
+    }
+    .canonicalize()
+    .map_err(crate::io_error)?;
     transport::run(
         Script::RealProfiles,
         &serde_json::json!({"operation":stage,"sid":context.interactive_sid(),"exe":exe}),

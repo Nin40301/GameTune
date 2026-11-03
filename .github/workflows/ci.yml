@@ -11,7 +11,7 @@ concurrency:
 jobs:
   frontend:
     name: Frontend (Linux)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: read
@@ -50,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-24.04, windows-2025]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     permissions:
@@ -95,6 +95,19 @@ jobs:
       - name: Verify native manifests and closed frontend
         if: runner.os == 'Windows'
         run: ./tools/verify-desktop.ps1
+      - name: Build internal VM acceptance kit (never a release)
+        if: runner.os == 'Windows'
+        run: ./tools/build-vm-acceptance.ps1 -Destination outputs/vm-acceptance
+      - name: Inspect VM package without executing administrative tests
+        if: runner.os == 'Windows'
+        run: node tools/verify-vm-package.mjs outputs/vm-acceptance
+      - name: Preserve internal VM acceptance kit
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: INTERNAL-VM-ACCEPTANCE-NOT-A-RELEASE
+          path: outputs/vm-acceptance.zip
+          retention-days: 7
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ametista-cli-${{ matrix.os }}
@@ -117,7 +130,7 @@ jobs:
           retention-days: 14
   dependencies:
     name: Dependency audits
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: read
@@ -151,7 +164,7 @@ jobs:
   dependency-review:
     name: PR dependency review
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:
       contents: read
