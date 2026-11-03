@@ -40,14 +40,14 @@ Uma tag existente nunca deve ser movida para corrigir um artefato. Faça nova ve
 
 ## Artefatos e hashes
 
-O pipeline de release do Bloco D deverá criar um **rascunho**, com ZIP portátil Windows x64, `SHA256SUMS.txt`, SBOM CycloneDX e atestado de procedência. Até esse workflow estar validado, não apresente um ZIP local como release publicado. O executável da UI e o auxiliar precisam vir do mesmo build; o endurecimento do Bloco E recusará elevação a partir de pasta gravável por usuário comum.
+O pipeline de release cria um **rascunho**, com ZIPs portáteis Windows x64 de desktop/CLI, `SHA256SUMS.txt`, SBOMs CycloneDX e atestado de procedência. O primeiro ensaio de tag ainda está pendente do titular; não apresente um ZIP local como release publicado. O executável da UI e o auxiliar precisam vir do mesmo build. A integridade do Bloco E recusa elevação a partir de pasta gravável por usuário comum.
 
 Para conferir um arquivo baixado:
 
 ```powershell
-Get-FileHash -Algorithm SHA256 -LiteralPath .\ametista-0.6.5-windows-x64-portable.zip
+Get-FileHash -Algorithm SHA256 -LiteralPath .\ametista-0.6.5-windows-x64-desktop-portable.zip
 # Compare todos os 64 caracteres com a entrada correspondente em SHA256SUMS.txt
-gh attestation verify .\ametista-0.6.5-windows-x64-portable.zip --repo Nin40301/GameTune
+gh attestation verify .\ametista-0.6.5-windows-x64-desktop-portable.zip --repo Nin40301/GameTune
 ```
 
 O hash detecta alteração em relação ao arquivo listado; não é assinatura de código. O atestado deve identificar este repositório e o workflow/commit esperado. Confira também o manifesto dentro do ZIP, versões dos quatro executáveis e ausência de `.env`, certificados, tokens, dados de usuários, `node_modules` ou executáveis de fixture. Teste o pacote extraído somente na VM descartável.

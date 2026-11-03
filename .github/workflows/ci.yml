@@ -32,7 +32,7 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
-      - run: node tools/verify-version.mjs && node tools/check-doc-links.mjs && node tools/audit-unsafe.mjs && node tools/check-i18n.mjs
+      - run: node tools/verify-version.mjs && node tools/check-doc-links.mjs && node tools/audit-unsafe.mjs && node tools/check-i18n.mjs && node tools/generate-catalog-docs.mjs --check
         working-directory: .
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e

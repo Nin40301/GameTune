@@ -4,8 +4,16 @@
 - Versões Cargo/npm/Tauri/recursos Win32 alinhadas em 0.6.5
 - Identificador estável `io.github.nin40301.ametista`; dados anteriores não são apagados nem migrados automaticamente
 - Linha de base de cinco execuções por modo; regressão de medianas RAM/CPU >15% e teto mediano de RAM de 200 MiB; p95 de CPU como alerta
-- Completo passa e é o padrão para novas preferências; Reduzido permanece opção, mas excede o teto neste host em 5,50 MiB
-- Monitor mantém os limites estritos de 15 MiB e CPU <0,5% e passou
+- Completo é o padrão para novas preferências; coorte final 163,54 MiB contra 244,04 MiB do Reduzido, preservando opções de acessibilidade
+- Gate final: ambos reprovam regressão da mediana de CPU sobre base zero; Reduzido também reprova RAM/CPU e excede o teto em 44,04 MiB. Referência e limites preservados
+- Monitor mantém os limites estritos de 15 MiB e CPU <0,5% e passou com picos de 2,75 MiB/0,1305%
+- UI asInvoker com auxiliar protegido por ACL/hash SHA-256 antes do UAC, validação Authenticode offline quando assinado e recusa de caminhos remotos/graváveis
+- Identidade interativa e serviços migrados para WTS/SCM nativos; scripts restantes auditados, sem bypass de CLM
+- Logs tipados com rotação, diagnóstico ZIP anonimizado com prévia e orientação para dados antigos/Proteção do Sistema
+- UI organizada por páginas/hooks/estado, CSS em layers sem Tailwind não utilizado, onboarding/resultados/filtros e foco/anúncios acessíveis
+- SVGs/ICOs multiquadro, licença local da fonte e 48 capturas revisadas, com dados de teste identificados
+- README pt-BR/en, comunidade/segurança, docs organizadas e páginas de 86 ajustes geradas do catálogo sem novos alvos
+- Rust/Node fixados, CI Linux/Windows, auditorias e release de tag em rascunho com hashes/SBOM/procedência; primeiro ensaio de tag pendente
 - Alfa para testes em VM; sem assinatura ou instalador final nesta etapa
 - Tag v0.6.0 preservada como referência; não houve merge automático
 
@@ -16,7 +24,7 @@
 - Orb com limiar acumulado de 1%, tabela fechada montada sob demanda e memoização de sparklines
 - Consultas/animações visuais suspensas fora de foco; coletor e benchmark Rust preservados
 - Corrigido blur que continuava ativo no Reduzido minificado; regressão testada com CSS de produção, incluindo forced-colors
-- Alternativas que aumentaram RAM descartadas e documentadas; gates continuam reprovados
+- Alternativas que aumentaram RAM descartadas e documentadas; investigação encerrada, critérios de pico históricos substituídos pela política 0.6.5
 - Veja docs/history/performance-investigation.md para os resultados brutos, limitações e próximos passos
 
 # Polimento da Fase 6.5 — 2026-11-01
@@ -25,7 +33,7 @@
 - Revisão compacta agrupada por risco, ícones por tipo e Checkbox acessível compartilhado
 - Busca/categoria refinadas, espaço reservado para ações e navegação móvel com quatro itens e Mais
 - Novas capturas e testes; backend e segurança preservados
-- Gates nativos executados sem jogos: Completo 238,29 MiB/3,1209%; Reduzido 240,62 MiB/1,5748%; ambos reprovados, limites inalterados
+- Medições históricas sem jogos: Completo 238,29 MiB/3,1209%; Reduzido 240,62 MiB/1,5748%; resultado sob o critério de pico então vigente, substituído na 0.6.5
 - Veja docs/history/phase-6.5-polish.md para evidências e pendências
 
 # Fase 6.5 — Renomeação

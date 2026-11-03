@@ -10,6 +10,8 @@ Os relatos preservam decisões, medições e pendências da data de cada fase. C
 - [block-d](block-d.md)
 - [block-e](block-e.md)
 - [block-f](block-f.md)
+- [block-g](block-g.md)
+- [Relatório consolidado 0.6.5](release-0.6.5-report.md)
 - [performance-investigation](performance-investigation.md)
 - [phase-1](phase-1.md)
 - [phase-2-plan](phase-2-plan.md)
