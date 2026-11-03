@@ -78,6 +78,7 @@ export function AppShell() {
     return (
       <button
         type="button"
+        data-page={item}
         aria-label={t(item)}
         aria-current={navPage === item ? 'page' : undefined}
         disabled={busy || (item === 'review' && !review)}
@@ -229,6 +230,7 @@ export function AppShell() {
             </footer>
           </div>
         </main>
+        <div id="action-layer" />
       </div>
       {detail && (
         <Details

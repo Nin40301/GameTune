@@ -149,13 +149,14 @@ export interface GameMonitor {
   readonly: boolean
 }
 export interface GamesView {
+  icons?: Record<string, string>
   library: { version: number; games: Game[]; language: string }
   candidates: GameCandidate[]
   actions: GameAction[]
   monitor: GameMonitor
 }
 export type GamesAction =
-  | { kind: 'status' | 'discover' | 'add_manual' | 'stop' }
+  | { kind: 'status' | 'discover' | 'add_manual' | 'stop' | 'icons' }
   | { kind: 'add_candidate'; index: number }
   | { kind: 'save'; game: Game; language: string }
   | { kind: 'remove'; id: string; confirm: boolean }

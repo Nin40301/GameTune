@@ -2,7 +2,7 @@
 
 Gerado por `node tools/audit-unsafe.mjs --write`. Cada linha com bloco unsafe/extern é listada; várias chamadas no mesmo bloco compartilham a justificativa. Revisão de código não substitui ensaio em VM, Miri ou auditoria independente. Fora destas fronteiras, unsafe continua proibido/negado; unwrap/expect são rejeitados pelo lint e pelo inventário.
 
-92 linhas de fronteira, sem handles em processos de jogos. As justificativas abaixo delimitam o propósito; os comentários SAFETY no código descrevem a validade dos ponteiros e a propriedade dos recursos.
+94 linhas de fronteira, sem handles em processos de jogos. As justificativas abaixo delimitam o propósito; os comentários SAFETY no código descrevem a validade dos ponteiros e a propriedade dos recursos.
 
 | Local | Função | Justificativa |
 | --- | --- | --- |
@@ -66,6 +66,8 @@ Gerado por `node tools/audit-unsafe.mjs --write`. Cada linha com bloco unsafe/ex
 | [crates/watcher/src/fs_native.rs:17](../../crates/watcher/src/fs_native.rs#L17) | `local_drive` | GetDriveTypeW com raiz local validada; recusa unidades de rede antes de ler launchers. Não acessa processos. |
 | [crates/watcher/src/wmi.rs:21](../../crates/watcher/src/wmi.rs#L21) | `drop` | COM/WMI local em worker MTA próprio; interfaces e VARIANTs RAII, só eventos/snapshot de nome/caminho/PID da sessão, sem handles de jogos. |
 | [crates/watcher/src/wmi.rs:39](../../crates/watcher/src/wmi.rs#L39) | `listen_health` | COM/WMI local em worker MTA próprio; interfaces e VARIANTs RAII, só eventos/snapshot de nome/caminho/PID da sessão, sem handles de jogos. |
+| [crates/windows_runtime/src/icon/native.rs:20](../../crates/windows_runtime/src/icon/native.rs#L20) | `drop` | Shell extrai um recurso de arquivo local cadastrado; GDI usa bitmap fixo de 32x32 e recursos próprios liberados por RAII. Sem executar o arquivo, rede, hooks ou handles em processos. |
+| [crates/windows_runtime/src/icon/native.rs:52](../../crates/windows_runtime/src/icon/native.rs#L52) | `extract` | Shell extrai um recurso de arquivo local cadastrado; GDI usa bitmap fixo de 32x32 e recursos próprios liberados por RAII. Sem executar o arquivo, rede, hooks ou handles em processos. |
 | [crates/windows_runtime/src/native.rs:32](../../crates/windows_runtime/src/native.rs#L32) | `token_information` | WTS da sessão local, token próprio, pasta conhecida e SCM. Alocações do Windows copiadas/liberadas uma vez; estruturas alinhadas e limitadas; handles são de serviços, nunca de jogos. |
 | [crates/windows_runtime/src/native.rs:45](../../crates/windows_runtime/src/native.rs#L45) | `token_information` | WTS da sessão local, token próprio, pasta conhecida e SCM. Alocações do Windows copiadas/liberadas uma vez; estruturas alinhadas e limitadas; handles são de serviços, nunca de jogos. |
 | [crates/windows_runtime/src/native.rs:59](../../crates/windows_runtime/src/native.rs#L59) | `token_sid` | WTS da sessão local, token próprio, pasta conhecida e SCM. Alocações do Windows copiadas/liberadas uma vez; estruturas alinhadas e limitadas; handles são de serviços, nunca de jogos. |
@@ -106,4 +108,5 @@ Gerado por `node tools/audit-unsafe.mjs --write`. Cada linha com bloco unsafe/ex
 - `crates/monitor/src/tray.rs`: `74e3ff5a4218bd689d2bb28a61158618dbd3174a34c6da1453572d2f60850b83`
 - `crates/watcher/src/fs_native.rs`: `af0671813596ec12fb06fec2f02a61004050d7cc48612fc8b24becd13c634d1b`
 - `crates/watcher/src/wmi.rs`: `5684eda873167e19f18d1fd1d0de6077b5b2cd6064ba2a307c18fb04c2509352`
+- `crates/windows_runtime/src/icon/native.rs`: `ca499fb4de72ef8f7a3c1e0b3f899080deb7cd4afff7097a2e82b9513ebab114`
 - `crates/windows_runtime/src/native.rs`: `5dbaabb36a3c14d1b030f5413e8658b5e510fb4c737f60190fba32aa0c700841`

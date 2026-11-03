@@ -591,5 +591,8 @@
   "historyDate": "Date",
   "safeGroupOnly": "Selects only verified, reversible items without high risk",
   "selectionEmpty": "No adjustments match these filters",
-  "filters": "Filters"
+  "filters": "Filters",
+  "exportIdentityWarning": "Without anonymization, the report may include usernames and paths. Review it before sharing",
+  "alphaNotice": "Alpha · test in a virtual machine with a snapshot",
+  "saveLocal": "Save to this computer"
 }

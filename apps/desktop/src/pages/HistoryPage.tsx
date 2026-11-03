@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { itemName } from '../i18n'
 import { date } from '../i18n-format'
 import { useApp } from '../state/AppContext'
 import { OperationResult } from '../components/OperationResult'
@@ -108,27 +109,62 @@ export function HistoryPage() {
                   {t(from || to || kind !== 'all' ? 'noHistoryMatches' : 'emptyHistory')}
                 </p>
               ) : (
-                <ul className="history-list">
-                  {entries.map((entry) => (
-                    <li key={entry.itemId}>
-                      <div>
-                        <strong>
-                          {data?.items.find((item) => item.id === entry.itemId)?.name[language] ??
-                            entry.itemId}
-                        </strong>
-                        <time dateTime={entry.appliedAt}>{date(language, entry.appliedAt)}</time>
-                      </div>
-                      <span className="pill">{t(entry.status)}</span>
-                      <button
-                        className="button subtle"
-                        disabled={entry.status === 'reverted' || busy}
-                        onClick={() => void prepare('undo', [entry.itemId])}
-                      >
-                        {t('undo')}
-                      </button>
-                    </li>
+                <div className="history-days">
+                  {[
+                    ...new Set(
+                      entries.map((entry) =>
+                        new Intl.DateTimeFormat(language, { dateStyle: 'full' }).format(
+                          new Date(entry.appliedAt),
+                        ),
+                      ),
+                    ),
+                  ].map((day) => (
+                    <section className="history-day" key={day}>
+                      <h2>{day}</h2>
+                      <ul className="history-list">
+                        {entries
+                          .filter(
+                            (entry) =>
+                              new Intl.DateTimeFormat(language, { dateStyle: 'full' }).format(
+                                new Date(entry.appliedAt),
+                              ) === day,
+                          )
+                          .map((entry) => {
+                            const item = data?.items.find((item) => item.id === entry.itemId)
+                            return (
+                              <li key={entry.itemId}>
+                                <span className="history-marker">
+                                  <Icon
+                                    name={
+                                      item?.type === 'scheduled_task'
+                                        ? 'task'
+                                        : item?.type === 'appx'
+                                          ? 'apps'
+                                          : (item?.type ?? 'history')
+                                    }
+                                  />
+                                </span>
+                                <div>
+                                  <strong>{item ? itemName(item, language) : entry.itemId}</strong>
+                                  <time dateTime={entry.appliedAt}>
+                                    {date(language, entry.appliedAt)}
+                                  </time>
+                                </div>
+                                <span className="pill">{t(entry.status)}</span>
+                                <button
+                                  className="button subtle"
+                                  disabled={entry.status === 'reverted' || busy}
+                                  onClick={() => void prepare('undo', [entry.itemId])}
+                                >
+                                  {t('undo')}
+                                </button>
+                              </li>
+                            )
+                          })}
+                      </ul>
+                    </section>
                   ))}
-                </ul>
+                </div>
               )}
               <h2 className="space-top">{t('removedApps')}</h2>
               <p className="muted small">{t('noUndoDetail')}</p>

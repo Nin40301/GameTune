@@ -19,6 +19,7 @@ declare global {
   }
 }
 export function createMockBackend(): Backend {
+  const scenario = new URLSearchParams(location.search).get('ui-state')
   const items = catalog.items as unknown as Item[]
   const trace = { executions: [] as Approval[], reviews: [] as Selection[], cancelled: 0 }
   window.__ametistaTest = trace
@@ -87,8 +88,19 @@ export function createMockBackend(): Backend {
     current:
       item.type === 'appx'
         ? { type: 'appx', packages: [`${item.id}_test`], provisioned: [], families: [] }
+        : item.type === 'service'
+          ? { type: 'service', start_mode: 3, running: true }
+          : item.type === 'scheduled_task'
+            ? { type: 'scheduled_task', enabled: true }
+            : null,
+    currentDword:
+      item.type === 'registry'
+        ? item.id === 'reg.advertising'
+          ? Number(item.target.value)
+          : Number(item.target.value) === 0
+            ? 1
+            : 0
         : null,
-    currentDword: null,
     error: null,
     scope: item.type === 'appx' ? 'current_user_only' : 'machine',
     removable: item.type === 'appx' ? installed.includes(item.id) : null,
@@ -169,6 +181,12 @@ export function createMockBackend(): Backend {
       readonly: false,
     },
   }
+  if (scenario === 'empty') {
+    history.journal = { entries: [], needs_recovery: false, torn_tail: false }
+    history.apps = []
+    lab.latest = null
+    lab.comparisons = []
+  }
   return {
     support: async (action) =>
       action.kind === 'preview'
@@ -235,6 +253,7 @@ export function createMockBackend(): Backend {
     },
     bootstrap: async () => bootstrap,
     start: async () => {
+      if (scenario === 'error') throw Error('operation_failed')
       id++
       completed = 0
       status = 'running'
@@ -242,7 +261,7 @@ export function createMockBackend(): Backend {
       return id
     },
     state: async () => {
-      if (status === 'running') {
+      if (status === 'running' && scenario !== 'loading') {
         completed = Math.min(items.length, completed + 16)
         if (completed === items.length) status = 'complete'
       }
@@ -252,7 +271,17 @@ export function createMockBackend(): Backend {
         completed,
         total: items.length,
         itemId: items[Math.max(0, completed - 1)]?.id ?? '',
-        observations: status === 'complete' ? observations : [],
+        observations:
+          status === 'complete'
+            ? scenario === 'empty'
+              ? observations.map((row) => ({
+                  ...row,
+                  exists: false,
+                  removable: false,
+                  presence: 'missing' as const,
+                }))
+              : observations
+            : [],
         error: null,
       }
     },

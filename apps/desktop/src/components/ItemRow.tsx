@@ -28,6 +28,14 @@ export function ItemRow({
     name = itemName(item, language)
   return (
     <div className={`item-row ${checked ? 'selected-row' : ''}`}>
+      {item.type === 'appx' && (
+        <span className="application-initials" aria-hidden="true">
+          {name
+            .replace(/^Microsoft\./, '')
+            .slice(0, 2)
+            .toLocaleUpperCase(language)}
+        </span>
+      )}
       <div className="item-select">
         {item.type === 'appx' ? (
           <label className="checkbox-target">

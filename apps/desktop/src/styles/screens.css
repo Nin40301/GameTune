@@ -1609,14 +1609,16 @@ input::placeholder {
 }
 @keyframes rise {
   from {
-    transform: translateY(8px);
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
+    opacity: 1;
     transform: none;
   }
 }
 .page {
-  animation: rise 280ms var(--ease-out);
+  animation: rise var(--dur-3) var(--ease-out);
   transform: translateZ(0);
 }
 :is(button, input, select, summary, a):focus-visible {
@@ -2666,4 +2668,273 @@ main {
   .profile-card > small {
     grid-column: 1/-1;
   }
+}
+
+/* Supporting screens share the same spacing and solid row surfaces. */
+.application-initials {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--r-sm);
+  background: var(--surface2);
+  color: var(--accent);
+  font-weight: 700;
+}
+.app-grid .item-row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 24px;
+  align-items: flex-start;
+}
+.app-grid .item-select {
+  flex: 1 1 160px;
+}
+.app-grid .item-badges {
+  max-width: 100%;
+  width: 100%;
+}
+.history-day {
+  margin-top: 24px;
+  padding-left: 16px;
+  border-left: 1px solid var(--line);
+}
+.history-day > h2 {
+  font-size: var(--fs-md);
+  margin: 0 0 16px;
+}
+.history-list li {
+  gap: 12px;
+}
+.history-marker {
+  color: var(--ink-soft);
+  flex: none;
+}
+.history-list li > div {
+  min-width: 0;
+  flex: 1;
+}
+.interval-chart {
+  margin: 24px 0;
+  padding: 16px;
+  background: var(--surface2);
+  border-radius: var(--r-sm);
+}
+.interval-chart figcaption {
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.interval-chart svg {
+  width: 100%;
+  max-width: 600px;
+  display: block;
+}
+.interval-chart text {
+  font: 12px var(--font-sans);
+  fill: var(--ink);
+}
+.interval-chart line {
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.chart-axis {
+  stroke: var(--ink-soft);
+  opacity: 0.5;
+}
+.chart-before {
+  stroke: var(--ink-soft);
+  fill: var(--ink-soft);
+}
+.chart-after {
+  stroke: var(--accent);
+  fill: var(--accent);
+}
+.interval-chart g text {
+  stroke: none;
+}
+.export-preview {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+.export-preview h3 {
+  margin-top: 0;
+}
+.export-preview dl {
+  display: grid;
+  gap: 12px;
+}
+.export-preview dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.export-preview dd {
+  margin: 0;
+}
+.export-preview .actions {
+  margin-top: 20px;
+}
+.settings-cards {
+  display: grid;
+  gap: 24px;
+}
+.settings-cards .settings-panel {
+  margin: 0;
+}
+.settings-cards .setting-row {
+  gap: 24px;
+}
+.settings-cards .setting-row > div {
+  min-width: 0;
+}
+.settings-cards .setting-row input[type='range'] {
+  min-height: 44px;
+  accent-color: var(--accent);
+  max-width: 100%;
+}
+.settings-cards .licenses {
+  margin-top: 24px;
+}
+.licenses pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--fs-sm);
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.monitor-card {
+  display: grid;
+  gap: 16px;
+  padding-block: 24px;
+}
+.monitor-card > p {
+  margin: 0;
+}
+.monitor-card h2 {
+  font-size: var(--fs-lg);
+}
+.monitor-card .button {
+  justify-self: start;
+}
+.game-library > h2 {
+  margin-bottom: 8px;
+}
+.game-library .monitor-card {
+  border-bottom: 1px solid var(--line);
+}
+.active-session {
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 16px;
+  margin-bottom: 24px;
+}
+.active-session h3 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: var(--fs-md);
+  margin: 0 0 12px;
+}
+.game-state-chip {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+.game-state-chip::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  flex: none;
+}
+.game-consent {
+  margin-block: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 16px !important;
+  background: var(--surface2);
+}
+.game-library .game-monitor-summary {
+  padding-top: 0;
+}
+@media (max-width: 600px) {
+  .app-grid .item-row {
+    padding: 20px;
+  }
+  .history-day {
+    padding-left: 8px;
+  }
+  .history-list li {
+    flex-wrap: wrap;
+  }
+  .history-list .pill {
+    margin-left: 32px;
+  }
+  .settings-cards .setting-row {
+    align-items: stretch;
+  }
+  .settings-cards .segmented {
+    max-width: 100%;
+  }
+  .interval-chart {
+    padding: 12px;
+  }
+}
+/* At most six list entries enter, with no perpetual animation. */
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion='reduced']):not([data-effects='reduced'])
+    :is(.app-grid, .game-library ul, .history-list)
+    > :nth-child(-n + 6) {
+    animation: rise var(--dur-3) var(--ease-out) both;
+  }
+  :is(.app-grid, .game-library ul, .history-list) > :nth-child(2) {
+    animation-delay: 40ms;
+  }
+  :is(.app-grid, .game-library ul, .history-list) > :nth-child(3) {
+    animation-delay: 80ms;
+  }
+  :is(.app-grid, .game-library ul, .history-list) > :nth-child(4) {
+    animation-delay: 120ms;
+  }
+  :is(.app-grid, .game-library ul, .history-list) > :nth-child(5) {
+    animation-delay: 160ms;
+  }
+  :is(.app-grid, .game-library ul, .history-list) > :nth-child(6) {
+    animation-delay: 200ms;
+  }
+}
+@media (forced-colors: active) {
+  .application-initials,
+  .active-session,
+  .export-preview,
+  .game-consent {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid CanvasText;
+  }
+  .chart-before,
+  .chart-after {
+    stroke: CanvasText;
+    fill: CanvasText;
+  }
+  .interval-chart text {
+    fill: CanvasText;
+  }
+}
+
+.game-file-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex: none;
+}
+.game-choice strong {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }

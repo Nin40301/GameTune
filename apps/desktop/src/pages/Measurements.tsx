@@ -1,4 +1,5 @@
 import { appendCpuSample } from '../state/visualHistory'
+import { IntervalChart } from '../components/IntervalChart'
 import { Button } from '../components/Button'
 import { InlineStatus } from '../components/InlineStatus'
 import { useWindowActivity } from '../hooks/useWindowActivity'
@@ -39,6 +40,7 @@ export function Measurements({
   const [conditions, setConditions] = useState<Conditions>(unchecked)
   const [reset, setReset] = useState(false)
   const [anonymize, setAnonymize] = useState(true)
+  const [exportFormat, setExportFormat] = useState<'json' | 'html' | null>(null)
   const [saved, setSaved] = useState(false)
   const t = translator(language)
   const number = (value: number | null | undefined, digits = 1) =>
@@ -413,6 +415,15 @@ export function Measurements({
             ) : (
               <>
                 <p>{t('comparisonNote')}</p>
+                <div className="comparison-charts">
+                  {status.comparisons.map((comparison) => (
+                    <IntervalChart
+                      key={comparison.metric}
+                      comparison={comparison}
+                      language={language}
+                    />
+                  ))}
+                </div>
                 <div
                   className="table-scroll"
                   role="region"
@@ -533,16 +544,57 @@ export function Measurements({
               {(['json', 'html'] as const).map((format) => (
                 <button
                   key={format}
-                  className={`button ${format === 'json' && p?.phase === 'complete' ? 'primary' : 'secondary'}`}
+                  className="button secondary"
                   disabled={busy || !p}
                   onClick={() => {
-                    void file({ kind: 'export', format, anonymize, english: language === 'en' })
+                    setExportFormat(format)
                   }}
                 >
                   {t(format === 'json' ? 'exportJson' : 'exportHtml')}
                 </button>
               ))}
             </div>
+            {exportFormat && (
+              <section className="export-preview" aria-labelledby="export-preview-title">
+                <h3 id="export-preview-title">{t('exportPreview')}</h3>
+                <p>{t('exportPreviewNote')}</p>
+                <dl>
+                  <div>
+                    <dt>{t('anonymizeReport')}</dt>
+                    <dd>{t(anonymize ? 'nextEnabled' : 'nextDisabled')}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('beforeRuns')}</dt>
+                    <dd className="num">{number(p?.before.length, 0)}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('afterRuns')}</dt>
+                    <dd className="num">{number(p?.after.length, 0)}</dd>
+                  </div>
+                </dl>
+                <p>{t(anonymize ? 'anonymizeNote' : 'exportIdentityWarning')}</p>
+                <div className="actions">
+                  <button
+                    className="button secondary"
+                    disabled={busy}
+                    onClick={() => {
+                      void file({
+                        kind: 'export',
+                        format: exportFormat,
+                        anonymize,
+                        english: language === 'en',
+                      })
+                      setExportFormat(null)
+                    }}
+                  >
+                    {t('confirmExport')}
+                  </button>
+                  <button className="button subtle" onClick={() => setExportFormat(null)}>
+                    {t('cancelPreview')}
+                  </button>
+                </div>
+              </section>
+            )}
             {saved && (
               <InlineStatus next={t('dismiss')} onNext={() => setSaved(false)}>
                 {t('exportDialogDone')}

@@ -73,3 +73,21 @@ test('top-process table is mounted only when expanded and remains accessible', a
   await user.click(screen.getByText(pt.topMemory))
   expect(screen.queryByRole('table', { hidden: true })).not.toBeInTheDocument()
 })
+
+test('export previews anonymization and run counts before opening the save dialog', async () => {
+  const backend = createMockBackend(),
+    save = vi.spyOn(backend, 'labFile'),
+    user = userEvent.setup()
+  render(<Measurements backend={backend} language="pt-BR" />)
+  await user.click(await screen.findByRole('button', { name: pt.exportJson }))
+  expect(screen.getByRole('heading', { name: pt.exportPreview })).toBeVisible()
+  expect(save).not.toHaveBeenCalled()
+  expect(screen.getByRole('checkbox', { name: pt.anonymizeReport })).toBeChecked()
+  await user.click(screen.getByRole('button', { name: pt.confirmExport }))
+  expect(save).toHaveBeenCalledExactlyOnceWith({
+    kind: 'export',
+    format: 'json',
+    anonymize: true,
+    english: false,
+  })
+})

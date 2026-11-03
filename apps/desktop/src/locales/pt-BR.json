@@ -591,5 +591,8 @@
   "historyDate": "Data",
   "safeGroupOnly": "Seleciona apenas itens verificados, reversíveis e sem risco alto",
   "selectionEmpty": "Nenhum ajuste corresponde aos filtros",
-  "filters": "Filtros"
+  "filters": "Filtros",
+  "exportIdentityWarning": "Sem anonimização, o relatório pode incluir nomes de usuário e caminhos. Confira antes de compartilhar",
+  "alphaNotice": "Alfa · teste em uma máquina virtual com snapshot",
+  "saveLocal": "Salvar no computador"
 }

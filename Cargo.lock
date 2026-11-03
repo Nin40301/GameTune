@@ -284,6 +284,7 @@ dependencies = [
  "ametista-catalog",
  "ametista-core",
  "base64 0.22.1",
+ "png 0.18.1",
  "serde",
  "serde_json",
  "sha2",
