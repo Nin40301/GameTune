@@ -13,7 +13,7 @@ publish = false
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }
 thiserror = "2"
-sha2 = "0.10"
+sha2 = "0.11"
 time = { version = "0.3", features = ["formatting"] }
 jsonschema = { version = "0.46", default-features = false }
 tempfile = "3"
