@@ -4,6 +4,7 @@ Os relatos preservam decisões, medições e pendências da data de cada fase. C
 
 ## Fase 6.7
 
+- [Estado e relatório da Entrega 2](phase-6.7/delivery-2.md)
 - [Plano da Entrega 2](phase-6.7/delivery-2-plan.md)
 - [Verificações por bloco da Entrega 2](phase-6.7/delivery-2-progress.md)
 - [Planos das duas entregas](phase-6.7-plan.md)

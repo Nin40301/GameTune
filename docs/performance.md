@@ -47,3 +47,12 @@ pwsh -NoProfile -File tools/test-resource-budget.ps1 -Mode game_monitor
 ```
 
 Para reavaliar sem medir: `budget.exe evaluate docs/perf-baseline.json full <saida.json>` e os cinco arquivos `docs/history/perf-final-0.6.5/full-N.json`; use reduced e suas séries para o outro modo. `evaluate-v1` reproduz as reprovações históricas; `evaluate` aplica v2. Código 2 indica dados inválidos; não é aprovação. Não substitua automaticamente a base. O harness de coleta continua com 5×60 amostras, sem descarte por host ocupado.
+
+
+## Entrega 2 — nova coorte ainda não coletada (03/11/2026)
+
+A candidata de UI `a5a3c27` foi compilada e conferida no Windows em 1100×740, pt-BR/claro, DPR1/DPI96, WebView2 156.0.4314.58 e três superfícies com blur no Completo. Essa conferência usou depuração temporária e **não é o gate de consumo**. A janela foi fechada depois. Não há amostras temporizadas, médias, medianas ou aprovação nova a partir dessa inspeção.
+
+A verificação somente leitura detectou um jogo em execução. A condição sem jogos ainda não foi satisfeita; a nova coorte fica pendente, inclusive o ensaio separado do monitor. Nenhum processo de terceiro foi encerrado. [Estado e hashes dos binários](history/phase-6.7/delivery-2-perf-status.json). Não usar as séries 0.6.5 da tabela acima como se fossem medições desta UI. Limites, baseline e harness não foram alterados, e o PR continua em rascunho para fechar essa evidência obrigatória.
+
+Ao disponibilizar o computador: conferir as preferências em processo fresco, fechar o preflight, executar o mesmo harness cinco vezes por modo (ele faz as cinco execuções), preservando os relatórios e sem depuração na coleta; monitor somente leitura com limite estrito. Registrar host/WebView/GPU/DPI e anonimizar séries antes de publicar. Completo exige CPU mediana <1%, RAM ≤200 MiB e ≤15% sobre a base; p95 >2% alerta. Reduzido é informativo. Não descartar execuções por host ocupado.

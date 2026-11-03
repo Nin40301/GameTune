@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "policyVersion": 2,
+  "status": "not_started",
+  "reason": "Required no-game condition not satisfied; availability confirmation pending",
+  "applicationSourceCommit": "a5a3c27f23ae96b1e9f70db6fcc115a4b8a35e34",
+  "version": "0.6.5",
+  "identifier": "io.github.nin40301.ametista",
+  "baseline": "../../perf-baseline.json",
+  "baselineSha256": "c639415970e0e7bc510b6e59c92356a65e634f0461aea54379e235bda69887b7",
+  "binaries": [
+    {
+      "name": "ametista.exe",
+      "sha256": "fa9680a30b68c64b5fce8d6275c4655ffe296ae9ff3cb232e9f29c73aa8d6fef"
+    },
+    {
+      "name": "ametista-monitor.exe",
+      "sha256": "ed055e0050ccebb219b811c3d3245cce43227fd8055571d454e455dfc253e60b"
+    },
+    {
+      "name": "ametista-helper.exe",
+      "sha256": "663e8deff7ac0618c7c245769ab34df0c15a81b7a327d98aa42acbb3cb15c0ed"
+    },
+    {
+      "name": "budget.exe",
+      "sha256": "3705dd91109b1deec279e04cd3722db17475ff77e568bb10bf403dfd20aa8cff"
+    }
+  ],
+  "cohorts": {
+    "full": null,
+    "reduced": null,
+    "game_monitor": null
+  },
+  "preflight": {
+    "webView2": "156.0.4314.58",
+    "windowWidth": 1100,
+    "windowHeight": 740,
+    "dpi": 96,
+    "devicePixelRatio": 1,
+    "theme": "light",
+    "language": "pt-BR",
+    "effects": "full",
+    "blurSurfaces": 3,
+    "metricOverflow": false,
+    "debuggingDuringPreflight": true,
+    "timedSamplesCollected": 0
+  },
+  "recordedUtc": "2026-11-03T12:19:04.094136+00:00"
+}

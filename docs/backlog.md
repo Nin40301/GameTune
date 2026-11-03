@@ -4,6 +4,7 @@ As propostas P2 abaixo não foram adicionadas ao catálogo ou implementadas. `ve
 
 ## P1 — antes do aceite de VM/Fase 7
 
+- Entrega 2: nova coorte de consumo ainda pendente da condição sem jogos; manter PR em rascunho e não declarar aceite a partir das séries antigas
 - Consumo: política v2 por decisão do titular em 02/11/2026 aprova o Completo nas séries finais preservadas; Reduzido é informativo. Investigação limitada encerrada em duas tentativas, sem correção comprovada. Repetir o gate na Entrega 2 após o novo desenho. Monitor estrito aprovado. Ver [decisão/evidências](performance.md)
 - Validar UAC em instalação protegida, hash/ACL/Authenticode, outra conta, SCM, tarefas, startup, energia, Appx, reinícios e abertura de Minecraft/Loja/Edge/Configurações/Segurança na matriz Home/Pro
 - Confirmar Proteção do Sistema por volume por uma API documentada ou na ferramenta nativa. A leitura não elevada atual informa desconhecido quando não há prova; não inferir ativação de pontos antigos/VSS/frequência
@@ -32,3 +33,8 @@ As propostas P2 abaixo não foram adicionadas ao catálogo ou implementadas. `ve
 - Investigar apenas regressões futuras reprodutíveis contra a linha de base; a investigação anterior de GPU/WebView está encerrada. Não reabrir o redesign como “falha” pelo critério antigo
 
 **Fora do produto:** desativar VBS/HVCI/Isolamento de Núcleo, TPM/Secure Boot, mitigações, Defender/Update/Firewall/SmartScreen/UAC; limpadores de RAM/working set/registro; tweaks TCP; drivers, DLL injection, hooks, arquivos de jogos ou handles em seus processos. Não entram como backlog implementável.
+
+
+## Experimentos de UX 3.8 — fora desta entrega
+
+Mica/Acrylic, paleta Ctrl+K, tela de atalhos e notificações de sessão não foram implementados ou habilitados. Exigem pedido/medição e aceite próprios. Ícones Appx continuam com iniciais quando o inventário não oferece imagem confiável; ampliar a leitura não é autorização para acessar dados de outros usuários. Conferir recursos variados de ícone e alto DPI no aceite manual.
