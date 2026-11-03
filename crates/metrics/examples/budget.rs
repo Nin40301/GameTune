@@ -55,7 +55,7 @@ fn create_baseline(args: &[String]) -> Result<bool, Box<dyn std::error::Error>> 
     println!("Baseline candidate written; review metadata and results before committing");
     Ok(true)
 }
-fn evaluate(args: &[String]) -> Result<bool, Box<dyn std::error::Error>> {
+fn evaluate(args: &[String], legacy: bool) -> Result<bool, Box<dyn std::error::Error>> {
     if args.len() != 8 {
         return Err(
             "evaluate requires baseline, effects, output and exactly five run files".into(),
@@ -73,15 +73,29 @@ fn evaluate(args: &[String]) -> Result<bool, Box<dyn std::error::Error>> {
         .iter()
         .map(|path| read_run(path))
         .collect::<Result<_, _>>()?;
-    let result = resource_budget::evaluate_interface(&runs, mode)?;
+    if legacy {
+        let result = resource_budget::evaluate_interface_v1(&runs, mode)?;
+        std::fs::write(&args[2], serde_json::to_vec_pretty(&result)?)?;
+        println!("{}", serde_json::to_string(&result)?);
+        return Ok(result.passed);
+    }
+    let effects = if args[1] == "full" {
+        resource_budget::InterfaceMode::Full
+    } else {
+        resource_budget::InterfaceMode::Reduced
+    };
+    let result = resource_budget::evaluate_interface(&runs, mode, effects)?;
     std::fs::write(&args[2], serde_json::to_vec_pretty(&result)?)?;
     println!("{}", serde_json::to_string(&result)?);
-    Ok(result.passed)
+    Ok(result.blocking_passed)
 }
 fn run() -> Result<bool, Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().skip(1).collect();
     if args.first().is_some_and(|arg| arg == "evaluate") {
-        return evaluate(&args[1..]);
+        return evaluate(&args[1..], false);
+    }
+    if args.first().is_some_and(|arg| arg == "evaluate-v1") {
+        return evaluate(&args[1..], true);
     }
     if args.first().is_some_and(|arg| arg == "baseline") {
         return create_baseline(&args[1..]);

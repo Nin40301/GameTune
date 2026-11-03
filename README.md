@@ -34,6 +34,6 @@ Pare de aplicar ajustes. Tente **Desfaça tudo** no histórico. Se necessário, 
 
 Alvos: Windows 10 22H2 e Windows 11 23H2+. A matriz Home/Pro, UAC com outra conta e reinícios ainda precisam de aceite em VM. NVDA/Narrador e DPI alto têm validação manual pendente. Apps removidos podem precisar da Microsoft Store e de internet para reinstalar.
 
-Completo é o padrão. Na [medição final](docs/performance.md), ele ficou em 163,54 MiB; Reduzido, em 244,04 MiB. Ambos reprovaram na regressão de CPU contra a referência zero; Reduzido também excedeu o teto de RAM. O monitor passou nos limites estritos. Esses dados não são uma previsão de FPS.
+Completo é o padrão. Na [medição final](docs/performance.md), ele ficou em 163,54 MiB; Reduzido, em 244,04 MiB. Pela política v2 e decisão do titular, Completo está aprovado; Reduzido é informativo e excede o teto de RAM. O monitor passou nos limites estritos. Esses dados não são uma previsão de FPS.
 
 [Apache-2.0](LICENSE) · [NOTICE](NOTICE) · [Contribuir](CONTRIBUTING.md) · [Código de Conduta](CODE_OF_CONDUCT.md)

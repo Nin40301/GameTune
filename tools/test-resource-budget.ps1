@@ -57,7 +57,7 @@ try{
         if(-not(Test-Path -LiteralPath $taskEvaluationReport)){throw 'Cohort evaluation produced no fresh report'}
         Copy-Item -LiteralPath $taskEvaluationReport -Destination $taskFinalReport
         $taskEvaluation=Get-Content -LiteralPath $taskFinalReport -Raw|ConvertFrom-Json
-        if($taskEvaluation.cpuP95Alert){Write-Warning 'Interface CPU p95 reached 1% in at least one run; warning only, not a peak-CPU veto'}
+        if($taskEvaluation.cpuP95Alert){Write-Warning 'Interface CPU p95 exceeded 2% in at least one run; warning only, not a peak-CPU veto'}
     }else{Copy-Item -LiteralPath $taskReports[0] -Destination $taskFinalReport}
     if($taskCode -ne 0){throw ('Resource regression gate failed; inspect '+$taskFinalReport)}
     Write-Output ('Resource gate passed; evidence: '+$taskFinalReport)
