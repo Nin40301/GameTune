@@ -67,7 +67,13 @@ export function createMockBackend(): Backend {
     presets: {
       safe,
       balanced: [...safe, 'reg.edge_preload', 'reg.edge_background', 'power.high_performance'],
-      aggressive: [...safe, 'svc.wsearch'],
+      aggressive: [
+        ...safe,
+        'reg.edge_preload',
+        'reg.edge_background',
+        'power.high_performance',
+        'svc.wsearch',
+      ],
     },
     compatible: Object.fromEntries(items.map((i) => [i.id, true])),
     blockedIds: ['reg.recall', 'svc.icssvc', 'svc.wmpnetworksvc', 'svc.xboxnetapisvc'],

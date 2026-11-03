@@ -7,8 +7,7 @@ export function translator(language: Language) {
   const messages: Record<string, string> = language === 'en' ? en : pt
   return (key: string) => {
     const text = messages[key] ?? messages.operation_failed ?? key
-    if (__TEST_BACKEND__ && localStorage.getItem('__ametistaPseudo') === 'true') return pseudo(text)
-    return text
+    return presentationText(text)
   }
 }
 export function categoryKey(category: string) {
@@ -22,6 +21,10 @@ export function itemName(
 ) {
   const messages: Record<string, string> = language === 'en' ? en : pt
   const text = messages[`itemName_${item.id}`] ?? item.name[language]
+  return presentationText(text)
+}
+
+export function presentationText(text: string) {
   return __TEST_BACKEND__ && localStorage.getItem('__ametistaPseudo') === 'true'
     ? pseudo(text)
     : text

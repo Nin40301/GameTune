@@ -39,13 +39,13 @@ for (const locale of ['pt-BR', 'en'] as const)
       await page.getByRole('button', { name: t.settings, exact: true }).click()
       await page.getByRole('checkbox', { name: t.monitorConsent }).check()
       await page.getByRole('button', { name: t.startMonitor }).click()
-      await expect(page.getByText(t.monitorRunning)).toBeVisible()
+      await expect(page.locator('.monitor-card').getByText(t.monitorRunning)).toBeVisible()
       expect(
         (await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze())
           .violations,
       ).toEqual([])
       await page.getByRole('button', { name: t.stopMonitor }).click()
-      await expect(page.getByText(t.monitorStopped)).toBeVisible()
+      await expect(page.locator('.monitor-card').getByText(t.monitorStopped)).toBeVisible()
       expect(await page.evaluate(() => window.__ametistaTest?.executions.length)).toBe(0)
     })
   }

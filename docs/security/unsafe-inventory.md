@@ -108,5 +108,5 @@ Gerado por `node tools/audit-unsafe.mjs --write`. Cada linha com bloco unsafe/ex
 - `crates/monitor/src/tray.rs`: `74e3ff5a4218bd689d2bb28a61158618dbd3174a34c6da1453572d2f60850b83`
 - `crates/watcher/src/fs_native.rs`: `af0671813596ec12fb06fec2f02a61004050d7cc48612fc8b24becd13c634d1b`
 - `crates/watcher/src/wmi.rs`: `5684eda873167e19f18d1fd1d0de6077b5b2cd6064ba2a307c18fb04c2509352`
-- `crates/windows_runtime/src/icon/native.rs`: `ca499fb4de72ef8f7a3c1e0b3f899080deb7cd4afff7097a2e82b9513ebab114`
+- `crates/windows_runtime/src/icon/native.rs`: `0811fb54c261e2de17abad8885f102dfb8ef1f563345f16850fdb4ce9f45377e`
 - `crates/windows_runtime/src/native.rs`: `5dbaabb36a3c14d1b030f5413e8658b5e510fb4c737f60190fba32aa0c700841`

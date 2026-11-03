@@ -60,7 +60,9 @@ export function ProfileCards({
             <strong>{t(profile)}</strong>
           </span>
           <span className="num">
-            {plural(language, 'profileCount', counts[profile]?.length ?? 0)}
+            {counts[profile]
+              ? plural(language, 'profileCount', counts[profile].length)
+              : t('loadingData')}
           </span>
           <span>{t(`${profile}Note`)}</span>
           <small>{t(`profileRisk_${profile}`)}</small>

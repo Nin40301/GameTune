@@ -48,3 +48,19 @@ test('startup offers recovery without starting monitor or requesting elevation a
   expect(await screen.findByRole('button', { name: pt.startMonitor })).toBeDisabled()
   expect(window.__ametistaTest?.executions).toHaveLength(0)
 })
+
+test('icons are requested without paths or PIDs and missing icons keep a usable game choice', async () => {
+  const backend = createMockBackend(),
+    games = vi.spyOn(backend, 'games'),
+    user = userEvent.setup()
+  render(<GamesPanel backend={backend} language="pt-BR" />)
+  await user.click(await screen.findByRole('button', { name: pt.addGame }))
+  await screen.findByRole('button', { name: /Sample.exe/ })
+  expect(games).toHaveBeenCalledWith({ kind: 'icons' })
+  expect(
+    games.mock.calls
+      .filter(([action]) => action.kind === 'icons')
+      .every(([action]) => Object.keys(action).length === 1),
+  ).toBe(true)
+  expect(screen.getByRole('button', { name: /Sample.exe/ })).toBeEnabled()
+})

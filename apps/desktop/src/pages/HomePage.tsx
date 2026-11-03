@@ -33,26 +33,6 @@ export function HomePage() {
             safetyCard={<SecurityCard />}
             profileControls={
               <>
-                <div className="section-top">
-                  <h2>{t('profile')}</h2>
-                  <span className="pill accent">
-                    <Icon name="safe" />
-                    {t('simulated')}
-                  </span>
-                </div>
-                <ProfileCards
-                  value={profile}
-                  onChange={chooseProfile}
-                  counts={{ ...data?.presets, custom: selected }}
-                  language={language}
-                  disabled={busy}
-                />
-                {profile === 'aggressive' && (
-                  <p className="notice warning">
-                    <Icon name="warning" />
-                    {t('aggressiveCaution')}
-                  </p>
-                )}
                 <div className="actions">
                   <Button
                     icon={<Icon name="simulate" />}
@@ -70,6 +50,26 @@ export function HomePage() {
                     <Icon name="arrowRight" />
                   </Button>
                 </div>
+                <div className="section-top">
+                  <h2>{t('profile')}</h2>
+                  <span className="pill accent">
+                    <Icon name="safe" />
+                    {t('simulated')}
+                  </span>
+                </div>
+                <ProfileCards
+                  value={profile}
+                  onChange={chooseProfile}
+                  counts={{ ...data?.presets, custom: profile === 'custom' ? selected : [] }}
+                  language={language}
+                  disabled={busy || !data}
+                />
+                {profile === 'aggressive' && (
+                  <p className="notice warning">
+                    <Icon name="warning" />
+                    {t('aggressiveCaution')}
+                  </p>
+                )}
                 <p className="calm-note">
                   <Icon name="safe" />
                   {t('simulateNote')}

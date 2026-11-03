@@ -47,6 +47,36 @@ export default function DesignSystem() {
                 >
                   {t(state === 'loading' ? 'analyzing' : 'simulate')}
                 </Button>
+                <label className="check-line">
+                  <Checkbox
+                    checked={checked}
+                    disabled={state === 'disabled'}
+                    onChange={(event) => setChecked(event.target.checked)}
+                  />
+                  {t('ackAll')}
+                </label>
+                <Switch
+                  checked={checked}
+                  disabled={state === 'disabled'}
+                  onChange={setChecked}
+                  label={t('enableProfile')}
+                />
+                <label className="design-input">
+                  {t('search')}
+                  <input
+                    type="search"
+                    disabled={state === 'disabled'}
+                    aria-invalid={state === 'error'}
+                    placeholder={t('searchPlaceholder')}
+                  />
+                </label>
+                <Segmented
+                  label={t('profile')}
+                  value={checked ? 'balanced' : 'safe'}
+                  disabled={state === 'disabled'}
+                  onChange={(value) => setChecked(value === 'balanced')}
+                  options={['safe', 'balanced'].map((value) => ({ value, label: t(value) }))}
+                />
               </div>
             ),
           )}

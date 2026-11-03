@@ -20,7 +20,9 @@ export function SecurityCard({ compact = false }: { compact?: boolean }) {
       </p>
       <p>
         {history.available
-          ? plural(language, 'restorable', activeHistory.length)
+          ? activeHistory.length
+            ? plural(language, 'restorable', activeHistory.length)
+            : t('restorable_zero')
           : t('historyUnavailable')}
       </p>
       <button

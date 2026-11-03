@@ -2938,3 +2938,92 @@ main {
   align-items: center;
   gap: 12px;
 }
+
+/* Final visual QA: compact app tiles and intact outcome words on narrow screens. */
+.app-grid .item-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-content: start;
+  align-items: start;
+  gap: 16px;
+}
+.app-grid .item-select {
+  flex: initial;
+  min-width: 0;
+  align-items: flex-start;
+}
+.app-grid .item-badges {
+  grid-column: 1/-1;
+  margin-top: 0;
+}
+.app-grid .item-select .checkbox-target {
+  margin-top: 0;
+}
+.result-list li {
+  flex-wrap: wrap;
+}
+.result-list li > span {
+  flex: 1 1 180px;
+  min-width: 0;
+}
+.result-list li > strong {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+.profile-panel > .actions {
+  margin-bottom: 24px;
+}
+.profile-panel > .section-top {
+  margin-top: 8px;
+}
+.game-monitor-summary h3 {
+  font-size: var(--fs-md);
+  margin: 0;
+}
+.design-states > div {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+.design-states > div h3 {
+  margin: 0;
+}
+.design-input {
+  display: grid;
+  gap: 8px;
+  font-size: var(--fs-sm);
+}
+.design-input input {
+  min-width: 0;
+  max-width: 100%;
+  padding: 10px;
+  border: 1px solid var(--ink-faint);
+  border-radius: var(--r-sm);
+  min-height: 44px;
+}
+.design-input input[aria-invalid='true'] {
+  border: 2px solid var(--danger);
+}
+.btn,
+.button,
+.segmented__thumb,
+.switch::after {
+  transition-timing-function: var(--ease-spring);
+}
+@media (max-width: 600px) {
+  .app-grid .item-select {
+    grid-column: 2;
+  }
+  .app-grid .item-select strong {
+    margin-left: 0;
+  }
+  .app-grid .item-select {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.diff > dl {
+  margin: 0;
+  min-width: 0;
+}

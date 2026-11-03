@@ -1466,6 +1466,7 @@ pre {
   background: transparent;
 }
 .switch::before {
+  border: 1.5px solid var(--ink-faint);
   content: '';
   position: absolute;
   inset: 6px 0;
@@ -1474,6 +1475,7 @@ pre {
   box-shadow: var(--elev-1);
 }
 .switch::after {
+  border: 1px solid var(--ink-faint);
   content: '';
   position: absolute;
   top: 9px;
@@ -1492,6 +1494,7 @@ pre {
   box-shadow: none;
 }
 .switch[aria-checked='true']::after {
+  border-color: transparent;
   transform: translateX(18px);
 }
 .orb {
@@ -1581,10 +1584,12 @@ pre {
 }
 @media (forced-colors: active) {
   .switch::before {
+    border: 1.5px solid var(--ink-faint);
     background: Canvas;
     border: 1px solid ButtonText;
   }
   .switch::after {
+    border: 1px solid var(--ink-faint);
     background: ButtonText;
   }
   .switch[aria-checked='true']::before {
@@ -1607,4 +1612,9 @@ pre {
     background: Canvas;
     border: 1px solid CanvasText;
   }
+}
+
+/* RAM changes are discrete, gated by the component's 1% threshold. */
+.orb circle {
+  transition: none !important;
 }

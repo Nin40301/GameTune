@@ -1,5 +1,6 @@
 import trayPt from '../../../crates/monitor/locales/pt-BR.json'
 import trayEn from '../../../crates/monitor/locales/en.json'
+import { plural } from '../src/i18n-format'
 import { appendCpuSample } from '../src/state/visualHistory'
 import { itemName } from '../src/i18n'
 import catalog from '../../../catalog/items.json'
@@ -27,14 +28,20 @@ test('all catalog and game options have noun labels in both languages; action la
     for (const action of actions.actions)
       expect(t[`gameAction_${action.id}`]).not.toMatch(/^(Ative|Pause|Use|Enable) /)
   }
-  expect(pt.simulate).toBe('Simular')
+  expect(pt.simulate).toBe('Simular ajustes')
   expect(pt.analyze).toBe('Analisar')
   expect(pt.reviewSelection).toBe('Revisar ajustes')
-  expect(en.simulate).toBe('Simulate')
+  expect(en.simulate).toBe('Simulate adjustments')
 })
 
 test('tray voice remains localized and uses infinitive labels', () => {
   expect(Object.keys(trayPt).sort()).toEqual(Object.keys(trayEn).sort())
   expect(trayPt.open).toBe('Abrir Ametista')
   expect(trayPt.stop).toBe('Parar e restaurar')
+})
+
+test('count copy handles zero explicitly and follows localized singular/plural for other counts', () => {
+  expect(plural('pt-BR', 'profileCount', 0)).toBe('0 ajustes')
+  expect(plural('pt-BR', 'profileCount', 1)).toBe('1 ajuste')
+  expect(plural('en', 'profileCount', 2)).toBe('2 adjustments')
 })

@@ -180,16 +180,13 @@ export function ItemsPage() {
                     ),
                   ].map((type) => (
                     <span key={type}>
-                      {t('selectionType')
-                        .replace(
-                          '{count}',
-                          new Intl.NumberFormat(language).format(
-                            (data?.items ?? []).filter(
-                              (item) => selected.includes(item.id) && item.type === type,
-                            ).length,
-                          ),
-                        )
-                        .replace('{type}', t(type))}
+                      {plural(
+                        language,
+                        `typeCount_${type}`,
+                        (data?.items ?? []).filter(
+                          (item) => selected.includes(item.id) && item.type === type,
+                        ).length,
+                      )}
                     </span>
                   ))}
                 </span>

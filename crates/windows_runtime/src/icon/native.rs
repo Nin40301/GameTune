@@ -140,10 +140,20 @@ fn encode(mut rgba: Vec<u8>) -> Option<String> {
 mod tests {
     use super::*;
     #[test]
-    fn fixed_pixels_are_encoded_as_bounded_png() {
-        let uri = encode(vec![255; 32 * 32 * 4]);
-        assert!(uri.as_ref().is_some_and(
-            |value| value.starts_with("data:image/png;base64,") && value.len() < 10000
-        ));
+    fn png_preserves_channels_alpha_and_fixed_dimensions() -> Result<(), Box<dyn std::error::Error>>
+    {
+        let uri = encode([32, 64, 96, 128].repeat(32 * 32)).ok_or("PNG encoding failed")?;
+        let encoded = uri
+            .strip_prefix("data:image/png;base64,")
+            .ok_or("wrong MIME")?;
+        let bytes = base64::engine::general_purpose::STANDARD.decode(encoded)?;
+        assert!(bytes.len() < 10000);
+        let mut reader = png::Decoder::new(std::io::Cursor::new(bytes)).read_info()?;
+        let mut pixels = vec![0; reader.output_buffer_size().ok_or("unbounded PNG")?];
+        let info = reader.next_frame(&mut pixels)?;
+        assert_eq!((info.width, info.height), (32, 32));
+        assert_eq!(info.color_type, png::ColorType::Rgba);
+        assert_eq!(&pixels[..4], &[191, 127, 63, 128]);
+        Ok(())
     }
 }

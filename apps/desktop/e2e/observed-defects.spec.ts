@@ -88,7 +88,7 @@ for (const language of ['pt-BR', 'en'] as const)
         }
         // 12 toggles use switches; consent alone uses a checkbox.
         await page.getByRole('button', { name: t.games, exact: true }).click()
-        await expect(page.locator('.game-monitor-summary')).toContainText(t.monitorStopped)
+        await expect(page.locator('.monitor-card')).toContainText(t.monitorStopped)
         await expect(page.locator('.game-monitor-summary')).toContainText(t.gameSetupSteps)
         await page.getByRole('button', { name: t.addGame, exact: true }).click()
         await page.getByRole('button', { name: /Sample.exe/ }).click()

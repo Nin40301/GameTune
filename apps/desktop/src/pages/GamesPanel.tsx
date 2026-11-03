@@ -3,7 +3,7 @@ import { InlineStatus } from '../components/InlineStatus'
 import { Checkbox } from '../components/Checkbox'
 import { useEffect, useState } from 'react'
 import type { Backend, Game, GamesAction, GamesView, Language } from '../types'
-import { translator } from '../i18n'
+import { translator, presentationText } from '../i18n'
 import { Icon } from '../components/Icon'
 export function GamesPanel({
   backend,
@@ -166,8 +166,7 @@ export function GamesPanel({
                 ))}
               </section>
               <div className="game-monitor-summary">
-                <Icon name="monitor" />
-                <strong>{t(live ? 'monitorRunning' : 'monitorStopped')}</strong>
+                <h3>{t('setupGame')}</h3>
                 <p>{t('gameSetupSteps')}</p>
                 {onMonitorSettings && (
                   <button type="button" className="button subtle" onClick={onMonitorSettings}>
@@ -246,7 +245,7 @@ export function GamesPanel({
                         />
                         <span>
                           <strong>{t(`gameAction_${action.id}`)}</strong>
-                          <small>{action.description[language]}</small>
+                          <small>{presentationText(action.description[language])}</small>
                           {compatible[action.id] === false && <small>{t('incompatible')}</small>}
                         </span>
                       </label>

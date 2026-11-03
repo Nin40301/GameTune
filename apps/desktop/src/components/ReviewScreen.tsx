@@ -1,7 +1,7 @@
 import { itemName } from '../i18n'
 import { useState } from 'react'
 import type { Language, Review, Approval, Observation } from '../types'
-import { translator } from '../i18n'
+import { translator, presentationText } from '../i18n'
 import { Icon } from './Icon'
 import { Checkbox } from './Checkbox'
 import { ActionBar } from './ActionBar'
@@ -132,7 +132,11 @@ export function ReviewScreen({
               {review.items
                 .filter((item) => item.risk === risk)
                 .map((item) => (
-                  <details className="review-item" key={item.id}>
+                  <details
+                    className="review-item"
+                    key={item.id}
+                    open={item.id === review.items[0]?.id}
+                  >
                     <summary>
                       <span className="timeline-marker">
                         <Icon
@@ -148,20 +152,20 @@ export function ReviewScreen({
                       <span id={`review-heading-${item.id}`}>{itemName(item, language)}</span>
                       <Icon name="chevronDown" />
                     </summary>
-                    <p id={`review-risk-${item.id}`}>{item.riskNote[language]}</p>
-                    <dl className="diff">
-                      <div>
+                    <p id={`review-risk-${item.id}`}>{presentationText(item.riskNote[language])}</p>
+                    <div className="diff">
+                      <dl>
                         <dt>{t('current')}</dt>
                         <dd className="num">{currentLabel(observations.get(item.id), t)}</dd>
-                      </div>
-                      <div className="diff__arrow" aria-hidden="true">
+                      </dl>
+                      <span className="diff__arrow" aria-hidden="true">
                         →
-                      </div>
-                      <div>
+                      </span>
+                      <dl>
                         <dt>{t('next')}</dt>
                         <dd className="num">{nextLabel(item, review.kind, t)}</dd>
-                      </div>
-                    </dl>
+                      </dl>
+                    </div>
                     <p className="revert-note">
                       <Icon name={item.revert === 'auto' ? 'history' : 'warning'} />
                       {t(item.revert === 'auto' ? 'autoRevert' : 'noUndoDetail')}
@@ -197,7 +201,7 @@ export function ReviewScreen({
           .map((item) => (
             <div className="consent-item" key={item.id}>
               <h3>{itemName(item, language)}</h3>
-              <p id={`consent-risk-${item.id}`}>{item.riskNote[language]}</p>
+              <p id={`consent-risk-${item.id}`}>{presentationText(item.riskNote[language])}</p>
               {removal && ack(`undo:${item.id}`, t('ackNoUndo'))}
               {item.risk === 'high' &&
                 (removal || review.kind === 'apply') &&

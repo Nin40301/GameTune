@@ -1,6 +1,6 @@
 import { itemName } from '../i18n'
 import type { Item, Language, Observation } from '../types'
-import { translator } from '../i18n'
+import { translator, presentationText } from '../i18n'
 import { Icon } from './Icon'
 import { Checkbox } from './Checkbox'
 import { Switch } from './Switch'
@@ -46,7 +46,7 @@ export function ItemRow({
         )}
         <span>
           <strong>{name}</strong>
-          <small>{item.description[language]}</small>
+          <small>{presentationText(item.description[language])}</small>
         </span>
       </div>
       <div className="item-badges">

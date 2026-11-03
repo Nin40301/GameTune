@@ -3,6 +3,12 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      update-visual-baselines:
+        description: Generate canonical Linux AAA baselines for review
+        type: boolean
+        required: false
+        default: false
   workflow_call:
 permissions: {}
 concurrency:
@@ -12,7 +18,7 @@ jobs:
   frontend:
     name: Frontend (Linux)
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     permissions:
       contents: read
     defaults:
@@ -32,9 +38,12 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
-      - run: node tools/verify-version.mjs && node tools/check-doc-links.mjs && node tools/audit-unsafe.mjs && node tools/check-i18n.mjs && node tools/generate-catalog-docs.mjs --check
+      - run: node tools/verify-production-ui.mjs && node tools/sync-ui-licenses.mjs && node tools/verify-version.mjs && node tools/check-doc-links.mjs && node tools/audit-unsafe.mjs && node tools/check-i18n.mjs && node tools/generate-catalog-docs.mjs --check
         working-directory: .
       - run: npx playwright install --with-deps chromium
+      - name: Generate Linux visual baselines on explicit dispatch
+        if: github.event_name == 'workflow_dispatch' && inputs.update-visual-baselines
+        run: npx playwright test e2e/aaa-visual.spec.ts --update-snapshots
       - run: npm run test:e2e
       - name: Preserve browser evidence
         if: always()
@@ -45,6 +54,8 @@ jobs:
             apps/desktop/test-results/
             outputs/release-0.6.5/screenshots/
             outputs/phase-6.7/screenshots/
+            outputs/phase-6.7/delivery-2/
+            apps/desktop/e2e/__screenshots__/
           retention-days: 7
   rust:
     name: Rust (${{ matrix.os }})
@@ -93,6 +104,9 @@ jobs:
         run: cargo build --workspace --release --locked --offline
       - run: cargo run -p ametista-catalog --example simulate --locked --offline
       - run: cargo run -p ametista-cli --locked --offline -- --list --json
+      - name: Read only our own executable icon resource
+        if: runner.os == 'Windows'
+        run: cargo run --release -p ametista-windows-runtime --example icon_probe --locked --offline
       - name: Verify native manifests and closed frontend
         if: runner.os == 'Windows'
         run: ./tools/verify-desktop.ps1
