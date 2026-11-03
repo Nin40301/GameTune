@@ -26,3 +26,10 @@ As bases Linux e a nova coorte nativa pertencem aos próximos registros deste me
 A janela real em 1100×740 revelou legenda longa no Orb e conteúdo da métrica que excedia a altura fixa de 172 px. Mantivemos o anel e os cartões; legenda agora quebra dentro do anel, e três tracks iguais usam altura definida pelo conteúdo. A inspeção foi somente leitura. Acrescentado gate de geometria interna e ensaio 1100×740; 12 cenários de capturas/defeitos passaram após a correção. A fonte continua local, sem flags novas, alteração de limites ou do harness.
 
 O probe de ícone leu o recurso do próprio ametista.exe, gerou PNG válido 32×32 e a gema foi conferida. Isso não valida todo formato de ícone de terceiros ou DPI alto.
+
+
+## Referências Linux e contagem confirmada
+
+O [CI 41629989145](https://github.com/Nin40301/GameTune/actions/runs/41629989145), da candidata a5a3c27, passou integralmente em ubuntu-24.04/windows-2025. Linux: 130 testes Rust ativos. Windows: 138 ativos e 5 administrativos ignorados. Frontend: 41 componentes e 99 cenários Playwright, incluindo axe, pseudo, teclado e comparação das 36 referências canônicas geradas no próprio Linux. As contagens foram extraídas dos logs por plataforma, sem somar testes repetidos entre sistemas.
+
+Referências e hashes versionados; 68 capturas de tela/estado persistentes em docs/assets/screenshots/6.7/delivery-2 e quatro galeria em __screenshots__, 72 imagens inspecionadas por painéis e ampliações. O índice cobre todas as oito telas, dois temas e 1440/390. O horário é mascarado apenas nas bases de comparação, não nas evidências públicas. README recebeu capturas atuais. Restam a confirmação por uma execução normal com referências commitadas e a nova coorte de consumo; ela ainda não começou porque a condição sem jogo não foi satisfeita.

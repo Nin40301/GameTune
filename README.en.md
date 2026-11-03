@@ -14,7 +14,7 @@ No account, telemetry or FPS promises. It does not change Windows security prote
 | --- | --- |
 | **Review**<br><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/screenshots/review-dark.png"><img src="docs/assets/screenshots/review-light.png" alt="Ametista — Review" width="420"></picture> | **Games**<br><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/screenshots/games-dark.png"><img src="docs/assets/screenshots/games-light.png" alt="Ametista — Games" width="420"></picture> |
 
-Screenshots show deterministic test-backend data in the pt-BR interface, not measurements from your PC. The app also supports English. [Light and dark images](docs/assets/screenshots/).
+Screenshots show deterministic test-backend data in the pt-BR interface, not measurements from your PC. The app also supports English. [Light and dark images](docs/design/screenshots.md).
 
 ## Installation and basic use
 

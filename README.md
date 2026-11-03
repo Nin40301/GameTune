@@ -14,14 +14,14 @@ Sem conta, telemetria ou promessas de FPS. Não altera proteções do Windows, n
 | --- | --- |
 | **Revisão**<br><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/screenshots/review-dark.png"><img src="docs/assets/screenshots/review-light.png" alt="Ametista — Revisão" width="420"></picture> | **Jogos**<br><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/screenshots/games-dark.png"><img src="docs/assets/screenshots/games-light.png" alt="Ametista — Jogos" width="420"></picture> |
 
-As imagens mostram dados de demonstração do backend de testes, não medições do seu PC. [Todas as capturas claras e escuras](docs/assets/screenshots/).
+As imagens mostram dados de demonstração do backend de testes, não medições do seu PC. [Todas as telas e estados, claros e escuros](docs/design/screenshots.md).
 
 ## Instalação e uso
 
 A distribuição ainda está em preparação: não há instalador final assinado. Para avaliar, use o [guia de build](docs/dev/build.md) dentro de uma VM Windows com snapshot e WebView2. Confira a origem, a versão e os hashes conforme o [processo de release](docs/release-process.md). Não confunda um rascunho ou a tag histórica v0.6.0 com uma versão estável.
 
 1. Abra a interface como usuário comum e escolha o perfil Seguro
-2. Selecione **Simular** e confira os itens, os riscos e a revisão
+2. Selecione **Simular ajustes** e confira os itens, os riscos e a revisão
 3. Aplique somente na VM e com consentimento. Depois, use **Histórico → Desfazer tudo** para conferir a reversão
 
 O portátil serve para análise/simulação; aplicação real exige instalação protegida e aceite em VM. Não abra o auxiliar diretamente. Perfis de jogos usam um monitor Rust separado; ele pode continuar com a janela fechada. [Como usar](docs/user/desktop.md).

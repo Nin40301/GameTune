@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "a5a3c27",
+  "ciRun": "https://github.com/Nin40301/GameTune/actions/runs/41629989145",
+  "frontend": {
+    "componentPassed": 41,
+    "e2ePassed": 99,
+    "failed": 0
+  },
+  "windows": {
+    "passed": 138,
+    "failed": 0,
+    "ignored": 5
+  },
+  "linux": {
+    "passed": 130,
+    "failed": 0,
+    "ignored": 0
+  }
+}

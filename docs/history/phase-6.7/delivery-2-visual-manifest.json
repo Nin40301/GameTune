@@ -1,0 +1,152 @@
+{
+  "sourceCommit": "a5a3c27",
+  "ciRun": "https://github.com/Nin40301/GameTune/actions/runs/41629989145",
+  "canonicalPlatform": "ubuntu-24.04",
+  "mockData": true,
+  "canonical": [
+    {
+      "file": "aaa-visual.spec.ts/apps-dark-1440.png",
+      "sha256": "3eb0d1fbedb7306e94cc120088cf442fd417918e129d65f5d533cfe730bf63b2"
+    },
+    {
+      "file": "aaa-visual.spec.ts/apps-dark-390.png",
+      "sha256": "bd37b6828bab68dc2148f826e78d930649257162fdc14bd26f93265400a67f99"
+    },
+    {
+      "file": "aaa-visual.spec.ts/apps-light-1440.png",
+      "sha256": "98691fab139186aee3abdcd912d1e6236aa2de1d058dce5cf14c4d346f811085"
+    },
+    {
+      "file": "aaa-visual.spec.ts/apps-light-390.png",
+      "sha256": "ab5bd61c3ce0c54fe9c0eb325f02dbfa3d7945eeee888e32a72a0f149ae78b13"
+    },
+    {
+      "file": "aaa-visual.spec.ts/benchmark-dark-1440.png",
+      "sha256": "971c37d67c3ea60c587fca092764c405f4b0cdd3b57d82d9c8f8e9b1823c6651"
+    },
+    {
+      "file": "aaa-visual.spec.ts/benchmark-dark-390.png",
+      "sha256": "ff747304ff901a51db839b66d18eb5798b651cbf2e047e42b8d740a12824feb3"
+    },
+    {
+      "file": "aaa-visual.spec.ts/benchmark-light-1440.png",
+      "sha256": "31dbc9ae84836a18a76c521801b465fd7139fe235dfcef6b1310e32fa1ef5673"
+    },
+    {
+      "file": "aaa-visual.spec.ts/benchmark-light-390.png",
+      "sha256": "1f21b2ad4b6d532bc14b9e6d7705d1bd3e5a84efdd5080aba1e8a33e91e5077f"
+    },
+    {
+      "file": "aaa-visual.spec.ts/design-system-dark-1440.png",
+      "sha256": "dd1e06bf82024823b2ec725da73f0d8ceb0ba5f026a5663f91129bf736202a1c"
+    },
+    {
+      "file": "aaa-visual.spec.ts/design-system-dark-390.png",
+      "sha256": "f63368a6c3b1268f90781241453db21e2ed889774ca0e1614c28c735caf1793d"
+    },
+    {
+      "file": "aaa-visual.spec.ts/design-system-light-1440.png",
+      "sha256": "4a6330295a28884041c38617d54df6d359a642062b0d013c43125b2a9ec49a00"
+    },
+    {
+      "file": "aaa-visual.spec.ts/design-system-light-390.png",
+      "sha256": "16575f3feea52caadeb4ac6e0682e9666d3d83b88094acc60be57e315d331ffd"
+    },
+    {
+      "file": "aaa-visual.spec.ts/games-dark-1440.png",
+      "sha256": "b8d0d562d0e39c98522433eb06fc9df8f11deb3642b1ea4145f2d5aeb4bff539"
+    },
+    {
+      "file": "aaa-visual.spec.ts/games-dark-390.png",
+      "sha256": "041ff80db5ae5262adc7f8155ef726e0c95adce505f1be01306a34fbb1ed4646"
+    },
+    {
+      "file": "aaa-visual.spec.ts/games-light-1440.png",
+      "sha256": "283d30f03930abe33289489929e28b08bae25184d0c0cbb74b20791434052ee4"
+    },
+    {
+      "file": "aaa-visual.spec.ts/games-light-390.png",
+      "sha256": "7988c259d84fd0257f70e07cfe0b3a602f79705b1d5e47ba1c76ae6b39047e5b"
+    },
+    {
+      "file": "aaa-visual.spec.ts/history-dark-1440.png",
+      "sha256": "479e86b6d972fdd835558d0e50f40f85ea5ab97557058945da9433685d39dbee"
+    },
+    {
+      "file": "aaa-visual.spec.ts/history-dark-390.png",
+      "sha256": "74e3d37bcdd9823ab1c43a1ce00cc3d96ca9bc854acc9d1b8d9173ec5e385ab4"
+    },
+    {
+      "file": "aaa-visual.spec.ts/history-light-1440.png",
+      "sha256": "744b8c53e25a3f684c7a0b11c00d52cdf58f7c036371e62232e2d4fde8cee229"
+    },
+    {
+      "file": "aaa-visual.spec.ts/history-light-390.png",
+      "sha256": "82d06726cf6087ba1486602ca8d60efac4197d44c0058e64d99c6b12b34cb158"
+    },
+    {
+      "file": "aaa-visual.spec.ts/home-dark-1440.png",
+      "sha256": "ad9c1654b10bfce2519662aa847717420f38eed1a500d09f5e7fe339b1502e5d"
+    },
+    {
+      "file": "aaa-visual.spec.ts/home-dark-390.png",
+      "sha256": "484af3d8cd3849dc5bbb2d1ab57f01869be9f51672ae1d94cb1bc9c56928d26f"
+    },
+    {
+      "file": "aaa-visual.spec.ts/home-light-1440.png",
+      "sha256": "8f2c599264d1d1c701514b57bfd76f188e8e811685e4a8543a1291b38025530a"
+    },
+    {
+      "file": "aaa-visual.spec.ts/home-light-390.png",
+      "sha256": "5e44ad26d666e34d55f2646aedef13159e343b0ab727d84c2b152ee2e019f14e"
+    },
+    {
+      "file": "aaa-visual.spec.ts/items-dark-1440.png",
+      "sha256": "cde09d3b03f42959fb945d23e1149e8c674e957a899d59d5a505eb8721d4fee0"
+    },
+    {
+      "file": "aaa-visual.spec.ts/items-dark-390.png",
+      "sha256": "840d65edc9270e92dd16b2c41523dcdbffac158bd6c886ffe044d3440748bacb"
+    },
+    {
+      "file": "aaa-visual.spec.ts/items-light-1440.png",
+      "sha256": "45bf1784a43c9a5532ac0ba95486894ac334e2566fef52cb3793a8a21e9eb163"
+    },
+    {
+      "file": "aaa-visual.spec.ts/items-light-390.png",
+      "sha256": "f2de8d96c178735084d49d93d915980fabc7f72ed148b305612b53eb95167211"
+    },
+    {
+      "file": "aaa-visual.spec.ts/review-dark-1440.png",
+      "sha256": "6680d04283b3bfcc7578aa25582267ce354e462c2700845117349c045e2b2ede"
+    },
+    {
+      "file": "aaa-visual.spec.ts/review-dark-390.png",
+      "sha256": "2ee6eab9438a471ac0a9df6f2d3614570293ad555671fc6cc4a5680035f6c6e8"
+    },
+    {
+      "file": "aaa-visual.spec.ts/review-light-1440.png",
+      "sha256": "a1079023918bef26bf0d828502b7181cddbfcb119415f642b8e0a628af2d9343"
+    },
+    {
+      "file": "aaa-visual.spec.ts/review-light-390.png",
+      "sha256": "3b5d5bcdb182ff067b84e403aa68a48f388d58a959858e53d5a1c3ea4e821d8d"
+    },
+    {
+      "file": "aaa-visual.spec.ts/settings-dark-1440.png",
+      "sha256": "e5bdeb2236913faf2d0b0f90be2a9581048336ed822873218553a324f7176082"
+    },
+    {
+      "file": "aaa-visual.spec.ts/settings-dark-390.png",
+      "sha256": "efa2b2e3c667b3131bdf30e26b1ad895313b1c8358c34fd42bcf95760e326a84"
+    },
+    {
+      "file": "aaa-visual.spec.ts/settings-light-1440.png",
+      "sha256": "3c97200c36d9003db7ef332e5c9479879fe034a2c05fb5e66f43de9d545eff16"
+    },
+    {
+      "file": "aaa-visual.spec.ts/settings-light-390.png",
+      "sha256": "9cf41e824df4463836867eb17495f0a3481628bc5a49865a39a3ac9ee16a4352"
+    }
+  ]
+}
