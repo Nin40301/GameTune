@@ -50,7 +50,7 @@ test('orb labels measured values, clamps invalid fractions and isolates SVG ids'
   const { container } = render(
     <>
       <StatusOrb value={Number.NaN} title="—" caption="RAM" />
-      <StatusOrb value={5} title="16 GiB" caption="RAM" />
+      <StatusOrb value={5} title="16,0 GiB" caption="RAM" />
     </>,
   )
   expect(screen.getByRole('img', { name: 'RAM: —' })).toBeVisible()

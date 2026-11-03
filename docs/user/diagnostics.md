@@ -14,7 +14,7 @@ A pasta pode não existir antes de uma operação administrativa. Um usuário se
 
 ## Revise antes de salvar
 
-1. Selecione **Revise o diagnóstico**
+1. Selecione **Revisar diagnóstico**
 2. Leia a prévia: versão, build/edição do Windows, estado conhecido da proteção, última análise concluída, resumo do journal e logs disponíveis
 3. Confirme o conteúdo e escolha onde salvar o ZIP na janela nativa
 

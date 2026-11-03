@@ -58,6 +58,7 @@ try{
         Copy-Item -LiteralPath $taskEvaluationReport -Destination $taskFinalReport
         $taskEvaluation=Get-Content -LiteralPath $taskFinalReport -Raw|ConvertFrom-Json
         if($taskEvaluation.cpuP95Alert){Write-Warning 'Interface CPU p95 exceeded 2% in at least one run; warning only, not a peak-CPU veto'}
+        if($taskEvaluation.informational -and -not $taskEvaluation.passed){Write-Warning 'Reduced mode is informational: numerical RAM criteria were not met. Nonblocking does not mean the numerical budget passed.'}
     }else{Copy-Item -LiteralPath $taskReports[0] -Destination $taskFinalReport}
     if($taskCode -ne 0){throw ('Resource regression gate failed; inspect '+$taskFinalReport)}
     Write-Output ('Resource gate passed; evidence: '+$taskFinalReport)

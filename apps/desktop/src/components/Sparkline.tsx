@@ -1,7 +1,7 @@
 import { memo } from 'react'
 export const Sparkline = memo(
   function Sparkline({ values, label }: { values: number[]; label: string }) {
-    const samples = values.filter(Number.isFinite).slice(-30)
+    const samples = values.filter(Number.isFinite).slice(-60)
     if (samples.length < 2) return null
     const low = Math.min(...samples),
       high = Math.max(...samples)

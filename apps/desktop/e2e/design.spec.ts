@@ -4,7 +4,7 @@ import { mkdirSync, readFileSync } from 'node:fs'
 import pt from '../src/locales/pt-BR.json' with { type: 'json' }
 import en from '../src/locales/en.json' with { type: 'json' }
 
-const shots = '../../outputs/release-0.6.5/screenshots'
+const shots = '../../outputs/phase-6.7/screenshots'
 for (const language of ['pt-BR', 'en'] as const)
   for (const theme of ['light', 'dark'] as const)
     for (const width of [1440, 1100, 768, 390]) {
@@ -33,7 +33,7 @@ for (const language of ['pt-BR', 'en'] as const)
         await page.goto('/?benchmark-complete=1')
         await expect(page.getByRole('radio', { name: t.safe, exact: true })).toBeChecked()
         await expect(
-          page.getByRole('img', { name: `${t.availableRam}: 6 GiB`, exact: true }),
+          page.getByRole('img', { name: language === 'en' ? /6\.0 GiB/ : /6,0 GiB/ }),
         ).toBeVisible()
         mkdirSync(shots, { recursive: true })
         async function inspect(name: string) {
@@ -80,6 +80,7 @@ for (const language of ['pt-BR', 'en'] as const)
             })
           expect.soft(axe.violations, name).toEqual([])
         }
+        await expect(page.locator('.metric--cpu .sparkline')).toBeVisible()
         await inspect('home')
         await page.getByRole('button', { name: t.simulate, exact: true }).click()
         await expect(page.getByText(t.complete, { exact: true })).toBeVisible()

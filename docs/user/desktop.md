@@ -6,11 +6,11 @@
 
 Na primeira abertura, leia os três passos: alcance do app, Proteção do Sistema e perfil inicial. O idioma inicial segue a preferência do Windows/navegador; você pode trocá-lo. Concluir a apresentação não aplica nada. Se a proteção aparecer como desconhecida, confira na ferramenta do Windows; o app não a ativa automaticamente. Você pode continuar para simular.
 
-Abra Ametista como usuário comum. Em Início, escolha Seguro e selecione Simule. A análise consulta o que existe no Windows; não aplica mudanças. Aguarde o progresso ou cancele. Confira os resultados e abra Itens para ler nome, descrição, risco e reversão. Um item ausente ou indisponível não é uma recomendação para instalar/forçar algo.
+Abra Ametista como usuário comum. Em Início, escolha Seguro e selecione Simular. A análise consulta o que existe no Windows; não aplica mudanças. Aguarde o progresso ou cancele. Confira os resultados e abra Itens para ler nome, descrição, risco e reversão. Um item ausente ou indisponível não é uma recomendação para instalar/forçar algo.
 
 ## Revise antes de aplicar
 
-Use Revise os ajustes. Confira o resumo por tipo e as consequências. Aplique somente os itens que entende, na VM, com a confirmação exigida. O UAC pertence ao auxiliar daquela operação; não execute a interface inteira como administrador. Se a análise ficar desatualizada ou o app pedir para analisar de novo, siga essa orientação.
+Use Revisar ajustes. Confira o resumo por tipo e as consequências. Aplique somente os itens que entende, na VM, com a confirmação exigida. O UAC pertence ao auxiliar daquela operação; não execute a interface inteira como administrador. Se a análise ficar desatualizada ou o app pedir para analisar de novo, siga essa orientação.
 
 Depois da operação, confira o resultado de cada item. Uma falha não significa que o lote inteiro foi desfeito. Se houver pedido de reinício, o botão abre a escolha do Windows; não reinicia automaticamente. A ação Desfazer volta para a revisão antes de pedir autorização.
 
@@ -18,11 +18,11 @@ Itens de alto risco não entram em perfis automáticos. As dependências de Mine
 
 ## Remova apps separadamente
 
-Em Limpeza de apps, selecione apenas apps do catálogo instalados. Leia o aviso e dê o consentimento de cada app na revisão. Desfazer não reinstala, não recupera dados e não garante a versão original. O histórico oferece Abra na Loja quando houver registro para reinstalação; isso pode precisar de internet.
+Em Limpeza de apps, selecione apenas apps do catálogo instalados. Leia o aviso e dê o consentimento de cada app na revisão. Desfazer não reinstala, não recupera dados e não garante a versão original. O histórico oferece Reinstalar pela Loja quando houver registro para reinstalação; isso pode precisar de internet.
 
 ## Desfaça e confira
 
-Em Histórico, use Desfaça tudo ou a ação de um item, confira a revisão e confirme. Preserve qualquer erro/conflito e o journal; não edite os arquivos para forçar uma restauração. Se o PC apresentar problema, pare de aplicar e siga [o guia de recuperação](recovery.md).
+Em Histórico, use Desfazer tudo ou a ação de um item, confira a revisão e confirme. Preserve qualquer erro/conflito e o journal; não edite os arquivos para forçar uma restauração. Se o PC apresentar problema, pare de aplicar e siga [o guia de recuperação](recovery.md).
 
 Use os filtros por data e tipo para localizar uma operação. Apps removidos têm ação separada para a Loja, quando o PFN foi registrado. A orientação sobre dados do nome antigo não move nem apaga a pasta: preserve os arquivos e consulte suporte antes de tentar escrever.
 

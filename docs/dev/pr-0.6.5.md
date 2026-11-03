@@ -35,4 +35,4 @@ Rust: 134 passaram, cinco administrativos ignorados. Componentes: 30/30. Suíte 
 - [ ] Primeiro ensaio de tag/SBOM/procedência e revisão do rascunho pelo titular
 - [ ] Titular aplica descrição/tópicos e proteção de main; nenhuma alteração automática dessas configurações
 
-Rascunho recomendado enquanto os bloqueios acima estiverem abertos. [Backlog](../backlog.md) separa pendências P1 das propostas P2 sem implementação. Este texto é uma proposta para o titular; nenhuma mensagem/PR público foi enviado automaticamente.
+Rascunho recomendado enquanto os aceites de VM/AX estiverem abertos. [Backlog](../backlog.md) separa pendências P1 das propostas P2 sem implementação. Este texto é uma proposta para o titular; nenhuma mensagem/PR público foi enviado automaticamente.

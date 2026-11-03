@@ -44,6 +44,7 @@ jobs:
           path: |
             apps/desktop/test-results/
             outputs/release-0.6.5/screenshots/
+            outputs/phase-6.7/screenshots/
           retention-days: 7
   rust:
     name: Rust (${{ matrix.os }})

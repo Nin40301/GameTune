@@ -1,18 +1,18 @@
-# Galeria Ametista 0.6.5
+# Galeria Ametista — Fase 6.7 / Entrega 1
 
-Capturas atualizadas no Bloco F, com Playwright e backend mockado. **Valores de demonstração, nunca medições do host.** pt-BR, modo Completo, claro/escuro, larguras 1440 e 390; páginas longas têm captura inteira. Testes axe também cobrem inglês.
+24 capturas novas: Início, Itens, Revisão e Jogos em claro/escuro, 1440/390, página inteira; Itens inclui viewport no início e no fim da rolagem. Dados explícitos do backend de testes, **nunca medições do host**. Cada imagem e todas as faixas longas foram inspecionadas. Os arquivos inteiros conservam a posição inicial das barras fixas; as capturas finais de Itens comprovam a última linha livre e a barra na borda.
 
-[Todas as capturas](0.6.5/) · [Manifesto SHA-256](0.6.5/manifest.json)
+[Capturas 6.7 e hashes](6.7/manifest.json) · [Correções e regressões](../../history/phase-6.7/ui-fixes.md) · [Histórico: 48 capturas 0.6.5 preservadas](0.6.5/manifest.json)
 
-Os oito painéis de inspeção local abrangeram as 32 capturas das telas principais, incluindo faixas de toda a lista longa de Itens. Também há capturas de resultados e dos três passos de onboarding. As barras fixas aparecem na posição do viewport inicial na captura inteira; os testes verificam separadamente que o último item fica livre ao rolar.
+A galeria abaixo, usada no README, acompanha o estado atual:
 
-| Arquivo da galeria | SHA-256 |
+| Arquivo | SHA-256 |
 | --- | --- |
-| [games-dark.png](games-dark.png) | `2033cb998c14936341b8da1bfbc393a9395b4aaaa10e3767456adfce374440b1` |
-| [games-light.png](games-light.png) | `a280c668f60c6123e58abc84e18125a5c202cf5569313ffc3544980bf207604f` |
-| [home-dark.png](home-dark.png) | `e29b88284a1063fcff5a24650bdc2cdae1ede7d2bb8bafbf2d725ac06616a171` |
-| [home-light.png](home-light.png) | `2830dbe50f0c12fe2ccd0dae9da77887d0a0c323be01ea6574fbd45916a0d069` |
-| [items-dark.png](items-dark.png) | `2be82df4bb72c190b387ba8590e7d047f2fa8a6cd71f39163831f38095001f1b` |
-| [items-light.png](items-light.png) | `6fa7b71b6f95e76ab7c98415f49f5eb82c64827b860fd9522fa23512fe22ede6` |
-| [review-dark.png](review-dark.png) | `60419444364341761a85cb307144c65a75dce08a62bd715b4a520d0052a22db5` |
-| [review-light.png](review-light.png) | `048f67e6e270ed0aadbdb2879932338cf604005d759b003efa8e8dbe9f5c02da` |
+| [home-light.png](home-light.png) | `f06bcda669e04276207c36f3d9396e6c69dcf4997476f54caf70bdcc67ad1aee` |
+| [home-dark.png](home-dark.png) | `a1fb5bf38519e051f1c333d8cf747600df6d2636cb0d7929dbd440247f73ea3f` |
+| [items-light.png](items-light.png) | `7c89ac93341b7e079a6b7434a6d8ca159b3db7599ccb9e1790406005b7cbe484` |
+| [items-dark.png](items-dark.png) | `81cf62be3f588eaa6d8204f18a36e4748f3cfc3831b79106aa32b0390488e132` |
+| [review-light.png](review-light.png) | `0f2ef521ce7a3b0140600be4f78ed7c9a5c401c40aaa395a58aa4278f17123fc` |
+| [review-dark.png](review-dark.png) | `a821764691b31566782fa5ea09a35cbe78e7133bc0bdf8b93640665c6b7a83b1` |
+| [games-light.png](games-light.png) | `5c3d625a82ba4304c7c90a3ade51b64f89991e9571b1be21e9c19efa7a8c8449` |
+| [games-dark.png](games-dark.png) | `65cca88361fba2de2925c4539ab788bec82e4d371cf74250cae6d0125bc4882c` |

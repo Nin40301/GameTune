@@ -209,6 +209,8 @@ export function createMockBackend(): Backend {
       return structuredClone(games)
     },
     lab: async (action) => {
+      // Test-only measured samples advance in time, so visual history can render.
+      if (action.kind === 'status' && lab.monitor && lab.latest) lab.latest.timestampMs = Date.now()
       if (action.kind === 'monitor') lab.monitor = action.enabled
       if (action.kind === 'start') {
         if (!Object.values(action.conditions).every(Boolean)) throw 'benchmark_conditions'

@@ -1,20 +1,22 @@
+import { Switch } from '../components/Switch'
 import { InlineStatus } from '../components/InlineStatus'
 import { Checkbox } from '../components/Checkbox'
 import { useEffect, useState } from 'react'
 import type { Backend, Game, GamesAction, GamesView, Language } from '../types'
 import { translator } from '../i18n'
 import { Icon } from '../components/Icon'
-import { Segmented } from '../components/Segmented'
 export function GamesPanel({
   backend,
   language,
   settings = false,
   compatible = {},
+  onMonitorSettings,
 }: {
   backend: Backend
   language: Language
   settings?: boolean
   compatible?: Record<string, boolean>
+  onMonitorSettings?: () => void
 }) {
   const [view, setView] = useState<GamesView | null>(null),
     [busy, setBusy] = useState(false),
@@ -134,6 +136,16 @@ export function GamesPanel({
           <div className="games-layout">
             <section className="surface game-library">
               <h2>{t('registeredGames')}</h2>
+              <div className="game-monitor-summary">
+                <Icon name="monitor" />
+                <strong>{t(live ? 'monitorRunning' : 'monitorStopped')}</strong>
+                <p>{t('gameSetupSteps')}</p>
+                {onMonitorSettings && (
+                  <button type="button" className="button subtle" onClick={onMonitorSettings}>
+                    {t('monitorSettings')}
+                  </button>
+                )}
+              </div>
               {!view?.library.games.length && <p>{t('noGames')}</p>}
               <ul>
                 {view?.library.games.map((game) => (
@@ -175,20 +187,21 @@ export function GamesPanel({
                     <legend>{t('gameActions')}</legend>
                     {view?.actions.map((action) => (
                       <label className="game-action" key={action.id}>
-                        <Checkbox
+                        <Switch
+                          label={t(`gameAction_${action.id}`)}
                           checked={editing.actionIds.includes(action.id)}
                           disabled={compatible[action.id] === false}
-                          onChange={(e) =>
+                          onChange={(checked) =>
                             setEditing({
                               ...editing,
-                              actionIds: e.target.checked
+                              actionIds: checked
                                 ? [...editing.actionIds, action.id]
                                 : editing.actionIds.filter((id) => id !== action.id),
                             })
                           }
                         />
                         <span>
-                          <strong>{action.name[language]}</strong>
+                          <strong>{t(`gameAction_${action.id}`)}</strong>
                           <small>{action.description[language]}</small>
                           {compatible[action.id] === false && <small>{t('incompatible')}</small>}
                         </span>
@@ -203,14 +216,10 @@ export function GamesPanel({
                     </label>
                     <div className="game-profile-segment">
                       <span>{t('enableProfile')}</span>
-                      <Segmented
+                      <Switch
                         label={t('enableProfile')}
-                        value={editing.enabled ? 'on' : 'off'}
-                        onChange={(value) => setEditing({ ...editing, enabled: value === 'on' })}
-                        options={[
-                          { value: 'off', label: t('profileOff') },
-                          { value: 'on', label: t('profileOn') },
-                        ]}
+                        checked={editing.enabled}
+                        onChange={(enabled) => setEditing({ ...editing, enabled })}
                         disabled={busy || live}
                       />
                     </div>

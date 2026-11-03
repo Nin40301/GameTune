@@ -1,5 +1,9 @@
 import {
   House,
+  ScanEye,
+  Pause,
+  Play,
+  WifiOff,
   MoreHorizontal,
   ChevronDown,
   CalendarClock,
@@ -32,6 +36,10 @@ import {
 } from 'lucide-react'
 const icons = {
   home: House,
+  simulate: ScanEye,
+  pause: Pause,
+  play: Play,
+  offline: WifiOff,
   results: Check,
   more: MoreHorizontal,
   chevronDown: ChevronDown,

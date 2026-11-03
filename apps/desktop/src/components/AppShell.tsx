@@ -1,4 +1,5 @@
-import { plural, number } from '../i18n-format'
+import { StatusStrip } from './StatusStrip'
+import { number } from '../i18n-format'
 import { Onboarding } from '../pages/Onboarding'
 import { ResultsPage } from '../pages/ResultsPage'
 import { InlineStatus } from './InlineStatus'
@@ -152,25 +153,9 @@ export function AppShell() {
         </div>
       </aside>
       <div className="workspace">
-        <header className="topbar glass">
-          <span className="topbar-location">
-            <span className="mobile-brand">
-              <BrandMark />
-              {t('brand')}
-            </span>
-          </span>
-          <div>
-            <span className="pill">
-              <span className="status-dot" />
-              {t('noNetwork')}
-            </span>
-            <span className="mode-label">
-              {t(busy && page === 'review' ? 'working' : 'readOnly')}
-            </span>
-          </div>
-        </header>
+        <StatusStrip />
         <main id="main" tabIndex={-1} aria-busy={busy}>
-          <div key={page} className="page">
+          <div key={page} className={`page page--${page}`}>
             {import.meta.env.MODE === 'test' && <div className="test-mode">{t('testMode')}</div>}
             <div className="page-heading">
               <div>
@@ -183,7 +168,6 @@ export function AppShell() {
               </div>
               {page === 'items' && (
                 <div className="heading-actions">
-                  <span className="counter">{plural(language, 'selected', selected.length)}</span>
                   <Button
                     variant="glass"
                     icon={<Icon name="search" />}

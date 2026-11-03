@@ -1,3 +1,4 @@
+import { itemName } from '../i18n'
 import { useState } from 'react'
 import type { Language, Review, Approval } from '../types'
 import { translator } from '../i18n'
@@ -146,7 +147,7 @@ export function ReviewScreen({
                       />
                     </span>
                     <div className="section-top">
-                      <h2 id={`review-heading-${item.id}`}>{item.name[language]}</h2>
+                      <h2 id={`review-heading-${item.id}`}>{itemName(item, language)}</h2>
                     </div>
                     <p id={`review-risk-${item.id}`}>{item.riskNote[language]}</p>
                     {item.requiresReboot && (

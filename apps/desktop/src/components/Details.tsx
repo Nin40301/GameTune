@@ -1,3 +1,4 @@
+import { itemName } from '../i18n'
 import { useEffect, useRef } from 'react'
 import type { Item, Language, Observation } from '../types'
 import { translator } from '../i18n'
@@ -38,7 +39,7 @@ export function Details({
           <Icon name="close" />
         </button>
       </div>
-      <h2 id="detail-title">{item.name[language]}</h2>
+      <h2 id="detail-title">{itemName(item, language)}</h2>
       <h3>{t('what')}</h3>
       <p>{item.description[language]}</p>
       <h3>{t('risk')}</h3>

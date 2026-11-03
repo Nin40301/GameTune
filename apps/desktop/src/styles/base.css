@@ -140,7 +140,7 @@ ul {
 summary {
   cursor: pointer;
   margin: 10px 0;
-  font-size: 0.75rem;
+  font-size: 0.84375rem;
 }
 html {
   font-family: var(--font-sans);
@@ -221,7 +221,7 @@ input {
   font-variant-numeric: tabular-nums;
 }
 .eyebrow {
-  font: 700 0.7rem/1.5 var(--font-sans);
+  font: 700 0.84375rem/1.5 var(--font-sans);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent);

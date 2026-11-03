@@ -4,7 +4,7 @@ As propostas P2 abaixo não foram adicionadas ao catálogo ou implementadas. `ve
 
 ## P1 — antes do aceite de VM/Fase 7
 
-- Gate final da interface: Completo reprova a regressão de CPU sobre a referência zero; Reduzido reprova RAM/CPU e excede 200 MiB em 44,04 MiB. Referência/limites preservados, sem exceção por host ocupado. Monitor aprovado. Ver [evidências](performance.md)
+- Consumo: política v2 por decisão do titular em 02/11/2026 aprova o Completo nas séries finais preservadas; Reduzido é informativo. Investigação limitada encerrada em duas tentativas, sem correção comprovada. Repetir o gate na Entrega 2 após o novo desenho. Monitor estrito aprovado. Ver [decisão/evidências](performance.md)
 - Validar UAC em instalação protegida, hash/ACL/Authenticode, outra conta, SCM, tarefas, startup, energia, Appx, reinícios e abertura de Minecraft/Loja/Edge/Configurações/Segurança na matriz Home/Pro
 - Confirmar Proteção do Sistema por volume por uma API documentada ou na ferramenta nativa. A leitura não elevada atual informa desconhecido quando não há prova; não inferir ativação de pontos antigos/VSS/frequência
 - NVDA/Narrador, DPI 125/150/200%, zoom real 200/400%, alto contraste e troca de monitor: preencher [checklist](dev/accessibility-checklist.md)

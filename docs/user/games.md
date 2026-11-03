@@ -13,11 +13,11 @@
    ele pede UAC para um auxiliar da sessão. Cancelar UAC impede a aplicação.
    Jogos já abertos são ignorados; é preciso reabri-los para ter eventos novos.
 5. Ao fechar o último jogo que usa uma ação, o auxiliar restaura seu snapshot.
-   Use **Pare e restaure** na bandeja ou em Configurações para encerrar. Edite
+   Use **Parar e restaurar** na bandeja ou em Configurações para encerrar. Edite
    a biblioteca só depois de o monitor liberar o lock.
 
-O menu da bandeja é acessível pelo teclado do Windows e tem **Abra o Ametista**
-e **Pare e restaure**. O tooltip indica observação, sessão, autorização,
+O menu da bandeja é acessível pelo teclado do Windows e tem **Abrir Ametista**
+e **Parar e restaurar**. O tooltip indica observação, sessão, autorização,
 recuperação ou falha. Um erro fica na bandeja até o usuário parar o monitor;
 não há repetição automática de UAC em loop.
 

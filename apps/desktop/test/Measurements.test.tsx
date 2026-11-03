@@ -7,7 +7,7 @@ import pt from '../src/locales/pt-BR.json'
 test('dashboard renders measured fields and can pause without a system operation', async () => {
   const user = userEvent.setup()
   render(<Measurements backend={createMockBackend()} language="pt-BR" dashboard />)
-  await screen.findByText('6 GiB')
+  await screen.findByText('6,0 GiB')
   await user.click(screen.getByRole('button', { name: pt.pauseMetrics }))
   expect(await screen.findByText(pt.metricsPaused)).toBeVisible()
   expect(window.__ametistaTest?.executions).toHaveLength(0)
@@ -39,14 +39,14 @@ test('production sampling errors never become fictitious values', async () => {
   }
   render(<Measurements backend={backend} language="en" dashboard />)
   expect(await screen.findByRole('alert')).toHaveTextContent('No values were estimated')
-  expect(screen.queryByText('6 GiB')).not.toBeInTheDocument()
+  expect(screen.queryByText('6,0 GiB')).not.toBeInTheDocument()
 })
 
 test('visual polling pauses on blur and resumes without stopping the Rust monitor or benchmark', async () => {
   const backend = createMockBackend()
   const lab = vi.spyOn(backend, 'lab')
   render(<Measurements backend={backend} language="pt-BR" dashboard />)
-  await screen.findByText('6 GiB')
+  await screen.findByText('6,0 GiB')
   await act(async () => window.dispatchEvent(new Event('blur')))
   const calls = lab.mock.calls.length
   vi.useFakeTimers()
@@ -66,7 +66,7 @@ test('visual polling pauses on blur and resumes without stopping the Rust monito
 test('top-process table is mounted only when expanded and remains accessible', async () => {
   const user = userEvent.setup()
   render(<Measurements backend={createMockBackend()} language="pt-BR" dashboard />)
-  await screen.findByText('6 GiB')
+  await screen.findByText('6,0 GiB')
   expect(screen.queryByRole('table', { hidden: true })).not.toBeInTheDocument()
   await user.click(screen.getByText(pt.topMemory))
   expect(await screen.findByRole('table')).toHaveAccessibleName(pt.groupedMemory)

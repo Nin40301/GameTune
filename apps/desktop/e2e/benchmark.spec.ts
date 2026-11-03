@@ -18,7 +18,8 @@ for (const locale of ['pt-BR', 'en'] as const)
       ).toBeVisible()
       await expect(
         page.getByRole('checkbox', {
-          name: locale === 'en' ? 'Anonymize names and paths' : 'Anonimize nomes e caminhos',
+          name:
+            locale === 'en' ? 'Name and path anonymization' : 'Anonimização de nomes e caminhos',
         }),
       ).toBeChecked()
       expect(
@@ -34,7 +35,7 @@ for (const locale of ['pt-BR', 'en'] as const)
 test('guided run is read-only, cancelable and keyboard accessible', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: /Medições|Measurements/, exact: true }).click()
-  const start = page.getByRole('button', { name: 'Inicie uma rodada de 60 s' })
+  const start = page.getByRole('button', { name: 'Iniciar rodada de 60 s' })
   await expect(start).toBeDisabled()
   for (const box of await page
     .getByRole('group', { name: 'Confirme antes de cada rodada' })
@@ -48,7 +49,7 @@ test('guided run is read-only, cancelable and keyboard accessible', async ({ pag
     (await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze())
       .violations,
   ).toEqual([])
-  await page.getByRole('button', { name: 'Descarte esta rodada' }).click()
+  await page.getByRole('button', { name: 'Descartar rodada' }).click()
   await expect(
     page.getByText('A rodada interrompida foi descartada. As concluídas foram preservadas'),
   ).toBeVisible()
