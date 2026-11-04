@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "policyVersion": 2,
-  "status": "not_started",
-  "reason": "Required no-game condition not satisfied; availability confirmation pending",
+  "status": "partial",
+  "reason": "Complete passed policy v2; the game returned during Reduced, which was interrupted after three runs; the monitor cohort remains pending",
   "applicationSourceCommit": "a5a3c27f23ae96b1e9f70db6fcc115a4b8a35e34",
   "version": "0.6.5",
   "identifier": "io.github.nin40301.ametista",
@@ -27,11 +27,77 @@
     }
   ],
   "cohorts": {
-    "full": null,
-    "reduced": null,
-    "game_monitor": null
+    "full": {
+      "status": "passed",
+      "manifest": "perf-v2/full-manifest.json",
+      "evaluation": "perf-v2/full-evaluation-v2.json",
+      "executions": 5,
+      "samplesPerExecution": 60,
+      "medianRamMiB": 156.92578125,
+      "runMedianRamMiB": {
+        "minimum": 136.984375,
+        "median": 156.92578125,
+        "maximum": 211.798828125
+      },
+      "ramChangeFromBaselinePercent": -5.01264984749249,
+      "runMedianCpuPercent": {
+        "minimum": 0.0,
+        "median": 0.0,
+        "maximum": 1.3020833333333333
+      },
+      "runP95CpuPercent": {
+        "minimum": 0.1375804144287681,
+        "median": 0.4025277961250547,
+        "maximum": 3.001302083333333
+      },
+      "passed": true,
+      "cpuP95Alert": true,
+      "rawEvaluationSha256": "65e95999fe0ec9e45eac660365d4b11b226bacc7dad7549cdeb1329cf9994c1b"
+    },
+    "reduced": {
+      "status": "interrupted",
+      "plannedExecutions": 5,
+      "completedExecutions": 3,
+      "evaluated": false,
+      "reason": "Roblox returned during the cohort and the harness stopped after a graceful-close timeout; partial runs are preserved locally but are not an acceptance result"
+    },
+    "game_monitor": {
+      "status": "pending",
+      "reason": "Not measured after the game returned"
+    }
   },
-  "preflight": {
+  "recordedUtc": "2026-11-04T17:51:08.907118+00:00",
+  "preflights": {
+    "full": {
+      "webView2": "156.0.4314.58",
+      "windowWidth": 1100,
+      "windowHeight": 740,
+      "dpi": 96,
+      "devicePixelRatio": 1,
+      "theme": "light",
+      "language": "pt-BR",
+      "effects": "full",
+      "blurSurfaces": 3,
+      "metricOverflow": false,
+      "debuggingDuringPreflight": true,
+      "timedRunsDebugging": false
+    },
+    "reduced": {
+      "webView2": "156.0.4314.58",
+      "windowWidth": 1100,
+      "windowHeight": 740,
+      "dpi": 96,
+      "devicePixelRatio": 1,
+      "theme": "light",
+      "language": "pt-BR",
+      "effects": "reduced",
+      "blurSurfaces": 0,
+      "metricOverflow": false,
+      "debuggingDuringPreflight": true,
+      "timedRunsDebugging": false
+    }
+  },
+  "preflightBeforeCohort": {
     "webView2": "156.0.4314.58",
     "windowWidth": 1100,
     "windowHeight": 740,
@@ -43,7 +109,7 @@
     "blurSurfaces": 3,
     "metricOverflow": false,
     "debuggingDuringPreflight": true,
-    "timedSamplesCollected": 0
-  },
-  "recordedUtc": "2026-11-03T12:19:04.094136+00:00"
+    "timedSamplesCollected": 0,
+    "collectedDate": "2026-11-03"
+  }
 }

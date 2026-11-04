@@ -4,8 +4,8 @@ As propostas P2 abaixo não foram adicionadas ao catálogo ou implementadas. `ve
 
 ## P1 — antes do aceite de VM/Fase 7
 
-- Entrega 2: nova coorte de consumo ainda pendente da condição sem jogos; manter PR em rascunho e não declarar aceite a partir das séries antigas
-- Consumo: política v2 por decisão do titular em 02/11/2026 aprova o Completo nas séries finais preservadas; Reduzido é informativo. Investigação limitada encerrada em duas tentativas, sem correção comprovada. Repetir o gate na Entrega 2 após o novo desenho. Monitor estrito aprovado. Ver [decisão/evidências](performance.md)
+- Entrega 2: Completo v2 aprovado; repetir Reduzido após interrupção por jogo reaberto e medir monitor. PR fica em rascunho até esses gates e validação manual
+- Consumo: política v2 por decisão do titular em 02/11/2026 aprova o Completo nas séries finais preservadas; Reduzido é informativo. Investigação limitada encerrada em duas tentativas, sem correção comprovada. Na Entrega 2, Completo passou (156,93 MiB; CPU mediana 0%; p95 3,00% como alerta). Reduzido ficou interrompido; monitor ainda não medido. Não usar a série parcial. Ver [decisão/evidências](performance.md)
 - Validar UAC em instalação protegida, hash/ACL/Authenticode, outra conta, SCM, tarefas, startup, energia, Appx, reinícios e abertura de Minecraft/Loja/Edge/Configurações/Segurança na matriz Home/Pro
 - Confirmar Proteção do Sistema por volume por uma API documentada ou na ferramenta nativa. A leitura não elevada atual informa desconhecido quando não há prova; não inferir ativação de pontos antigos/VSS/frequência
 - NVDA/Narrador, DPI 125/150/200%, zoom real 200/400%, alto contraste e troca de monitor: preencher [checklist](dev/accessibility-checklist.md)

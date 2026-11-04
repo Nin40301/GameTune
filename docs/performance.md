@@ -49,10 +49,22 @@ pwsh -NoProfile -File tools/test-resource-budget.ps1 -Mode game_monitor
 Para reavaliar sem medir: `budget.exe evaluate docs/perf-baseline.json full <saida.json>` e os cinco arquivos `docs/history/perf-final-0.6.5/full-N.json`; use reduced e suas séries para o outro modo. `evaluate-v1` reproduz as reprovações históricas; `evaluate` aplica v2. Código 2 indica dados inválidos; não é aprovação. Não substitua automaticamente a base. O harness de coleta continua com 5×60 amostras, sem descarte por host ocupado.
 
 
-## Entrega 2 — nova coorte ainda não coletada (03/11/2026)
+## Entrega 2 — coorte v2 parcial (04/11/2026)
 
-A candidata de UI `a5a3c27` foi compilada e conferida no Windows em 1100×740, pt-BR/claro, DPR1/DPI96, WebView2 156.0.4314.58 e três superfícies com blur no Completo. Essa conferência usou depuração temporária e **não é o gate de consumo**. A janela foi fechada depois. Não há amostras temporizadas, médias, medianas ou aprovação nova a partir dessa inspeção.
+A medição temporizada de **Completo** terminou em processo de produção, sem depuração, com cinco execuções de 60 amostras após 30 s de aquecimento. Home ficou visível em 1100×740, pt-BR/claro, DPI96/DPR1; WebView2 156.0.4314.58, três superfícies com blur. Host: Windows 11 Pro 25H2, build 26200.9711, Ryzen 5 8600G, Radeon 760M/driver 32.0.21030.2001, 12 processadores lógicos e 15482.7 MiB de RAM física.
 
-A verificação somente leitura detectou um jogo em execução. A condição sem jogos ainda não foi satisfeita; a nova coorte fica pendente, inclusive o ensaio separado do monitor. Nenhum processo de terceiro foi encerrado. [Estado e hashes dos binários](history/phase-6.7/delivery-2-perf-status.json). Não usar as séries 0.6.5 da tabela acima como se fossem medições desta UI. Limites, baseline e harness não foram alterados, e o PR continua em rascunho para fechar essa evidência obrigatória.
+| Modo | Execuções válidas | RAM mediana entre execuções | Variação sobre base | CPU mediana entre execuções | Maior p95 por execução | Resultado |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| Completo | 5 × 60 s | **156.93 MiB** (mín 136.98; máx 211.80) | **−5.01%** | **0.00%** (máx de medianas 1.30%) | **3.00%** | **Passa**; alerta p95 |
+| Reduzido | 3 de 5, interrompidas | — | — | — | — | Sem avaliação; não conta como coorte |
+| Monitor | não executado | — | — | — | — | Pendente; limite estrito preservado |
 
-Ao disponibilizar o computador: conferir as preferências em processo fresco, fechar o preflight, executar o mesmo harness cinco vezes por modo (ele faz as cinco execuções), preservando os relatórios e sem depuração na coleta; monitor somente leitura com limite estrito. Registrar host/WebView/GPU/DPI e anonimizar séries antes de publicar. Completo exige CPU mediana <1%, RAM ≤200 MiB e ≤15% sobre a base; p95 >2% alerta. Reduzido é informativo. Não descartar execuções por host ocupado.
+Completo passa pelos limites de RAM (≤200 MiB e até 15% acima da base de 165.207 MiB) e CPU mediana (<1%). O p95 máximo ultrapassou 2%, então fica registrado como alerta, sem reprovar. A base original e o harness não foram alterados. A mediana de CPU é quantizada a 0% em parte das execuções; seguimos o critério da política v2 aprovado pelo titular.
+
+Reduzido foi conferido antes de iniciar: zero superfícies com blur e as mesmas dimensões, tema, idioma, DPI e WebView. Três execuções foram coletadas; durante a terceira, uma janela/processo do Roblox reapareceu e o harness também atingiu seu limite ao fechar normalmente a janela do Ametista. O harness não terminou processo algum. As três amostras parciais foram preservadas apenas no diretório local `work/resource-budget-phase-6` e não foram avaliadas, publicadas ou misturadas a outra série. Repetir as cinco execuções de Reduzido do início quando o computador permanecer sem jogos durante toda a coleta. O monitor permanece pendente pelo mesmo motivo.
+
+Séries públicas anonimizadas, seus hashes e avaliação: [manifesto da coorte Completo](history/phase-6.7/perf-v2/full-manifest.json) e [avaliação da política v2](history/phase-6.7/perf-v2/full-evaluation-v2.json). A lista de arquivos-fonte originais permanece no diretório local de trabalho; os hashes no manifesto permitem conferir que os dados publicados correspondem às amostras. `perf-baseline.json` continua inalterado.
+
+**Nota de procedimento:** ao diagnosticar por que a janela de medição não fechou, uma consulta pontual a `Get-Process` leu estado/CPU do processo de jogo, o que abre um handle. Isso excedeu a regra do projeto; não alterou nem encerrou o jogo e não será repetido. Nenhum binário do produto abriu handle de jogo.
+
+Próximos ensaios: fechar o jogo, repetir Reduzido com cinco séries novas e executar o gate estrito do monitor (≤15 MiB e CPU <0.5%). Não aceitar a Entrega 2 até completar esses gates e as validações manuais de VM/acessibilidade.
