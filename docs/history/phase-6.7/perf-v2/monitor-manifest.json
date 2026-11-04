@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "policyVersion": 2,
+  "mode": "game_monitor",
+  "status": "passed",
+  "collectedDate": "2026-11-04",
+  "sourceCommit": "a5a3c27f23ae96b1e9f70db6fcc115a4b8a35e34",
+  "applicationVersion": "0.6.5",
+  "conditions": {
+    "readonly": true,
+    "games": "closed",
+    "WebView2": "not used",
+    "warmupSeconds": 30,
+    "sampleSeconds": 60,
+    "samples": 60
+  },
+  "host": {
+    "os": "Windows 11 Pro 25H2",
+    "build": "26200.9711",
+    "architecture": "x64",
+    "ramMiB": 15482.7,
+    "cpu": "AMD Ryzen 5 8600G w/ Radeon 760M Graphics",
+    "logicalProcessors": 12,
+    "gpu": "AMD Radeon 760M Graphics",
+    "gpuDriver": "32.0.21030.2001"
+  },
+  "thresholds": {
+    "peakRamMiB": 15,
+    "peakCpuPercentExclusive": 0.5
+  },
+  "summary": {
+    "cpuP95Percent": 0.13020833333333334,
+    "cpuPercent": {
+      "maximum": 0.13020833333333334,
+      "median": 0.0,
+      "minimum": 0.0
+    },
+    "ramBytes": {
+      "maximum": 2560000.0,
+      "median": 2539520.0,
+      "minimum": 2539520.0
+    },
+    "samples": 60,
+    "spanMs": 59001
+  },
+  "peakRamMiB": 2.44140625,
+  "peakCpuPercent": 0.13020833333333334,
+  "passed": true,
+  "rawSha256": "6967113ff58c7542aa236ef59cbad81a4d4b5a0ee375e375ab92fdd5377f79ca",
+  "publicSha256": "1b663e1ba3a79b4c9984764bd973b16a3ad244a7141947110142e93f6d2c9947",
+  "sampleCount": 60,
+  "binarySha256": {
+    "ametista-monitor.exe": "ed055e0050ccebb219b811c3d3245cce43227fd8055571d454e455dfc253e60b"
+  },
+  "anonymization": {
+    "boot": "schema-compatible redaction token",
+    "powerPlan": "schema-compatible redaction token",
+    "topProcessNames": "omitted",
+    "timestamps": "relative to first sample",
+    "definition": "clarified for the monitor-only single-run measurement"
+  }
+}

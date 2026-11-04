@@ -1,17 +1,21 @@
 import { itemName } from '../i18n'
 import { useState } from 'react'
-import type { Language, Review, Approval } from '../types'
-import { translator } from '../i18n'
+import type { Language, Review, Approval, Observation } from '../types'
+import { translator, presentationText } from '../i18n'
 import { Icon } from './Icon'
 import { Checkbox } from './Checkbox'
+import { ActionBar } from './ActionBar'
+import { currentLabel, nextLabel } from '../state/presentation'
 export function ReviewScreen({
   review,
+  observations = new Map<string, Observation>(),
   language,
   busy,
   onSubmit,
   onBack,
 }: {
   review: Review
+  observations?: Map<string, Observation>
   language: Language
   busy: boolean
   onSubmit: (approval: Approval) => void
@@ -43,7 +47,7 @@ export function ReviewScreen({
       <label className="consent" key={id}>
         <Checkbox
           checked={acks[id] ?? false}
-          aria-describedby={`review-heading-${itemId} review-risk-${itemId}`}
+          aria-describedby={`consent-risk-${itemId}`}
           disabled={busy}
           onChange={(e) => setAcks((old) => ({ ...old, [id]: e.target.checked }))}
         />
@@ -128,47 +132,85 @@ export function ReviewScreen({
               {review.items
                 .filter((item) => item.risk === risk)
                 .map((item) => (
-                  <section className="review-item" key={item.id}>
-                    <span className="timeline-marker">
-                      <Icon
-                        name={
-                          item.type === 'appx'
-                            ? 'apps'
-                            : item.type === 'power'
-                              ? 'power'
-                              : item.type === 'service'
-                                ? 'service'
-                                : item.type === 'scheduled_task'
-                                  ? 'task'
-                                  : item.type === 'startup'
-                                    ? 'startup'
-                                    : 'registry'
-                        }
-                      />
-                    </span>
-                    <div className="section-top">
-                      <h2 id={`review-heading-${item.id}`}>{itemName(item, language)}</h2>
+                  <details
+                    className="review-item"
+                    key={item.id}
+                    open={item.id === review.items[0]?.id}
+                  >
+                    <summary>
+                      <span className="timeline-marker">
+                        <Icon
+                          name={
+                            item.type === 'appx'
+                              ? 'apps'
+                              : item.type === 'scheduled_task'
+                                ? 'task'
+                                : item.type
+                          }
+                        />
+                      </span>
+                      <span id={`review-heading-${item.id}`}>{itemName(item, language)}</span>
+                      <Icon name="chevronDown" />
+                    </summary>
+                    <p id={`review-risk-${item.id}`}>{presentationText(item.riskNote[language])}</p>
+                    <div className="diff">
+                      <dl>
+                        <dt>{t('current')}</dt>
+                        <dd className="num">{currentLabel(observations.get(item.id), t)}</dd>
+                      </dl>
+                      <span className="diff__arrow" aria-hidden="true">
+                        →
+                      </span>
+                      <dl>
+                        <dt>{t('next')}</dt>
+                        <dd className="num">{nextLabel(item, review.kind, t)}</dd>
+                      </dl>
                     </div>
-                    <p id={`review-risk-${item.id}`}>{item.riskNote[language]}</p>
+                    <p className="revert-note">
+                      <Icon name={item.revert === 'auto' ? 'history' : 'warning'} />
+                      {t(item.revert === 'auto' ? 'autoRevert' : 'noUndoDetail')}
+                    </p>
                     {item.requiresReboot && (
                       <p className="notice warning">
                         <Icon name="warning" />
                         {t('reboot')}
                       </p>
                     )}
-                    {removal && ack(`undo:${item.id}`, t('ackNoUndo'))}
-                    {item.risk === 'high' &&
-                      (removal || review.kind === 'apply') &&
-                      ack(`risk:${item.id}`, t('ackRisk'))}
-                    {!item.verified &&
-                      (removal || review.kind === 'apply') &&
-                      ack(`unverified:${item.id}`, t('ackUnverified'))}
-                  </section>
+                  </details>
                 ))}
             </section>
           ))}
       </div>
-      <div className="final-consent">
+      {review.kind === 'apply' && (
+        <section className="surface next-steps">
+          <h2>{t('whatNext')}</h2>
+          <ol>
+            {['stepRestore', 'stepPermission', 'stepApply'].map((step, index) => (
+              <li key={step}>
+                <span className="step-number num">{index + 1}</span>
+                <p>{t(step)}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+      <section className="final-consent surface" aria-label={t('consentPanel')}>
+        <h2>{t('consentPanel')}</h2>
+        {review.items
+          .filter((item) => removal || item.risk === 'high' || !item.verified)
+          .map((item) => (
+            <div className="consent-item" key={item.id}>
+              <h3>{itemName(item, language)}</h3>
+              <p id={`consent-risk-${item.id}`}>{presentationText(item.riskNote[language])}</p>
+              {removal && ack(`undo:${item.id}`, t('ackNoUndo'))}
+              {item.risk === 'high' &&
+                (removal || review.kind === 'apply') &&
+                ack(`risk:${item.id}`, t('ackRisk'))}
+              {!item.verified &&
+                (removal || review.kind === 'apply') &&
+                ack(`unverified:${item.id}`, t('ackUnverified'))}
+            </div>
+          ))}
         <label className="consent">
           <Checkbox
             checked={confirmed}
@@ -178,19 +220,22 @@ export function ReviewScreen({
           <strong>{t('ackAll')}</strong>
         </label>
         <p>{t('uac')}</p>
-        <div className="actions">
-          <button
-            className={`button ${removal ? 'destructive' : 'primary'}`}
-            disabled={!ready || busy}
-            onClick={submit}
-          >
-            {busy ? t('executing') : t(action)}
-          </button>
-          <button className="button subtle" disabled={busy} onClick={onBack}>
-            {t('back')}
-          </button>
-        </div>
-      </div>
+      </section>
+      <ActionBar
+        summary={<span id="missing-consent">{ready ? t('uac') : t('missingConsent')}</span>}
+      >
+        <button className="button subtle" disabled={busy} onClick={onBack}>
+          {t('back')}
+        </button>
+        <button
+          className={`button ${removal ? 'destructive' : 'primary'}`}
+          disabled={!ready || busy}
+          aria-describedby={!ready ? 'missing-consent' : undefined}
+          onClick={submit}
+        >
+          {busy ? t('executing') : t(action)}
+        </button>
+      </ActionBar>
     </>
   )
 }

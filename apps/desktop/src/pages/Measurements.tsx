@@ -1,4 +1,5 @@
 import { appendCpuSample } from '../state/visualHistory'
+import { IntervalChart } from '../components/IntervalChart'
 import { Button } from '../components/Button'
 import { InlineStatus } from '../components/InlineStatus'
 import { useWindowActivity } from '../hooks/useWindowActivity'
@@ -21,23 +22,25 @@ export function Measurements({
   language,
   dashboard = false,
   profileControls,
-  selectedCount = 0,
+  safetyCard,
 }: {
   backend: Backend
   language: Language
   dashboard?: boolean
   profileControls?: ReactNode
-  selectedCount?: number
+  safetyCard?: ReactNode
 }) {
   const active = useWindowActivity()
   const [processesOpen, setProcessesOpen] = useState(false)
   const [cpuSamples, setCpuSamples] = useState<{ time: number; value: number }[]>([])
+  const [ramSamples, setRamSamples] = useState<{ time: number; value: number }[]>([])
   const [status, setStatus] = useState<LabStatus | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
   const [conditions, setConditions] = useState<Conditions>(unchecked)
   const [reset, setReset] = useState(false)
   const [anonymize, setAnonymize] = useState(true)
+  const [exportFormat, setExportFormat] = useState<'json' | 'html' | null>(null)
   const [saved, setSaved] = useState(false)
   const t = translator(language)
   const number = (value: number | null | undefined, digits = 1) =>
@@ -61,6 +64,13 @@ export function Measurements({
           if (alive) {
             setStatus(s)
             const latest = s.latest
+            if (latest && Number.isFinite(latest.availableBytes))
+              setRamSamples((old) =>
+                appendCpuSample(old, {
+                  time: latest.timestampMs,
+                  value: latest.availableBytes / 1073741824,
+                }),
+              )
             if (latest?.cpuPercent != null && Number.isFinite(latest.cpuPercent)) {
               const value = latest.cpuPercent
               setCpuSamples((old) => appendCpuSample(old, { time: latest.timestampMs, value }))
@@ -175,14 +185,33 @@ export function Measurements({
                 <Sparkline values={cpuSamples.map((s) => s.value)} label={t('cpuHistory')} />
                 <p>{t('cpuNote')}</p>
               </article>
-              <article className="surface metric metric--selection">
+              <article className="surface metric metric--memory">
                 <h3>
-                  <Icon name="items" />
-                  {t('selected')}
+                  <Icon name="memory" />
+                  {t('memoryHistory')}
                 </h3>
-                <strong className="num">{number(selectedCount, 0)}</strong>
-                <p>{t('safeDefaultNote')}</p>
+                <strong className="num">{gib(sample?.availableBytes)}</strong>
+                <Sparkline values={ramSamples.map((s) => s.value)} label={t('memoryHistory')} />
+                <p>{t('sampleShortHistory')}</p>
               </article>
+              <section className="surface top-three">
+                <h3>{t('topThree')}</h3>
+                {sample ? (
+                  <ol>
+                    {sample.top.slice(0, 3).map((process) => (
+                      <li key={process.name}>
+                        <span>{process.name}</span>
+                        <strong className="num">
+                          {number(process.memoryBytes / 1048576)} {t('mibUnit')}
+                        </strong>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p>{t('metricsWaiting')}</p>
+                )}
+              </section>
+              {safetyCard}
               <p className="footprint">
                 <Icon name="memory" />
                 {t('appFootprint')}: {sample ? number(sample.appPrivateBytes / 1048576) : '—'}{' '}
@@ -386,6 +415,15 @@ export function Measurements({
             ) : (
               <>
                 <p>{t('comparisonNote')}</p>
+                <div className="comparison-charts">
+                  {status.comparisons.map((comparison) => (
+                    <IntervalChart
+                      key={comparison.metric}
+                      comparison={comparison}
+                      language={language}
+                    />
+                  ))}
+                </div>
                 <div
                   className="table-scroll"
                   role="region"
@@ -506,16 +544,57 @@ export function Measurements({
               {(['json', 'html'] as const).map((format) => (
                 <button
                   key={format}
-                  className={`button ${format === 'json' && p?.phase === 'complete' ? 'primary' : 'secondary'}`}
+                  className="button secondary"
                   disabled={busy || !p}
                   onClick={() => {
-                    void file({ kind: 'export', format, anonymize, english: language === 'en' })
+                    setExportFormat(format)
                   }}
                 >
                   {t(format === 'json' ? 'exportJson' : 'exportHtml')}
                 </button>
               ))}
             </div>
+            {exportFormat && (
+              <section className="export-preview" aria-labelledby="export-preview-title">
+                <h3 id="export-preview-title">{t('exportPreview')}</h3>
+                <p>{t('exportPreviewNote')}</p>
+                <dl>
+                  <div>
+                    <dt>{t('anonymizeReport')}</dt>
+                    <dd>{t(anonymize ? 'nextEnabled' : 'nextDisabled')}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('beforeRuns')}</dt>
+                    <dd className="num">{number(p?.before.length, 0)}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('afterRuns')}</dt>
+                    <dd className="num">{number(p?.after.length, 0)}</dd>
+                  </div>
+                </dl>
+                <p>{t(anonymize ? 'anonymizeNote' : 'exportIdentityWarning')}</p>
+                <div className="actions">
+                  <button
+                    className="button secondary"
+                    disabled={busy}
+                    onClick={() => {
+                      void file({
+                        kind: 'export',
+                        format: exportFormat,
+                        anonymize,
+                        english: language === 'en',
+                      })
+                      setExportFormat(null)
+                    }}
+                  >
+                    {t('confirmExport')}
+                  </button>
+                  <button className="button subtle" onClick={() => setExportFormat(null)}>
+                    {t('cancelPreview')}
+                  </button>
+                </div>
+              </section>
+            )}
             {saved && (
               <InlineStatus next={t('dismiss')} onNext={() => setSaved(false)}>
                 {t('exportDialogDone')}

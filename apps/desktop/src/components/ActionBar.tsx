@@ -8,6 +8,6 @@ export function ActionBar({ summary, children }: { summary: ReactNode; children:
         <div className="action-bar__actions">{children}</div>
       </div>
     </div>,
-    document.body,
+    document.getElementById('action-layer') ?? document.body,
   )
 }

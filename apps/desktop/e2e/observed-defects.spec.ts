@@ -18,7 +18,7 @@ for (const language of ['pt-BR', 'en'] as const)
         await page.goto('/')
         // 2 useful navigation targets, 6 simulation rather than search, 7 precision.
         await expect(page.getByRole('list', { name: t.statusStrip })).toBeVisible()
-        await expect(page.locator('.status-strip .status-chip')).toHaveCount(2)
+        await expect(page.locator('.status-strip .status-chip')).toHaveCount(3)
         await expect(
           page.getByRole('button', { name: t.simulate, exact: true }).locator('.lucide-scan-eye'),
         ).toBeVisible()
@@ -31,6 +31,13 @@ for (const language of ['pt-BR', 'en'] as const)
           }),
         ).toBeVisible()
         await expect(page.locator('.metric--cpu .sparkline')).toBeVisible()
+        expect(
+          await page
+            .locator('.vitals .metric')
+            .evaluateAll((nodes) =>
+              nodes.every((node) => node.scrollHeight <= node.clientHeight + 1),
+            ),
+        ).toBe(true)
         // 8 equal metric heights, 9 balanced short slogan, 11 real ghost control.
         const heights = await page
           .locator('.vitals .metric')
@@ -88,7 +95,7 @@ for (const language of ['pt-BR', 'en'] as const)
         }
         // 12 toggles use switches; consent alone uses a checkbox.
         await page.getByRole('button', { name: t.games, exact: true }).click()
-        await expect(page.locator('.game-monitor-summary')).toContainText(t.monitorStopped)
+        await expect(page.locator('.monitor-card')).toContainText(t.monitorStopped)
         await expect(page.locator('.game-monitor-summary')).toContainText(t.gameSetupSteps)
         await page.getByRole('button', { name: t.addGame, exact: true }).click()
         await page.getByRole('button', { name: /Sample.exe/ }).click()

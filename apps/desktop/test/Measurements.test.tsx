@@ -7,7 +7,7 @@ import pt from '../src/locales/pt-BR.json'
 test('dashboard renders measured fields and can pause without a system operation', async () => {
   const user = userEvent.setup()
   render(<Measurements backend={createMockBackend()} language="pt-BR" dashboard />)
-  await screen.findByText('6,0 GiB')
+  await screen.findByRole('img', { name: /6,0 GiB/ })
   await user.click(screen.getByRole('button', { name: pt.pauseMetrics }))
   expect(await screen.findByText(pt.metricsPaused)).toBeVisible()
   expect(window.__ametistaTest?.executions).toHaveLength(0)
@@ -46,7 +46,7 @@ test('visual polling pauses on blur and resumes without stopping the Rust monito
   const backend = createMockBackend()
   const lab = vi.spyOn(backend, 'lab')
   render(<Measurements backend={backend} language="pt-BR" dashboard />)
-  await screen.findByText('6,0 GiB')
+  await screen.findByRole('img', { name: /6,0 GiB/ })
   await act(async () => window.dispatchEvent(new Event('blur')))
   const calls = lab.mock.calls.length
   vi.useFakeTimers()
@@ -66,10 +66,28 @@ test('visual polling pauses on blur and resumes without stopping the Rust monito
 test('top-process table is mounted only when expanded and remains accessible', async () => {
   const user = userEvent.setup()
   render(<Measurements backend={createMockBackend()} language="pt-BR" dashboard />)
-  await screen.findByText('6,0 GiB')
+  await screen.findByRole('img', { name: /6,0 GiB/ })
   expect(screen.queryByRole('table', { hidden: true })).not.toBeInTheDocument()
   await user.click(screen.getByText(pt.topMemory))
   expect(await screen.findByRole('table')).toHaveAccessibleName(pt.groupedMemory)
   await user.click(screen.getByText(pt.topMemory))
   expect(screen.queryByRole('table', { hidden: true })).not.toBeInTheDocument()
+})
+
+test('export previews anonymization and run counts before opening the save dialog', async () => {
+  const backend = createMockBackend(),
+    save = vi.spyOn(backend, 'labFile'),
+    user = userEvent.setup()
+  render(<Measurements backend={backend} language="pt-BR" />)
+  await user.click(await screen.findByRole('button', { name: pt.exportJson }))
+  expect(screen.getByRole('heading', { name: pt.exportPreview })).toBeVisible()
+  expect(save).not.toHaveBeenCalled()
+  expect(screen.getByRole('checkbox', { name: pt.anonymizeReport })).toBeChecked()
+  await user.click(screen.getByRole('button', { name: pt.confirmExport }))
+  expect(save).toHaveBeenCalledExactlyOnceWith({
+    kind: 'export',
+    format: 'json',
+    anonymize: true,
+    english: false,
+  })
 })

@@ -2,11 +2,11 @@
 
 Automação não comprova conformidade WCAG. Preencher os resultados abaixo na build candidata, **na VM** para fluxos com escrita. Registrar commit/hash, Windows/edição, WebView2, navegador, tamanho da janela, idioma, tema, efeitos, DPI e tecnologias assistivas. Nesta entrega, **NVDA, Narrador e DPI físico ainda não foram validados**.
 
-Fase 6.7 / Entrega 1: repetir manualmente os atalhos da StatusStrip, switches de Jogos e navegação entre a barra fixa de Itens e a barra móvel. O novo texto secundário tem mínimo de 13,5 px. Os testes de geometria e axe não preenchem os resultados manuais abaixo; o objetivo “AAA” de acabamento não é uma declaração de conformidade WCAG AAA.
+Fase 6.7 / Entrega 2: repetir manualmente os atalhos da StatusStrip, switches de Jogos e navegação entre a barra fixa de Itens e a barra móvel. O novo texto secundário tem mínimo de 13,5 px. Os testes de geometria e axe não preenchem os resultados manuais abaixo; o objetivo “AAA” de acabamento não é uma declaração de conformidade WCAG AAA.
 
 | Ensaio | Roteiro e resultado esperado | Resultado do titular |
 | --- | --- | --- |
-| Somente teclado | Tab/Shift+Tab, Pular para o conteúdo, navegação + Mais no celular, setas/Home/End em Segmented, Espaço em Checkbox/Switch, Escape em detalhes, foco de retorno | Pendente |
+| Somente teclado | Tab/Shift+Tab, Pular para o conteúdo, navegação + Mais no celular, setas/Home/End em Segmented e cartões de perfil, Espaço em Checkbox/Switch, Escape em detalhes, foco de retorno | Pendente |
 | Troca de tela | Foco no h1, anúncio da nova página, sem anúncio repetido do mesmo nome em títulos/banners | Pendente |
 | NVDA | Ler Início, Itens, Revisão, Apps, Jogos, Medições, Histórico, Configurações e onboarding; nomes/papéis/estados corretos, tabelas com caption e cabeçalhos | Pendente |
 | Narrador | Repetir o roteiro anterior; simulação deve anunciar progresso no máximo uma vez a cada 3 s e conclusão/cancelamento, sem ler cada alvo | Pendente |
@@ -23,3 +23,10 @@ Fase 6.7 / Entrega 1: repetir manualmente os atalhos da StatusStrip, switches de
 | UAC/Store/reinício | Só na VM: cancelar UAC não aplica; Appx exige cada consentimento; Desfazer não reinstala; botão de reinício só abre a escolha do Windows | Pendente |
 
 Playwright verifica axe AA nos dois idiomas/temas, foco e layouts 1440/1100/768/390. O ensaio de reflow automatizado em viewports CSS 640/320 representa a geometria de zoom 200/400% sobre 1280 px; **não substitui o zoom real no WebView ou os ensaios de leitores de tela/DPI acima**. Evidências incompletas não são marcadas como aprovação.
+
+
+## Evidências automatizadas da Entrega 2
+
+A suíte inclui pseudo-localização de pelo menos +40% nos dois idiomas, temas e 1440/390 px, incluindo editor de Jogos e descrições do catálogo; disclosures Agora→Depois; fluxo completo simular→revisar→aplicar **no mock**→resultado→desfazer somente com Tab/Enter/Espaço; reflow equivalente em 640/320 px; axe nos dois temas/idiomas e na galeria de estados. Contraste de ink/base é testado ≥7:1, sem extrapolar esse número para cada pixel do vidro. Bordas de switches preservam o limite visível em ambos os temas.
+
+Não substituir “Pendente” na tabela pelos resultados do axe. Zoom geométrico não mede zoom físico do WebView. Rodar NVDA/Narrador em Itens recolhidos/expandidos, painel de consentimentos e região de progresso; confirmar que os anúncios limitados a 3 s não atrapalham os consentimentos. Verificar foco no menu Mais enquanto a barra de revisão está visível. Efeitos Automático deve acompanhar redução de transparência; Movimento reduzido deve remover também o desenho do visto, sem ocultar o resultado.

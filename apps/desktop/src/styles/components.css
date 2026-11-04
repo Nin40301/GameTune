@@ -468,7 +468,7 @@ main {
 }
 .profile-option.chosen {
   background: var(--surface2);
-  box-shadow: inset 3px 0 var(--accent);
+  box-shadow: var(--elev-1);
 }
 .profile-option input {
   position: absolute;
@@ -1223,8 +1223,8 @@ pre {
   .button,
   .sidebar nav button {
     transition:
-      background-color 0.12s ease,
-      transform 0.12s ease;
+      transform var(--dur-2) var(--ease-out),
+      opacity var(--dur-2) var(--ease-out);
   }
 }
 .result-list {
@@ -1259,10 +1259,7 @@ pre {
   border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
   background: var(--glass-fill);
-  box-shadow:
-    var(--glass-shadow),
-    inset 0 1px 0 rgb(255 255 255 / 65%),
-    inset 0 -1px 0 var(--glass-edge-shade);
+  box-shadow: var(--elev-1);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
@@ -1283,9 +1280,7 @@ pre {
   background: linear-gradient(118deg, rgb(255 255 255 / 55%), transparent 42%);
 }
 :root[data-theme='dark'] .glass {
-  box-shadow:
-    var(--glass-shadow),
-    inset 0 1px 0 rgb(255 255 255 / 12%);
+  box-shadow: var(--elev-1);
 }
 :root[data-theme='dark'] .glass::before {
   background: linear-gradient(118deg, rgb(255 255 255 / 9%), transparent 42%);
@@ -1315,7 +1310,9 @@ pre {
   user-select: none;
   background: var(--solid-surface);
   color: var(--accent);
-  transition: transform var(--dur-fast) var(--ease-spring);
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
 }
 .btn:active,
 .button:active {
@@ -1335,9 +1332,7 @@ pre {
   color: #fff;
   background: linear-gradient(135deg, #7c3aed, #6d28d9);
   border-color: transparent;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 35%),
-    0 10px 24px -8px rgb(109 40 217 / 45%);
+  box-shadow: var(--elev-1);
 }
 .btn--primary::after,
 .button.primary::after {
@@ -1347,7 +1342,9 @@ pre {
   z-index: -1;
   background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 8%) 50%, transparent 70%);
   transform: translateX(-120%);
-  transition: transform 600ms var(--ease-out);
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
 }
 :is(.btn, .button):hover:not([disabled]) {
   transform: translateY(-1px);
@@ -1377,7 +1374,7 @@ pre {
   color: #fff;
   background: linear-gradient(135deg, #be123c, #9f1239);
   border-color: transparent;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%);
+  box-shadow: var(--elev-1);
 }
 @media (forced-colors: active) {
   .btn,
@@ -1406,7 +1403,7 @@ pre {
   padding: 4px;
   border-radius: var(--r-pill);
   background: rgb(124 58 237 / 10%);
-  box-shadow: inset 0 1px 2px rgb(59 26 122 / 14%);
+  box-shadow: var(--elev-1);
   max-width: 100%;
 }
 .segmented[data-count='3'] {
@@ -1432,11 +1429,11 @@ pre {
   width: calc((100% - 8px) / var(--n));
   border-radius: var(--r-pill);
   background: var(--thumb);
-  box-shadow:
-    inset 0 0 0 1.5px #7c3aed,
-    0 2px 10px rgb(59 26 122 / 16%);
+  box-shadow: var(--elev-1);
   transform: translateX(calc(var(--i) * 100%));
-  transition: transform 320ms var(--ease-spring);
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
 }
 .segmented__opt {
   position: relative;
@@ -1469,14 +1466,16 @@ pre {
   background: transparent;
 }
 .switch::before {
+  border: 1.5px solid var(--ink-faint);
   content: '';
   position: absolute;
   inset: 6px 0;
   border-radius: inherit;
   background: rgb(91 85 117 / 22%);
-  box-shadow: inset 0 0 0 1.5px var(--ink-faint);
+  box-shadow: var(--elev-1);
 }
 .switch::after {
+  border: 1px solid var(--ink-faint);
   content: '';
   position: absolute;
   top: 9px;
@@ -1485,14 +1484,17 @@ pre {
   height: 22px;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 2px 6px rgb(59 26 122 / 30%);
-  transition: transform var(--dur) var(--ease-spring);
+  box-shadow: var(--elev-1);
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
 }
 .switch[aria-checked='true']::before {
   background: linear-gradient(135deg, #7c3aed, #6d28d9);
   box-shadow: none;
 }
 .switch[aria-checked='true']::after {
+  border-color: transparent;
   transform: translateX(18px);
 }
 .orb {
@@ -1509,19 +1511,13 @@ pre {
       transparent 62%
     ),
     radial-gradient(circle at 70% 80%, rgb(167 139 250 / 28%), transparent 60%), var(--glass-fill);
-  box-shadow:
-    inset 0 2px 0 rgb(255 255 255 / 90%),
-    inset 0 -6px 14px rgb(124 58 237 / 10%),
-    0 14px 28px -12px rgb(109 40 217 / 35%);
+  box-shadow: var(--elev-1);
 }
 :root[data-theme='dark'] .orb {
   background:
     radial-gradient(circle at 30% 24%, rgb(196 176 255 / 20%), transparent 62%),
     radial-gradient(circle at 70% 80%, rgb(124 58 237 / 18%), transparent 60%), #241a3c;
-  box-shadow:
-    inset 0 2px 0 rgb(255 255 255 / 15%),
-    inset 0 -6px 14px rgb(124 58 237 / 10%),
-    0 14px 28px -12px rgb(0 0 0 / 35%);
+  box-shadow: var(--elev-1);
 }
 .orb svg {
   position: absolute;
@@ -1588,10 +1584,12 @@ pre {
 }
 @media (forced-colors: active) {
   .switch::before {
+    border: 1.5px solid var(--ink-faint);
     background: Canvas;
     border: 1px solid ButtonText;
   }
   .switch::after {
+    border: 1px solid var(--ink-faint);
     background: ButtonText;
   }
   .switch[aria-checked='true']::before {
@@ -1614,4 +1612,9 @@ pre {
     background: Canvas;
     border: 1px solid CanvasText;
   }
+}
+
+/* RAM changes are discrete, gated by the component's 1% threshold. */
+.orb circle {
+  transition: none !important;
 }

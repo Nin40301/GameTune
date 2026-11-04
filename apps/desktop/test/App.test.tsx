@@ -68,8 +68,10 @@ test('review requires final acknowledgement and submits only reviewed ids', asyn
 test('app cleanup requires a separate consent per selected app', async () => {
   const user = await analyzed()
   await user.click(screen.getByRole('button', { name: 'Limpeza de apps' }))
-  await user.click(screen.getByRole('checkbox', { name: 'Microsoft.Copilot' }))
-  await user.click(screen.getByRole('checkbox', { name: 'Microsoft.549981C3F5F10' }))
+  await user.click(screen.getByRole('checkbox', { name: pt['itemName_appx.microsoft.copilot'] }))
+  await user.click(
+    screen.getByRole('checkbox', { name: pt['itemName_appx.microsoft.549981c3f5f10'] }),
+  )
   await user.click(screen.getByRole('button', { name: /Revisar remoção/ }))
   expect(screen.getByText(pt.noUndo)).toBeVisible()
   const remove = screen.getByRole('button', { name: pt.remove })

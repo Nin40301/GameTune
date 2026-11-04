@@ -1,3 +1,4 @@
+import { itemName } from '../i18n'
 import { operationRows } from '../state/result'
 import type { Item, Language, Reply } from '../types'
 import { translator } from '../i18n'
@@ -14,6 +15,10 @@ export function OperationResult({
 }) {
   const t = translator(language)
   const rows = operationRows(reply)
+  const name = (id: unknown) => {
+    const item = items.find((item) => item.id === id)
+    return item ? itemName(item, language) : String(id ?? '')
+  }
   return (
     <section className={`notice ${reply.ok ? 'success' : 'danger'}`} role="status">
       <strong>{t(reply.ok ? 'operationDone' : 'operationError')}</strong>
@@ -21,10 +26,7 @@ export function OperationResult({
         <ul className="result-list">
           {rows.map((row, index) => (
             <li key={index}>
-              <span>
-                {items.find((item) => item.id === row.itemId)?.name[language] ??
-                  String(row.itemId ?? '')}
-              </span>
+              <span>{name(row.itemId)}</span>
               <strong>
                 {t(
                   typeof row.outcome === 'string'

@@ -18,7 +18,7 @@ test('first run explains scope, protection and profile without authorizing chang
   expect(support).toHaveBeenCalledWith({ kind: 'open', tool: 'protection' })
   await user.click(screen.getByRole('button', { name: 'Continuar' }))
   await user.click(screen.getByRole('button', { name: 'Começar pela simulação' }))
-  expect(await screen.findByRole('button', { name: 'Simular' })).toBeEnabled()
+  expect(await screen.findByRole('button', { name: 'Simular ajustes' })).toBeEnabled()
   expect(localStorage.getItem('ametista.onboarding')).toBe('done')
   expect(window.__ametistaTest?.executions).toHaveLength(0)
 })

@@ -14,6 +14,7 @@ function walk(dir) {
 }
 walk('crates'); walk('apps/desktop/src-tauri');
 const reasons = {
+  'crates/windows_runtime/src/icon/native.rs': 'Shell extrai um recurso de arquivo local cadastrado; GDI usa bitmap fixo de 32x32 e recursos próprios liberados por RAII. Sem executar o arquivo, rede, hooks ou handles em processos.',
   'crates/ipc/src/native.rs': 'ACLs, SID/token próprio, pipe autenticado, arquivo do auxiliar e ShellExecute/WinVerifyTrust offline. Buffers e handles pertencem à chamada; nunca processos de jogos.',
   'crates/windows_runtime/src/native.rs': 'WTS da sessão local, token próprio, pasta conhecida e SCM. Alocações do Windows copiadas/liberadas uma vez; estruturas alinhadas e limitadas; handles são de serviços, nunca de jogos.',
   'crates/metrics/src/native.rs': 'Contadores de sistema e snapshot de processos do sistema; buffers/alinhamento e tamanhos verificados. Nenhum OpenProcess de terceiros.',

@@ -1,7 +1,7 @@
 import { useApp } from '../state/AppContext'
 import { BrandMark, Icon } from './Icon'
 export function StatusStrip() {
-  const { t, data, busy, setPage } = useApp()
+  const { t, data, busy, setPage, monitor } = useApp()
   return (
     <header className="topbar glass status-strip">
       <span className="topbar-location mobile-brand">
@@ -40,6 +40,28 @@ export function StatusStrip() {
             <span>
               {t('offline')}
               <strong>{t('noTelemetry')}</strong>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            className="status-chip"
+            disabled={busy}
+            onClick={() => setPage('games')}
+          >
+            <Icon name="games" />
+            <span>
+              {t('gameMonitor')}
+              <strong>
+                {t(
+                  monitor
+                    ? monitor.running
+                      ? 'monitorRunning'
+                      : 'monitorStopped'
+                    : 'monitorUnknown',
+                )}
+              </strong>
             </span>
           </button>
         </li>

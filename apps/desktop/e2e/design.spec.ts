@@ -4,7 +4,7 @@ import { mkdirSync, readFileSync } from 'node:fs'
 import pt from '../src/locales/pt-BR.json' with { type: 'json' }
 import en from '../src/locales/en.json' with { type: 'json' }
 
-const shots = '../../outputs/phase-6.7/screenshots'
+const shots = '../../outputs/phase-6.7/delivery-2/screenshots'
 for (const language of ['pt-BR', 'en'] as const)
   for (const theme of ['light', 'dark'] as const)
     for (const width of [1440, 1100, 768, 390]) {

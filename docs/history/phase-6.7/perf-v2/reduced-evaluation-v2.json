@@ -1,0 +1,33 @@
+{
+  "policyVersion": 2,
+  "mode": "reduced",
+  "informational": true,
+  "summary": {
+    "executions": 5,
+    "runMedianRamBytes": {
+      "minimum": 178634752.0,
+      "median": 180555776.0,
+      "maximum": 189655040.0
+    },
+    "runMedianCpuPercent": {
+      "minimum": 0.0,
+      "median": 0.0,
+      "maximum": 0.12978590799602474
+    },
+    "runCpuP95Percent": {
+      "minimum": 0.26814635239472734,
+      "median": 0.5201899111400087,
+      "maximum": 0.6511693218954248
+    },
+    "observedMinimumRamBytes": 170962944.0,
+    "observedMaximumRamBytes": 220438528.0,
+    "observedMinimumCpuPercent": 0.0,
+    "observedMaximumCpuPercent": 1.297016861219196
+  },
+  "ramRegression": false,
+  "ramCapExceeded": false,
+  "cpuMedianExceeded": false,
+  "cpuP95Alert": false,
+  "passed": true,
+  "blockingPassed": true
+}

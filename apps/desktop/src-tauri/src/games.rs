@@ -10,6 +10,7 @@ use std::{path::PathBuf, sync::Mutex};
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Action {
     Status {},
+    Icons {},
     Discover {},
     AddManual {},
     AddCandidate {
@@ -37,6 +38,7 @@ pub struct View {
     pub candidates: Vec<Candidate>,
     pub actions: Vec<ametista_core::temporary::GameAction>,
     pub monitor: MonitorStatus,
+    pub icons: std::collections::BTreeMap<String, String>,
 }
 pub struct Games {
     directory: PathBuf,
@@ -67,6 +69,7 @@ impl Games {
             candidates: self.candidates.lock().map_err(|_| Error::Storage)?.clone(),
             actions: self.actions.clone(),
             monitor,
+            icons: Default::default(),
         })
     }
     pub fn action(&self, action: Action) -> std::result::Result<View, String> {
@@ -75,6 +78,17 @@ impl Games {
     fn apply(&self, action: Action) -> Result<View> {
         match action {
             Action::Status {} => {}
+            Action::Icons {} => {
+                let mut view = self.view()?;
+                for game in &view.library.games {
+                    if let Ok(path) = discovery::local_executable(std::path::Path::new(&game.exe))
+                        && let Some(icon) = ametista_windows_runtime::icon::executable_icon(&path)
+                    {
+                        view.icons.insert(game.id.clone(), icon);
+                    }
+                }
+                return Ok(view);
+            }
             Action::Discover {} => {
                 let program = std::env::var_os("ProgramFiles(x86)")
                     .or_else(|| std::env::var_os("ProgramFiles"))

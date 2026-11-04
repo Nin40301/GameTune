@@ -1,4 +1,26 @@
 :root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.84375rem;
+  --fs-md: 0.9375rem;
+  --fs-lg: 1.0625rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.625rem;
+  --fs-3xl: 2.125rem;
+  --elev-1: 0 1px 2px rgb(59 26 122 / 6%), 0 4px 12px -4px rgb(76 29 149 / 10%);
+  --elev-2: 0 1px 2px rgb(59 26 122 / 6%), 0 14px 34px -10px rgb(76 29 149 / 20%);
+  --elev-3: 0 2px 4px rgb(59 26 122 / 8%), 0 28px 60px -18px rgb(76 29 149 / 35%);
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+  --dur-4: 480ms;
+
   color-scheme: light;
   --font-sans: 'Plus Jakarta Sans Variable', 'Segoe UI Variable Text', system-ui, sans-serif;
   --font-mono: var(--font-sans);
@@ -20,14 +42,14 @@
   --glass-fill-strong: linear-gradient(145deg, rgb(255 255 255 / 90%), rgb(255 255 255 / 58%));
   --glass-border: rgb(255 255 255 / 80%);
   --glass-edge-shade: rgb(124 58 237 / 10%);
-  --glass-shadow: 0 1px 2px rgb(59 26 122 / 6%), 0 10px 20px -8px rgb(76 29 149 / 18%);
+  --glass-shadow: var(--elev-2);
   --blur: 18px;
   --ok: #0f766e;
   --warn: #b45309;
   --danger: #be123c;
-  --r-sm: 12px;
-  --r-md: 18px;
-  --r-lg: 26px;
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
   --r-pill: 999px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -60,7 +82,7 @@
   --glass-fill-strong: linear-gradient(145deg, rgb(255 255 255 / 14%), rgb(255 255 255 / 7%));
   --glass-border: rgb(255 255 255 / 14%);
   --glass-edge-shade: rgb(0 0 0 / 25%);
-  --glass-shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 12px 22px -8px rgb(0 0 0 / 45%);
+  --glass-shadow: var(--elev-2);
   --ok: #5eead4;
   --warn: #fbbf24;
   --danger: #fb7185;

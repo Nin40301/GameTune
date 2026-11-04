@@ -1,7 +1,7 @@
 import { itemName } from '../i18n'
 import { useEffect, useRef } from 'react'
 import type { Item, Language, Observation } from '../types'
-import { translator } from '../i18n'
+import { translator, presentationText } from '../i18n'
 import { Icon } from './Icon'
 export function Details({
   item,
@@ -40,10 +40,13 @@ export function Details({
         </button>
       </div>
       <h2 id="detail-title">{itemName(item, language)}</h2>
+      {item.type === 'appx' && (
+        <p className="mono break-text">{String(item.target.name ?? item.name[language])}</p>
+      )}
       <h3>{t('what')}</h3>
-      <p>{item.description[language]}</p>
+      <p>{presentationText(item.description[language])}</p>
       <h3>{t('risk')}</h3>
-      <p>{item.riskNote[language]}</p>
+      <p>{presentationText(item.riskNote[language])}</p>
       {item.requiresReboot && (
         <p className="notice warning">
           <Icon name="warning" />

@@ -49,3 +49,6 @@ contra 127.0.0.1 e mocks, sem aplicar configurações reais.
 - `@fontsource-variable/plus-jakarta-sans`: família variável solicitada, WOFF2 local, licença OFL-1.1 incluída na distribuição. Nenhuma chamada a CDN. [Fontsource](https://fontsource.org/fonts/plus-jakarta-sans/use)
 - `lucide-react`: SVGs acessíveis de traço simples, imports explícitos e tree shaking; substitui glifos/emoji sem biblioteca de gráficos ou animação. Licença ISC incluída na distribuição. [Documentação oficial](https://lucide.dev/guide/react)
 - Nenhuma dependência Rust nova; sem mudança na CSP `font-src self` existente.
+
+
+Fase 6.7: `png 0.18.1` é dependência direta apenas no Windows Runtime para codificar o ícone local de 32×32; essa versão já existia no lockfile como transitiva do Tauri. `base64` já fazia parte do workspace. Não há biblioteca de gráficos nova. A leitura de ícone usa o recurso do arquivo, sem executar o binário ou consultar um processo.

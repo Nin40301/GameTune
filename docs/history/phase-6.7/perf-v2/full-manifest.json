@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "policyVersion": 2,
+  "mode": "full",
+  "sourceCommit": "a5a3c27f23ae96b1e9f70db6fcc115a4b8a35e34",
+  "applicationVersion": "0.6.5",
+  "collectedDate": "2026-11-04",
+  "passed": true,
+  "blockingPassed": true,
+  "cpuP95Alert": true,
+  "baseline": {
+    "path": "../../../perf-baseline.json",
+    "sha256": "c639415970e0e7bc510b6e59c92356a65e634f0461aea54379e235bda69887b7",
+    "medianRamMiB": 165.20703125
+  },
+  "conditions": {
+    "window": "Home, 1100x740",
+    "theme": "light",
+    "language": "pt-BR",
+    "dpi": 96,
+    "devicePixelRatio": 1,
+    "webView2": "156.0.4314.58",
+    "effects": "full",
+    "blurSurfaces": 3,
+    "games": "closed, verified before cohort; no process query during timed runs"
+  },
+  "host": {
+    "os": "Windows 11 Pro 25H2",
+    "build": "26200.9711",
+    "architecture": "x64",
+    "ramMiB": 15482.7,
+    "cpu": "AMD Ryzen 5 8600G w/ Radeon 760M Graphics",
+    "logicalProcessors": 12,
+    "gpu": "AMD Radeon 760M Graphics",
+    "gpuDriver": "32.0.21030.2001"
+  },
+  "thresholds": {
+    "medianRamMiB": 200,
+    "maxRegressionPercent": 15,
+    "medianCpuPercentExclusive": 1,
+    "cpuP95AlertPercent": 2
+  },
+  "summary": {
+    "executions": 5,
+    "runMedianRamBytes": {
+      "minimum": 143638528.0,
+      "median": 164548608.0,
+      "maximum": 222087168.0
+    },
+    "runMedianCpuPercent": {
+      "minimum": 0.0,
+      "median": 0.0,
+      "maximum": 1.3020833333333333
+    },
+    "runCpuP95Percent": {
+      "minimum": 0.1375804144287681,
+      "median": 0.4025277961250547,
+      "maximum": 3.001302083333333
+    },
+    "observedMinimumRamBytes": 137138176.0,
+    "observedMaximumRamBytes": 274653184.0,
+    "observedMinimumCpuPercent": 0.0,
+    "observedMaximumCpuPercent": 3.6458333333333335
+  },
+  "ramMedianMiB": 156.92578125,
+  "ramChangeFromBaselinePercent": -5.01264984749249,
+  "binarySha256": {
+    "ametista.exe": "fa9680a30b68c64b5fce8d6275c4655ffe296ae9ff3cb232e9f29c73aa8d6fef",
+    "budget.exe": "3705dd91109b1deec279e04cd3722db17475ff77e568bb10bf403dfd20aa8cff"
+  },
+  "rawEvaluationSha256": "65e95999fe0ec9e45eac660365d4b11b226bacc7dad7549cdeb1329cf9994c1b",
+  "runs": [
+    {
+      "file": "full-run-1.json",
+      "rawSha256": "e7f61ad72bdfb3724f7c37f6dee58c568f427176ada3b616acd6b0fc4cd4c404",
+      "publicSha256": "1b2744f9dee81c99bfe3c99b270b6697d413b5befb801a44b9017f4e3f734f4c",
+      "sampleCount": 60,
+      "durationSeconds": 60.0063963,
+      "metrics": {
+        "cpuP95Percent": 2.734138257575757,
+        "cpuPercent": {
+          "maximum": 3.515625,
+          "median": 1.3020833333333333,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 261115904.0,
+          "median": 222087168.0,
+          "minimum": 195555328.0
+        },
+        "samples": 60,
+        "spanMs": 59002
+      }
+    },
+    {
+      "file": "full-run-2.json",
+      "rawSha256": "7d7b520ebd242422e8a5ad00f7f916395a5146ff11be10a87da5ca1389caf7de",
+      "publicSha256": "1c16b0f88be01e241a11fb054c5c4e277da9c9dd6121714a96997dca8c0f24f3",
+      "sampleCount": 60,
+      "durationSeconds": 60.0051426,
+      "metrics": {
+        "cpuP95Percent": 3.001302083333333,
+        "cpuPercent": {
+          "maximum": 3.6458333333333335,
+          "median": 1.2936957020181987,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 274653184.0,
+          "median": 202113024.0,
+          "minimum": 182730752.0
+        },
+        "samples": 60,
+        "spanMs": 58998
+      }
+    },
+    {
+      "file": "full-run-3.json",
+      "rawSha256": "4884f2420199bbdee40a863bd1d66082b9f422e4a2d59b2fb76f1f9391fc2e56",
+      "publicSha256": "559c142a5609d0f5df439d9f6be4e39ca7cea59bd0cee2ba1c5a809cb53f18c2",
+      "sampleCount": 60,
+      "durationSeconds": 60.0078918,
+      "metrics": {
+        "cpuP95Percent": 0.1375804144287681,
+        "cpuPercent": {
+          "maximum": 0.6418485237483954,
+          "median": 0.0,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 186236928.0,
+          "median": 158175232.0,
+          "minimum": 156110848.0
+        },
+        "samples": 60,
+        "spanMs": 59001
+      }
+    },
+    {
+      "file": "full-run-4.json",
+      "rawSha256": "c69139395bd676c40bbe1af9521f6d5db7409acda1a5d74e82b40636c59ac920",
+      "publicSha256": "e77260481af28084803c23e4de9fc3b9017a75857550b0d860448ab944ba2112",
+      "sampleCount": 60,
+      "durationSeconds": 60.0081249,
+      "metrics": {
+        "cpuP95Percent": 0.4025277961250547,
+        "cpuPercent": {
+          "maximum": 0.5284015852047557,
+          "median": 0.0,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 169422848.0,
+          "median": 164548608.0,
+          "minimum": 159154176.0
+        },
+        "samples": 60,
+        "spanMs": 59004
+      }
+    },
+    {
+      "file": "full-run-5.json",
+      "rawSha256": "ce63e5752f9cdd9b75c1a1a3fa939b05c6b0512e4d04d48ad7245cf2822f2370",
+      "publicSha256": "f4a12581af834a3c1dc1f40c94bdef1485fceb4921e9d368a8b6934f869cad85",
+      "sampleCount": 60,
+      "durationSeconds": 60.0039764,
+      "metrics": {
+        "cpuP95Percent": 0.3996239426537749,
+        "cpuPercent": {
+          "maximum": 0.6544502617801047,
+          "median": 0.0,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 172638208.0,
+          "median": 143638528.0,
+          "minimum": 137138176.0
+        },
+        "samples": 60,
+        "spanMs": 59000
+      }
+    }
+  ],
+  "anonymization": {
+    "boot": "replaced with schema-compatible redaction token",
+    "powerPlan": "replaced with schema-compatible redaction token",
+    "topProcessNames": "omitted",
+    "timestamps": "relative to first sample",
+    "finalAppTree": "own application and WebView process basenames only"
+  },
+  "evaluationPublicSha256": "b4f6392620b15dc33f1eb7bee62fe25059096b68bfed518e31a21e711f930d45"
+}

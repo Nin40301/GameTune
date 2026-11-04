@@ -15,3 +15,8 @@ npm run test:e2e --prefix apps/desktop
 ```
 
 O backend de produção não contém fixtures. Os testes antigos usam uma fixture explícita de pessoa que já concluiu onboarding; os novos testes de primeira execução não usam esse atalho. As capturas de documentação são identificadas como dados simulados, nunca medições reais do host. Ver [checklist manual](accessibility-checklist.md).
+
+
+Na Entrega 2, as preferências incluem tema resolvido (Sistema/Claro/Escuro), efeitos Completo/Reduzido/Automático, texto 90–130% e movimento do sistema/reduzido. Cartões de perfil mantêm a navegação por setas/Home/End; grupos nunca pré-selecionam risco alto/não verificados. Projeções Agora→Depois usam a última leitura e o alvo fixo do catálogo; não inferem autorização ou executam ajustes.
+
+A rota /design-system é carregada apenas em desenvolvimento e eliminada do JavaScript de produção. O teste de produção verifica também a ausência de pseudo-localização/mock. [Tokens](../design/tokens.md), [voz](../design/voice.md), [referências Linux](../design/visual-regression.md) e [capturas](../design/screenshots.md). A única extensão nativa é [ícone de arquivo cadastrado](../security/icon-resources.md), sem parâmetro de caminho da UI, sem abrir processo do jogo.

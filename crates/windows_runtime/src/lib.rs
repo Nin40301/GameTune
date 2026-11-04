@@ -2,6 +2,7 @@
 //! Fixed Windows operations. This crate never accepts command or script text from callers.
 #[cfg(feature = "vm-tests")]
 pub mod fixture;
+pub mod icon;
 #[cfg(test)]
 mod native_tests;
 mod platform;

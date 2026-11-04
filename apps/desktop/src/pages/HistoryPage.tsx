@@ -1,11 +1,16 @@
 import { useState } from 'react'
-import { date } from '../i18n-format'
+import { itemName } from '../i18n'
+import { date, day as dayLabel } from '../i18n-format'
 import { useApp } from '../state/AppContext'
 import { OperationResult } from '../components/OperationResult'
 import { Icon } from '../components/Icon'
 export function HistoryPage() {
   const { page, t, reply, language, advanced, data, history, busy, prepare, activeHistory } =
     useApp()
+  const displayName = (id: string, fallback: string) => {
+    const item = data?.items.find((item) => item.id === id)
+    return item ? itemName(item, language) : fallback
+  }
   const [from, setFrom] = useState(''),
     [to, setTo] = useState(''),
     [kind, setKind] = useState('all')
@@ -108,27 +113,53 @@ export function HistoryPage() {
                   {t(from || to || kind !== 'all' ? 'noHistoryMatches' : 'emptyHistory')}
                 </p>
               ) : (
-                <ul className="history-list">
-                  {entries.map((entry) => (
-                    <li key={entry.itemId}>
-                      <div>
-                        <strong>
-                          {data?.items.find((item) => item.id === entry.itemId)?.name[language] ??
-                            entry.itemId}
-                        </strong>
-                        <time dateTime={entry.appliedAt}>{date(language, entry.appliedAt)}</time>
-                      </div>
-                      <span className="pill">{t(entry.status)}</span>
-                      <button
-                        className="button subtle"
-                        disabled={entry.status === 'reverted' || busy}
-                        onClick={() => void prepare('undo', [entry.itemId])}
-                      >
-                        {t('undo')}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                <div className="history-days">
+                  {[...new Set(entries.map((entry) => dayLabel(language, entry.appliedAt)))].map(
+                    (day) => (
+                      <section className="history-day" key={day}>
+                        <h2>{day}</h2>
+                        <ul className="history-list">
+                          {entries
+                            .filter((entry) => dayLabel(language, entry.appliedAt) === day)
+                            .map((entry) => {
+                              const item = data?.items.find((item) => item.id === entry.itemId)
+                              return (
+                                <li key={entry.itemId}>
+                                  <span className="history-marker">
+                                    <Icon
+                                      name={
+                                        item?.type === 'scheduled_task'
+                                          ? 'task'
+                                          : item?.type === 'appx'
+                                            ? 'apps'
+                                            : (item?.type ?? 'history')
+                                      }
+                                    />
+                                  </span>
+                                  <div>
+                                    <strong>
+                                      {item ? itemName(item, language) : entry.itemId}
+                                    </strong>
+                                    <time dateTime={entry.appliedAt}>
+                                      {date(language, entry.appliedAt)}
+                                    </time>
+                                  </div>
+                                  <span className="pill">{t(entry.status)}</span>
+                                  <button
+                                    className="button subtle"
+                                    disabled={entry.status === 'reverted' || busy}
+                                    onClick={() => void prepare('undo', [entry.itemId])}
+                                  >
+                                    {t('undo')}
+                                  </button>
+                                </li>
+                              )
+                            })}
+                        </ul>
+                      </section>
+                    ),
+                  )}
+                </div>
               )}
               <h2 className="space-top">{t('removedApps')}</h2>
               <p className="muted small">{t('noUndoDetail')}</p>
@@ -136,10 +167,7 @@ export function HistoryPage() {
                 {apps.map((app, index) => (
                   <li key={`${app.itemId}-${index}`}>
                     <div>
-                      <strong>
-                        {data?.items.find((item) => item.id === app.itemId)?.name[language] ??
-                          app.name}
-                      </strong>
+                      <strong>{displayName(app.itemId, app.name)}</strong>
                       <span className="mono small">{app.packageFamilyNames.join(', ')}</span>
                     </div>
                     <span className="pill">{t(app.status)}</span>

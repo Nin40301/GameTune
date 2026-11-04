@@ -1,3 +1,5 @@
+& node (Join-Path (Split-Path -Parent $PSScriptRoot) 'tools/verify-production-ui.mjs')
+if($LASTEXITCODE -ne 0){throw 'Development UI in production build'}
 $ErrorActionPreference='Stop'
 $root=Split-Path -Parent $PSScriptRoot
 & node (Join-Path $root 'tools/verify-version.mjs')

@@ -23,6 +23,13 @@ export function ItemsPage() {
     ready,
     prepare,
     language,
+    riskFilter,
+    setRiskFilter,
+    revertFilter,
+    setRevertFilter,
+    selectedOnly,
+    setSelectedOnly,
+    selectGroup,
   } = useApp()
   return (
     <>
@@ -62,14 +69,84 @@ export function ItemsPage() {
               </span>
             </label>
           </div>
+          <div className="filter-chips" role="group" aria-label={t('filters')}>
+            <label>
+              {t('riskFilter')}
+              <span className="select-field">
+                <select value={riskFilter} onChange={(e) => setRiskFilter(e.target.value)}>
+                  <option value="all">{t('allRisk')}</option>
+                  {['none', 'low', 'high'].map((risk) => (
+                    <option value={risk} key={risk}>
+                      {t(risk === 'high' ? 'riskHigh' : risk === 'low' ? 'riskLow' : 'riskNone')}
+                    </option>
+                  ))}
+                </select>
+                <Icon name="chevronDown" />
+              </span>
+            </label>
+            <label>
+              {t('revertFilter')}
+              <span className="select-field">
+                <select value={revertFilter} onChange={(e) => setRevertFilter(e.target.value)}>
+                  <option value="all">{t('allRevert')}</option>
+                  <option value="auto">{t('reversible')}</option>
+                  <option value="manual">{t('notReversible')}</option>
+                </select>
+                <Icon name="chevronDown" />
+              </span>
+            </label>
+            <button
+              className="button subtle"
+              type="button"
+              aria-pressed={selectedOnly}
+              onClick={() => setSelectedOnly(!selectedOnly)}
+            >
+              {t('filterSelected')}
+            </button>
+          </div>
+          {!list.length && (
+            <div className="empty-state">
+              <Icon name="items" />
+              <p>{t('selectionEmpty')}</p>
+              <button
+                className="button secondary"
+                onClick={() => {
+                  setSearch('')
+                  setCategory('all')
+                  setRiskFilter('all')
+                  setRevertFilter('all')
+                  setSelectedOnly(false)
+                }}
+              >
+                {t('clearFilters')}
+              </button>
+            </div>
+          )}
           <div className="item-list surface">
             {[...new Set(list.map((item) => item.category))].map((group) => (
-              <section key={group} aria-label={categoryLabel(group)}>
-                <div className="group-heading">
-                  <h2>{categoryLabel(group)}</h2>
-                  <span className="mono">
+              <details open key={group} className="item-group">
+                <summary>
+                  <span>{categoryLabel(group)}</span>
+                  <span className="num">
                     {list.filter((item) => item.category === group).length}
                   </span>
+                  <Icon name="chevronDown" />
+                </summary>
+                <div className="group-actions">
+                  <button
+                    type="button"
+                    className="button subtle"
+                    disabled={busy}
+                    title={t('safeGroupOnly')}
+                    onClick={() =>
+                      selectGroup(
+                        list.filter((item) => item.category === group).map((item) => item.id),
+                      )
+                    }
+                  >
+                    {t('selectGroup')}
+                  </button>
+                  <span>{t('safeGroupOnly')}</span>
                 </div>
                 {list
                   .filter((item) => item.category === group)
@@ -87,10 +164,35 @@ export function ItemsPage() {
                       onDetail={() => setDetail(item)}
                     />
                   ))}
-              </section>
+              </details>
             ))}
           </div>
-          <ActionBar summary={plural(language, 'selected', selected.length)}>
+          <ActionBar
+            summary={
+              <>
+                {plural(language, 'selected', selected.length)}
+                <span className="action-summary-types">
+                  {[
+                    ...new Set(
+                      (data?.items ?? [])
+                        .filter((item) => selected.includes(item.id))
+                        .map((item) => item.type),
+                    ),
+                  ].map((type) => (
+                    <span key={type}>
+                      {plural(
+                        language,
+                        `typeCount_${type}`,
+                        (data?.items ?? []).filter(
+                          (item) => selected.includes(item.id) && item.type === type,
+                        ).length,
+                      )}
+                    </span>
+                  ))}
+                </span>
+              </>
+            }
+          >
             <button
               className="button primary"
               disabled={!ready || !selected.length || busy}

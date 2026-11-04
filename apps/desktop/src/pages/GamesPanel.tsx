@@ -3,7 +3,7 @@ import { InlineStatus } from '../components/InlineStatus'
 import { Checkbox } from '../components/Checkbox'
 import { useEffect, useState } from 'react'
 import type { Backend, Game, GamesAction, GamesView, Language } from '../types'
-import { translator } from '../i18n'
+import { translator, presentationText } from '../i18n'
 import { Icon } from '../components/Icon'
 export function GamesPanel({
   backend,
@@ -24,6 +24,21 @@ export function GamesPanel({
   const [editing, setEditing] = useState<Game | null>(null),
     [ack, setAck] = useState(false),
     [remove, setRemove] = useState(false)
+  const [icons, setIcons] = useState<Record<string, string>>({})
+  const iconKey = view?.library.games.map((game) => game.id).join(',') ?? ''
+  useEffect(() => {
+    if (settings || !iconKey) return
+    let alive = true
+    void backend
+      .games({ kind: 'icons' })
+      .then((result) => {
+        if (alive) setIcons(result.icons ?? {})
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [backend, settings, iconKey])
   const t = translator(language)
   useEffect(() => {
     let active = true,
@@ -70,6 +85,35 @@ export function GamesPanel({
     }
   }
   const live = view?.monitor.running ?? false
+  const monitorCard = (
+    <section className="monitor-card">
+      <h2>{t('gameMonitor')}</h2>
+      <p>{t('monitorExplanation')}</p>
+      <p className="pill" role="status">
+        {t(live ? 'monitorRunning' : 'monitorStopped')}
+        {view?.monitor.readonly && ` · ${t('observationOnly')}`}
+      </p>
+      {view?.monitor.recoveryPending && <p className="notice warning">{t('monitorRecovery')}</p>}
+      {!live && (
+        <label className="check-line">
+          <Checkbox checked={ack} onChange={(e) => setAck(e.target.checked)} />
+          {t('monitorConsent')}
+        </label>
+      )}
+      <button
+        className="button secondary"
+        disabled={busy || !view || (!live && !ack)}
+        onClick={() => {
+          void act(
+            live ? { kind: 'stop' } : { kind: 'start', confirm: ack, readonly: false, language },
+          )
+        }}
+      >
+        {t(live ? 'stopMonitor' : 'startMonitor')}
+      </button>
+      <p className="muted small">{t('monitorNoAutostart')}</p>
+    </section>
+  )
   return (
     <section className="games-panel" aria-label={t(settings ? 'gameMonitor' : 'games')}>
       {(error || view?.monitor.error) && (
@@ -78,37 +122,7 @@ export function GamesPanel({
         </InlineStatus>
       )}
       {settings ? (
-        <>
-          <h2>{t('gameMonitor')}</h2>
-          <p>{t('monitorExplanation')}</p>
-          <p className="pill" role="status">
-            {t(live ? 'monitorRunning' : 'monitorStopped')}
-            {view?.monitor.readonly && ` · ${t('observationOnly')}`}
-          </p>
-          {view?.monitor.recoveryPending && (
-            <p className="notice warning">{t('monitorRecovery')}</p>
-          )}
-          {!live && (
-            <label className="check-line">
-              <Checkbox checked={ack} onChange={(e) => setAck(e.target.checked)} />
-              {t('monitorConsent')}
-            </label>
-          )}
-          <button
-            className="button secondary"
-            disabled={busy || !view || (!live && !ack)}
-            onClick={() => {
-              void act(
-                live
-                  ? { kind: 'stop' }
-                  : { kind: 'start', confirm: ack, readonly: false, language },
-              )
-            }}
-          >
-            {t(live ? 'stopMonitor' : 'startMonitor')}
-          </button>
-          <p className="muted small">{t('monitorNoAutostart')}</p>
-        </>
+        monitorCard
       ) : (
         <>
           <p className="intro">{t('gamesIntro')}</p>
@@ -136,9 +150,23 @@ export function GamesPanel({
           <div className="games-layout">
             <section className="surface game-library">
               <h2>{t('registeredGames')}</h2>
+              {monitorCard}
+              <section className="active-session" aria-label={t('activeSession')}>
+                <h3>
+                  <Icon name="games" />
+                  {t('activeSession')}
+                </h3>
+                <p>
+                  {t(view?.monitor.activeGames.length ? 'activeSessionNote' : 'noActiveSession')}
+                </p>
+                {view?.monitor.activeGames.map((id) => (
+                  <span className="pill accent" key={id}>
+                    {view.library.games.find((game) => game.id === id)?.name ?? t('unknown')}
+                  </span>
+                ))}
+              </section>
               <div className="game-monitor-summary">
-                <Icon name="monitor" />
-                <strong>{t(live ? 'monitorRunning' : 'monitorStopped')}</strong>
+                <h3>{t('setupGame')}</h3>
                 <p>{t('gameSetupSteps')}</p>
                 {onMonitorSettings && (
                   <button type="button" className="button subtle" onClick={onMonitorSettings}>
@@ -146,7 +174,12 @@ export function GamesPanel({
                   </button>
                 )}
               </div>
-              {!view?.library.games.length && <p>{t('noGames')}</p>}
+              {!view?.library.games.length && (
+                <div className="empty-state">
+                  <Icon name="games" />
+                  <p>{t('noGames')}</p>
+                </div>
+              )}
               <ul>
                 {view?.library.games.map((game) => (
                   <li key={game.id}>
@@ -159,10 +192,20 @@ export function GamesPanel({
                       }}
                     >
                       <strong>
-                        <Icon name="games" />
+                        {icons[game.id] ? (
+                          <img
+                            className="game-file-icon"
+                            src={icons[game.id]}
+                            alt=""
+                            width={32}
+                            height={32}
+                          />
+                        ) : (
+                          <Icon name="games" />
+                        )}
                         {game.name}
                       </strong>
-                      <span>
+                      <span className="game-state-chip">
                         {t(
                           view.monitor.activeGames.includes(game.id)
                             ? 'gameDetected'
@@ -202,12 +245,12 @@ export function GamesPanel({
                         />
                         <span>
                           <strong>{t(`gameAction_${action.id}`)}</strong>
-                          <small>{action.description[language]}</small>
+                          <small>{presentationText(action.description[language])}</small>
                           {compatible[action.id] === false && <small>{t('incompatible')}</small>}
                         </span>
                       </label>
                     ))}
-                    <label className="check-line">
+                    <label className="check-line game-consent">
                       <Checkbox
                         checked={editing.consent}
                         onChange={(e) => setEditing({ ...editing, consent: e.target.checked })}
@@ -255,7 +298,10 @@ export function GamesPanel({
                   </details>
                 </>
               ) : (
-                <p>{t('chooseGame')}</p>
+                <div className="empty-state">
+                  <Icon name="items" />
+                  <p>{t('chooseGame')}</p>
+                </div>
               )}
             </section>
           </div>

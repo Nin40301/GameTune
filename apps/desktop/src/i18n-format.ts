@@ -10,6 +10,14 @@ export function date(language: Language, value: string) {
     : new Intl.DateTimeFormat(language, { dateStyle: 'short', timeStyle: 'short' }).format(date)
 }
 export function plural(language: Language, key: string, value: number) {
-  const category = new Intl.PluralRules(language).select(value)
+  // Product voice uses plural for a zero count; other quantities follow Intl.
+  const category = value === 0 ? 'other' : new Intl.PluralRules(language).select(value)
   return translator(language)(`${key}_${category}`).replace('{count}', number(language, value))
+}
+
+export function day(language: Language, value: string) {
+  const parsed = new Date(value)
+  return Number.isNaN(parsed.getTime())
+    ? translator(language)('noHistoryDay')
+    : new Intl.DateTimeFormat(language, { dateStyle: 'full' }).format(parsed)
 }

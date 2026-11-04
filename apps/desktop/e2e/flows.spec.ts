@@ -26,8 +26,10 @@ test('multi-app removal needs every consent and reinforced high-risk approval', 
     page.getByText('Análise concluída. Nenhuma alteração foi feita', { exact: true }),
   ).toBeVisible()
   await page.getByRole('button', { name: 'Limpeza de apps' }).click()
-  await page.getByRole('checkbox', { name: 'Microsoft.Copilot', exact: true }).check()
-  await page.getByRole('checkbox', { name: 'Microsoft.GamingServices', exact: true }).check()
+  await page.getByRole('checkbox', { name: 'Copilot', exact: true }).check()
+  await page
+    .getByRole('checkbox', { name: 'Serviços de jogos (Gaming Services)', exact: true })
+    .check()
   await page.getByRole('button', { name: /Revisar remoção/ }).click()
   const remove = page.getByRole('button', { name: 'Remover apps' })
   await page.getByLabel('Revisei esta operação e autorizo continuar').check()

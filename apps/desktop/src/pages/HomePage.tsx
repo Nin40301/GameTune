@@ -1,6 +1,7 @@
+import { SecurityCard } from '../components/SecurityCard'
 import { useApp } from '../state/AppContext'
 import { Measurements } from './Measurements'
-import { Segmented } from '../components/Segmented'
+import { ProfileCards } from '../components/ProfileCards'
 import { Button } from '../components/Button'
 import { Icon } from '../components/Icon'
 export function HomePage() {
@@ -29,27 +30,9 @@ export function HomePage() {
             backend={backend}
             language={language}
             dashboard
-            selectedCount={selected.length}
+            safetyCard={<SecurityCard />}
             profileControls={
               <>
-                <div className="section-top">
-                  <h2>{t('profile')}</h2>
-                  <span className="pill accent">
-                    <Icon name="safe" />
-                    {t('simulated')}
-                  </span>
-                </div>
-                <Segmented
-                  options={['safe', 'balanced', 'aggressive', 'custom'].map((value) => ({
-                    value,
-                    label: t(value),
-                  }))}
-                  value={profile}
-                  onChange={chooseProfile}
-                  label={t('profile')}
-                  disabled={busy}
-                />
-                <p className="profile-note">{t(`${profile}Note`)}</p>
                 <div className="actions">
                   <Button
                     icon={<Icon name="simulate" />}
@@ -67,6 +50,26 @@ export function HomePage() {
                     <Icon name="arrowRight" />
                   </Button>
                 </div>
+                <div className="section-top">
+                  <h2>{t('profile')}</h2>
+                  <span className="pill accent">
+                    <Icon name="safe" />
+                    {t('simulated')}
+                  </span>
+                </div>
+                <ProfileCards
+                  value={profile}
+                  onChange={chooseProfile}
+                  counts={{ ...data?.presets, custom: profile === 'custom' ? selected : [] }}
+                  language={language}
+                  disabled={busy || !data}
+                />
+                {profile === 'aggressive' && (
+                  <p className="notice warning">
+                    <Icon name="warning" />
+                    {t('aggressiveCaution')}
+                  </p>
+                )}
                 <p className="calm-note">
                   <Icon name="safe" />
                   {t('simulateNote')}

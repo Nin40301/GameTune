@@ -1,5 +1,5 @@
 export type Language = 'pt-BR' | 'en'
-export type Theme = 'dark' | 'light'
+export type Theme = 'system' | 'dark' | 'light'
 export type Kind = 'registry' | 'service' | 'scheduled_task' | 'appx' | 'startup' | 'power'
 export type Page =
   'results' | 'home' | 'items' | 'apps' | 'review' | 'history' | 'settings' | 'benchmark' | 'games'
@@ -149,13 +149,14 @@ export interface GameMonitor {
   readonly: boolean
 }
 export interface GamesView {
+  icons?: Record<string, string>
   library: { version: number; games: Game[]; language: string }
   candidates: GameCandidate[]
   actions: GameAction[]
   monitor: GameMonitor
 }
 export type GamesAction =
-  | { kind: 'status' | 'discover' | 'add_manual' | 'stop' }
+  | { kind: 'status' | 'discover' | 'add_manual' | 'stop' | 'icons' }
   | { kind: 'add_candidate'; index: number }
   | { kind: 'save'; game: Game; language: string }
   | { kind: 'remove'; id: string; confirm: boolean }
