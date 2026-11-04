@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "policyVersion": 2,
+  "mode": "reduced",
+  "informational": true,
+  "passed": true,
+  "blockingPassed": true,
+  "cpuP95Alert": false,
+  "sourceCommit": "a5a3c27f23ae96b1e9f70db6fcc115a4b8a35e34",
+  "applicationVersion": "0.6.5",
+  "collectedDate": "2026-11-04",
+  "baseline": {
+    "path": "../../../perf-baseline.json",
+    "sha256": "c639415970e0e7bc510b6e59c92356a65e634f0461aea54379e235bda69887b7",
+    "medianRamMiB": 205.50390625
+  },
+  "conditions": {
+    "window": "Home, 1100x740",
+    "theme": "light",
+    "language": "pt-BR",
+    "dpi": 96,
+    "devicePixelRatio": 1,
+    "webView2": "156.0.4314.58",
+    "effects": "reduced",
+    "blurSurfaces": 0,
+    "games": "closed before the cohort; five executions from a fresh cohort"
+  },
+  "host": {
+    "os": "Windows 11 Pro 25H2",
+    "build": "26200.9711",
+    "architecture": "x64",
+    "ramMiB": 15482.7,
+    "cpu": "AMD Ryzen 5 8600G w/ Radeon 760M Graphics",
+    "logicalProcessors": 12,
+    "gpu": "AMD Radeon 760M Graphics",
+    "gpuDriver": "32.0.21030.2001"
+  },
+  "thresholds": {
+    "medianRamMiB": 200,
+    "maxRegressionPercent": 15,
+    "medianCpuPercentExclusive": 1,
+    "cpuP95AlertPercent": 2,
+    "cohortBlocking": false
+  },
+  "summary": {
+    "executions": 5,
+    "runMedianRamBytes": {
+      "minimum": 178634752.0,
+      "median": 180555776.0,
+      "maximum": 189655040.0
+    },
+    "runMedianCpuPercent": {
+      "minimum": 0.0,
+      "median": 0.0,
+      "maximum": 0.12978590799602474
+    },
+    "runCpuP95Percent": {
+      "minimum": 0.26814635239472734,
+      "median": 0.5201899111400087,
+      "maximum": 0.6511693218954248
+    },
+    "observedMinimumRamBytes": 170962944.0,
+    "observedMaximumRamBytes": 220438528.0,
+    "observedMinimumCpuPercent": 0.0,
+    "observedMaximumCpuPercent": 1.297016861219196
+  },
+  "ramMedianMiB": 172.19140625,
+  "ramChangeFromBaselinePercent": -16.210154156132983,
+  "fullModeMedianRamMiB": 156.92578125,
+  "differenceFromFullMiB": 15.265625,
+  "binarySha256": {
+    "ametista.exe": "fa9680a30b68c64b5fce8d6275c4655ffe296ae9ff3cb232e9f29c73aa8d6fef",
+    "budget.exe": "3705dd91109b1deec279e04cd3722db17475ff77e568bb10bf403dfd20aa8cff"
+  },
+  "rawEvaluationSha256": "91c0afbc18e0a2f76d220338edb8a1a5bfa19ab1e7a2674a9edc68ed7a776857",
+  "runs": [
+    {
+      "file": "reduced-run-1.json",
+      "rawSha256": "170ce67736cbfb111c1e10c0291776f8f6c2191d8d3b04054b80753d1021cf0f",
+      "publicSha256": "858c4c02fa063aaf698ecee9c127e06eb8291fcf1318c64fc88f46926eb2a482",
+      "sampleCount": 60,
+      "durationSeconds": 60.0055471,
+      "metrics": {
+        "cpuP95Percent": 0.26814635239472734,
+        "cpuPercent": {
+          "maximum": 0.6468305304010349,
+          "median": 0.0,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 197931008.0,
+          "median": 189655040.0,
+          "minimum": 185368576.0
+        },
+        "samples": 60,
+        "spanMs": 59001
+      }
+    },
+    {
+      "file": "reduced-run-2.json",
+      "rawSha256": "9bf6945dd574fbce66840371404efbc787483c2c54392d2b1c2f67b8d6a66387",
+      "publicSha256": "ccc878f8bda7b65fdf6cba0f8645c847cb688ab8267d1d9dd8e5a211dcee92a8",
+      "sampleCount": 60,
+      "durationSeconds": 60.0053653,
+      "metrics": {
+        "cpuP95Percent": 0.39113428943937417,
+        "cpuPercent": {
+          "maximum": 1.0416666666666667,
+          "median": 0.12978590799602474,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 184283136.0,
+          "median": 179503104.0,
+          "minimum": 172498944.0
+        },
+        "samples": 60,
+        "spanMs": 59001
+      }
+    },
+    {
+      "file": "reduced-run-3.json",
+      "rawSha256": "15bba02413934954f7e219e93ab4d7a5bd08543df23f858dc1310aa6e14935a3",
+      "publicSha256": "396bc63616156602ec3e56c932050508d352f52bd74b40fc319f9b5ead4e1d8a",
+      "sampleCount": 60,
+      "durationSeconds": 60.0044506,
+      "metrics": {
+        "cpuP95Percent": 0.5201899111400087,
+        "cpuPercent": {
+          "maximum": 1.1826544021024967,
+          "median": 0.0,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 185929728.0,
+          "median": 178634752.0,
+          "minimum": 170962944.0
+        },
+        "samples": 60,
+        "spanMs": 58999
+      }
+    },
+    {
+      "file": "reduced-run-4.json",
+      "rawSha256": "fc167885e33e189b63520628060acb4f0aae9c1f27da7933a1ba117b167ccbdf",
+      "publicSha256": "da60e14ac30dda4029a036ccd56188efd944c0d67eea63b525203358102da385",
+      "sampleCount": 60,
+      "durationSeconds": 60.0044977,
+      "metrics": {
+        "cpuP95Percent": 0.6511693218954248,
+        "cpuPercent": {
+          "maximum": 1.1642949547218628,
+          "median": 0.0,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 220438528.0,
+          "median": 181284864.0,
+          "minimum": 173793280.0
+        },
+        "samples": 60,
+        "spanMs": 59000
+      }
+    },
+    {
+      "file": "reduced-run-5.json",
+      "rawSha256": "d1bc27a5bd28beacaaa111edda2dd13185d94692f9c67305bf7d78033bb2df40",
+      "publicSha256": "17e9c8ec537a5b843185c561ced1d442f22cd45e446afb98de80b5ffeb7452c7",
+      "sampleCount": 60,
+      "durationSeconds": 60.0049537,
+      "metrics": {
+        "cpuP95Percent": 0.5299171113124593,
+        "cpuPercent": {
+          "maximum": 1.297016861219196,
+          "median": 0.06443298969072164,
+          "minimum": 0.0
+        },
+        "ramBytes": {
+          "maximum": 189227008.0,
+          "median": 180555776.0,
+          "minimum": 175763456.0
+        },
+        "samples": 60,
+        "spanMs": 59001
+      }
+    }
+  ],
+  "anonymization": {
+    "boot": "schema-compatible redaction token",
+    "powerPlan": "schema-compatible redaction token",
+    "topProcessNames": "omitted",
+    "timestamps": "relative to first sample",
+    "finalAppTree": "own application and WebView process basenames only"
+  },
+  "evaluationPublicSha256": "286abe5983cde3ffe18feab61a95e2230694d34969aaeafab61077690a85237a"
+}

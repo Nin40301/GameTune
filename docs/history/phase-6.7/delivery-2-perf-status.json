@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "policyVersion": 2,
-  "status": "partial",
-  "reason": "Complete passed policy v2; the game returned during Reduced, which was interrupted after three runs; the monitor cohort remains pending",
+  "status": "complete",
+  "reason": "All three policy v2 resource modes were measured; Full and the strict monitor gate passed; Reduced passed as an informational mode",
   "applicationSourceCommit": "a5a3c27f23ae96b1e9f70db6fcc115a4b8a35e34",
   "version": "0.6.5",
   "identifier": "io.github.nin40301.ametista",
@@ -55,18 +55,53 @@
       "rawEvaluationSha256": "65e95999fe0ec9e45eac660365d4b11b226bacc7dad7549cdeb1329cf9994c1b"
     },
     "reduced": {
-      "status": "interrupted",
-      "plannedExecutions": 5,
-      "completedExecutions": 3,
-      "evaluated": false,
-      "reason": "Roblox returned during the cohort and the harness stopped after a graceful-close timeout; partial runs are preserved locally but are not an acceptance result"
+      "status": "passed_informational",
+      "manifest": "perf-v2/reduced-manifest.json",
+      "evaluation": "perf-v2/reduced-evaluation-v2.json",
+      "executions": 5,
+      "samplesPerExecution": 60,
+      "medianRamMiB": 172.19140625,
+      "runMedianRamMiB": {
+        "minimum": 170.3486328125,
+        "median": 172.19140625,
+        "maximum": 180.810546875
+      },
+      "ramChangeFromBaselinePercent": -16.210154156132983,
+      "runMedianCpuPercent": {
+        "minimum": 0.0,
+        "median": 0.0,
+        "maximum": 0.12978590799602474
+      },
+      "runP95CpuPercent": {
+        "minimum": 0.26814635239472734,
+        "median": 0.5201899111400087,
+        "maximum": 0.6511693218954248
+      },
+      "differenceFromFullMiB": 15.265625,
+      "passed": true,
+      "blockingPassed": true,
+      "cpuP95Alert": false,
+      "previousInterruptedAttempt": {
+        "completedExecutions": 3,
+        "evaluated": false,
+        "includedInCurrentCohort": false
+      }
     },
     "game_monitor": {
-      "status": "pending",
-      "reason": "Not measured after the game returned"
+      "status": "passed",
+      "manifest": "perf-v2/monitor-manifest.json",
+      "evidence": "perf-v2/monitor-run.json",
+      "executions": 1,
+      "samples": 60,
+      "warmupSeconds": 30,
+      "peakRamMiB": 2.44140625,
+      "peakCpuPercent": 0.13020833333333334,
+      "ramLimitMiB": 15,
+      "cpuLimitExclusivePercent": 0.5,
+      "passed": true
     }
   },
-  "recordedUtc": "2026-11-04T17:51:08.907118+00:00",
+  "recordedUtc": "2026-11-04T21:36:11.491741+00:00",
   "preflights": {
     "full": {
       "webView2": "156.0.4314.58",

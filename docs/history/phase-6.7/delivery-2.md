@@ -53,17 +53,17 @@ Não rodar testes administrativos no host. Somente o harness de VM tem opt-in pa
 
 Inspecionados os 72 alvos solicitados por painéis de contato e ampliações críticas, em duas rodadas de acabamento complementadas pela janela nativa. Corrigidos: menu Mais encoberto pela barra fixa, cards Appx altos demais, palavra de resultado dividida, estado de monitor repetido, posição de Simular, definição HTML do Agora→Depois, legenda do Orb e vazamento da nota de CPU no tamanho nativo. A legenda do Orb pode ocupar duas linhas no tamanho nativo. Itens/Configurações continuam longos em 390 px; grupos/filtros ajudam, mas não eliminam a rolagem. Capturas de documento inteiro conservam barras fixas na posição de viewport; testes de fim de lista conferem margem real para a última linha.
 
-## Consumo antes/depois — parcial
+## Consumo antes/depois — gates v2 concluídos
 
 | Modo | Referência final 0.6.5 preservada | Nova UI |
 | --- | --- | --- |
 | Completo | 163,54 MiB / CPU mediana 0,3932% | **156,93 MiB / CPU mediana 0,00%**; −5,01% RAM; aprovado, alerta p95 3,00% |
-| Reduzido | 244,04 MiB / CPU mediana 0,3886% | Interrompido após 3 de 5; sem avaliação |
-| Monitor, picos | 2,75 MiB / CPU 0,1305% | Pendente de ensaio separado |
+| Reduzido | 244,04 MiB / CPU mediana 0,3886% | **172,19 MiB / CPU mediana 0,00%**; −16,21% sobre base; informativo aprovado |
+| Monitor, picos | 2,75 MiB / CPU 0,1305% | **2,44 MiB / CPU pico 0,1302%**; aprovado nos limites estritos |
 
-Completo mediu cinco execuções válidas sem depuração e passou a política v2; o p95 máximo de 3,00% é alerta informativo. Reduzido foi interrompido após três execuções quando Roblox reapareceu; nenhuma dessas três é tratada como coorte aprovada. Monitor ainda não executado. Séries Completo anonimizadas, hashes e avaliação estão em [perf-v2](perf-v2/full-manifest.json); estado de todos os ensaios em [delivery-2-perf-status.json](delivery-2-perf-status.json). Baseline, limites e harness permanecem intactos. O PR continua em rascunho.
+Completo, Reduzido e monitor foram medidos. Completo passou com alerta p95; Reduzido passou como informativo e ficou 15,27 MiB acima de Completo; monitor passou nos limites estritos. A primeira tentativa parcial de Reduzido foi descartada e refeita integralmente. As três séries anonimizadas e hashes estão nos [manifestos perf-v2](perf-v2/full-manifest.json), com avaliações reproduzidas; estado em [delivery-2-perf-status.json](delivery-2-perf-status.json). Baseline e harness intactos. O PR permanece em rascunho enquanto faltam as validações manuais/VM.
 
-Quando o computador estiver livre:
+Para reproduzir os gates em outro computador:
 
 ```powershell
 cargo build --release -p ametista-metrics --example budget --locked
@@ -76,8 +76,8 @@ pwsh -NoProfile -File tools/test-resource-budget.ps1 -Mode game_monitor
 
 ## Segurança, riscos e pendências
 
-Catálogo, core, executores existentes, IPC elevado, helper, monitor, watcher, métricas e harness não mudaram. O diff nativo se limita a `games_action::Icons` sem argumentos e ao leitor Shell/GDI de recurso local cadastrado. Não há caminho livre da UI, execução do arquivo, handle em jogo, injeção ou hook. PNG 0.18.1 já era transitivo e agora é direto só no Windows. [Fronteira de ícones](../../security/icon-resources.md); [inventário completo de 94 linhas unsafe](../../security/unsafe-inventory.md), duas novas com RAII e comentários SAFETY. unwrap/expect continuam proibidos.
+Catálogo, core, executores existentes, IPC elevado, helper, monitor, watcher, métricas e harness não mudaram. O diff nativo se limita a `games_action::Icons` sem argumentos e ao leitor Shell/GDI de recurso local cadastrado. O código do produto não tem caminho livre da UI, execução do arquivo, handle em jogo, injeção ou hook. PNG 0.18.1 já era transitivo e agora é direto só no Windows. [Fronteira de ícones](../../security/icon-resources.md); [inventário completo de 94 linhas unsafe](../../security/unsafe-inventory.md), duas novas com RAII e comentários SAFETY. unwrap/expect continuam proibidos.
 
-Não validados: coorte Reduzido v2 completa e monitor, roundtrip/UAC/Appx/reinício/Minecraft na matriz VM, NVDA/Narrador, DPI 125/150/200%, zoom físico e outras GPUs/versões WebView. O reflow automatizado é geometria equivalente, não prova de zoom físico. [Checklist manual](../../dev/accessibility-checklist.md) mantém resultado Pendente. Não declaramos conformidade WCAG AAA.
+Não validados: roundtrip/UAC/Appx/reinício/Minecraft na matriz VM, NVDA/Narrador, DPI 125/150/200%, zoom físico e outras GPUs/versões WebView. O reflow automatizado é geometria equivalente, não prova de zoom físico. [Checklist manual](../../dev/accessibility-checklist.md) mantém resultado Pendente. Não declaramos conformidade WCAG AAA.
 
-Experimentos 3.8 e refinamentos opcionais de ícones ficam no [backlog](../../backlog.md). Próximo passo obrigatório: repetir Reduzido em cinco execuções válidas, medir o monitor e registrar o resultado; depois revisar o PR, sem merge automático. Fase 7 continua dependente do aceite de VM e dos riscos já documentados.
+Experimentos 3.8 e refinamentos opcionais de ícones ficam no [backlog](../../backlog.md). Gates de consumo concluídos. Próximo passo: aceite em VM e verificações manuais; depois revisar o PR, sem merge automático. Fase 7 continua dependente do aceite de VM e dos riscos já documentados.
